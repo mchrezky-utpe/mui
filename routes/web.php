@@ -145,4 +145,3 @@ Route::controller(MasterSkuDetailController::class)->group(function () {
     // EDIT    
     Route::post("/sku-detail/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
-
