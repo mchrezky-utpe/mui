@@ -243,7 +243,7 @@
                         <!-- Terms Menu -->
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-file-alt"></i>Terms</a>
+                                <i class="fas fa-file-alt"></i>General</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="purchase.html">Purchase</a>

@@ -1,0 +1,25 @@
+$(document).on('click', '.edit', function (e) {
+    var id = this.dataset.id;
+    $.ajax({
+        type: 'GET',
+        url: base_url + 'person-supplier/' + id,
+        success: function (data) {
+            var data = data.data;
+
+            $('[name=id]').val(data.id);
+            $('[name=manual_id]').val(data.manual_id);
+            $('[name=description]').val(data.description);
+            $('[name=address]').val(data.address);
+            $('[name=phone]').val(data.phone);
+            $('[name=fax]').val(data.fax);
+            $('[name=email]').val(data.email);
+            $('[name=contact_person]').val(data.contact_person);
+
+            $('#edit_modal').modal('show');
+
+        },
+        error: function (err) {
+            debugger;
+        }
+    });
+});
