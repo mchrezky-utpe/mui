@@ -7,6 +7,7 @@ use App\Models\MasterSkuProcess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class MasterSkuProcessService
 {
@@ -26,7 +27,10 @@ class MasterSkuProcessService
 
     public function delete($id){
         $data = MasterSkuProcess::where('id', $id)->firstOrFail();
-        $data->delete();
+        $data->flag_active = 0;
+        $data->deleted_at  = Carbon::now();
+        $data->deleted_by  = Auth::id();
+        $data->save();
     }
     
     public function get(int $id)

@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasUserTracking;
 
 class MasterSku extends Model
 {
     use HasFactory;
+    use HasUserTracking;
   
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
@@ -47,4 +49,5 @@ class MasterSku extends Model
     {
         return $this->hasOne(MasterSkuBusiness::class, 'id','sku_business_type_id');
     }
+    
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasUserTracking;
 
 class MasterSkuPackaging extends Model
 {
@@ -12,4 +13,6 @@ class MasterSkuPackaging extends Model
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
     protected $table = 'mst_sku_packaging';
+
+    use HasUserTracking;
 }

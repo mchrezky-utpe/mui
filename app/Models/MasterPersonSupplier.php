@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasUserTracking;
 
 class MasterPersonSupplier extends Model
 {
@@ -12,4 +13,6 @@ class MasterPersonSupplier extends Model
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
     protected $table = 'mst_person_supplier';
+
+    use HasUserTracking;
 }
