@@ -11,7 +11,9 @@ use Illuminate\Support\Str;
 class MasterSkuService
 {
     public function list(){
-          return MasterSku::with(['type','unit','detail','model','process','packaging','business'])->get();
+          return MasterSku::with(['type','unit','detail','model','process','packaging','business'])
+          ->where('flag_active', 1)
+          ->get();
     }
 
     public function add(Request $request){
@@ -34,7 +36,8 @@ class MasterSkuService
 
     public function delete($id){
         $data = MasterSku::where('id', $id)->firstOrFail();
-        $data->delete();
+        $data->flag_active = 0;
+        $data->save();
     }
     
     public function get(int $id)

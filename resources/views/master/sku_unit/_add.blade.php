@@ -1,6 +1,6 @@
 <x-modals.modal id="add_modal" title="Add Sku Unit">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-unit">
-    @
+  @csrf
     <div class="form-group">
       <label>Manual ID</label>
       <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">

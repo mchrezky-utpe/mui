@@ -7,11 +7,13 @@ use App\Models\MasterSkuType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 
 class MasterSkuTypeService
 {
     public function list(){
-          return MasterSkuType::all();
+          return MasterSkuType::where('flag_active', 1)->get();
     }
 
     public function add(Request $request){
@@ -26,7 +28,10 @@ class MasterSkuTypeService
 
     public function delete($id){
         $data = MasterSkuType::where('id', $id)->firstOrFail();
-        $data->delete();
+        $data->flag_active = 0;
+        $data->deleted_at  = Carbon::now();
+        $data->deleted_by  = Auth::id();
+        $data->save();
     }
     
     public function get(int $id)
