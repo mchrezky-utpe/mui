@@ -10,9 +10,11 @@ class MasterPersonSupplier extends Model
 {
     use HasFactory;
   
-    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $table = 'mst_person_supplier';
+
+    public $timestamps = false;
 
     use HasUserTracking;
 }
