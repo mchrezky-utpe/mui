@@ -27,7 +27,7 @@
     </div>
     <div class="form-group">
       <label>Contact Person</label>
-      <input required name="contact_person" class="form-control" type="email" placeholder="Contact Person">
+      <input required name="contact_person" class="form-control" type="text" placeholder="Contact Person">
     </div>
   </form>   
 </x-modals.modal>
