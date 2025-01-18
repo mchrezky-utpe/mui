@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Master\MasterGeneralDepartmentController;
+use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Master\MasterSkuController;
@@ -14,7 +16,9 @@ use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\Master\MasterSkuBusinessController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
-
+use App\Models\MasterGeneralTerms;
+use App\Services\Master\MasterGeneralDepartmentService;
+use App\Services\Master\MasterGeneralTermsService;
 
 require_once base_path('routes/transaction_route.php');
 
@@ -156,4 +160,30 @@ Route::controller(MasterPersonSupplierController::class)->group(function () {
     Route::get("/person-supplier/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/person-supplier/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralTermsController::class)->group(function () {
+    // LIST
+    Route::get("/general-terms", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-terms", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-terms/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-terms/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-terms/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralDepartmentController::class)->group(function () {
+    // LIST
+    Route::get("/general-department", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-department", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-department/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-department/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-department/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });

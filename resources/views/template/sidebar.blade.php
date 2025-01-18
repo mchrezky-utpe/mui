@@ -246,6 +246,12 @@
                                 <i class="fas fa-file-alt"></i>General</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
+                                    <a href="/general-terms">Terms</a>
+                                </li>
+                                <li>
+                                    <a href="general-department">Department</a>
+                                </li>
+                                <li>
                                     <a href="purchase.html">Purchase</a>
                                 </li>
                             </ul>
