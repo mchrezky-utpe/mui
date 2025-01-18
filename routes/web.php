@@ -14,14 +14,12 @@ use App\Http\Controllers\Master\MasterSkuBusinessController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
 
+
+require_once base_path('routes/transaction_route.php');
+
 Route::get('/', function () {
     return view('dashboard.dashboard');
 });
-
-
-// Route::get('/user', function () {
-//     return view('user.index');
-// });
 
 Route::controller(AuthController::class)->group(function () {
     Route::get("/login", "login")->middleware(OnlyGuestMiddleware::class);
