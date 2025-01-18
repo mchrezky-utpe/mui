@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuTypeController;
@@ -142,4 +143,17 @@ Route::controller(MasterSkuDetailController::class)->group(function () {
     Route::get("/sku-detail/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/sku-detail/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterPersonSupplierController::class)->group(function () {
+    // LIST
+    Route::get("/person-supplier", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/person-supplier", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/person-supplier/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/person-supplier/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/person-supplier/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
