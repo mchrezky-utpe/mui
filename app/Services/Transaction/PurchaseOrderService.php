@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Master;
+namespace App\Services\Transaction;
 
 use App\Helpers\HelperCustom;
 use App\Models\Transaction\PurchaseOrder;

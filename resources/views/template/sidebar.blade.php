@@ -126,7 +126,7 @@
                                 <i class="fas fa-shopping-bag"></i>Purchase</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="purchase_order.html">Purchase Order (PO)</a>
+                                    <a href="/po">Purchase Order (PO)</a>
                                 </li>
                                 <li>
                                     <a href="purchase_invoice.html">Purchase Invoice</a>

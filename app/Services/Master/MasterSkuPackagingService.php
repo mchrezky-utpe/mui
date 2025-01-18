@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class MasterSkuPackagingService
 {
     public function list(){
-          return MasterSkuPackaging::all();
+          return MasterSkuPackaging::where('flag_active', 1)->get();
     }
 
     public function add(Request $request){

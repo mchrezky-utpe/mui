@@ -1,4 +1,4 @@
-<x-modals.modal id="edit_modal" title="Edit Sku Unit">
+<x-modals.modal id="edit_modal" title="Edit Purchase Order">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-unit/edit">
     @csrf
     <div class="form-group">

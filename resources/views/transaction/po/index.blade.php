@@ -1,4 +1,20 @@
-@extends('template.main') @section('content') <div class="section__content section__content--p30">
+@extends('template.main') @section('content') 
+<style>
+    /* Tambahkan gaya untuk membuat scroll */
+  .table-container {
+        max-height: 400px; /* Sesuaikan tinggi maksimum sesuai kebutuhan */
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        overflow-y: auto;
+    }
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+</style>
+
+<div class="section__content section__content--p30">
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -9,6 +25,9 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">Transaction</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="#" class="breadcrumb-link">Purchase</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Purchase Order(PO)</li>
               </ol>
@@ -32,27 +51,15 @@
                     <th>No</th>
                     <th>ID</th>
                     <th>Manual ID</th>
+                    <th>Doc Number</th>
+                    <th>Type</th>
+                    <th>Supplier</th>
                     <th>Description</th>
+                    <th>Total</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) <tr>
-                    <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->prefix }}</td>
-                    <td>{{ $value->manual_id }}</td>
-                    <td>{{ $value->description }}</td>
-                    <td>
-                      <form action="/sku-unit/{{ $value->id }}/delete" method="post"> @csrf 
-                        <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
-                          <span class="fas fa-pencil-alt"></span>
-                        </button>
-                        <button class="btn btn-danger">
-                          <span class="fas fa-trash"></span>
-                        </button>
-                      </form>
-                    </td>
-                  </tr> @endforeach </tbody>
-              </table>
+                </table>
             </div>
           </div>
         </div>
@@ -61,10 +68,11 @@
   </div>
 </div>
 <!-- MODAL --> 
- @include('master.sku_unit._add') 
- @include('master.sku_unit._edit') 
+ @include('transaction.po._add') 
+ @include('transaction.po._edit') 
+ @include('transaction.po._other_cost') 
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/master/sku_unit.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/transaction/po.js') }}" type="text/javascript"></script> 
  @endsection

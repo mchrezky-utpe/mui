@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class MasterSkuModelService
 {
     public function list(){
-          return MasterSkuModel::all();
+          return MasterSkuModel::where('flag_active', 1)->get();
     }
 
     public function add(Request $request){

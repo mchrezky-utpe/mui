@@ -77,6 +77,8 @@ Route::controller(MasterSkuUnitController::class)->group(function () {
     Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/sku-unit/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API LIST
+    Route::get("/api/sku-unit", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuModelController::class)->group(function () {
