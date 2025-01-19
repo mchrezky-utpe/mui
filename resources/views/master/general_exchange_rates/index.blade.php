@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">General Terms</h2>
+          <h2 class="pageheader-title">General Exchange Rates</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -13,7 +13,9 @@
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">General</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Terms</li>
+                <li class="breadcrumb-item">
+                  <a href="/general-terms" class="breadcrumb-link">Terms</a>
+                </li>
                 <li class="breadcrumb-item">
                   <a href="/general-department" class="breadcrumb-link">Department</a>
                 </li>
@@ -27,11 +29,9 @@
                   <a href="/general-deductor" class="breadcrumb-link">Deductor</a>
                 </li>
                 <li class="breadcrumb-item">
-                  <a href="/general-other-cost" class="breadcrumb-link">Other Cost</a>
+                  <a href="/general-other-cost" class="breadcrumb-link">Deductor</a>
                 </li>
-                <li class="breadcrumb-item">
-                  <a href="/general-exchange-rates" class="breadcrumb-link">Exchange Rates</a>
-                </li>
+                <li class="breadcrumb-item active" aria-current="page">Exchange Rates</li>               
               </ol>
             </nav>
           </div>
@@ -63,7 +63,7 @@
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
                     <td>
-                      <form action="/general-terms/{{ $value->id }}/delete" method="post"> @csrf 
+                      <form action="/general-exchange-rates/{{ $value->id }}/delete" method="post"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
@@ -82,10 +82,10 @@
   </div>
 </div>
 <!-- MODAL --> 
- @include('master.general_terms._add') 
- @include('master.general_terms._edit') 
+ @include('master.general_exchange_rates._add') 
+ @include('master.general_exchange_rates._edit') 
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/master/general_terms.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/master/general_exchange_rates.js') }}" type="text/javascript"></script> 
  @endsection

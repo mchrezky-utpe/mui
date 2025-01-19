@@ -249,18 +249,30 @@
                                     <a href="/general-terms">Terms</a>
                                 </li>
                                 <li>
-                                    <a href="general-department">Department</a>
+                                    <a href="/general-department">Department</a>
                                 </li>
                                 <li>
-                                    <a href="purchase.html">Purchase</a>
+                                    <a href="/general-currency">Currency</a>
+                                </li>
+                                <li>
+                                    <a href="/general-tax">Tax</a>
+                                </li>
+                                <li>
+                                    <a href="/general-deductor">Deductor</a>
+                                </li>
+                                <li>
+                                    <a href="/general-other-cost">Other Cost</a>
+                                </li>
+                                <li>
+                                    <a href="/general-exchange-rates">Exchange Rates</a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li>
+                        {{-- <li>
                             <a href="chart.html">
                                 <i class="fas fa-file"></i>Echange Rates</a>
-                        </li>
+                        </li> --}}
 
                         <li>
                             <a href="chart.html">Report</a>

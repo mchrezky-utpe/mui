@@ -2,7 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Master\MasterGeneralCurrencyController;
+use App\Http\Controllers\Master\MasterGeneralDeductorController;
 use App\Http\Controllers\Master\MasterGeneralDepartmentController;
+use App\Http\Controllers\Master\MasterGeneralExchageRatesController;
+use App\Http\Controllers\Master\MasterGeneralExchangeRatesController;
+use App\Http\Controllers\Master\MasterGeneralOtherCostController;
+use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
@@ -16,9 +22,6 @@ use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\Master\MasterSkuBusinessController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
-use App\Models\MasterGeneralTerms;
-use App\Services\Master\MasterGeneralDepartmentService;
-use App\Services\Master\MasterGeneralTermsService;
 
 require_once base_path('routes/transaction_route.php');
 
@@ -186,4 +189,69 @@ Route::controller(MasterGeneralDepartmentController::class)->group(function () {
     Route::get("/general-department/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/general-department/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralCurrencyController::class)->group(function () {
+    // LIST
+    Route::get("/general-currency", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-currency", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-currency/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-currency/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-currency/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralTaxController::class)->group(function () {
+    // LIST
+    Route::get("/general-tax", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-tax", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-tax/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-tax/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-tax/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralDeductorController::class)->group(function () {
+    // LIST
+    Route::get("/general-deductor", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-deductor", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-deductor/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-deductor/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-deductor/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralOtherCostController::class)->group(function () {
+    // LIST
+    Route::get("/general-other-cost", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-other-cost", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-other-cost/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-other-cost/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-other-cost/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterGeneralExchageRatesController::class)->group(function () {
+    // LIST
+    Route::get("/general-exchange-rates", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/general-exchange-rates", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/general-exchange-rates/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/general-exchange-rates/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/general-exchange-rates/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });

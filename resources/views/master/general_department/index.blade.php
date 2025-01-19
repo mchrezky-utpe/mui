@@ -17,6 +17,21 @@
                   <a href="/general-terms" class="breadcrumb-link">Terms</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Department</li>
+                <li class="breadcrumb-item">
+                  <a href="/general-currency" class="breadcrumb-link">Currency</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="/general-tax" class="breadcrumb-link">Tax</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="/general-deductor" class="breadcrumb-link">Deductor</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="/general-other-cost" class="breadcrumb-link">Other Cost</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="/general-exchange-rates" class="breadcrumb-link">Exchange Rates</a>
+                </li>
               </ol>
             </nav>
           </div>
