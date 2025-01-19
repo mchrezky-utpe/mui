@@ -22,6 +22,11 @@ class MasterGeneralCurrencyController
         return response()->view('master.general_currency.index',
          ['data' =>  $this->service->list()]);
     }
+    public function index2(): Response
+    {
+        return response()->view('master.general_currency.index2',
+         ['data' =>  $this->service->list2()]);
+    }
 
     public function add(Request $request)
     {
@@ -33,6 +38,16 @@ class MasterGeneralCurrencyController
     {
         $this->service->delete($id);
         return redirect("/general-currency");
+    }
+    public function hapus(Request $request, int $id)
+    {
+        $this->service->hapus($id);
+        return redirect("/general-currency/deleted");
+    }
+    public function restore(Request $request, int $id)
+    {
+        $this->service->restore($id);
+        return redirect("/general-currency/deleted");
     }
     
     public function get(Request $request, int $id)

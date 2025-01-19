@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">General Currency</h2>
+          <h2 class="pageheader-title">General Currency Deleted Items</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -42,13 +42,9 @@
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <div>
-            <h5 class="mb-0">List</h5>
-            </div>
-            <div>
-              <a href="/general-currency/deleted"  class="btn btn-warning">list deleted</a>
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
-            </div>
+            <h5 class="mb-0">List Deleted</h5>
+            <a href="/general-currency"  class="btn btn-primary">list Active</a>
+            {{-- <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button> --}}
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -68,14 +64,22 @@
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
                     <td>
-                      <form action="/general-currency/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
-                        <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
-                          <span class="fas fa-pencil-alt"></span>
+                      <div class="inline d-flex">
+                      <form action="/general-currency/{{ $value->id }}/restore" method="post" onsubmit="return confirm('Yakin ingin mengembalikan item ini?')">
+                        @csrf
+                        <!-- Tombol Hapus -->
+                        <button type="submit" class="btn btn-warning mr-3">
+                            Restore
                         </button>
+                    </form>
+                      <form action="/general-currency/{{ $value->id }}/hapus" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')">
+                        @csrf
+                        <!-- Tombol Hapus -->
                         <button type="submit" class="btn btn-danger">
-                          <span class="fas fa-trash"></span>
+                            <span class="fas fa-trash"></span>
                         </button>
-                      </form>
+                    </form>
+                      </div>
                     </td>
                   </tr> @endforeach </tbody>
               </table>

@@ -194,10 +194,15 @@ Route::controller(MasterGeneralDepartmentController::class)->group(function () {
 Route::controller(MasterGeneralCurrencyController::class)->group(function () {
     // LIST
     Route::get("/general-currency", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-currency/deleted", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-currency", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/general-currency/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // HAPUS PERMANEN
+    Route::post("/general-currency/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    //RESTORE
+    Route::post("/general-currency/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/general-currency/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
