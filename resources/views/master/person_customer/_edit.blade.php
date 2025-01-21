@@ -1,5 +1,5 @@
-<x-modals.modal id="edit_modal" title="Edit Person Supplier">
-<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/person-supplier/edit">
+<x-modals.modal id="edit_modal" title="Edit Person Customer">
+<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/person-customer/edit">
     @csrf
     <input type="hidden" name="id" />
      
@@ -29,11 +29,7 @@
     </div>
     <div class="form-group">
       <label>Contact Person</label>
-<<<<<<< HEAD
       <input required name="contact_person" class="form-control" type="text" placeholder="Contact Person">
-=======
-      <input required name="contact_person" class="form-control" type="email" placeholder="Contact Person">
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
     </div>
   </form>   
 </x-modals.modal>
