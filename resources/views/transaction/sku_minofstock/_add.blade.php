@@ -9,9 +9,6 @@
       <label>SKU</label>
       <select required name="sku_id" class="form-control">
       <option value=""> === Select SKU === </option>
-      @foreach($sku as $key => $value) 
-        <option value="{{ $value->id }}">{{ $value->prefix }} - {{ $value->description }}</option>
-        @endforeach 
       </select >
     </div>
     <div class="form-group">

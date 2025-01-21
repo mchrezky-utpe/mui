@@ -19,3 +19,41 @@ $(document).on('click', '.edit', function (e) {
         }
     });
 });
+
+
+// =========== HANDLING PARAM
+initParam();
+function initParam(){
+    fetchSkuMaster()
+    .then(data => {
+        console.log("Succesfully get Sku:", data);
+        populateSelect('Sku', data, $('[name=sku_id]')) ;
+    }).catch(err => {
+        console.error("Error get Sku:", err);
+    });
+}
+
+
+function fetchSkuMaster() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: base_url + 'api/sku',
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetching terms master:", err);
+                reject(err);
+            }
+        });
+    });
+}
+
+function populateSelect(title, master_data, element) {
+    element.empty();
+    element.append('<option value="">-- Select '+title+' --</option>');
+    master_data.forEach(data => {
+        element.append(`<option value="${data.id}">${data.description}</option>`);
+    });
+}
