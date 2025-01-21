@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-<<<<<<< HEAD
 use App\Http\Controllers\Master\MasterGeneralCurrencyController;
 use App\Http\Controllers\Master\MasterGeneralDeductorController;
 use App\Http\Controllers\Master\MasterGeneralDepartmentController;
@@ -12,8 +11,6 @@ use App\Http\Controllers\Master\MasterGeneralOtherCostController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterPersonCustomerController;
-=======
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Master\MasterSkuController;
@@ -159,25 +156,18 @@ Route::controller(MasterSkuDetailController::class)->group(function () {
 Route::controller(MasterPersonSupplierController::class)->group(function () {
     // LIST
     Route::get("/person-supplier", "index")->middleware(OnlyMemberMiddleware::class);
-<<<<<<< HEAD
     Route::get("/person-supplier/index2", "index2")->middleware(OnlyMemberMiddleware::class);
-=======
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
     // ADD
     Route::post("/person-supplier", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/person-supplier/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-<<<<<<< HEAD
     Route::post("/person-supplier/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
     Route::post("/person-supplier/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
-=======
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
     // GET
     Route::get("/person-supplier/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/person-supplier/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
-<<<<<<< HEAD
 
 Route::controller(MasterPersonCustomerController::class)->group(function () {
     // LIST
@@ -317,5 +307,3 @@ Route::controller(MasterGeneralExchageRatesController::class)->group(function ()
     // EDIT    
     Route::post("/general-exchange-rates/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
-=======
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c

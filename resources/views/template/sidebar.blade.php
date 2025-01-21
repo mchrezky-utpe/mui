@@ -218,7 +218,7 @@
                                     <a href="/person-supplier">Supplier</a>
                                 </li>
                                 <li>
-                                    <a href="customer.html">Customer</a>
+                                    <a href="/person-customer">Customer</a>
                                 </li>
                                 <li>
                                     <a class="button_sidebar" href="user">User System</a>
