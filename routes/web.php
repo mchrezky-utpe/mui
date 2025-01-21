@@ -10,6 +10,7 @@ use App\Http\Controllers\Master\MasterGeneralExchangeRatesController;
 use App\Http\Controllers\Master\MasterGeneralOtherCostController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
+use App\Http\Controllers\Master\MasterPersonCustomerController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Master\MasterSkuController;
@@ -155,14 +156,33 @@ Route::controller(MasterSkuDetailController::class)->group(function () {
 Route::controller(MasterPersonSupplierController::class)->group(function () {
     // LIST
     Route::get("/person-supplier", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/person-supplier/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/person-supplier", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/person-supplier/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-supplier/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-supplier/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/person-supplier/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/person-supplier/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterPersonCustomerController::class)->group(function () {
+    // LIST
+    Route::get("/person-customer", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/person-customer/index2", "index2")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/person-customer", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/person-customer/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-customer/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-customer/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/person-customer/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/person-customer/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralTermsController::class)->group(function () {

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">PERSON  Supplier</h2>
+          <h2 class="pageheader-title">PERSON  Customer</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -13,10 +13,11 @@
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">Person</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Suplier</li>
                 <li class="breadcrumb-item">
-                  <a href="/person-customer" class="breadcrumb-link">Customer</a>
+                  <a href="/person-supplier" class="breadcrumb-link">Supplier</a>
                 </li>
+                <li class="breadcrumb-item active" aria-current="page">Customer</li>
+                
               </ol>
             </nav>
           </div>
@@ -31,7 +32,7 @@
             <h5 class="mb-0">List</h5>
             </div>
             <div>
-              <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a>
+              <a href="/person-customer/index2"  class="btn btn-warning">list deleted</a>
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
             </div>
           </div>
@@ -53,7 +54,7 @@
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
                     <td>
-                      <form action="/person-supplier/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      <form action="/person-customer/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
@@ -72,10 +73,10 @@
   </div>
 </div>
 <!-- MODAL --> 
- @include('master.person_supplier._add') 
- @include('master.person_supplier._edit') 
+ @include('master.person_customer._add') 
+ @include('master.person_customer._edit') 
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/master/person_supplier.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/master/person_customer.js') }}" type="text/javascript"></script> 
  @endsection
