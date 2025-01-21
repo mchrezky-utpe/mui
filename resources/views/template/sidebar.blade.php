@@ -33,13 +33,16 @@
                                 <i class="fas fa-tags"></i>SKU</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="index.html">Pricelist</a>
+                                    <a href="/sku-pricelist">Pricelist</a>
                                 </li>
                                 <li>
-                                    <a href="index2.html">Minimum Stock</a>
+                                    <a href="/sku-minofstock">Minimum Stock</a>
                                 </li>
                                 <li>
-                                    <a href="index3.html">Bill of Material</a>
+                                    <a href="/sku-minofqty">Minimum Qty</a>
+                                </li>
+                                <li>
+                                    <a href="/bom">Bill of Material</a>
                                 </li>
                             </ul>
                         </li><li class="has-sub">

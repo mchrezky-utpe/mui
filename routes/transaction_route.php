@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Controllers\Transaction\SkuPricelistController;
 use App\Http\Controllers\Transaction\SkuMinOfStockController;
-use App\Http\Controllers\Transaction\SkuMinOfQtykController;
+use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Middleware\OnlyMemberMiddleware;
 
 Route::controller(PurchaseOrderController::class)->group(function () {
@@ -31,7 +31,7 @@ Route::controller(SkuMinOfStockController::class)->group(function () {
     Route::post("/sku-minofstock/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
 
-Route::controller(SkuMinOfQtykController::class)->group(function () {
+Route::controller(SkuMinOfQtyController::class)->group(function () {
     Route::get("/sku-minofqty", "index")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-minofqty", "add")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-minofqty/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);

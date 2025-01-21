@@ -243,6 +243,8 @@ Route::controller(MasterGeneralCurrencyController::class)->group(function () {
     Route::get("/general-currency/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/general-currency/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/currency", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralTaxController::class)->group(function () {

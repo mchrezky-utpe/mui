@@ -37,6 +37,7 @@ function initParam(){
         console.log("Succesfully get Sku:", data);
         skuMaster = data;
     })
+    
     .catch(err => {
         console.error("Error get Supplier:", err);
     });
