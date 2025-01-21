@@ -5,6 +5,10 @@ namespace App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
+use  App\Models\MasterSku;
+use  App\Models\MasterPersonSupplier;
+use  App\Models\MasterGeneralCurrency;
+
 
 class SkuPricelist extends Model
 {
@@ -24,5 +28,10 @@ class SkuPricelist extends Model
     public function supplier()
     {
         return $this->hasOne(MasterPersonSupplier::class, 'id','prs_supplier_id');
+    }
+
+    public function currency()
+    {
+        return $this->hasOne(MasterGeneralCurrency::class, 'id','gen_currency_id');
     }
 }

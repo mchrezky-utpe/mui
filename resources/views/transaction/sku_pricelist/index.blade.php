@@ -35,9 +35,9 @@
                     <th>No</th>
                     <th>Manual ID</th>
                     <th>Sku</th>
+                    <th>Supplier</th>
                     <th>Currency</th>
                     <th>Price</th>
-                    <th>Supplier</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -45,9 +45,9 @@
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->sku->description }}</td>
+                    <td>{{ $value->supplier->description }}</td>
                     <td>{{ $value->currency->description }}</td>
                     <td>{{ $value->price }}</td>
-                    <td>{{ $value->supplier->description }}</td>
                     <td>
                       <form action="/sku-pricelist/{{ $value->id }}/delete" method="post"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
