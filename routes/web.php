@@ -168,10 +168,13 @@ Route::controller(MasterPersonSupplierController::class)->group(function () {
 Route::controller(MasterGeneralTermsController::class)->group(function () {
     // LIST
     Route::get("/general-terms", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-terms/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-terms", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/general-terms/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-terms/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-terms/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/general-terms/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
@@ -219,10 +222,13 @@ Route::controller(MasterGeneralCurrencyController::class)->group(function () {
 Route::controller(MasterGeneralTaxController::class)->group(function () {
     // LIST
     Route::get("/general-tax", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-tax/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-tax", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/general-tax/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-tax/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-tax/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/general-tax/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    

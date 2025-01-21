@@ -22,6 +22,11 @@ class MasterGeneralTaxController
         return response()->view('master.general_tax.index',
          ['data' =>  $this->service->list()]);
     }
+    public function index2(): Response
+    {
+        return response()->view('master.general_tax.index2',
+         ['data' =>  $this->service->list2()]);
+    }
 
     public function add(Request $request)
     {
@@ -33,6 +38,16 @@ class MasterGeneralTaxController
     {
         $this->service->delete($id);
         return redirect("/general-tax");
+    }
+    public function restore(Request $request, int $id)
+    {
+        $this->service->restore($id);
+        return redirect("/general-tax/index2");
+    }
+    public function hapus(Request $request, int $id)
+    {
+        $this->service->hapus($id);
+        return redirect("/general-tax/index2");
     }
     
     public function get(Request $request, int $id)

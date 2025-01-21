@@ -22,6 +22,11 @@ class MasterGeneralTermsController
         return response()->view('master.general_terms.index',
          ['data' =>  $this->service->list()]);
     }
+    public function index2(): Response
+    {
+        return response()->view('master.general_terms.index2',
+         ['data' =>  $this->service->list2()]);
+    }
 
     public function add(Request $request)
     {
@@ -33,6 +38,16 @@ class MasterGeneralTermsController
     {
         $this->service->delete($id);
         return redirect("/general-terms");
+    }
+    public function restore(Request $request, int $id)
+    {
+        $this->service->restore($id);
+        return redirect("/general-terms/index2");
+    }
+    public function hapus(Request $request, int $id)
+    {
+        $this->service->hapus($id);
+        return redirect("/general-terms/index2");
     }
     
     public function get(Request $request, int $id)

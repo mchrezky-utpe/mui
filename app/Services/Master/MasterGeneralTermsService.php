@@ -16,6 +16,10 @@ class MasterGeneralTermsService
         //   return MasterGeneralTerms::all();
           return MasterGeneralTerms::where('flag_active', 1)->get();
     }
+    public function list2(){
+        //   return MasterGeneralTerms::all();
+          return MasterGeneralTerms::where('flag_active', 0)->get();
+    }
 
     public function add(Request $request){
             $data['description'] = $request->description;
@@ -33,6 +37,17 @@ class MasterGeneralTermsService
         $data->deleted_at  = Carbon::now();
         $data->deleted_by  = Auth::id();
         $data->save();
+    }
+    public function restore($id){
+        $data = MasterGeneralTerms::where('id', $id)->firstOrFail();
+        $data->flag_active = 1;
+        $data->deleted_at  = Carbon::now();
+        $data->deleted_by  = Auth::id();
+        $data->save();
+    }
+    public function hapus($id){
+        $data = MasterGeneralTerms::where('id', $id)->firstOrFail();
+        $data->delete();
     }
     
     public function get(int $id)
