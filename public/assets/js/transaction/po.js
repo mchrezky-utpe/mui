@@ -13,14 +13,6 @@ $(document).ready(function () {
 initParam();
 function initParam(){
 
-    fetchSkuMaster()
-    .then(data => {
-        console.log("Succesfully get Sku:", data);
-        skuMaster = data;
-    })
-    .catch(err => {
-        console.error("Error get terms:", err);
-    });
 
     fetchTermsMaster()
     .then(data => {
@@ -29,6 +21,24 @@ function initParam(){
     })
     .catch(err => {
         console.error("Error get terms:", err);
+    });
+
+    fetchSupplierMaster()
+    .then(data => {
+        console.log("Succesfully get Supplier:", data);
+        populateSelect('Supplier', data, $('#supplier_select')) ;
+    })
+    .catch(err => {
+        console.error("Error get Supplier:", err);
+    });
+
+    fetchSkuMaster()
+    .then(data => {
+        console.log("Succesfully get Sku:", data);
+        skuMaster = data;
+    })
+    .catch(err => {
+        console.error("Error get Supplier:", err);
     });
 
     // fetchDepartmentMaster()
@@ -73,13 +83,29 @@ function fetchTermsMaster() {
     });
 }
 
+function fetchSupplierMaster() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'GET',
+            url: base_url + 'api/person-supplier',
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetching supplier master:", err);
+                reject(err);
+            }
+        });
+    });
+}
+
 function fetchSkuMaster() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
             url: base_url + 'api/sku',
             success: function (data) {
-                resolve(data);
+                resolve(data.data);
             },
             error: function (err) {
                 console.error("Error fetching terms master:", err);
@@ -94,6 +120,10 @@ function fetchSkuMaster() {
 let rowCount = 0;
 $("#add_row").on("click", function () {
     rowCount++;
+    let sku_item
+    skuMaster.forEach(data => {
+        sku_item += `<option value="`+data.id+`">`+data.prefix+" - "+data.description+`</option>`
+    });
     const newRow = `
         <tr>
             <td>${rowCount}</td>
@@ -103,6 +133,9 @@ $("#add_row").on("click", function () {
                     <option value="">
                         -- Select SKU --
                     </option>
+                    `+
+                    sku_item
+                    +`
                 </select>
             </td>
             <td><input type="number" class="form-control" name="price[]" placeholder="Price" step="0.01"></td>

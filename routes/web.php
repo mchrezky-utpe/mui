@@ -52,6 +52,8 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::get("/sku/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/sku/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API ALL
+    Route::get("/api/sku", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuTypeController::class)->group(function () {
@@ -78,7 +80,7 @@ Route::controller(MasterSkuUnitController::class)->group(function () {
     Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/sku-unit/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    // API LIST
+    // API GET ALL DATA
     Route::get("/api/sku-unit", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
@@ -158,4 +160,6 @@ Route::controller(MasterPersonSupplierController::class)->group(function () {
     Route::get("/person-supplier/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/person-supplier/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/person-supplier", "api_all")->middleware(OnlyMemberMiddleware::class);
 });

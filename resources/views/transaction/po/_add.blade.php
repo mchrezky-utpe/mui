@@ -10,7 +10,7 @@
         </div>
         <div class="form-group">
           <label for="description_left">Doc Number(Auto)</label>
-          <input name="doc_number" class="form-control" type="text" placeholder="Description">
+          <input readonly name="doc_number" class="form-control" type="text" placeholder="Doc Number">
         </div>
         <div class="form-group">
           <label for="description_left">Date</label>
@@ -60,7 +60,7 @@
         </div>
         <div class="form-group">
           <label for="description_right">Supplier</label>
-          <select name="supplier" class="form-control">
+          <select id="supplier_select" name="supplier" class="form-control">
           <option value="">-- Select Supplier --</option>
           </select>
         </div>
@@ -73,6 +73,10 @@
       </div>
       
       <div class="col-md-1">
+      <div class="form-group">
+          <label for="description_left">Description</label>
+          <input readonly name="description" class="form-control" type="text" placeholder="Description">
+        </div>
           <div class="form-group">
             <button id="add_other_cost" type="button" class="btn btn-primary"  data-toggle="modal" data-target="#other_cost_modal">+ Other Cost</button>
           </div>

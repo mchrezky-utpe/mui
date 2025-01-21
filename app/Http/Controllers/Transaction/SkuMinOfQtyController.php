@@ -1,46 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace App\Http\Controllers\Transaction;
 
 use App\Helpers\HelperCustom;
-use App\Services\Master\MasterPersonSupplierService;
+use App\Services\Transaction\SkuMinOfQtyService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MasterPersonSupplierController
+class SkuMinOfQtyController
 {
 
-    private MasterPersonSupplierService $service;
+    private SkuMinOfQtyService $service;
 
-    public function __construct(MasterPersonSupplierService $service)
+    public function __construct(SkuMinOfQtyService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()->view('master.person_supplier.index',
+        return response()->view('transaction.sku_minofqty.index',
          ['data' =>  $this->service->list()]);
-    }
-    
-    public function api_all()
-    {
-        $data = $this->service->list();
-         return response()->json([
-            'data' => $data
-        ]);
     }
 
     public function add(Request $request)
     {
         $this->service->add($request);
-        return redirect("/person-supplier");
+        return redirect("/sku-minofqty");
     }
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
-        return redirect("/person-supplier");
+        return redirect("/sku-minofqty");
     }
     
     public function get(Request $request, int $id)
@@ -54,6 +46,6 @@ class MasterPersonSupplierController
     public function edit(Request $request)
     {
         $this->service->edit($request);
-        return redirect("/person-supplier");
+        return redirect("/sku-minofqty");
     }
 }

@@ -31,7 +31,7 @@ class MasterSkuController
         MasterSkuBusinessService $businessService,
         MasterSkuPackagingService $packagingService
     )
-    {
+    { 
         $this->service = $service;
         $this->detailService = $detailService;
         $this->modelService = $modelService;
@@ -56,6 +56,14 @@ class MasterSkuController
                 'process' => $this->processService->list(),
                 'business' => $this->businessService->list()
             ]);
+    }
+
+    public function api_all()
+    {
+        $data = $this->service->list();
+         return response()->json([
+            'data' => $data
+        ]);
     }
 
     public function add(Request $request)
