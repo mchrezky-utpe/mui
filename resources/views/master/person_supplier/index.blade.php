@@ -14,12 +14,9 @@
                   <a href="#" class="breadcrumb-link">Person</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Suplier</li>
-<<<<<<< HEAD
                 <li class="breadcrumb-item">
                   <a href="/person-customer" class="breadcrumb-link">Customer</a>
                 </li>
-=======
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
               </ol>
             </nav>
           </div>
@@ -30,7 +27,6 @@
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
-<<<<<<< HEAD
             <div>
             <h5 class="mb-0">List</h5>
             </div>
@@ -38,10 +34,6 @@
               <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a>
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
             </div>
-=======
-            <h5 class="mb-0">List</h5>
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -61,19 +53,11 @@
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
                     <td>
-<<<<<<< HEAD
                       <form action="/person-supplier/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button type="submit" class="btn btn-danger">
-=======
-                      <form action="/person-supplier/{{ $value->id }}/delete" method="post"> @csrf 
-                        <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
-                          <span class="fas fa-pencil-alt"></span>
-                        </button>
-                        <button class="btn btn-danger">
->>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
                           <span class="fas fa-trash"></span>
                         </button>
                       </form>
