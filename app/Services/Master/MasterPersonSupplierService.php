@@ -15,9 +15,12 @@ class MasterPersonSupplierService
     public function list(){
         return MasterPersonSupplier::where('flag_active', 1)->get();
     }
+<<<<<<< HEAD
     public function list2(){
         return MasterPersonSupplier::where('flag_active', 0)->get();
     }
+=======
+>>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
 
     public function add(Request $request){
         $data['description'] = $request->description;
@@ -40,6 +43,7 @@ class MasterPersonSupplierService
         $data->flag_active = 0;
         $data->save();
     }
+<<<<<<< HEAD
     public function Restore($id){
         $data = MasterPersonSupplier::where('id', $id)->firstOrFail();
         $data->flag_active = 1;
@@ -49,6 +53,8 @@ class MasterPersonSupplierService
         $data = MasterPersonSupplier::where('id', $id)->firstOrFail();
         $data->delete();
     }
+=======
+>>>>>>> e2c037d0332bf583f80d8240bd34f9cbc7089a3c
 
     public function get(int $id)
     {
