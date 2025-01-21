@@ -22,6 +22,11 @@ class MasterGeneralDepartmentController
         return response()->view('master.general_department.index',
          ['data' =>  $this->service->list()]);
     }
+    public function index2(): Response
+    {
+        return response()->view('master.general_department.index2',
+         ['data' =>  $this->service->list2()]);
+    }
 
     public function add(Request $request)
     {
@@ -47,5 +52,15 @@ class MasterGeneralDepartmentController
     {
         $this->service->edit($request);
         return redirect("/general-department");
+    }
+    public function hapus(Request $request, int $id)
+    {
+        $this->service->hapus($id);
+        return redirect("/general-department/index2");
+    }
+    public function restore(Request $request, int $id)
+    {
+        $this->service->restore($id);
+        return redirect("/general-department/index2");
     }
 }

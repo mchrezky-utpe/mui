@@ -181,6 +181,8 @@ Route::controller(MasterGeneralTermsController::class)->group(function () {
 Route::controller(MasterGeneralDepartmentController::class)->group(function () {
     // LIST
     Route::get("/general-department", "index")->middleware(OnlyMemberMiddleware::class);
+    //LIST DELETED
+    Route::get("/general-department/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-department", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
@@ -189,11 +191,16 @@ Route::controller(MasterGeneralDepartmentController::class)->group(function () {
     Route::get("/general-department/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/general-department/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // HAPUS PERMANEN
+    Route::post("/general-department/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    //RESTORE
+    Route::post("/general-department/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralCurrencyController::class)->group(function () {
     // LIST
     Route::get("/general-currency", "index")->middleware(OnlyMemberMiddleware::class);
+    //LIST DELETED
     Route::get("/general-currency/deleted", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-currency", "add")->middleware(OnlyMemberMiddleware::class);
@@ -225,6 +232,8 @@ Route::controller(MasterGeneralTaxController::class)->group(function () {
 Route::controller(MasterGeneralDeductorController::class)->group(function () {
     // LIST
     Route::get("/general-deductor", "index")->middleware(OnlyMemberMiddleware::class);
+    //LIST DELETED
+    Route::get("/general-deductor/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-deductor", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
@@ -233,15 +242,24 @@ Route::controller(MasterGeneralDeductorController::class)->group(function () {
     Route::get("/general-deductor/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/general-deductor/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+
+    
+    // HAPUS PERMANEN
+    Route::post("/general-deductor/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    //RESTORE
+    Route::post("/general-deductor/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralOtherCostController::class)->group(function () {
     // LIST
     Route::get("/general-other-cost", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-other-cost/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-other-cost", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/general-other-cost/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-other-cost/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-other-cost/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/general-other-cost/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
@@ -251,10 +269,13 @@ Route::controller(MasterGeneralOtherCostController::class)->group(function () {
 Route::controller(MasterGeneralExchageRatesController::class)->group(function () {
     // LIST
     Route::get("/general-exchange-rates", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-exchange-rates/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-exchange-rates", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/general-exchange-rates/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-exchange-rates/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/general-exchange-rates/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/general-exchange-rates/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    

@@ -23,6 +23,11 @@ class MasterGeneralExchageRatesController
         return response()->view('master.general_exchange_rates.index',
          ['data' =>  $this->service->list()]);
     }
+    public function index2(): Response
+    {
+        return response()->view('master.general_exchange_rates.index2',
+         ['data' =>  $this->service->list2()]);
+    }
 
     public function add(Request $request)
     {
@@ -34,6 +39,16 @@ class MasterGeneralExchageRatesController
     {
         $this->service->delete($id);
         return redirect("/general-exchange-rates");
+    }
+    public function hapus(Request $request, int $id)
+    {
+        $this->service->hapus($id);
+        return redirect("/general-exchange-rates/index2");
+    }
+    public function restore(Request $request, int $id)
+    {
+        $this->service->restore($id);
+        return redirect("/general-exchange-rates/index2");
     }
     
     public function get(Request $request, int $id)

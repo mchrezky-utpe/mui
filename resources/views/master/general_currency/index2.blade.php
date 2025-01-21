@@ -90,9 +90,6 @@
     </div>
   </div>
 </div>
-<!-- MODAL --> 
- @include('master.general_currency._add') 
- @include('master.general_currency._edit') 
  @endsection 
  
  @section('extra_javascript') 

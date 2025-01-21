@@ -22,6 +22,11 @@ class MasterGeneralOtherCostController
         return response()->view('master.general_other_cost.index',
          ['data' =>  $this->service->list()]);
     }
+    public function index2(): Response
+    {
+        return response()->view('master.general_other_cost.index2',
+         ['data' =>  $this->service->list2()]);
+    }
 
     public function add(Request $request)
     {
@@ -33,6 +38,16 @@ class MasterGeneralOtherCostController
     {
         $this->service->delete($id);
         return redirect("/general-other-cost");
+    }
+    public function restore(Request $request, int $id)
+    {
+        $this->service->restore($id);
+        return redirect("/general-other-cost/index2");
+    }
+    public function hapus(Request $request, int $id)
+    {
+        $this->service->hapus($id);
+        return redirect("/general-other-cost/index2");
     }
     
     public function get(Request $request, int $id)

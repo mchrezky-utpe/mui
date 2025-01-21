@@ -41,6 +41,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
+          
           <div class="card-header d-flex justify-content-between align-items-center">
             <div>
             <h5 class="mb-0">List</h5>
@@ -50,6 +51,7 @@
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
             </div>
           </div>
+
           <div class="card-body">
             <div class="table-responsive">
               <table class="table data-table table-striped table-bordered first">
