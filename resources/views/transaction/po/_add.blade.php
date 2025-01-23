@@ -1,5 +1,6 @@
 <x-modals.modal id="add_modal" title="Add Purchase Order" modalClass="custom-modal-dialog-large">
-  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/po"> @csrf <div class="row">
+  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/po"> @csrf
+    <div class="row">
     
     <!-- REGION OF HEADER -->
     <!-- REGION SIDE 1 -->

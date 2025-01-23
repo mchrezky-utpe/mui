@@ -13,25 +13,7 @@
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">General</a>
                 </li>
-                <li class="breadcrumb-item">
-                  <a href="/general-terms" class="breadcrumb-link">Terms</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="/general-department" class="breadcrumb-link">Department</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="/general-currency" class="breadcrumb-link">Currency</a>
-                </li>
                 <li class="breadcrumb-item active" aria-current="page">tax</li>
-                <li class="breadcrumb-item">
-                  <a href="/general-deductor" class="breadcrumb-link">Deductor</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="/general-other-cost" class="breadcrumb-link">Other Cost</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="/general-exchange-rates" class="breadcrumb-link">Exchange Rates</a>
-                </li>
               </ol>
             </nav>
           </div>
@@ -46,7 +28,7 @@
             <h5 class="mb-0">List</h5>
             </div>
             <div>
-              <a href="/general-tax/index2"  class="btn btn-warning">list deleted</a>
+              <!-- <a href="/general-tax/index2"  class="btn btn-warning">list deleted</a> -->
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
             </div>
           </div>
@@ -59,6 +41,7 @@
                     <th>ID</th>
                     <th>Manual ID</th>
                     <th>Description</th>
+                    <th>Value</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -67,6 +50,7 @@
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
+                    <td>{{ $value->value }}</td>
                     <td>
                       <form action="/general-tax/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">

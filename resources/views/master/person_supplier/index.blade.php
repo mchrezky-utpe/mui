@@ -14,9 +14,6 @@
                   <a href="#" class="breadcrumb-link">Person</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Suplier</li>
-                <li class="breadcrumb-item">
-                  <a href="/person-customer" class="breadcrumb-link">Customer</a>
-                </li>
               </ol>
             </nav>
           </div>
@@ -31,7 +28,7 @@
             <h5 class="mb-0">List</h5>
             </div>
             <div>
-              <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a>
+              <!-- <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a> -->
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
             </div>
           </div>

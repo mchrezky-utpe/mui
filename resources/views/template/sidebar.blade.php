@@ -25,6 +25,108 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li>
+                            <a href="#">Master</a>
+                        </li>
+                        <!-- SKU Menu -->
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tags"></i>SKU</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/sku">Main</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-type">Type</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-unit">Unit</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-model">Model</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-process">Process</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-business">Business Type</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-packaging">Packaging</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-detail">Detail</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Person Menu -->
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-users"></i>Person</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/person-supplier">Supplier</a>
+                                </li>
+                                <li>
+                                    <a href="/person-customer">Customer</a>
+                                </li>
+                                <li>
+                                    <a class="button_sidebar" href="user">User System</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Factory Menu -->
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-industry"></i>Factory</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="warehouse.html">Warehouse</a>
+                                </li>
+                                <li>
+                                    <a href="machine.html">Machine</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Terms Menu -->
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-file-alt"></i>General</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/general-terms">Terms</a>
+                                </li>
+                                <li>
+                                    <a href="/general-department">Department</a>
+                                </li>
+                                <li>
+                                    <a href="/general-currency">Currency</a>
+                                </li>
+                                <li>
+                                    <a href="/general-tax">Tax</a>
+                                </li>
+                                <li>
+                                    <a href="/general-deductor">Deductor</a>
+                                </li>
+                                <li>
+                                    <a href="/general-other-cost">Other Cost</a>
+                                </li>
+                                <!-- <li>
+                                    <a href="/general-exchange-rates">Exchange Rates</a>
+                                </li> -->
+                            </ul>
+                        </li>
+
+                        {{-- <li>
+                            <a href="chart.html">
+                                <i class="fas fa-file"></i>Echange Rates</a>
+                        </li> --}}
+
+                        
                         <li>
                             <a href="#">Transaction</a>
                         </li>
@@ -176,106 +278,6 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <li>
-                            <a href="#">Master</a>
-                        </li>
-                        <!-- SKU Menu -->
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tags"></i>SKU</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="/sku">Main</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-type">Type</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-unit">Unit</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-model">Model</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-process">Process</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-business">Business Type</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-packaging">Packaging</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-detail">Detail</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- Person Menu -->
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-users"></i>Person</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="/person-supplier">Supplier</a>
-                                </li>
-                                <li>
-                                    <a href="/person-customer">Customer</a>
-                                </li>
-                                <li>
-                                    <a class="button_sidebar" href="user">User System</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- Factory Menu -->
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-industry"></i>Factory</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="warehouse.html">Warehouse</a>
-                                </li>
-                                <li>
-                                    <a href="machine.html">Machine</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- Terms Menu -->
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-file-alt"></i>General</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="/general-terms">Terms</a>
-                                </li>
-                                <li>
-                                    <a href="/general-department">Department</a>
-                                </li>
-                                <li>
-                                    <a href="/general-currency">Currency</a>
-                                </li>
-                                <li>
-                                    <a href="/general-tax">Tax</a>
-                                </li>
-                                <li>
-                                    <a href="/general-deductor">Deductor</a>
-                                </li>
-                                <li>
-                                    <a href="/general-other-cost">Other Cost</a>
-                                </li>
-                                <li>
-                                    <a href="/general-exchange-rates">Exchange Rates</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        {{-- <li>
-                            <a href="chart.html">
-                                <i class="fas fa-file"></i>Echange Rates</a>
-                        </li> --}}
 
                         <li>
                             <a href="chart.html">Report</a>
