@@ -47,7 +47,7 @@
             <h5 class="mb-0">List</h5>
             </div>
             <div>
-              <a href="/general-deductor/index2"  class="btn btn-warning">list deleted</a>
+              {{-- <a href="/general-deductor/index2"  class="btn btn-warning">list deleted</a> --}}
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
             </div>
           </div>

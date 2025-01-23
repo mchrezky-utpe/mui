@@ -224,7 +224,7 @@ Route::controller(MasterGeneralCurrencyController::class)->group(function () {
     // LIST
     Route::get("/general-currency", "index")->middleware(OnlyMemberMiddleware::class);
     //LIST DELETED
-    Route::get("/general-currency/deleted", "index2")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-currency/index2", "index2")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/general-currency", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
