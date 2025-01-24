@@ -12,7 +12,7 @@ use Carbon\Carbon;
 class MasterSkuProcessService
 {
     public function list(){
-          return MasterSkuProcess::all();
+          return MasterSkuProcess::where('flag_active', 1)->get();
     }
 
     public function add(Request $request){

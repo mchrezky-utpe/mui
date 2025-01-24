@@ -51,13 +51,13 @@
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
-                    <td>{{ $value->detail->description }}</td>
-                    <td>{{ $value->type->description }}</td>
-                    <td>{{ $value->unit->description }}</td>
-                    <td>{{ $value->model->description }}</td>
-                    <td>{{ $value->packaging->description }}</td>
-                    <td>{{ $value->process->description }}</td>
-                    <td>{{ $value->business->description }}</td>
+                    <td>{{ $value->detail?->description }}</td>
+                    <td>{{ $value->type?->description }}</td>
+                    <td>{{ $value->unit?->description }}</td>
+                    <td>{{ $value->model?->description }}</td>
+                    <td>{{ $value->packaging?->description }}</td>
+                    <td>{{ $value->process?->description }}</td>
+                    <td>{{ $value->business?->description }}</td>
                     <td>
                       <form action="/sku/{{ $value->id }}/delete" method="post"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">

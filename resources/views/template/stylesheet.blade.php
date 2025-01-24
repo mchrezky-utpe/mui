@@ -19,3 +19,21 @@
 <!-- Main CSS-->
 <link href="{{asset('assets/css/theme.css')}}" rel="stylesheet" media="all">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+
+<style>
+.custom-modal-dialog-large {
+    max-width: 1700px; /* Lebar modal */
+    margin: 0 auto; /* Memastikan modal tetap berada di tengah horizontal */
+}
+.custom-modal-dialog-medium {
+    max-width: 800px; /* Lebar modal */
+    margin: 0 auto; /* Memastikan modal tetap berada di tengah horizontal */
+}
+
+
+.custom-modal-dialog-large .modal-content {
+    height: auto; /* Sesuaikan tinggi konten jika diperlukan */
+    overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+}
+
+</style>

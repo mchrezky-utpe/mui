@@ -24,6 +24,7 @@ class MasterGeneralTaxService
     public function add(Request $request){
             $data['description'] = $request->description;
             $data['manual_id'] = $request->manual_id;
+            $data['value'] = $request->value;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterGeneralTax::create($data);
@@ -60,6 +61,7 @@ class MasterGeneralTaxService
         $data = MasterGeneralTax::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
+        $data->value= $request->value;
         $data->save();
     }
 }

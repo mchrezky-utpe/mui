@@ -2,7 +2,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                            <img src="{{asset('assets/images/icon/mui.png')}}" alt="CoolAdmin" />
+                            <img src="{{secure_asset('assets/images/icon/mui.png')}}" alt="CoolAdmin" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">

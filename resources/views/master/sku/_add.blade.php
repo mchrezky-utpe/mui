@@ -1,6 +1,10 @@
-<x-modals.modal id="add_modal" title="Add Sku">
+<x-modals.modal id="add_modal" title="Add Sku" modalClass="custom-modal-dialog-medium">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku">
+<div class="row">
     @csrf
+    
+    <!-- REGION SIDE 1 -->
+    <div class="col-md-6">
     <div class="form-group">
       <label>Manual ID</label>
       <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
@@ -36,6 +40,10 @@
         @endforeach 
       </select >
     </div>
+</div>
+
+    <!-- REGION SIDE 1 -->
+ <div class="col-md-6">
     <div class="form-group">
       <label>Model</label>
       <select required name="model_id" class="form-control">
@@ -72,5 +80,7 @@
         @endforeach 
       </select >
     </div>
+</div>
+</div>
   </form>   
 </x-modals.modal>

@@ -9,5 +9,9 @@
       <label>Description</label>
       <input required name="description" class="form-control" type="text" placeholder="Description">
     </div>
+    <div class="form-group">
+      <label>Value</label>
+      <input required name="value" class="form-control" type="text" placeholder="Value">
+    </div>
   </form>   
 </x-modals.modal>

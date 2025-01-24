@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('prefix', 50)->nullable();
             $table->boolean('flag_active')->nullable();
             $table->string('manual_id', 50)->nullable();
+            $table->decimal('value', 20, 4)->nullable();
             $table->string('generated_id', 64)->nullable();
             addAuditColumns($table);
         });

@@ -22,10 +22,13 @@ class MasterPersonSupplierController
         return response()->view('master.person_supplier.index',
          ['data' =>  $this->service->list()]);
     }
-    public function index2(): Response
+    
+    public function api_all()
     {
-        return response()->view('master.person_supplier.index2',
-         ['data' =>  $this->service->list2()]);
+        $data = $this->service->list();
+         return response()->json([
+            'data' => $data
+        ]);
     }
 
     public function add(Request $request)

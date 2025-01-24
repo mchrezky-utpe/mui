@@ -23,6 +23,14 @@ class MasterSkuUnitController
          ['data' =>  $this->service->list()]);
     }
 
+    public function api_all()
+    {
+        $data = $this->service->list();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function add(Request $request)
     {
         $this->service->add($request);
