@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Master\MasterFactoryMachineController;
 use App\Http\Controllers\Master\MasterFactoryWarehouseController;
 use App\Http\Controllers\Master\MasterGeneralCurrencyController;
 use App\Http\Controllers\Master\MasterGeneralDeductorController;
@@ -333,4 +334,20 @@ Route::controller(MasterFactoryWarehouseController::class)->group(function () {
     Route::get("/factory-warehouse/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/factory-warehouse/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterFactoryMachineController::class)->group(function () {
+    // LIST
+    Route::get("/factory-machine", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/factory-machine/index2", "index2")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/factory-machine", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/factory-machine/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/factory-machine/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/factory-machine/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/factory-machine/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/factory-machine/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });

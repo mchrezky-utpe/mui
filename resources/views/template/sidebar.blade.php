@@ -78,7 +78,7 @@
                                     <a href="/factory-warehouse">Warehouse</a>
                                 </li>
                                 <li>
-                                    <a href="machine.html">Machine</a>
+                                    <a href="/factory-machine">Machine</a>
                                 </li>
                             </ul>
                         </li>
