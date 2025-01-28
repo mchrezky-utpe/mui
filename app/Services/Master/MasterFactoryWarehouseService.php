@@ -22,14 +22,13 @@ class MasterFactoryWarehouseService
     }
 
     public function add(Request $request){
-        dd($request);
+        // dd($request);
             $data['description'] = $request->description;
             $data['manual_id'] = $request->manual_id;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterFactoryWarehouse::create($data);
             $data['prefix'] = HelperCustom::generateTrxNo('F-W-', $data->id);
-            $data['app_module_id'] = $request->app_module_id;
             $data->save();
     }
 
@@ -51,7 +50,6 @@ class MasterFactoryWarehouseService
         $data = MasterFactoryWarehouse::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
-        $data->app_module_id= $request->app_module_id;
         $data->save();
     }
     public function restore($id){
