@@ -150,7 +150,7 @@ CREATE TABLE `app_global_params` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -172,7 +172,7 @@ CREATE TABLE `app_module` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -190,7 +190,7 @@ CREATE TABLE `log_purchase_request_approval` (
   `created_by` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=2730 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -473,7 +473,7 @@ CREATE TABLE `mst_general_deductor` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `app_module_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
@@ -496,7 +496,7 @@ CREATE TABLE `mst_general_department` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `gen_cost_center_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=8192 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
@@ -528,7 +528,7 @@ CREATE TABLE `mst_general_exchange_rates` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `gen_currency_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=16384 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
@@ -557,7 +557,7 @@ CREATE TABLE `mst_general_other_cost` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `app_module_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
@@ -580,7 +580,7 @@ CREATE TABLE `mst_general_tax` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=5461 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -727,7 +727,7 @@ CREATE TABLE `mst_sku` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `sku_type_id` bigint(20) DEFAULT NULL,
   `sku_unit_id` bigint(20) DEFAULT NULL,
   `sku_model_id` bigint(20) DEFAULT NULL,
@@ -776,7 +776,7 @@ CREATE TABLE `mst_sku_business_type` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=3276 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -807,7 +807,7 @@ CREATE TABLE `mst_sku_detail` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -829,7 +829,7 @@ CREATE TABLE `mst_sku_model` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -850,7 +850,7 @@ CREATE TABLE `mst_sku_packaging` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=5461 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -880,7 +880,7 @@ CREATE TABLE `mst_sku_process` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=2730 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -913,7 +913,7 @@ CREATE TABLE `mst_sku_type` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=4096 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -944,7 +944,7 @@ CREATE TABLE `mst_sku_unit` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL
+  `generated_id` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=1365 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
 --
@@ -1083,7 +1083,7 @@ CREATE TABLE `trans_purchase_order_deduction` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `trans_po_id` bigint(20) DEFAULT NULL,
   `gen_deductor_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
@@ -1159,7 +1159,7 @@ CREATE TABLE `trans_purchase_order_othercost` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `trans_po_id` bigint(20) DEFAULT NULL,
   `gen_othercost_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
@@ -1188,7 +1188,7 @@ CREATE TABLE `trans_purchase_request` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `gen_currency_id` bigint(20) DEFAULT NULL,
   `gen_department_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=3276 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
@@ -1258,7 +1258,7 @@ CREATE TABLE `trans_purchase_request_detail` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `flag_status` smallint(6) DEFAULT NULL COMMENT '1 : accepted\r\n	2 : denied\r\n	3 : hold',
   `trans_pr_id` bigint(20) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL
@@ -1299,7 +1299,7 @@ CREATE TABLE `trans_sku_minofqty` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 
@@ -1320,7 +1320,7 @@ CREATE TABLE `trans_sku_minofstock` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 

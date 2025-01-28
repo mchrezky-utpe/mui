@@ -17,7 +17,7 @@ $(document).on('click', '.btn_submit_modal', function (e) {
             $(this).after('<span class="error-message" style="color: red; font-size: 12px;">This field is required.</span>');
         }
     });
-    if(is_using_item != undefined && is_using_item == true){
+    if (typeof is_using_item !== 'undefined' && is_using_item == true){
     let item_table_id = $('#item_table');
         if (item_table_id.length > 0) {
             let tableRowCount = item_table_id.find('tbody tr').length;
