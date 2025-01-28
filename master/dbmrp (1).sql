@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2025 at 05:24 AM
+-- Generation Time: Jan 28, 2025 at 05:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -243,10 +243,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2025_01_19_084533_create_mst_general_deductor_table', 1),
 (20, '2025_01_19_092117_create_mst_general_other_cost_table', 1),
 (21, '2025_01_19_102322_create_mst_general_exchange_rates_table', 1),
-(22, '2025_01_21_094300_create_mst_person_customer_table', 1),
 (23, '2025_01_21_113334_create_trans_sku_pricelist_table', 1),
 (24, '2025_01_21_113920_create_trans_sku_minofstock_table', 1),
-(25, '2025_01_21_113934_create_trans_sku_minofqty_table', 1);
+(25, '2025_01_21_113934_create_trans_sku_minofqty_table', 1),
+(26, '2025_01_21_094300_create_mst_person_customer_table', 2);
 
 -- --------------------------------------------------------
 
@@ -640,6 +640,33 @@ CREATE TABLE `mst_general_terms_detail` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mst_person_customer`
+--
+
+CREATE TABLE `mst_person_customer` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `prefix` varchar(50) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `fax` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `contact_person` varchar(50) DEFAULT NULL,
+  `flag_active` tinyint(1) DEFAULT NULL,
+  `flag_show` tinyint(1) DEFAULT NULL,
+  `manual_id` varchar(50) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` varchar(50) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `mst_person_supplier`
 --
 
@@ -986,7 +1013,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('u6snkTvOUMb1gXZjb6zC3e6hVmUAOmMNSDd1IYOq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV21YZFpZdDdIQmE5RGZ4V3FkVVFyN09GVHFLTThoSzJRa29mTUduWCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wbyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1738038255);
+('u6snkTvOUMb1gXZjb6zC3e6hVmUAOmMNSDd1IYOq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV21YZFpZdDdIQmE5RGZ4V3FkVVFyN09GVHFLTThoSzJRa29mTUduWCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9za3UtbWlub2ZxdHkiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1738039679);
 
 -- --------------------------------------------------------
 
@@ -1530,6 +1557,12 @@ ALTER TABLE `log_purchase_request_approval`
   ADD KEY `FK_log_purchase_request_approval_trans_purchase_request` (`trans_pr_id`);
 
 --
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `mst_general_currency`
 --
 ALTER TABLE `mst_general_currency`
@@ -1581,6 +1614,12 @@ ALTER TABLE `mst_general_terms`
 ALTER TABLE `mst_general_terms_detail`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_mst_general_terms_detail_mst_general_terms` (`general_terms_id`);
+
+--
+-- Indexes for table `mst_person_customer`
+--
+ALTER TABLE `mst_person_customer`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `mst_person_supplier`
@@ -1750,6 +1789,12 @@ ALTER TABLE `log_purchase_request_approval`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
 -- AUTO_INCREMENT for table `mst_general_currency`
 --
 ALTER TABLE `mst_general_currency`
@@ -1796,6 +1841,12 @@ ALTER TABLE `mst_general_terms`
 --
 ALTER TABLE `mst_general_terms_detail`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `mst_person_customer`
+--
+ALTER TABLE `mst_person_customer`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `mst_person_supplier`

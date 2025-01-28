@@ -1671,3 +1671,32 @@
   }
 
 })(jQuery);
+
+
+
+  // Mendapatkan path URL saat ini
+  var currentPath = window.location.pathname;
+
+  // Selector untuk elemen js-arrow dan parent li
+  $('.list-unstyled li').each(function () {
+      var $this = $(this);
+      var $link = $this.find('a');
+
+      // Cek apakah href sesuai dengan path URL
+      if ($link.attr('href') === currentPath) {
+          // Tambahkan class active pada li
+          $this.addClass('active');
+          // Tambahkan class js-arrow-open pada parent js-arrow
+          const $jsArrow =  $this.closest('.has-sub').find('.js-arrow');
+          $jsArrow.addClass('js-arrow-open');
+          $jsArrow.addClass('open');
+          $jsArrow.siblings('.list-unstyled.navbar__sub-list.js-sub-list').css('display', 'block');
+      
+         
+            // Auto-scroll ke elemen aktif
+            var sidebarContainer = $('.menu-sidebar__content.js-scrollbar1'); // Sidebar container
+            var offset = $this.offset().top - sidebarContainer.offset().top + sidebarContainer.scrollTop() - 50;
+            sidebarContainer.animate({ scrollTop: offset }, 500); // Scroll dengan durasi 500ms
+    
+        }
+  });

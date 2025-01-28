@@ -69,11 +69,3 @@ $(parent).find(input).each(function(){
     $(this).val(accounting.unformat(price));
 });
 }
-
-function populateSelect(title, master_data, element) {
-    element.empty();
-    element.append('<option value="">-- Select '+title+' --</option>');
-    master_data.forEach(data => {
-        element.append(`<option value="${data.id}">${data.prefix} - ${data.description}</option>`);
-    });
-}
