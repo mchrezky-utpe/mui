@@ -14,15 +14,6 @@
                                 <li>
                                     <a href="/">Dashboard 1</a>
                                 </li>
-                                <li>
-                                    <a href="/">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="/">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="/">Dashboard 4</a>
-                                </li>
                             </ul>
                         </li>
 
@@ -230,6 +221,9 @@
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-shopping-bag"></i>Purchase</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/pr">Purchase Request (PR)</a>
+                                </li>
                                 <li>
                                     <a href="/po">Purchase Order (PO)</a>
                                 </li>

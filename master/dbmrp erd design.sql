@@ -301,9 +301,44 @@ CREATE TABLE `mst_person_supplier`
 	`manual_id` VARCHAR(50) NULL,
 	`generated_id` VARCHAR(32) NULL,
 	CONSTRAINT `PK_mst_person_supplier` PRIMARY KEY (`id` ASC)
-)
+);
 
-;
+CREATE TABLE `mst_factory_warehouse`
+(
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(100) NULL,
+	`prefix` VARCHAR(50) NULL,
+	`flag_active` BOOL NULL,
+	`flag_show` BOOL NULL,
+	`created_by` VARCHAR(50) NULL,
+	`created_at` TIMESTAMP NULL,
+	`updated_by` VARCHAR(50) NULL,
+	`updated_at` TIMESTAMP NULL,
+	`deleted_by` VARCHAR(50) NULL,
+	`deleted_at` TIMESTAMP NULL,
+	`manual_id` VARCHAR(50) NULL,
+	`generated_id` VARCHAR(32) NULL,
+	CONSTRAINT `PK_mst_factory_warehouse` PRIMARY KEY (`id` ASC)
+);
+
+
+CREATE TABLE `mst_factory_machine`
+(
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(100) NULL,
+	`prefix` VARCHAR(50) NULL,
+	`flag_active` BOOL NULL,
+	`flag_show` BOOL NULL,
+	`created_by` VARCHAR(50) NULL,
+	`created_at` TIMESTAMP NULL,
+	`updated_by` VARCHAR(50) NULL,
+	`updated_at` TIMESTAMP NULL,
+	`deleted_by` VARCHAR(50) NULL,
+	`deleted_at` TIMESTAMP NULL,
+	`manual_id` VARCHAR(50) NULL,
+	`generated_id` VARCHAR(32) NULL,
+	CONSTRAINT `PK_mst_factory_machine` PRIMARY KEY (`id` ASC)
+);
 
 CREATE TABLE `mst_sku`
 (
@@ -582,7 +617,9 @@ CREATE TABLE `trans_purchase_order_othercost`
 	`trans_po_id` BIGINT NULL,
 	`gen_othercost_id` BIGINT NULL,
 	CONSTRAINT `PK_trans_purchase_order_deduction` PRIMARY KEY (`id` ASC)
-);
+)
+
+;
 
 CREATE TABLE `trans_sku_minofqty`
 (

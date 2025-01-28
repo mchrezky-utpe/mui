@@ -2,10 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
+use App\Http\Controllers\Transaction\PurchaseOrderRequestController;
 use App\Http\Controllers\Transaction\SkuPricelistController;
 use App\Http\Controllers\Transaction\SkuMinOfStockController;
 use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Middleware\OnlyMemberMiddleware;
+
+Route::controller(PurchaseOrderRequestController::class)->group(function () {
+    Route::get("/pr", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pr", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pr/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pr/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pr/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pr/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
 
 Route::controller(PurchaseOrderController::class)->group(function () {
     Route::get("/po", "index")->middleware(OnlyMemberMiddleware::class);
@@ -13,6 +23,7 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::post("/po/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/po/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/po/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {
@@ -21,6 +32,7 @@ Route::controller(SkuPricelistController::class)->group(function () {
     Route::post("/sku-pricelist/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-pricelist/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-pricelist/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {

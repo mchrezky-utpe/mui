@@ -1,5 +1,5 @@
-<x-modals.modal id="add_modal" title="Add Purchase Order" modalClass="custom-modal-dialog-large">
-  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/po">
+<x-modals.modal id="add_modal" title="Add Purchase Order Request" modalClass="custom-modal-dialog-large">
+  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pr">
      @csrf
     <!-- TAB TRANSACTION -->
     <div class="row">
@@ -80,14 +80,6 @@
           <label for="sub_total">Sub Total</label>
           <input id="sub_total" name="sub_total" class="form-control" type="number" placeholder="0" step="0.01" readonly>
         </div>
-        <div class="form-group">
-          <label for="sub_total">Other Cost Total</label>
-          <input id="other_cost_total" name="other_cost_total" class="form-control" type="number" placeholder="0" step="0.01" readonly>
-        </div>
-        <div class="form-group">
-          <label for="sub_total">Deduction Total</label>
-          <input id="deduction_total" name="deduction_total" class="form-control" type="number" placeholder="0" step="0.01" readonly>
-        </div>
       </div>
       <div class="col-md-2">
         <div class="form-group">
@@ -121,9 +113,7 @@
       </li>
     </ul>
     <div class="tab-content mt-3" id="myTabContent">
-      <div class="tab-pane fade show active" id="transaksi" role="tabpanel" aria-labelledby="transaksi-tab"> @include('transaction.po._item') </div>
-      <div class="tab-pane fade" id="other-cost" role="tabpanel" aria-labelledby="other-cost-tab"> @include('transaction.po._other_cost') </div>
-      <div class="tab-pane fade" id="deduction" role="tabpanel" aria-labelledby="deduction-tab"> @include('transaction.po._deduction') </div>
+      <div class="tab-pane fade show active" id="transaksi" role="tabpanel" aria-labelledby="transaksi-tab"> @include('transaction.pr._item') </div>
     </div>
   </form>
 </x-modals.modal>

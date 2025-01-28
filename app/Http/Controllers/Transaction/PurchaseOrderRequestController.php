@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Helpers\HelperCustom;
-use App\Services\Transaction\PurchaseOrderService;
+use App\Services\Transaction\PurchaseOrderRequestService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PurchaseOrderController
+class PurchaseOrderRequestController
 {
 
-    private PurchaseOrderService $service;
+    private PurchaseOrderRequestService $service;
 
-    public function __construct(PurchaseOrderService $service)
+    public function __construct(PurchaseOrderRequestService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()->view('transaction.po.index',
+        return response()->view('transaction.pr.index',
          ['data' =>  $this->service->list()]);
     }
 
@@ -37,13 +37,13 @@ class PurchaseOrderController
     public function add(Request $request)
     {
         $this->service->add($request);
-        return redirect("/po");
+        return redirect("/pr");
     }
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
-        return redirect("/po");
+        return redirect("/pr");
     }
     
     public function get(Request $request, int $id)
@@ -57,6 +57,6 @@ class PurchaseOrderController
     public function edit(Request $request)
     {
         $this->service->edit($request);
-        return redirect("/po");
+        return redirect("/pr");
     }
 }

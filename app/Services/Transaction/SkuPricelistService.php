@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
+ 
 class SkuPricelistService
 {
     public function list(){
           return SkuPricelist::all();
+    }
+
+    public function get_by(Request $request){
+        $query = SkuPricelist::with(['sku'])
+        ->where('flag_active', 1);
+        foreach ($request->all() as $field => $value) {
+            if (!empty($value)) {
+                $query->where($field, $value);
+            }
+        }
+       return $query->get();
     }
 
     public function add(Request $request){

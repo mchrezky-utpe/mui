@@ -1,7 +1,40 @@
 
-$('.btn_submit_modal').click(function() {
-    $(this).closest('.modal').find('form').submit();
-}); 
+// common button submit
+$(document).on('click', '.btn_submit_modal', function (e) {
+    e.preventDefault();
+
+    let $modal = $(this).closest('.modal');
+    let $form = $modal.find('form');
+    let isValid = true;
+
+    $form.find('.error-message').remove(); 
+    $form.find('.is-invalid').removeClass('is-invalid');
+
+    $form.find('[required]').each(function () {
+        if (!$(this).val() || $(this).val().trim() === '') {
+            isValid = false;
+            $(this).addClass('is-invalid'); // Tambahkan kelas untuk styling error
+            $(this).after('<span class="error-message" style="color: red; font-size: 12px;">This field is required.</span>');
+        }
+    });
+    if(is_using_item){
+    let item_table_id = $('#item_table');
+        if (item_table_id.length > 0) {
+            let tableRowCount = item_table_id.find('tbody tr').length;
+            if (tableRowCount === 0) {
+                isValid = false;
+                item_table_id.after('<span class="error-message" style="color: red; font-size: 12px;">The item table cannot be empty.</span>');
+            }
+        }
+    }
+    
+    if (!isValid) {
+        return false;
+    }
+
+    $form.submit();
+});
+
 
 $('#add_button').click(function() {
     $("input[type=text], textarea, select").val("");
