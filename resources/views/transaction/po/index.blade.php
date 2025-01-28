@@ -1,8 +1,8 @@
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @extends('template.main') @section('content') 
 <style>
-    /* Tambahkan gaya untuk membuat scroll */
   .table-container {
-        max-height: 400px; /* Sesuaikan tinggi maksimum sesuai kebutuhan */
+        max-height: 400px; 
         overflow-y: auto;
         border: 1px solid #ccc;
         overflow-y: auto;
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row"> 
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
@@ -45,20 +45,40 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first">
+              <table id="table-po" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>ID</th>
                     <th>Manual ID</th>
                     <th>Doc Number</th>
+                    <th>Date</th>
                     <th>Type</th>
                     <th>Supplier</th>
                     <th>Description</th>
-                    <th>Total</th>
+                    <!-- <th>Total</th> -->
                     <th>Action</th>
                   </tr>
                 </thead>
+                <!-- <tbody> @foreach($data as $key => $value) <tr>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $value->manual_id }}</td>
+                    <td>{{ $value->doc_num }}</td>
+                    <td>{{ $value->flag_type == 1 ? 'Produciton Project Material' : 'General Item' }}</td>
+                    <td>{{ $value->supplier->description ?? 0 }}</td>
+                    <td>{{ $value->description  }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>
+                      <form action="/po/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                        <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
+                          <span class="fas fa-pencil-alt"></span>
+                        </button>
+                        <button type="submit" class="btn btn-danger">
+                          <span class="fas fa-trash"></span>
+                        </button>
+                      </form>
+                    </td>
+                  </tr> @endforeach 
+                </tbody> -->
                 </table>
             </div>
           </div>
@@ -70,9 +90,8 @@
 <!-- MODAL --> 
  @include('transaction.po._add') 
  @include('transaction.po._edit') 
- @include('transaction.po._other_cost') 
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/transaction/po.js') }}" type="text/javascript"></script> 
+ <script  type="module" src="{{ asset('assets/js/transaction/purchase_order/po_main.js') }}" type="text/javascript"></script> 
  @endsection

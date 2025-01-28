@@ -13,6 +13,7 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::post("/po/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/po/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/po/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {
@@ -21,6 +22,7 @@ Route::controller(SkuPricelistController::class)->group(function () {
     Route::post("/sku-pricelist/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-pricelist/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-pricelist/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {

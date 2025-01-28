@@ -1,11 +1,8 @@
-<x-modals.modal id="other_cost_modal" title="Other Cost" modalClass="custom-modal-dialog-medium">
-  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/other-cost"> @csrf <div class="row">
-    <!-- REGION OF ITEMS -->
-    <div class="col-md-12">
-      <div class="card-header d-flex justify-content-between align-items-center">
+   <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Other Cost</h5>
         <button id="add_row_other_cost" type="button" class="btn btn-primary">+</button>
-      </div>
-      <div class="table">
+    </div>
+    <div class="table-container">
         <table class="table table-scroll" id="other_cost_table">
           <thead>
             <tr>
@@ -21,6 +18,3 @@
           <tbody></tbody>
         </table>
       </div>
-    </div>
-  </form>
-</x-modals.modal>

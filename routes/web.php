@@ -224,6 +224,8 @@ Route::controller(MasterGeneralDepartmentController::class)->group(function () {
     Route::post("/general-department/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     //RESTORE
     Route::post("/general-department/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    // API GET DEPARTMENT DATA
+    Route::get("/api/general-department", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralCurrencyController::class)->group(function () {
@@ -244,7 +246,7 @@ Route::controller(MasterGeneralCurrencyController::class)->group(function () {
     // EDIT    
     Route::post("/general-currency/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     // API GET ALL DATA
-    Route::get("/api/currency", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/general-currency", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralTaxController::class)->group(function () {

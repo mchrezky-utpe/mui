@@ -76,7 +76,7 @@ function fetchCurrency() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: 'GET',
-            url: base_url + 'api/currency',
+            url: base_url + 'api/general-currency',
             success: function (data) {
                 resolve(data.data);
             },
