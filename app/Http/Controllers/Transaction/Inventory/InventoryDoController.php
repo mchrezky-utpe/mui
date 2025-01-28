@@ -3,36 +3,36 @@
 namespace App\Http\Controllers\Transaction\Inventory;
 
 use App\Helpers\HelperCustom;
-use App\Services\Transaction\Inventory\InventoryReceivingService;
+use App\Services\Transaction\Inventory\InventoryDoService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class InventoryReceivingController
+class InventoryDoController
 
 {
 
-    private InventoryReceivingService $service;
+    private InventoryDoService $service;
 
-    public function __construct(InventoryReceivingService $service)
+    public function __construct(InventoryDoService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()->view('transaction.inventory.inventory_receiving.index',
+        return response()->view('transaction.inventory.inventory_do.index',
          ['data' =>  $this->service->list()]);
     }
     public function add(Request $request)
     {
         $this->service->add($request);
-        return redirect("/inventory-receiving");
+        return redirect("/inventory-do");
     }
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
-        return redirect("/inventory-receiving");
+        return redirect("/inventory-do");
     }
     
     public function get(Request $request, int $id)
@@ -46,6 +46,6 @@ class InventoryReceivingController
     public function edit(Request $request)
     {
         $this->service->edit($request);
-        return redirect("/inventory-receiving");
+        return redirect("/inventory-do");
     }
 }

@@ -44,7 +44,7 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                {{-- <tbody> @foreach($data as $key => $value) <tr>
+                <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->manual_id }}</td>
@@ -59,7 +59,7 @@
                         </button>
                       </form>
                     </td>
-                  </tr> @endforeach </tbody> --}}
+                  </tr> @endforeach </tbody>
               </table>
             </div>
           </div>
@@ -69,8 +69,8 @@
   </div>
 </div>
 <!-- MODAL --> 
- @include('transaction.inventory_receiving._add') 
- @include('transaction.inventory_receiving._edit') 
+ @include('transaction.inventory.inventory_receiving._add') 
+ @include('transaction.inventory.inventory_receiving._edit') 
  @endsection 
  
  @section('extra_javascript') 

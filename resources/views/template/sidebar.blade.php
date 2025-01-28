@@ -146,10 +146,10 @@
                                     <a href="/inventory-receiving">Receiving</a>
                                 </li>
                                 <li>
-                                    <a href="delivery_order.html">Delivery Order</a>
+                                    <a href="/inventory-do">Delivery Order</a>
                                 </li>
                                 <li>
-                                    <a href="material_request.html">Material Request</a>
+                                    <a href="/inventory-material-req">Material Request</a>
                                 </li>
                                 <li>
                                     <a href="sales_return.html">Sales Return</a>

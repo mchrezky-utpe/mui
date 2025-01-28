@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Transaction\Inventory\InventoryDoController;
+use App\Http\Controllers\Transaction\Inventory\InventoryMaterialReqController;
+use App\Http\Controllers\Transaction\Inventory\InventoryReceivingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Controllers\Transaction\PurchaseOrderRequestController;
@@ -49,6 +52,30 @@ Route::controller(SkuMinOfQtyController::class)->group(function () {
     Route::post("/sku-minofqty/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-minofqty/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-minofqty/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(InventoryReceivingController::class)->group(function () {
+    Route::get("/inventory-receiving", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-receiving", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-receiving/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/inventory-receiving/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-receiving/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(InventoryDoController::class)->group(function () {
+    Route::get("/inventory-do", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-do", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-do/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/inventory-do/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-do/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(InventoryMaterialReqController::class)->group(function () {
+    Route::get("/inventory-material-req", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-material-req", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-material-req/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/inventory-material-req/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-material-req/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
 
 
