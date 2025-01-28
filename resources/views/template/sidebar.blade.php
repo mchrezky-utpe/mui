@@ -14,15 +14,6 @@
                                 <li>
                                     <a href="/">Dashboard 1</a>
                                 </li>
-                                <li>
-                                    <a href="/">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="/">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="/">Dashboard 4</a>
-                                </li>
                             </ul>
                         </li>
 
