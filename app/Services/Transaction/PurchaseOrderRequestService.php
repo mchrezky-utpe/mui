@@ -4,10 +4,8 @@ namespace App\Services\Transaction;
 use App\Helpers\NumberGenerator;
 
 use App\Helpers\HelperCustom;
-use App\Models\Transaction\PurchaseOrder;
-use App\Models\Transaction\PurchaseOrderDetail;
-use App\Models\Transaction\PurchaseOrderDeduction;
-use App\Models\Transaction\PurchaseOrderOtherCost;
+use App\Models\Transaction\PurchaseOrderRequest;
+use App\Models\Transaction\PurchaseOrderRequestDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -16,10 +14,10 @@ use App\Helpers\CalcHelper;
 use Illuminate\Support\Facades\DB;
 
 
-class PurchaseOrderService
+class PurchaseOrderRequestService
 {
     public function list(){
-          return PurchaseOrder::where('flag_active', 1)->get();
+          return PurchaseOrderRequest::where('flag_active', 1)->get();
     }
 
     public function get_all(Request $request){
@@ -32,32 +30,29 @@ class PurchaseOrderService
 
         $orderColumn = $columns[$orderColumnIndex]['data'];
 
-        $query = DB::table('trans_purchase_order')
+        $query = DB::table('trans_purchase_request')
             ->select(
-                'trans_purchase_order.id',
-                'trans_purchase_order.trans_date',
-                'trans_purchase_order.manual_id',
-                'trans_purchase_order.doc_num',
-                'trans_purchase_order.flag_type',
-                'trans_purchase_order.prs_supplier_id',
-                'trans_purchase_order.description',
-                'mst_person_supplier.description as supplier_name'
-            )
-            ->leftJoin('mst_person_supplier', 'trans_purchase_order.prs_supplier_id', '=', 'mst_person_supplier.id');
+                'trans_purchase_request.id',
+                'trans_purchase_request.trans_date',
+                'trans_purchase_request.manual_id',
+                'trans_purchase_request.doc_num',
+                'trans_purchase_request.flag_type',
+                'trans_purchase_request.flag_status',
+                'trans_purchase_request.description',
+            );
 
             
-        $query->where('trans_purchase_order.flag_active', [1]);
+        $query->where('trans_purchase_request.flag_active', [1]);
 
         if ($request->has('start_date') && $request->has('end_date')) {
-            $query->whereBetween('trans_purchase_order.trans_date', [$request->start_date, $request->end_date]);
+            $query->whereBetween('trans_purchase_request.trans_date', [$request->start_date, $request->end_date]);
         }
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('trans_purchase_order.manual_id', 'like', '%' . $search . '%')
-                    ->orWhere('trans_purchase_order.doc_num', 'like', '%' . $search . '%')
-                    ->orWhere('mst_person_supplier.description', 'like', '%' . $search . '%')
-                    ->orWhere('trans_purchase_order.description', 'like', '%' . $search . '%');
+                $q->where('trans_purchase_request.manual_id', 'like', '%' . $search . '%')
+                    ->orWhere('trans_purchase_request.doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('trans_purchase_request.description', 'like', '%' . $search . '%');
             });
         }
 
@@ -85,7 +80,7 @@ class PurchaseOrderService
     
         try {
             // Generate nomor dokumen
-            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_request', 'MUI/PR');
+            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_request', 'MUI/PO');
     
             // PO Header Data
             $data = [
@@ -96,7 +91,6 @@ class PurchaseOrderService
                 'flag_type' => $request->flag_type,
                 'gen_terms_detail_id' => $request->gen_terms_detail_id,
                 'gen_department_id' => $request->gen_department_id,
-                'prs_supplier_id' => $request->prs_supplier_id,
                 'gen_currency_id' => $request->gen_currency_id,
                 'description' => $request->description,
                 'val_exchangerates' => $request->val_exchangerates ?? 1,
@@ -109,7 +103,7 @@ class PurchaseOrderService
             ];
     
             // Simpan data PO Header
-            $poHeader = PurchaseOrder::create($data);
+            $poHeader = PurchaseOrderRequest::create($data);
             $items;
     
             // PO Detail Data
@@ -152,7 +146,7 @@ class PurchaseOrderService
             }
     
             // Simpan data PO Detail
-            PurchaseOrderDetail::insert($items);
+            PurchaseOrderRequestDetail::insert($items);
     
             // Commit transaksi jika semua berhasil
             DB::commit();
@@ -172,7 +166,7 @@ class PurchaseOrderService
         DB::beginTransaction();
 
         try {
-            $purchaseOrder = PurchaseOrder::where('id', $id)->firstOrFail();
+            $purchaseOrder = PurchaseOrderRequest::where('id', $id)->firstOrFail();
     
             $purchaseOrder->flag_active = 0;
             $purchaseOrder->deleted_at = Carbon::now();
@@ -194,12 +188,12 @@ class PurchaseOrderService
     
     public function get(int $id)
     {
-        return PurchaseOrder::where('id', $id)->firstOrFail();
+        return PurchaseOrderRequest::where('id', $id)->firstOrFail();
     } 
 
     function edit(Request $request)
     {
-        $data = PurchaseOrder::where('id', $request->id)->firstOrFail();
+        $data = PurchaseOrderRequest::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
         $data->save();

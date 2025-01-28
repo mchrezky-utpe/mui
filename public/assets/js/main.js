@@ -1696,7 +1696,16 @@
             // Auto-scroll ke elemen aktif
             var sidebarContainer = $('.menu-sidebar__content.js-scrollbar1'); // Sidebar container
             var offset = $this.offset().top - sidebarContainer.offset().top + sidebarContainer.scrollTop() - 50;
-            sidebarContainer.animate({ scrollTop: offset }, 500); // Scroll dengan durasi 500ms
+            sidebarContainer.animate({ scrollTop: offset }, 150); // Scroll dengan durasi 500ms
     
         }
   });
+
+  
+function populateSelect(title, master_data, element) {
+  element.empty();
+  element.append('<option value="">-- Select '+title+' --</option>');
+  master_data.forEach(data => {
+      element.append(`<option value="${data.id}">${data.description}</option>`);
+  });
+}

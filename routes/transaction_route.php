@@ -2,10 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
+use App\Http\Controllers\Transaction\PurchaseOrderRequestController;
 use App\Http\Controllers\Transaction\SkuPricelistController;
 use App\Http\Controllers\Transaction\SkuMinOfStockController;
 use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Middleware\OnlyMemberMiddleware;
+
+Route::controller(PurchaseOrderRequestController::class)->group(function () {
+    Route::get("/pr", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pr", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pr/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pr/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pr/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pr/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
 
 Route::controller(PurchaseOrderController::class)->group(function () {
     Route::get("/po", "index")->middleware(OnlyMemberMiddleware::class);
