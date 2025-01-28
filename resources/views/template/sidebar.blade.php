@@ -75,7 +75,7 @@
                                 <i class="fas fa-industry"></i>Factory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="warehouse.html">Warehouse</a>
+                                    <a href="/factory-warehouse">Warehouse</a>
                                 </li>
                                 <li>
                                     <a href="machine.html">Machine</a>
