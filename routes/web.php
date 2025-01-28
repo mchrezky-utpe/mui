@@ -23,6 +23,7 @@ use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\Master\MasterSkuBusinessController;
+use App\Http\Controllers\Transaction\Inventory\InventoryReceivingController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
 
@@ -350,4 +351,20 @@ Route::controller(MasterFactoryMachineController::class)->group(function () {
     Route::get("/factory-machine/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/factory-machine/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(InventoryReceivingController::class)->group(function () {
+    // LIST
+    Route::get("/inventory-receiving", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/inventory-receiving/index2", "index2")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/inventory-receiving", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/inventory-receiving/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-receiving/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/inventory-receiving/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/inventory-receiving/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/inventory-receiving/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });

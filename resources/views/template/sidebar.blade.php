@@ -143,7 +143,7 @@
                                 <i class="fas fa-box"></i>Inventory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="receiving.html">Receiving</a>
+                                    <a href="/inventory-receiving">Receiving</a>
                                 </li>
                                 <li>
                                     <a href="delivery_order.html">Delivery Order</a>
