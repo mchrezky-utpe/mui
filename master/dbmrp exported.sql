@@ -38,7 +38,7 @@ CREATE TABLE `app_global_params` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -72,7 +72,7 @@ CREATE TABLE `app_module` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -102,7 +102,7 @@ CREATE TABLE `log_purchase_request_approval` (
   `created_by` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_log_purchase_request_approval_trans_purchase_request` (`trans_pr_id`),
   CONSTRAINT `FK_log_purchase_request_approval_trans_purchase_request` FOREIGN KEY (`trans_pr_id`) REFERENCES `trans_purchase_request` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -198,7 +198,7 @@ CREATE TABLE `mst_general_deductor` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `app_module_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IXFK_mst_general_deductor_app_module` (`app_module_id`),
@@ -235,7 +235,7 @@ CREATE TABLE `mst_general_department` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `gen_cost_center_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=8192 ROW_FORMAT=DYNAMIC;
@@ -272,7 +272,7 @@ CREATE TABLE `mst_general_exchange_rates` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `gen_currency_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_mst_general_exchange_rates_mst_general_currency` (`gen_currency_id`),
@@ -309,7 +309,7 @@ CREATE TABLE `mst_general_other_cost` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `app_module_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IXFK_mst_general_other_cost_app_module` (`app_module_id`),
@@ -346,7 +346,7 @@ CREATE TABLE `mst_general_tax` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=5461 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -543,7 +543,7 @@ CREATE TABLE `mst_sku` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `sku_type_id` bigint(20) DEFAULT NULL,
   `sku_unit_id` bigint(20) DEFAULT NULL,
   `sku_model_id` bigint(20) DEFAULT NULL,
@@ -598,7 +598,7 @@ CREATE TABLE `mst_sku_business_type` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=3276 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -631,7 +631,7 @@ CREATE TABLE `mst_sku_detail` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -665,7 +665,7 @@ CREATE TABLE `mst_sku_model` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -698,7 +698,7 @@ CREATE TABLE `mst_sku_packaging` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=5461 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -732,7 +732,7 @@ CREATE TABLE `mst_sku_process` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=2730 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -766,7 +766,7 @@ CREATE TABLE `mst_sku_type` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=4096 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -800,7 +800,7 @@ CREATE TABLE `mst_sku_unit` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AVG_ROW_LENGTH=1365 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -952,7 +952,7 @@ CREATE TABLE `trans_purchase_order_deduction` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `trans_po_id` bigint(20) DEFAULT NULL,
   `gen_deductor_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1053,7 +1053,7 @@ CREATE TABLE `trans_purchase_order_othercost` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `trans_po_id` bigint(20) DEFAULT NULL,
   `gen_othercost_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1098,7 +1098,7 @@ CREATE TABLE `trans_purchase_request` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `gen_currency_id` bigint(20) DEFAULT NULL,
   `gen_department_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1127,13 +1127,20 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trg_purchase_request_approval_ins
-AFTER INSERT
-ON trans_purchase_request
-FOR EACH ROW
-BEGIN
-  INSERT INTO log_purchase_request_approval (description, flag_status, flag_active, trans_pr_id, created_by, created_at)
-    VALUES ('Transaction created', 1, 1, NEW.id, NEW.created_by, NEW.created_at);
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trg_purchase_request_approval_ins
+
+AFTER INSERT
+
+ON trans_purchase_request
+
+FOR EACH ROW
+
+BEGIN
+
+  INSERT INTO log_purchase_request_approval (description, flag_status, flag_active, trans_pr_id, created_by, created_at)
+
+    VALUES ('Transaction created', 1, 1, NEW.id, NEW.created_by, NEW.created_at);
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1149,14 +1156,22 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trg_purchase_request_approval_del
-AFTER DELETE
-ON trans_purchase_request
-FOR EACH ROW
-BEGIN
-  DELETE
-    FROM log_purchase_request_approval
-    WHERE id = OLD.id;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trg_purchase_request_approval_del
+
+AFTER DELETE
+
+ON trans_purchase_request
+
+FOR EACH ROW
+
+BEGIN
+
+  DELETE
+
+    FROM log_purchase_request_approval
+
+    WHERE id = OLD.id;
+
     END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1200,7 +1215,7 @@ CREATE TABLE `trans_purchase_request_detail` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `flag_status` smallint(6) DEFAULT NULL COMMENT '1 : accepted\r\n	2 : denied\r\n	3 : hold',
   `trans_pr_id` bigint(20) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL,
@@ -1240,7 +1255,7 @@ CREATE TABLE `trans_sku_minofqty` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IXFK_trans_sku_minofqty_mst_sku` (`sku_id`),
@@ -1275,7 +1290,7 @@ CREATE TABLE `trans_sku_minofstock` (
   `deleted_by` varchar(50) DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `manual_id` varchar(50) DEFAULT NULL,
-  `generated_id` varchar(32) DEFAULT NULL,
+  `generated_id` varchar(64) DEFAULT NULL,
   `sku_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IXFK_trans_sku_minofstock_mst_sku` (`sku_id`),
@@ -1491,10 +1506,14 @@ SET character_set_client = @saved_cs_client;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_log_pr_approval_update_dt_all`(IN trg_trans_pr_id bigint, IN trg_flag_status smallint)
-BEGIN
-  UPDATE trans_purchase_request_detail
-  SET flag_status = trg_flag_status
-  WHERE trans_pr_id = trg_trans_pr_id;
+BEGIN
+
+  UPDATE trans_purchase_request_detail
+
+  SET flag_status = trg_flag_status
+
+  WHERE trans_pr_id = trg_trans_pr_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1512,10 +1531,14 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_log_pr_approval_update_dt_single`(IN trg_trans_pr_dt_id bigint, IN trg_flag_status smallint)
-BEGIN
-  UPDATE trans_purchase_request_detail
-  SET flag_status = trg_flag_status
-  WHERE id = trg_trans_pr_dt_id;
+BEGIN
+
+  UPDATE trans_purchase_request_detail
+
+  SET flag_status = trg_flag_status
+
+  WHERE id = trg_trans_pr_dt_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1533,17 +1556,28 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_log_pr_approval_update_hd`(IN trg_trans_pr_id bigint, IN trg_flag_status smallint, IN trg_description varchar(255), IN trg_created_by varchar(50))
-BEGIN
-  UPDATE log_purchase_request_approval
-  SET flag_active = 0
-  WHERE trans_pr_id = trg_trans_pr_id;
-
-  UPDATE trans_purchase_request
-  SET flag_status = 2
-  WHERE id = trg_trans_pr_id;
-
-  INSERT INTO log_purchase_request_approval (description, flag_status, flag_active, trans_pr_id, created_by, created_at)
-    VALUES (trg_description, trg_flag_status, 1, trg_trans_pr_id, trg_created_by, NOW());
+BEGIN
+
+  UPDATE log_purchase_request_approval
+
+  SET flag_active = 0
+
+  WHERE trans_pr_id = trg_trans_pr_id;
+
+
+
+  UPDATE trans_purchase_request
+
+  SET flag_status = 2
+
+  WHERE id = trg_trans_pr_id;
+
+
+
+  INSERT INTO log_purchase_request_approval (description, flag_status, flag_active, trans_pr_id, created_by, created_at)
+
+    VALUES (trg_description, trg_flag_status, 1, trg_trans_pr_id, trg_created_by, NOW());
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1561,80 +1595,154 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_trans_pr_create_po`(IN trg_trans_pr_id bigint, IN trg_mst_supplier_id bigint, IN trg_mst_terms_dt_id bigint, IN trg_trans_date date, IN trg_valid_from_date date, IN trg_valid_to_date date, IN trg_description varchar(100), IN trg_doc_num varchar(50), IN trg_doc_counter smallint)
-BEGIN
-  DECLARE trg_trans_po_id bigint;
-
-  #Insert Header
-  INSERT INTO trans_purchase_order (trans_date, description, doc_num, doc_counter, flag_status, valid_from_date, valid_to_date, revision, flag_type,
-  flag_active, val_exchangerates, created_by, created_at, gen_terms_detail_id, gen_currency_id, gen_department_id,
-  prs_supplier_id, purchase_request_id)
-    SELECT
-      trg_trans_date,
-      trg_description,
-      trg_doc_num,
-      trg_doc_counter,
-      tpr.flag_status,
-      trg_valid_from_date,
-      trg_valid_to_date,
-      0,
-      tpr.flag_type,
-      1,
-      tpr.val_exchangerates,
-      tpr.created_by,
-      NOW(),
-      trg_mst_terms_dt_id,
-      tpr.gen_currency_id,
-      tpr.gen_department_id,
-      trg_mst_supplier_id,
-      tpr.id
-    FROM trans_purchase_request tpr
-    WHERE tpr.id = trg_trans_pr_id;
-
-  #Insert Detail
-  SET trg_trans_po_id = LAST_INSERT_ID();
-
-  INSERT INTO trans_purchase_order_detail (description, sku_description, sku_prefix, price_d, price_f, qty, subtotal_d, subtotal_f, discount_flag, discount_percentage, discount_d, discount_f,
-  afterdiscount_d, afterdiscount_f, vat_flag, vat_percentage, vat_d, vat_f, total_d, total_f, created_by, created_at, updated_by, updated_at, deleted_by,
-  deleted_at, manual_id, generated_id, trans_po_id, sku_id)
-    SELECT
-      tprd.description,
-      tprd.sku_description,
-      tprd.sku_prefix,
-      tprd.price_d,
-      tprd.price_f,
-      tprd.qty,
-      tprd.subtotal_d,
-      tprd.subtotal_f,
-      tprd.discount_flag,
-      tprd.discount_percentage,
-      tprd.discount_d,
-      tprd.discount_f,
-      tprd.afterdiscount_d,
-      tprd.afterdiscount_f,
-      tprd.vat_flag,
-      tprd.vat_percentage,
-      tprd.vat_d,
-      tprd.vat_f,
-      tprd.total_d,
-      tprd.total_f,
-      tprd.created_by,
-      tprd.created_at,
-      tprd.updated_by,
-      tprd.updated_at,
-      tprd.deleted_by,
-      tprd.deleted_at,
-      tprd.manual_id,
-      tprd.generated_id,
-      trg_trans_po_id,
-      tprd.sku_id
-    FROM trans_purchase_request_detail tprd
-    WHERE tprd.trans_pr_id = trg_trans_pr_id
-    AND tprd.flag_status = 1;
-
-  #Update PR Status
-  UPDATE trans_purchase_request
-  SET flag_status = 3
-  WHERE id = trg_trans_pr_id;
+BEGIN
+
+  DECLARE trg_trans_po_id bigint;
+
+
+
+  #Insert Header
+
+  INSERT INTO trans_purchase_order (trans_date, description, doc_num, doc_counter, flag_status, valid_from_date, valid_to_date, revision, flag_type,
+
+  flag_active, val_exchangerates, created_by, created_at, gen_terms_detail_id, gen_currency_id, gen_department_id,
+
+  prs_supplier_id, purchase_request_id)
+
+    SELECT
+
+      trg_trans_date,
+
+      trg_description,
+
+      trg_doc_num,
+
+      trg_doc_counter,
+
+      tpr.flag_status,
+
+      trg_valid_from_date,
+
+      trg_valid_to_date,
+
+      0,
+
+      tpr.flag_type,
+
+      1,
+
+      tpr.val_exchangerates,
+
+      tpr.created_by,
+
+      NOW(),
+
+      trg_mst_terms_dt_id,
+
+      tpr.gen_currency_id,
+
+      tpr.gen_department_id,
+
+      trg_mst_supplier_id,
+
+      tpr.id
+
+    FROM trans_purchase_request tpr
+
+    WHERE tpr.id = trg_trans_pr_id;
+
+
+
+  #Insert Detail
+
+  SET trg_trans_po_id = LAST_INSERT_ID();
+
+
+
+  INSERT INTO trans_purchase_order_detail (description, sku_description, sku_prefix, price_d, price_f, qty, subtotal_d, subtotal_f, discount_flag, discount_percentage, discount_d, discount_f,
+
+  afterdiscount_d, afterdiscount_f, vat_flag, vat_percentage, vat_d, vat_f, total_d, total_f, created_by, created_at, updated_by, updated_at, deleted_by,
+
+  deleted_at, manual_id, generated_id, trans_po_id, sku_id)
+
+    SELECT
+
+      tprd.description,
+
+      tprd.sku_description,
+
+      tprd.sku_prefix,
+
+      tprd.price_d,
+
+      tprd.price_f,
+
+      tprd.qty,
+
+      tprd.subtotal_d,
+
+      tprd.subtotal_f,
+
+      tprd.discount_flag,
+
+      tprd.discount_percentage,
+
+      tprd.discount_d,
+
+      tprd.discount_f,
+
+      tprd.afterdiscount_d,
+
+      tprd.afterdiscount_f,
+
+      tprd.vat_flag,
+
+      tprd.vat_percentage,
+
+      tprd.vat_d,
+
+      tprd.vat_f,
+
+      tprd.total_d,
+
+      tprd.total_f,
+
+      tprd.created_by,
+
+      tprd.created_at,
+
+      tprd.updated_by,
+
+      tprd.updated_at,
+
+      tprd.deleted_by,
+
+      tprd.deleted_at,
+
+      tprd.manual_id,
+
+      tprd.generated_id,
+
+      trg_trans_po_id,
+
+      tprd.sku_id
+
+    FROM trans_purchase_request_detail tprd
+
+    WHERE tprd.trans_pr_id = trg_trans_pr_id
+
+    AND tprd.flag_status = 1;
+
+
+
+  #Update PR Status
+
+  UPDATE trans_purchase_request
+
+  SET flag_status = 3
+
+  WHERE id = trg_trans_pr_id;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
