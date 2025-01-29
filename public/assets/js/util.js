@@ -37,7 +37,7 @@ $(document).on('click', '.btn_submit_modal', function (e) {
 
 
 $('#add_button').click(function() {
-    $("input[type=text], textarea, select").val("");
+    $("input[type=text], textarea, select").not("[name=manual_id], [name=gen_currency_id], [name=doc_number]").val("");
 });
 
 $(function() {

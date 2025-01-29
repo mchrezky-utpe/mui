@@ -40,6 +40,11 @@ class PurchaseOrderRequestController
         return redirect("/pr");
     }
 
+    public function add_po(Request $request){
+        $this->service->add_po($request);
+        return redirect("/pr");
+    }
+
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);

@@ -33,6 +33,7 @@ class PurchaseOrderController
             'data' => $data['data'], // Data untuk ditampilkan
         ]);
     }
+    
 
     public function add(Request $request)
     {
@@ -59,4 +60,11 @@ class PurchaseOrderController
         $this->service->edit($request);
         return redirect("/po");
     }
+
+
+    public function print(Request $request, int $id)
+    {
+        return response()->view('transaction.po.print_po');
+    }
+    
 }

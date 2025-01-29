@@ -10,7 +10,7 @@
         </div>
         <div class="form-group">
           <label for="description_left">Doc Number(Auto)</label>
-          <input readonly name="doc_number" class="form-control" type="text" placeholder="Doc Number">
+          <input readonly value="MUI/PR/XX/XX/XXXX" name="doc_number" class="form-control" type="text" placeholder="Doc Number">
         </div>
         <div class="form-group">
           <label for="description_left">Date</label>

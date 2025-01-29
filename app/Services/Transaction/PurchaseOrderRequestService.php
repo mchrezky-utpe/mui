@@ -25,21 +25,25 @@ class PurchaseOrderRequestService
         $length = $request->input('length'); // Jumlah data per halaman
         $search = $request->input('search.value'); // Pencarian global
         $orderColumnIndex = $request->input('order.0.column'); // Indeks kolom yang diurutkan
-        $orderDirection = $request->input('order.0.dir'); // Arah pengurutan (asc/desc)
+        $orderDirection = $request->input('order.0.dir') ?? 'desc'; // Arah pengurutan (asc/desc)
         $columns = $request->input('columns'); // Semua kolom
 
-        $orderColumn = $columns[$orderColumnIndex]['data'];
-
+        $orderColumn = $columns[$orderColumnIndex]['data']  ?? 'trans_date';
+  
         $query = DB::table('trans_purchase_request')
-            ->select(
+            ->select( 
                 'trans_purchase_request.id',
                 'trans_purchase_request.trans_date',
                 'trans_purchase_request.manual_id',
                 'trans_purchase_request.doc_num',
                 'trans_purchase_request.flag_type',
                 'trans_purchase_request.flag_status',
+                'trans_purchase_request.flag_purpose',
                 'trans_purchase_request.description',
-            );
+                'mst_person_supplier.description as supplier_name',
+                'trans_purchase_request.prs_supplier_id'
+            )
+            ->leftJoin('mst_person_supplier', 'trans_purchase_request.prs_supplier_id', '=', 'mst_person_supplier.id');
 
             
         $query->where('trans_purchase_request.flag_active', [1]);
@@ -80,30 +84,30 @@ class PurchaseOrderRequestService
     
         try {
             // Generate nomor dokumen
-            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_request', 'MUI/PO');
+            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_request', 'MUI/PR');
     
-            // PO Header Data
+            // PR Header Data
             $data = [
                 'manual_id' => $request->manual_id,
                 'trans_date' => $request->trans_date,
-                'valid_from_date' => $request->valid_from_date,
-                'valid_to_date' => $request->valid_to_date,
                 'flag_type' => $request->flag_type,
                 'gen_terms_detail_id' => $request->gen_terms_detail_id,
                 'gen_department_id' => $request->gen_department_id,
                 'gen_currency_id' => $request->gen_currency_id,
                 'description' => $request->description,
+                'prs_supplier_id' => $request->prs_supplier_id,
                 'val_exchangerates' => $request->val_exchangerates ?? 1,
                 'doc_num' => $doc_num_generated['doc_num'],
                 'doc_counter' => $doc_num_generated['doc_counter'],
-                'flag_status' => 1,
+                'flag_status' => 2,
+                'flag_purpose' => $request->flag_purpose,
                 'revision' => 0,
                 'generated_id' => Str::uuid()->toString(),
                 'flag_active' => 1,
             ];
     
             // Simpan data PO Header
-            $poHeader = PurchaseOrderRequest::create($data);
+            $prHeader = PurchaseOrderRequest::create($data);
             $items;
     
             // PO Detail Data
@@ -140,7 +144,7 @@ class PurchaseOrderRequestService
                     'total_f' => $vat['total_f'],
                     'total_d' => $vat['total_d'],
                     'generated_id' => Str::uuid()->toString(),
-                    'trans_po_id' => $poHeader->id, 
+                    'trans_pr_id' => $prHeader->id, 
                     'manual_id' => '',
                 ];
             }
@@ -152,6 +156,28 @@ class PurchaseOrderRequestService
             DB::commit();
         } catch (\Exception $e) {
             // Rollback jika terjadi error
+            DB::rollBack();
+            dd($e);
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat membuat Purchase Request.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    
+    public function add_po(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_order', 'MUI/PO');
+          
+            DB::statement('CALL  sp_trans_pr_create_po(?,?,?,?,?,?,?,?,?)',
+             [$request->id, $request->prs_supplier_id, $request->gen_terms_detail_id, 
+             $request->trans_po_date, $request->valid_from_date, $request->valid_to_date,
+            $request->description, $doc_num_generated['doc_num'], $doc_num_generated['doc_counter']]);
+          
+            DB::commit();
+        } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
             return response()->json([

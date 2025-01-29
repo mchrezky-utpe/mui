@@ -85,7 +85,7 @@ class PurchaseOrderService
     
         try {
             // Generate nomor dokumen
-            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_request', 'MUI/PR');
+            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_order', 'MUI/P0');
     
             // PO Header Data
             $data = [

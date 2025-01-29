@@ -42,6 +42,7 @@ function initParam(){
     .then(data => {
         console.log("Succesfully get currency:", data);
         populateSelect('Currency', data, $('[name=gen_currency_id]')) ;
+		$('[name=gen_currency_id]').val(65).change();
     }).catch(err => {
         console.error("Error get currency:", err);
     });
