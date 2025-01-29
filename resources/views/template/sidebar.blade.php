@@ -152,13 +152,13 @@
                                     <a href="/inventory-material-req">Material Request</a>
                                 </li>
                                 <li>
-                                    <a href="sales_return.html">Sales Return</a>
+                                    <a href="/inventory-sales-return">Sales Return</a>
                                 </li>
                                 <li>
-                                    <a href="purchase_return.html">Purchase Return</a>
+                                    <a href="/inventory-purchase-return">Purchase Return</a>
                                 </li>
                                 <li>
-                                    <a href="adjustment.html">Adjustment</a>
+                                    <a href="/inventory-adjustment">Adjustment</a>
                                 </li>
                             </ul>
                         </li><li class="has-sub">

@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">Inventory Material Request</h2>
+          <h2 class="pageheader-title">Inventory Sales Return</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">Inventory</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Material Request</li>
+                <li class="breadcrumb-item active" aria-current="page">Sales Return</li>
                 </li>
               </ol>
             </nav>
@@ -50,7 +50,7 @@
                     <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
                     <td>
-                      <form action="/inventory-material-req/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      <form action="/inventory-sales-return/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
@@ -69,10 +69,10 @@
   </div>
 </div>
 <!-- MODAL --> 
- @include('transaction.inventory.inventory_material_req._add') 
- @include('transaction.inventory.inventory_material_req._edit') 
+ @include('transaction.inventory.inventory_sales_return._add') 
+ @include('transaction.inventory.inventory_sales_return._edit') 
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/transaction/inventory/material_req/material_req.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/transaction/inventory/sales_return/sales_return.js') }}" type="text/javascript"></script> 
  @endsection
