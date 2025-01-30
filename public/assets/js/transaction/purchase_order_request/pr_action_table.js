@@ -1,11 +1,25 @@
 import {
-	skuMaster
+	skuMaster,
+	table_pr
 } from './pr_global_variable.js';
 import {
 	calculateTotal
 } from './pr_calculate.js';
 
 export function handleActionTable() {
+
+	$(document).on('click','.create_po',function(){
+		var id = this.dataset.id;
+		var supplier = $(this).closest('tr').find('td').eq(6).text();
+		var pr_doc_numb = $(this).closest('tr').find('td').eq(2).text();
+		var supplier_id = $(this).closest('tr').find('[name=supplier_id]').val();
+		$('[name=id]').val(id);
+		$('[name=pr_doc_numb]').val(pr_doc_numb);
+		$('[name=supplier_name]').val(supplier);
+		$('[name=prs_suplier_id]').val(supplier_id);
+		$('#add_modal_po').modal('show');
+	});
+
 	let rowCount = 0;
 	$("#add_row").on("click", function() {
 		const row = rowCount + 1;
@@ -44,32 +58,6 @@ export function handleActionTable() {
 		rowCount++;
 	});
 
-	// =========== HANDLING ROW ADD OTHER COST
-	let otherCostRowCount = 0;
-	$("#add_row_other_cost").on("click", function() {
-		otherCostRowCount++;
-		const newRow = `
-            <tr>
-                <td>${otherCostRowCount}</td>
-                <td><input type="text" class="form-control" name="description[]" placeholder="Description"></td>
-                <td>
-                    <select name="other_cost_id[]" class=form-control">
-                        <option value="">
-                            -- Select Cost --
-                        </option>
-                    </select>
-                </td>
-                <td><input type="number" class="form-control" name="price[]" placeholder="Price" step="0.01"></td>
-                <td><input type="number" class="form-control" name="qty[]" placeholder="Qty" step="0.01"></td>
-                <td><input type="number" class="form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
-                <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
-            </tr>
-        `;
-
-		$("#other_cost_table tbody").append(newRow);
-	});
-
-
 	$('#item_table').on('change', '.item_sku', function() {
 		const price = $(this).find('option:selected').attr('price');
 		const sku_description = $(this).find('option:selected').attr('sku_description');
@@ -78,22 +66,6 @@ export function handleActionTable() {
 		$(this).closest('tr').find('.sku_description').val(sku_description);
 		$(this).closest('tr').find('.sku_prefix').val(prefix);
 	});
-
-
-	// Event delegation for deleting rows
-	$("#other_cost_table").on("click", ".delete_row", function() {
-		$(this).closest("tr").remove();
-		othrtCostUpdateRowNumbers();
-	});
-
-	// Update row numbers after deletion
-	function othrtCostUpdateRowNumbers() {
-		otherCostRowCount = 0;
-		$("#other_cost_table tbody tr").each(function() {
-			otherCostRowCount++;
-			$(this).find("td:first").text(otherCostRowCount);
-		});
-	}
 
 	$('#item_table').on('input', '.price, .qty, .discount, .vat_percentage', function() {
 		calculateTotal();

@@ -15,6 +15,10 @@ export function handleTableServerSide() {
 				d.customer = $('#customer').val();
 			}
 		},
+		order: [
+			[3, 'desc'],
+			[2, 'desc']
+	],
 		columns: [{
 				data: null
 			}, // Kolom nomor urut
@@ -48,6 +52,17 @@ export function handleTableServerSide() {
 				render: function(data, type, row, meta) {
 					return meta.row + 1; // Menampilkan nomor urut
 				}
+			},{
+				targets: 4,
+				render: function(data, type, row, meta) {
+					let flag_type = "";
+					if(data.flag_type == 1){
+						flag_type = "Production Project Material";
+					}else {
+						flag_type = "General Item";
+					}
+					return flag_type;
+				}
 			},
 			{
 				targets: 7, // Kolom nomor urut
@@ -58,13 +73,16 @@ export function handleTableServerSide() {
 					return `
                         <form action="/po/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')"> 
                             <input type="hidden" name="_token" value="${csrfToken}">
-                            <button data-id="` + data.id + `" type="button" class="edit btn btn-success">
+							<a  target="_blank"  href="po/` + data.id + `/print" class="print btn btn-secondary">
+							 <span class="fas fa-print"></span>
+                            </a>
+							<button data-id="` + data.id + `" type="button" class="edit btn btn-success">
                             <span class="fas fa-pencil-alt"></span>
                             </button>
                             <button type="submit" class="btn btn-danger">
                             <span class="fas fa-trash"></span>
                             </button>
-                        </form>
+						</form>
                     `; // Menampilkan nomor urut
 				}
 			}

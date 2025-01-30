@@ -53,6 +53,7 @@
                     <th>Doc Number</th>
                     <th>Date</th>
                     <th>Type</th>
+                    <th>Purpose</th>
                     <th>Supplier</th>
                     <th>Description</th>
                     <th>Status</th>
@@ -69,6 +70,7 @@
   </div>
 </div>
 <!-- MODAL --> 
+ @include('transaction.pr._add_po') 
  @include('transaction.pr._add') 
  @include('transaction.pr._edit') 
  @endsection 

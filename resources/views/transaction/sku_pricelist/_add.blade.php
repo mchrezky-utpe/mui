@@ -3,7 +3,7 @@
     @csrf
     <div class="form-group">
       <label>Manual ID</label>
-      <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
+      <input value="{{ Str::random(10) }}" required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
     </div>
     <div class="form-group">
       <label>SKU</label>

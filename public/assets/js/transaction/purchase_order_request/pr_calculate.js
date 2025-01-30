@@ -16,9 +16,7 @@ export function calculateTotal() {
 		vat_total += result.vat;
 	});
 
-	const other_cost_total = parseFloat($('#other_cost_total').val()) || 0;
-	const deduction_total = parseFloat($('#deduction_total').val()) || 0;
-	const after_discount = sub_total + other_cost_total - deduction_total - discount_total;
+	const after_discount = sub_total - discount_total;
 	const total = after_discount + vat_total;
 
 	$('#sub_total').val(sub_total.toFixed(2));

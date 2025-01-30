@@ -21,6 +21,8 @@ Route::controller(PurchaseOrderRequestController::class)->group(function () {
     Route::get("/pr/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pr/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pr/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
+    // add po
+    Route::post("/pr/po", "add_po")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(PurchaseOrderController::class)->group(function () {
@@ -30,6 +32,7 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::get("/po/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/po/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/po/{id}/print", "print")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {
