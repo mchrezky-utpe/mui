@@ -25,6 +25,26 @@ export function initParam() {
 			console.error("Error get terms:", err);
 		});
 
+		
+function fetchTermsMaster() {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'general-terms/api/by',
+			data: {
+				prefix: 'PCT'
+			},
+			success: function(data) {
+				resolve(data.data[0].details);
+			},
+			error: function(err) {
+				console.error("Error fetching terms master:", err);
+				reject(err);
+			}
+		});
+	});
+}
+
 	fetchSupplierMaster()
 		.then(data => {
 			console.log("Succesfully get Supplier:", data);

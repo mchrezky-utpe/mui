@@ -1,5 +1,18 @@
 @extends('template.main') @section('content') <div class="section__content section__content--p30">
-  <div class="container-fluid">
+<style>
+  .table-container {
+        max-height: 350px; 
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        overflow-y: auto;
+    }
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+</style>  
+<div class="container-fluid">
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">

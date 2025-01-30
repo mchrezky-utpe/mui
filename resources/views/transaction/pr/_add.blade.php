@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
           <label for="description_right">Terms</label>
-          <select id="terms_select" name="gen_terms_detail_id" class="form-control"></select>
+          <select id="terms_select" name="gen_terms_detail_id" class="form-control terms_select"></select>
         </div>
       </div>
       <!-- REGION SIDE 3 -->

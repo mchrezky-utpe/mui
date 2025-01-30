@@ -205,6 +205,7 @@ Route::controller(MasterGeneralTermsController::class)->group(function () {
     Route::get("/general-terms/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/general-terms/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-terms/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralDepartmentController::class)->group(function () {
