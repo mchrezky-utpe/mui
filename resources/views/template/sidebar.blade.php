@@ -75,10 +75,10 @@
                                 <i class="fas fa-industry"></i>Factory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="warehouse.html">Warehouse</a>
+                                    <a href="/factory-warehouse">Warehouse</a>
                                 </li>
                                 <li>
-                                    <a href="machine.html">Machine</a>
+                                    <a href="/factory-machine">Machine</a>
                                 </li>
                             </ul>
                         </li>
@@ -143,22 +143,22 @@
                                 <i class="fas fa-box"></i>Inventory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="receiving.html">Receiving</a>
+                                    <a href="/inventory-receiving">Receiving</a>
                                 </li>
                                 <li>
-                                    <a href="delivery_order.html">Delivery Order</a>
+                                    <a href="/inventory-do">Delivery Order</a>
                                 </li>
                                 <li>
-                                    <a href="material_request.html">Material Request</a>
+                                    <a href="/inventory-material-req">Material Request</a>
                                 </li>
                                 <li>
-                                    <a href="sales_return.html">Sales Return</a>
+                                    <a href="/inventory-sales-return">Sales Return</a>
                                 </li>
                                 <li>
-                                    <a href="purchase_return.html">Purchase Return</a>
+                                    <a href="/inventory-purchase-return">Purchase Return</a>
                                 </li>
                                 <li>
-                                    <a href="adjustment.html">Adjustment</a>
+                                    <a href="/inventory-adjustment">Adjustment</a>
                                 </li>
                             </ul>
                         </li><li class="has-sub">
