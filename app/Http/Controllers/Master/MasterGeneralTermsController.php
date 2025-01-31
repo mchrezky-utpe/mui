@@ -58,6 +58,14 @@ class MasterGeneralTermsController
         ]);
     }
 
+    public function get_api_by(Request $request)
+    {
+        $data = $this->service->get_by($request);
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function edit(Request $request)
     {
         $this->service->edit($request);

@@ -6,20 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
 
-class MasterGeneralTerms extends Model
+class MasterGeneralTermsDetail extends Model
 {
     use HasFactory;
   
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
-    protected $table = 'mst_general_terms';
-
-    
-    public function details()
-    {
-        return $this->hasMany(MasterGeneralTermsDetail::class, 'general_terms_id','id')
-                    ->where('flag_active', true);  
-    }
+    protected $table = 'mst_general_terms_detail';
 
     use HasUserTracking;
 }

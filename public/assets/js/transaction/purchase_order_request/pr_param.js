@@ -19,7 +19,7 @@ export function initParam() {
 	fetchTermsMaster()
 		.then(data => {
 			console.log("Succesfully get terms:", data);
-			populateSelect('Terms', data, $('#terms_select'));
+			populateSelect('Terms', data, $('.terms_select'));
 		})
 		.catch(err => {
 			console.error("Error get terms:", err);
@@ -53,15 +53,17 @@ export function initParam() {
 			console.error("Error get Currency:", err);
 		});
 }
-
+		
 function fetchTermsMaster() {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'api/sku-unit',
+			url: base_url + 'general-terms/api/by',
+			data: {
+				prefix: 'PCT'
+			},
 			success: function(data) {
-				setGlobalVariable('termsMaster', data.data);
-				resolve(data.data);
+				resolve(data.data[0].details);
 			},
 			error: function(err) {
 				console.error("Error fetching terms master:", err);
