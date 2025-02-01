@@ -9,5 +9,6 @@
       <label>Description</label>
       <input required name="description" class="form-control" type="text" placeholder="Description">
     </div>
+    @include('master.general_terms._detail')
   </form>   
 </x-modals.modal>

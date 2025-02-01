@@ -116,10 +116,18 @@
                             <a href="chart.html">
                                 <i class="fas fa-file"></i>Echange Rates</a>
                         </li> --}}
-
                         
                         <li>
                             <a href="#">Transaction</a>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-check"></i>Approval</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/approval-pr">Purchase Request(PR)</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
@@ -138,7 +146,8 @@
                                     <a href="/bom">Bill of Material</a>
                                 </li>
                             </ul>
-                        </li><li class="has-sub">
+                        </li>
+                        <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-box"></i>Inventory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">

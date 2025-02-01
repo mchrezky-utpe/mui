@@ -10,7 +10,7 @@ class PurchaseOrderDetail extends Model
 {
     use HasFactory;
   
-    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
+    // protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
     protected $table = 'trans_purchase_order_detail';
 

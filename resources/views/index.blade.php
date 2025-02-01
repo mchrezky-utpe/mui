@@ -7,7 +7,17 @@
     <title>mui_mrp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+<<<<<<< HEAD:resources/views/index.blade.php
         
+=======
+
+        <style>
+          p,h6,h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+} 
+        </style>
+>>>>>>> 574ca74cc9603f731381adceae9783c46c63c228:resources/views/index.html
 </head>
 
 <body>

@@ -21,12 +21,12 @@ class PurchaseOrderRequestService
     }
 
     public function get_all(Request $request){
-        $start = $request->input('start'); // Start index untuk pagination
-        $length = $request->input('length'); // Jumlah data per halaman
-        $search = $request->input('search.value'); // Pencarian global
-        $orderColumnIndex = $request->input('order.0.column'); // Indeks kolom yang diurutkan
-        $orderDirection = $request->input('order.0.dir') ?? 'desc'; // Arah pengurutan (asc/desc)
-        $columns = $request->input('columns'); // Semua kolom
+        $start = $request->input('start'); 
+        $length = $request->input('length');
+        $search = $request->input('search.value'); 
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDirection = $request->input('order.0.dir') ?? 'desc'; 
+        $columns = $request->input('columns'); 
 
         $orderColumn = $columns[$orderColumnIndex]['data']  ?? 'trans_date';
   
@@ -99,7 +99,7 @@ class PurchaseOrderRequestService
                 'val_exchangerates' => $request->val_exchangerates ?? 1,
                 'doc_num' => $doc_num_generated['doc_num'],
                 'doc_counter' => $doc_num_generated['doc_counter'],
-                'flag_status' => 2,
+                'flag_status' => 1,
                 'flag_purpose' => $request->flag_purpose,
                 'revision' => 0,
                 'generated_id' => Str::uuid()->toString(),
@@ -110,7 +110,9 @@ class PurchaseOrderRequestService
             $prHeader = PurchaseOrderRequest::create($data);
             $items;
     
-            // PO Detail Data
+            $userId = Auth::id();
+            $now = Carbon::now();
+
             foreach ($request->sku_id as $index => $sku_id) {
                 $price = $request->price[$index];
                 $qty = $request->qty[$index];
@@ -146,22 +148,18 @@ class PurchaseOrderRequestService
                     'generated_id' => Str::uuid()->toString(),
                     'trans_pr_id' => $prHeader->id, 
                     'manual_id' => '',
+                    'flag_status' => 0,
+                    'created_by' => $userId,
+                    'created_at' => $now,
                 ];
             }
     
-            // Simpan data PO Detail
             PurchaseOrderRequestDetail::insert($items);
-    
-            // Commit transaksi jika semua berhasil
+
             DB::commit();
         } catch (\Exception $e) {
-            // Rollback jika terjadi error
             DB::rollBack();
             dd($e);
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat membuat Purchase Request.',
-                'error' => $e->getMessage(),
-            ], 500);
         }
     }
     
