@@ -12,7 +12,20 @@ use App\Http\Controllers\Transaction\PurchaseOrderRequestController;
 use App\Http\Controllers\Transaction\SkuPricelistController;
 use App\Http\Controllers\Transaction\SkuMinOfStockController;
 use App\Http\Controllers\Transaction\SkuMinOfQtyController;
+use App\Http\Controllers\Transaction\Approval\ApprovalPurchaseRequestController;
 use App\Http\Middleware\OnlyMemberMiddleware;
+
+
+Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
+    Route::get("/approval-pr", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/approval-pr/approve", "apporve")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/approval-pr/deny", "deny")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/approval-pr/hold", "hold")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/approval-pr/item/{id}", "getItem")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/approval-pr/item/deny", "deny_item")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/approval-pr/item/hold", "hold_item")->middleware(OnlyMemberMiddleware::class);
+});
+
 
 Route::controller(PurchaseOrderRequestController::class)->group(function () {
     Route::get("/pr", "index")->middleware(OnlyMemberMiddleware::class);

@@ -1,0 +1,42 @@
+1. GENERAL TERMS ADD
+2. Purchase request tamabhkan request date
+3. buat cetak po
+
+
+view cetak po header:
+
+CREATE OR REPLACE VIEW vw_purchase_order_print_hd AS
+select 
+ tpo.id, 
+ mps.description as supplier_name,
+ mps.address_01 as address,
+ mps.phone_01 as phone,
+ mps.fax_01 as address,
+ mps.email_01 as attention_to,
+ tpo.doc_num as po_number,
+ tpo.revision,
+ tpo.trans_date as po_date,
+ mgt.description as terms,
+ mgc.description as currency,
+ mgd.description as department,
+ tpod.sub_total,
+ tpod.discount,
+ tpod.ppn,
+ tpod.sub_total - tpod.discount + tpod.ppn as total_order
+from trans_purchase_order tpo 
+inner join mst_person_supplier mps 
+on tpo.prs_supplier_id = mps.id 
+left join mst_general_terms_detail mgt 
+on mgt.id = tpo.gen_terms_detail_id
+left join mst_general_currency mgc on 
+mgc.id = tpo.gen_currency_id 
+left join mst_general_department mgd on 
+mgd.id = tpo.gen_department_id
+left join (select tpod.id, tpod.trans_po_id, sum(tpod.subtotal_d) as sub_total, sum(tpod.discount_d) as discount,sum(tpod.vat_d) as ppn from trans_purchase_order_detail tpod group by tpod.trans_po_id) 
+tpod on tpod.trans_po_id = tpo.id;
+
+view cetak po detail :
+
+CREATE VIEW vw_purchase_order_print_dt AS
+select tprd.trans_po_id , 
+tprd.id,tprd.sku_prefix as item_code, tprd.sku_description as item_name, '' as spe_code, tprd.qty, '' as unit, tprd.price_d as price, tprd.price_d as amount, null as req_date from trans_purchase_order_detail tprd;

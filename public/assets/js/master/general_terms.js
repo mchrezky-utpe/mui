@@ -1,3 +1,8 @@
+
+$(document).on('click','#add_button',function(){
+    $('.detail_table tbody').empty();
+});
+
 $(document).on('click', '.edit', function (e) {
     var id = this.dataset.id;
     $.ajax({
@@ -11,7 +16,7 @@ $(document).on('click', '.edit', function (e) {
             $('[name=manual_id]').val(data.manual_id);
             $('[name=description]').val(data.description);
 
-            $('#detail_table tbody').empty();
+            $('.detail_table tbody').empty();
             detailRowCount = 0 ;
             for (let index = 0; index < data.details.length; index++) {
                 detailRowCount++;
@@ -26,7 +31,7 @@ $(document).on('click', '.edit', function (e) {
                     </tr>
                 `;
         
-                $("#detail_table tbody").append(newRow);  
+                $(".detail_table tbody").append(newRow);  
             }
 
             $('#edit_modal').modal('show');
@@ -43,7 +48,7 @@ $(document).on('click', '.edit', function (e) {
 
     // =========== HANDLING ROW ADD DETAIL
 	let detailRowCount = 0;
-	$("#add_row_detail").on("click", function() {
+	$(".add_row_detail").on("click", function() {
 		detailRowCount++;
 		const newRow = `
             <tr>
@@ -60,7 +65,7 @@ $(document).on('click', '.edit', function (e) {
 	});
     
     	// Event delegation for deleting rows
-	$("#detail_table").on("click", ".delete_row", function() {
+	$(".detail_table").on("click", ".delete_row", function() {
 		$(this).closest("tr").remove();
 		detailUpdateRowNumbers();
 	});
@@ -68,7 +73,7 @@ $(document).on('click', '.edit', function (e) {
     	// Update row numbers after deletion
 	function detailUpdateRowNumbers() {
 		detailRowCount = 0;
-		$("#detail_table tbody tr").each(function() {
+		$(".detail_table tbody tr").each(function() {
 			detailRowCount++;
 			$(this).find("td:first").text(detailRowCount);
 		});

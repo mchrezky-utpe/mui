@@ -29,6 +29,10 @@
     max-width: 800px; /* Lebar modal */
     margin: 0 auto; /* Memastikan modal tetap berada di tengah horizontal */
 }
+.custom-modal-dialog-medium2 {
+    max-width: 1000px; /* Lebar modal */
+    margin: 0 auto; /* Memastikan modal tetap berada di tengah horizontal */
+}
 
 
 .custom-modal-dialog-large .modal-content {
