@@ -16,7 +16,7 @@ export function handleActionTable() {
 		$('[name=id]').val(id);
 		$('[name=pr_doc_numb]').val(pr_doc_numb);
 		$('[name=supplier_name]').val(supplier);
-		$('[name=prs_suplier_id]').val(supplier_id);
+		$('[name=prs_supplier_id]').val(supplier_id);
 		$('#add_modal_po').modal('show');
 	});
 
