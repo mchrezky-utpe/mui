@@ -141,6 +141,26 @@
         </table>
     </div>
     <div class="container-fluid d-flex">
+        <div class="me-2">
+            <p style="line-height: 0.5;">SUB TOTAL</p>
+            <p style="line-height: 0.5;">DISCOUNT</p>
+            <p style="line-height: 0.5;">PPn</p>
+            <p style="line-height: 0.5;">TOTAL ORDER</p>
+        </div>
+        <div class="me-2">
+            <p style="line-height: 0.5;">:</p>
+            <p style="line-height: 0.5;">:</p>
+            <p style="line-height: 0.5;">:</p>
+            <p style="line-height: 0.5;">:</p>
+        </div>
+        <div>
+            <p style="line-height: 0.5;">{{ number_format($header->sub_total, 0, '', ',') }}&nbsp;</p>
+            <p style="line-height: 0.5;">{{ $header->discount }}&nbsp;</p>
+            <p style="line-height: 0.5;">{{ $header->ppn }}&nbsp;</p>
+            <p style="line-height: 0.5;">{{ number_format($header->total_order, 0, '', ',') }}&nbsp;</p>
+        </div>
+    </div>
+    <div class="container-fluid d-flex">
         <div class="text-center" style="width: 100px;">Prepared by</div>
         <div class="text-center" style="width: 100px;">Approved by</div>
         <div class="text-center" style="width: 100px;">Received by</div>
