@@ -124,6 +124,7 @@ class PurchaseOrderRequestService
                 $vat = CalcHelper::calcVat($discount['after_discount_f'], $discount['after_discount_d'], $vat_percentage);
 
                 $items[] = [
+                    'req_date' => $request->req_date[$index],
                     'sku_description' => $request->sku_description[$index],
                     'sku_prefix' => $request->sku_prefix[$index],
                     'description' => $request->description_item[$index] ?? null,
