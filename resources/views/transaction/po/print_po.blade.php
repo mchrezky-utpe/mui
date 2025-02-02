@@ -70,12 +70,12 @@
                 <p style="line-height: 0.5;">:</p>
             </div>
             <div>
-                <p style="line-height: 0.5;">{{ $header->supplier_name ?? '' }}&nbsp;</p>
-                <p style="line-height: 0.5;">{{ $header->address_01 }}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->supplier_name}}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->address }}&nbsp;</p>
                 <p style="line-height: 0.5;">&nbsp;</p>
                 <p style="line-height: 0.5;">&nbsp;</p>
-                <p style="line-height: 0.5;">{{ $header->phone_01 }}&nbsp; / {{ $header->fax_01 }}&nbsp;</p>
-                <p style="line-height: 0.5;">{{ $header->email_01 }}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->phone }}&nbsp; / {{ $header->fax }}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->attention_to }}&nbsp;</p>
                 <p style="line-height: 0.5;">&nbsp;</p>
             </div>
         </div>
@@ -100,10 +100,10 @@
                 <p style="line-height: 0.5;">:</p>
             </div>
             <div>
-                <p style="line-height: 0.5;">{{ $header->doc_num }}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->po_number }}&nbsp;</p>
                 <p style="line-height: 0.5;">{{ $header->revision }}&nbsp;</p>
-                <p style="line-height: 0.5;">{{ $header->trans_date }}&nbsp;</p>
-                <p style="line-height: 0.5;">{{ $header->purchase }}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->po_date }}&nbsp;</p>
+                <p style="line-height: 0.5;">&nbsp;</p>
                 <p style="line-height: 0.5;">{{ $header->terms }}&nbsp;</p>
                 <p style="line-height: 0.5;">{{ $header->currency }}&nbsp;</p>
                 <p style="line-height: 0.5;">{{ $header->department }}&nbsp;</p>
@@ -127,13 +127,13 @@
             <tbody>
                 <tbody> @foreach($detail as $key => $value) 
                 <tr>
-                    <td>{{ $value->sku_prefix }}</td>
-                    <td>{{ $value->sku_description }}</td>
+                    <td>{{ $value->item_code }}</td>
+                    <td>{{ $value->item_name }}</td>
                     <td></td>
                     <td>{{ $value->qty }}</td>
                     <td></td>
-                    <td>{{ $value->price_d }}</td>
-                    <td>{{ $value->price_d }}</td>
+                    <td>{{ $value->price }}</td>
+                    <td>{{ $value->amount }}</td>
                     <td></td>
                 </tr>
                 @endforeach
@@ -172,9 +172,23 @@
 </body>
 <script>
     window.onload = function() {
+        // Memulai pencetakan
         window.print();
     };
+
+    // Menutup jendela setelah pencetakan selesai
+    window.onafterprint = function() {
+        window.close(); // Menutup jendela setelah pencetakan selesai
+    };
+
+    // Menangani pembatalan pencetakan atau penutupan jendela
+    window.onbeforeunload = function() {
+        // Cek apakah print dibatalkan atau jendela ditutup
+        // Anda bisa menambahkan konfirmasi atau logika lain di sini jika perlu
+        window.close(); // Menutup jendela
+    };
 </script>
+
 
 
 </html>

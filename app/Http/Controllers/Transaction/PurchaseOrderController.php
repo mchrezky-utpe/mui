@@ -67,13 +67,11 @@ class PurchaseOrderController
 
     public function print(Request $request, int $id)
     {
-        $header = PurchaseOrdePrintHdVw::where('id', $request->id)->first();
-        $detail = PurchaseOrdePrintDtVw::where('trans_po_id', $request->id)->get();
-        $response = [
-            'header' => $header,
-            'detail' => $detail,
-        ];
+        // dd($request);
+        $response = $this->service->print($id);
+  
         return view('transaction.po.print_po', $response);
     }
     
+
 }
