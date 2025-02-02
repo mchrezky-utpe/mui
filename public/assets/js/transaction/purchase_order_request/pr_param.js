@@ -60,7 +60,7 @@ function fetchTermsMaster() {
 			type: 'GET',
 			url: base_url + 'general-terms/api/by',
 			data: {
-				prefix: 'GEN-T-0001'
+				prefix: 'PCT'
 			},
 			success: function(data) {
 				resolve(data.data[0].details);

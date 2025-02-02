@@ -1,5 +1,5 @@
 <x-modals.modal id="detail_modal" title="Detail Items PR"  modalClass="custom-modal-dialog-medium2">
-<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/general-terms/edit">
+<form id="form_modal" autocomplete="off" class="form-horizontal" method="get" action="/approval-pr">
     @csrf
     <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0">Details</h5>
