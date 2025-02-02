@@ -1,5 +1,5 @@
 <x-modals.modal id="add_modal" title="Add General Terms">
-<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/general-terms">
+<form id="form_modal" autocomplete="off" class="form-horizontal add_modal" method="post" action="/general-terms">
     @csrf
     <div class="form-group">
       <label>Manual ID</label>

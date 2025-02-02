@@ -35,7 +35,14 @@ $(document).on('click', '.edit', function (e) {
             }
 
             $('#edit_modal').modal('show');
-
+            $('.close').on('click', function() {
+                // Close the modal
+                $('#edit_modal').modal('hide');
+                
+                // Reset the form inside the modal
+                $('#add_modal form')[0].reset(); 
+                });
+                
         },
         error: function (err) {
             debugger;

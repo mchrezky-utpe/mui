@@ -29,18 +29,18 @@ class MasterGeneralTermsService
             $data['flag_active'] = 1;
             $data = MasterGeneralTerms::create($data);
             $data['prefix'] = HelperCustom::generateTrxNo('GEN-T-', $data->id);
-            $header =  $data->save();
+            $data->save();
             $items;
     
             // Detail Data
             if($request->description_detail){
-                foreach ($request->sku_id as $index => $sku_id) {
+                foreach ($request->detail_id as $index => $detail_id) {
                     $items[] = [
-                        'description' => $request->description_item[$index],
+                        'description' => $request->description_detail[$index],
                         'flag_active' => 1,
                         'flag_show' => 1,
                         'generated_id' => Str::uuid()->toString(),
-                        'trans_po_id' => $header->id, 
+                        'general_terms_id' => $data->id, 
                     ];
                 }
                 MasterGeneralTermsDetail::insert($items);
