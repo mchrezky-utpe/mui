@@ -11,7 +11,7 @@ select
  mps.description as supplier_name,
  mps.address_01 as address,
  mps.phone_01 as phone,
- mps.fax_01 as address,
+ mps.fax_01 as fax,
  mps.email_01 as attention_to,
  tpo.doc_num as po_number,
  tpo.revision,
@@ -32,11 +32,11 @@ left join mst_general_currency mgc on
 mgc.id = tpo.gen_currency_id 
 left join mst_general_department mgd on 
 mgd.id = tpo.gen_department_id
-left join (select tpod.id, tpod.trans_po_id, sum(tpod.subtotal_d) as sub_total, sum(tpod.discount_d) as discount,sum(tpod.vat_d) as ppn from trans_purchase_order_detail tpod group by tpod.trans_po_id) 
+left join (select tpod.trans_po_id, sum(tpod.subtotal_d) as sub_total, sum(tpod.discount_d) as discount,sum(tpod.vat_d) as ppn from trans_purchase_order_detail tpod group by tpod.trans_po_id) 
 tpod on tpod.trans_po_id = tpo.id;
 
 view cetak po detail :
 
-CREATE VIEW vw_purchase_order_print_dt AS
+CREATE OR REPLACE VIEW vw_purchase_order_print_dt AS
 select tprd.trans_po_id , 
 tprd.id,tprd.sku_prefix as item_code, tprd.sku_description as item_name, '' as spe_code, tprd.qty, '' as unit, tprd.price_d as price, tprd.price_d as amount, null as req_date from trans_purchase_order_detail tprd;

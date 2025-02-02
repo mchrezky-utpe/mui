@@ -10,6 +10,15 @@
         
 </head>
 
+<style>
+        .signature-line {
+            border-bottom: 1px solid black;
+            width: 100px;
+            margin: 20px 0;
+            margin-right: 5px; /* Memberikan jarak ke kanan */
+        }
+    </style>
+
 <body>
     <!-- First Section -->
     <div class="container-fluid d-flex w-100">
@@ -61,7 +70,7 @@
                 <p style="line-height: 0.5;">:</p>
             </div>
             <div>
-                <p style="line-height: 0.5;">{{ $header->supplier_name }}&nbsp;</p>
+                <p style="line-height: 0.5;">{{ $header->supplier_name ?? '' }}&nbsp;</p>
                 <p style="line-height: 0.5;">{{ $header->address_01 }}&nbsp;</p>
                 <p style="line-height: 0.5;">&nbsp;</p>
                 <p style="line-height: 0.5;">&nbsp;</p>
@@ -116,7 +125,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tbody> @foreach($data as $key => $value) 
+                <tbody> @foreach($detail as $key => $value) 
                 <tr>
                     <td>{{ $value->sku_prefix }}</td>
                     <td>{{ $value->sku_description }}</td>
@@ -144,9 +153,9 @@
         <div class="text-center" style="width: 100px;">{{ $header->supplier_name }}&nbsp;</div>
     </div>
     <div class="container-fluid d-flex">
-        <div class="text-center" style="width: 100px;">========</div>
-        <div class="text-center" style="width: 100px;">========</div>
-        <div class="text-center" style="width: 100px;">========</div>
+    <div class="signature-line"></div> 
+    <div class="signature-line"></div>
+    <div class="signature-line"></div>
     </div>
     <div class="container-fluid d-flex">
         <div class="text-center" style="width: 100px;">Purchasing</div>
