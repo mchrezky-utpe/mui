@@ -129,11 +129,11 @@
                 <tr>
                     <td>{{ $value->item_code }}</td>
                     <td>{{ $value->item_name }}</td>
+                    <td>{{ $value->spe_code }}</td>
+                    <td>{{ number_format($value->qty, 0, '', ',') }}</td>
                     <td></td>
-                    <td>{{ $value->qty }}</td>
-                    <td></td>
-                    <td>{{ $value->price }}</td>
-                    <td>{{ $value->amount }}</td>
+                    <td>{{ number_format($value->price, 0, '', ',') }}</td>
+                    <td>{{ number_format($value->amount, 0, '', ',') }}</td>
                     <td></td>
                 </tr>
                 @endforeach
