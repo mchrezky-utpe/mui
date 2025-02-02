@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
       <label>Address</label>
-      <input required name="address" class="form-control" type="text" placeholder="Address">
+      <input required name="address_01" class="form-control" type="text" placeholder="Address">
     </div>
     <div class="form-group">
       <label>Phone</label>

@@ -21,11 +21,11 @@ class MasterPersonSupplierService
 
     public function add(Request $request){
         $data['description'] = $request->description;
-        $data['address'] = $request->address;
-        $data['phone'] = $request->phone;
-        $data['fax'] = $request->fax;
-        $data['email'] = $request->email;
-        $data['contact_person'] = $request->contact_person;
+        $data['address_01'] = $request->address_01;
+        $data['phone_01'] = $request->phone;
+        $data['fax_01'] = $request->fax;
+        $data['email_01'] = $request->email;
+        $data['contact_person_01'] = $request->contact_person;
         $data['flag_active'] = 1;
         $data['flag_show'] = 1;
         $data['manual_id'] = $request->manual_id;
@@ -59,11 +59,11 @@ class MasterPersonSupplierService
     {
         $data = MasterPersonSupplier::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
-        $data->address = $request->address;
-        $data->phone = $request->phone;
-        $data->fax = $request->fax;
-        $data->email = $request->email;
-        $data->contact_person = $request->contact_person;
+        $data->address_01 = $request->address_01;
+        $data->phone_01 = $request->phone;
+        $data->fax_01 = $request->fax;
+        $data->email_01 = $request->email;
+        $data->contact_person_01 = $request->contact_person;
         $data->manual_id= $request->manual_id;
         $data->save();
     }
