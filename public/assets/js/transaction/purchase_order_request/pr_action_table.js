@@ -25,11 +25,12 @@ export function handleActionTable() {
 		const row = rowCount + 1;
 		let sku_item
 		skuMaster.forEach(data => {
-			sku_item += `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" >` + data.sku.prefix + " - " + data.sku.description + `</option>`
+			sku_item +=`"  req_date="` + data.req_date +  `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" >` + data.sku.prefix + " - " + data.sku.description + `</option>`
 		});
 		const newRow = `
             <tr>
                 <td>${row}</td>
+                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" step="0.01"></td>
                 <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"></td>
                 <td>
                     <select name="sku_id[]" class="form-control item_sku">

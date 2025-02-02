@@ -163,7 +163,18 @@
 </body>
 <script>
     window.onload = function() {
+        // Men-trigger print
         window.print();
+
+        // Menunggu proses print selesai, kemudian menutup halaman
+        window.onafterprint = function() {
+            window.close();
+        };
+
+        // Jika print dibatalkan, juga menutup halaman setelah percakapan print ditutup
+        window.onbeforeunload = function() {
+            window.close();
+        };
     };
 </script>
 

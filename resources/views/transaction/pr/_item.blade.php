@@ -7,6 +7,7 @@
     <thead>
       <tr>
         <th>No</th>
+        <th>Request Date</th>
         <th>Description</th>
         <th>Sku</th>
         <th>Price</th>
