@@ -1,4 +1,10 @@
 
+    $('.closeParentModalButton').click(function() {
+      // Cari parent element dengan class .modal dan sembunyikan
+      $(this).closest('.modal').modal('hide');
+    });
+
+
 // common button submit
 $(document).on('click', '.btn_submit_modal', function (e) {
     e.preventDefault();

@@ -31,6 +31,13 @@ require_once base_path('routes/transaction_route.php');
 
 Route::get('/', function () {
     return view('dashboard.dashboard');
+})->middleware(OnlyMemberMiddleware::class);
+
+
+Route::controller(AuthController::class)->group(function () {
+    Route::get("/login", "login")->middleware(OnlyGuestMiddleware::class);
+    Route::post("/login", "doLogin")->middleware(OnlyGuestMiddleware::class);
+    Route::post("/logout", "doLogout")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(AuthController::class)->group(function () {
