@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Helpers\CalcHelper;
+use App\Models\Transaction\PurchaseOrdePrintDtVw;
+use App\Models\Transaction\PurchaseOrdePrintHdVw;
 use Illuminate\Support\Facades\DB;
 
 
@@ -195,6 +197,16 @@ class PurchaseOrderService
     public function get(int $id)
     {
         return PurchaseOrder::where('id', $id)->firstOrFail();
+    } 
+    public function print(int $id)
+    {
+        $header = PurchaseOrdePrintHdVw::where('id', $id)->first();
+        $detail = PurchaseOrdePrintDtVw::where('trans_po_id', $id)->get();
+        
+        return [
+            'header' => $header,
+            'detail' => $detail,
+        ];
     } 
 
     function edit(Request $request)

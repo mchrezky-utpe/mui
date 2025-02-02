@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Helpers\HelperCustom;
-use App\Models\Transaction\PurchaseOrdePrintHdVw;
-use App\Models\Transaction\PurchaseOrdePrintDtVw;
 use App\Services\Transaction\PurchaseOrderService;
-use Dotenv\Repository\Adapter\PutenvAdapter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -67,13 +64,11 @@ class PurchaseOrderController
 
     public function print(Request $request, int $id)
     {
-        $header = PurchaseOrdePrintHdVw::where('id', $request->id)->first();
-        $detail = PurchaseOrdePrintDtVw::where('trans_po_id', $request->id)->get();
-        $response = [
-            'header' => $header,
-            'detail' => $detail,
-        ];
+        // dd($request);
+        $response = $this->service->print($id);
+  
         return view('transaction.po.print_po', $response);
     }
     
+
 }
