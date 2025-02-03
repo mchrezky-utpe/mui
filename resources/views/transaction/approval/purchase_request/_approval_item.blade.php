@@ -1,4 +1,4 @@
-<x-modals.modal id="detail_modal" title="Detail Items PR"  modalClass="custom-modal-dialog-medium2">
+<x-modals.modal notUsingSave="true" id="detail_modal" title="Detail Items PR"  modalClass="custom-modal-dialog-medium2">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="get" action="/approval-pr">
     @csrf
     <div class="card-header d-flex justify-content-between align-items-center">

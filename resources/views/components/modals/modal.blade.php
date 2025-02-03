@@ -12,7 +12,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary closeParentModalButton" data-dismiss="modal">Close</button>
+                @if (@!$notUsingSave)
                 <button type="button" class="btn btn-primary btn_submit_modal" id="btn_submit_modal">Save changes</button>
+                @endif     
             </div>
         </div>
     </div>
