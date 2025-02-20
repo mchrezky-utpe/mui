@@ -23,10 +23,10 @@
                         <!-- SKU Menu -->
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tags"></i>SKU</a>
+                                <i class="fas fa-tags"></i>Item</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/sku">Main</a>
+                                    <a href="/sku">Information</a>
                                 </li>
                                 <li>
                                     <a href="/sku-type">Type</a>
@@ -37,7 +37,7 @@
                                 <li>
                                     <a href="/sku-model">Model</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="/sku-process">Process</a>
                                 </li>
                                 <li>
@@ -47,7 +47,7 @@
                                     <a href="/sku-packaging">Packaging</a>
                                 </li>
                                 <li>
-                                    <a href="/sku-detail">Detail</a>
+                                    <a href="/sku-detail">Detail</a> -->
                                 </li>
                             </ul>
                         </li>
@@ -60,17 +60,17 @@
                                 <li>
                                     <a href="/person-supplier">Supplier</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="/person-customer">Customer</a>
                                 </li>
                                 <li>
                                     <a class="button_sidebar" href="user">User System</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
 
                         <!-- Factory Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-industry"></i>Factory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -81,7 +81,7 @@
                                     <a href="/factory-machine">Machine</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Terms Menu -->
                         <li class="has-sub">
@@ -94,7 +94,7 @@
                                 <li>
                                     <a href="/general-department">Department</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="/general-currency">Currency</a>
                                 </li>
                                 <li>
@@ -105,7 +105,7 @@
                                 </li>
                                 <li>
                                     <a href="/general-other-cost">Other Cost</a>
-                                </li>
+                                </li> -->
                                 <!-- <li>
                                     <a href="/general-exchange-rates">Exchange Rates</a>
                                 </li> -->
@@ -131,7 +131,7 @@
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tags"></i>SKU</a>
+                                <i class="fas fa-tags"></i>Item</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="/sku-pricelist">Pricelist</a>
@@ -142,12 +142,12 @@
                                 <li>
                                     <a href="/sku-minofqty">Minimum Qty</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="/bom">Bill of Material</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-box"></i>Inventory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -170,7 +170,9 @@
                                     <a href="/inventory-adjustment">Adjustment</a>
                                 </li>
                             </ul>
-                        </li><li class="has-sub">
+                        </li> -->
+<!--                         
+                        <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-industry"></i>Production</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -196,9 +198,9 @@
                                     <a href="production_order.html">Production Order</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!-- QC Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-check-circle"></i>QC</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -209,10 +211,10 @@
                                     <a href="qc_purchase.html">Purchase</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Engineering Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-cogs"></i>Engineering</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -223,7 +225,7 @@
                                     <a href="chemical_additional.html">Chemical Additional</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Purchase Menu -->
                         <li class="has-sub">
@@ -236,7 +238,7 @@
                                 <li>
                                     <a href="/po">Purchase Order (PO)</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="purchase_invoice.html">Purchase Invoice</a>
                                 </li>
                                 <li>
@@ -244,12 +246,12 @@
                                 </li>
                                 <li>
                                     <a href="payment.html">Payment</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
 
                         <!-- Sales Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-shopping-cart"></i>Sales</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -266,10 +268,10 @@
                                     <a href="customer_delivery_schedule.html">Customer Delivery Schedule (CDS)</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Maintenance Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-wrench"></i>Maintenance</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -280,13 +282,13 @@
                                     <a href="sparepart_request.html">Sparepart Request</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
-                        <li>
+                        <!-- <li>
                             <a href="chart.html">Report</a>
-                        </li>
+                        </li> -->
                         <!-- Inventory Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-file"></i>Inventory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -303,10 +305,10 @@
                                     <a href="stock_card.html">Stock Card</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Production Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-file"></i>Production</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -323,10 +325,10 @@
                                     <a href="analysis_production.html">Analysis</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- QC Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-file"></i>QC</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -334,10 +336,10 @@
                                     <a href="summary_qc.html">Summary</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Purchase Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-file"></i>Purchase</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -354,10 +356,10 @@
                                     <a href="supplier_performance.html">Supplier Performance</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Sales Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-file"></i>Sales</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -371,10 +373,10 @@
                                     <a href="comparison_sales.html">Comparison</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                         <!-- Cost Menu -->
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-file"></i>Cost</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -391,7 +393,7 @@
                                     <a href="poor_quality.html">Poor Quality</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
 
                          </ul>
                         </li>

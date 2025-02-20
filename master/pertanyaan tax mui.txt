@@ -1,0 +1,13 @@
+note : 
+1. add column req_date in pr & po
+2. generated_id length -> 64
+3. mst_sku add column counter
+4. mst sku add column set code
+5. history pricelist
+6. pricelist edit -> insert data
+7. price list flag status = 1
+8. insert product production material base on type
+9. general item
+10. sds
+11. source code delpi
+12. discount flag & vat pr & po

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\Master\Sku\SkuBusinessListVw;
 
 class MasterSkuBusinessService
 {
@@ -44,5 +45,9 @@ class MasterSkuBusinessService
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
         $data->save();
+    }
+
+    public function droplist(){
+        return SkuBusinessListVw::all();
     }
 }

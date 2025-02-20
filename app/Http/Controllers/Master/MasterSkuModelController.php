@@ -49,4 +49,12 @@ class MasterSkuModelController
         $this->service->edit($request);
         return redirect("/sku-model");
     }
+
+    public function api_droplist()
+    {
+        $data = $this->service->droplist();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
 }

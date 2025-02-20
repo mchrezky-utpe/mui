@@ -25,7 +25,7 @@ export function handleActionTable() {
 		const row = rowCount + 1;
 		let sku_item
 		skuMaster.forEach(data => {
-			sku_item +=`"  req_date="` + data.req_date +  `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" >` + data.sku.prefix + " - " + data.sku.description + `</option>`
+			sku_item +=`"  req_date="` + data.req_date +  `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" >` + data.sku.manual_id + " - " + data.sku.description + `</option>`
 		});
 		const newRow = `
             <tr>

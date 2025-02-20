@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\Master\Sku\SkuModelListVw;
 
 class MasterSkuModelService
 {
@@ -46,5 +47,9 @@ class MasterSkuModelService
         $data->image_path = $request->image_path; // TODO UPLOAD
         $data->manual_id= $request->manual_id;
         $data->save();
+    }
+    
+    public function droplist(){
+        return SkuModelListVw::all();
     }
 }

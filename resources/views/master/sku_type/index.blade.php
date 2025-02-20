@@ -33,25 +33,49 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>ID</th>
-                    <th>Manual ID</th>
-                    <th>Description</th>
+                    <th>Code</th>
+                    <th>Group Number</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
+                    <th>Name</th>
+                    <th>Extension</th>
+                    <th>Classification</th>
+                    <th>Trading</th>
+                    <th>Primary</th>
+                    <th>CS</th>
+                    <th>CRS</th>
+                    <th>Bom</th>
+                    <th>Allowance</th>
+                    <th>Allowance Value</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->prefix }}</td>
                     <td>{{ $value->manual_id }}</td>
+                    <td>{{ $value->group_tag }}</td>
+                    <td>{{ $value->sku_category }}</td>
+                    <td>{{ $value->sku_sub_category }}</td>
                     <td>{{ $value->description }}</td>
+                    <td>{{ $value->prefix }}</td>
+                    <td>{{ $value->sku_classification }}</td>
+                    <td>{{ $value->trans_type }}</td>
+                    <td>{{ $value->is_primary }}</td>
+                    <td>{{ $value->is_checking }}</td>
+                    <td>{{ $value->checking_result }}</td>
+                    <td>{{ $value->is_bom }}</td>
+                    <td>{{ $value->is_allowance }}</td>
+                    <td>{{ $value->val_allowance }}</td>
                     <td>
                       <form action="/sku-type/{{ $value->id }}/delete" method="post"> @csrf 
+                      <div class="d-flex">
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-danger">
                           <span class="fas fa-trash"></span>
                         </button>
+                    </div>
                       </form>
                     </td>
                   </tr> @endforeach </tbody>

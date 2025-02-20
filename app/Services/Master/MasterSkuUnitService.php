@@ -4,6 +4,7 @@ namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
 use App\Models\MasterSkuUnit;
+use App\Models\Master\Sku\SkuUnitListVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -11,8 +12,9 @@ use Carbon\Carbon;
 
 class MasterSkuUnitService
 {
+
     public function list(){
-          return MasterSkuUnit::where('flag_active', 1)->get();
+          return SkuUnitListVw::all();
     }
 
     public function add(Request $request){
@@ -44,5 +46,9 @@ class MasterSkuUnitService
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
         $data->save();
+    }
+
+    public function droplist(){
+        return SkuUnitListVw::all();
     }
 }

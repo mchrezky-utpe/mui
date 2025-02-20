@@ -4,6 +4,7 @@ namespace App\Services\Transaction;
 
 use App\Helpers\HelperCustom;
 use App\Models\Transaction\SkuPricelist;
+use App\Models\Transaction\Pricelist\SkuPricelistVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -12,7 +13,7 @@ use Carbon\Carbon;
 class SkuPricelistService
 {
     public function list(){
-          return SkuPricelist::all();
+          return SkuPricelistVw::all();
     }
 
     public function get_by(Request $request){
@@ -27,14 +28,20 @@ class SkuPricelistService
     }
 
     public function add(Request $request){
-            $data['sku_id'] = $request->sku_id;
-            $data['gen_currency_id'] = $request->gen_currency_id;
-            $data['prs_supplier_id'] = $request->prs_supplier_id;
-            $data['price'] = $request->price;
-            $data['manual_id'] = $request->manual_id;
-            $data['generated_id'] = Str::uuid()->toString();
-            $data['flag_active'] = 1;
-            $data = SkuPricelist::create($data);
+            $data = new SkuPricelist();
+            $data->sku_id = $request->sku_id;
+            $data->prs_supplier_id = $request->prs_supplier_id;
+            $data->gen_currency_id = $request->gen_currency_id;
+            $data->lead_time = $request->lead_time;
+            $data->valid_date_from = $request->valid_date_from;
+            $data->valid_date_to = $request->valid_date_to;
+            $data->flag_status = $request->flag_status;
+            $data->price = $request->price;
+            $data->price_retail = $request->price_retail;
+            $data->generated_id = Str::uuid()->toString();
+            $data->flag_active = 1;
+            $data->flag_status= 1;
+            $data->flag_type= 1;
             $data->save();
     }
 
@@ -54,11 +61,15 @@ class SkuPricelistService
     function edit(Request $request)
     {
         $data = SkuPricelist::where('id', $request->id)->firstOrFail();
-        $data->price = $request->price;
         $data->sku_id = $request->sku_id;
-        $data->gen_currency_id = $request->gen_currency_id;
         $data->prs_supplier_id = $request->prs_supplier_id;
-        $data->manual_id= $request->manual_id;
+        $data->gen_currency_id = $request->gen_currency_id;
+        $data->lead_time = $request->lead_time;
+        $data->valid_date_from = $request->valid_date_from;
+        $data->valid_date_to = $request->valid_date_to;
+        $data->flag_status = $request->flag_status;
+        $data->price = $request->price;
+        $data->price_retail = $request->price_retail;
         $data->save();
     }
 }

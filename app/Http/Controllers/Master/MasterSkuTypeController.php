@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class MasterSkuTypeController
-{
+{ 
 
     private MasterSkuTypeService $service;
 
@@ -49,5 +49,13 @@ class MasterSkuTypeController
     {
         $this->service->edit($request);
         return redirect("/sku-type");
+    }
+
+    public function api_droplist()
+    {
+        $data = $this->service->droplist();
+         return response()->json([
+            'data' => $data
+        ]);
     }
 }

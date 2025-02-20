@@ -25,47 +25,43 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
-            <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
-          </div>
+              <div class="d-flex">
+              <button id="add_button" type="button" class="btn btn-primary btn_part_information" data-toggle="modal" data-target="#add_modal">+ Part Information</button>
+              <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_production_material_modal">+ Production Material</button>
+              <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_general_item_modal">+ General Item</button>
+              </div>
+           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table data-table table-striped table-bordered first">
                 <thead>
                   <tr> 
                     <th>No</th>
-                    <th>ID</th>
-                    <th>Manual ID</th>
-                    <th>Description</th>
-                    <th>Detail</th>
-                    <th>Type</th>
-                    <th>Unit</th>
-                    <th>Model</th>
-                    <th>Packaging</th>
-                    <th>Process</th>
-                    <th>Business</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Business Type</th>
+                    <th>Sales Category</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->prefix }}</td>
-                    <td>{{ $value->manual_id }}</td>
-                    <td>{{ $value->description }}</td>
-                    <td>{{ $value->detail?->description }}</td>
-                    <td>{{ $value->type?->description }}</td>
-                    <td>{{ $value->unit?->description }}</td>
-                    <td>{{ $value->model?->description }}</td>
-                    <td>{{ $value->packaging?->description }}</td>
-                    <td>{{ $value->process?->description }}</td>
-                    <td>{{ $value->business?->description }}</td>
+                    <td>{{ $value->sku_id }}</td>
+                    <td>{{ $value->sku_name }}</td>
+                    <td>{{ $value->sku_material_type }}</td>
+                    <td>{{ $value->sku_business_type }}</td>
+                    <td>{{ $value->sku_sales_category }}</td>
                     <td>
                       <form action="/sku/{{ $value->id }}/delete" method="post"> @csrf 
+                      <div class="d-flex">
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-danger">
                           <span class="fas fa-trash"></span>
                         </button>
+                      </div>
                       </form>
                     </td>
                   </tr> @endforeach </tbody>
@@ -78,6 +74,9 @@
   </div>
 </div>
 <!-- MODAL --> 
+ @include('master.sku._set_code') 
+ @include('master.sku._add_general_item') 
+ @include('master.sku._add_production_material') 
  @include('master.sku._add') 
  @include('master.sku._edit') 
  @endsection 

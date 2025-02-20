@@ -56,4 +56,12 @@ class MasterSkuUnitController
         $this->service->edit($request);
         return redirect("/sku-unit");
     }
+
+    public function api_droplist()
+    {
+        $data = $this->service->droplist();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
 }

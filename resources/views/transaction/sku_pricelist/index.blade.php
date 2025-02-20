@@ -33,21 +33,33 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Manual ID</th>
-                    <th>Sku</th>
-                    <th>Supplier</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Procurement Unit</th>
                     <th>Currency</th>
                     <th>Price</th>
-                    <th>Action</th>
+                    <th>Retail Price</th>
+                    <th>Status</th>
+                    <th>Valid From</th>
+                    <th>Valid Until</th>
+                    <th>Valid Status</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->manual_id }}</td>
-                    <td>{{ $value->sku->description }}</td>
-                    <td>{{ $value->supplier->description }}</td>
-                    <td>{{ $value->currency->description }}</td>
+                    <td>{{ $value->sku_id }}</td>
+                    <td>{{ $value->sku_name }}</td>
+                    <td>{{ $value->sku_type }}</td>
+                    <td>{{ $value->sku_procurement_unit }}</td>
+                    <td>{{ $value->currency }}</td>
                     <td>{{ $value->price }}</td>
+                    <td>{{ $value->price_retail }}</td>
+                    <td>{{ $value->pricelist_status }}</td>
+                    <td>{{ $value->valid_date_from }}</td>
+                    <td>{{ $value->valid_date_to }}</td>
+                    <td>{{ $value->valid_date_status}}</td>
                     <td>
                       <form action="/sku-pricelist/{{ $value->id }}/delete" method="post"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">

@@ -27,13 +27,28 @@ $(document).on('click', '.edit', function (e) {
 
 
 
+$(document).on('change', '[name=sku_id]', function (e) {
+    var selectedOption = $('[name=sku_id] option:selected');
+    $('[name=material_code]').val(selectedOption.attr('sku_id'));
+    $('[name=procurement_unit]').val(selectedOption.attr('unit'));
+});
+
 // =========== HANDLING PARAM
+ 
+function populateSelectSku(title, master_data, element) {
+    element.empty();
+    element.append('<option value="">-- Select '+title+' --</option>');
+    master_data.forEach(data => {
+        element.append(`<option sku_id="${data.sku_id}" unit="${data.sku_procurement_unit}" value="${data.id}">${data.sku_name}</option>`);
+    });
+  }
+
 initParam();
 function initParam(){
     fetchSkuMaster()
     .then(data => {
         console.log("Succesfully get Sku:", data);
-        populateSelect('Sku', data, $('[name=sku_id]')) ;
+        populateSelectSku('Sku', data, $('[name=sku_id]'));
     }).catch(err => {
         console.error("Error get Sku:", err);
     });

@@ -40,4 +40,31 @@
     overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
 }
 
+
+table.dataTable tbody {
+    font-size: 11px;
+}
+table.dataTable thead {
+    font-size: 12px;
+}
+table.dataTable tbody td {
+    padding: 2px 2px; /* Atur sesuai kebutuhan */
+}
+table.dataTable thead th {
+    padding: 2px;
+}
+.row {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+body {
+    font-weight: 500;
+    font-size: 13px;
+}
+.form-group {
+    margin: 0.2rem;
+}
+.btn {
+    margin: 2px;
+}
 </style>

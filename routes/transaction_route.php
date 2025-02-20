@@ -1,19 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\OnlyMemberMiddleware;
 use App\Http\Controllers\Transaction\Inventory\InventoryAdjustmentController;
 use App\Http\Controllers\Transaction\Inventory\InventoryDoController;
 use App\Http\Controllers\Transaction\Inventory\InventoryMaterialReqController;
 use App\Http\Controllers\Transaction\Inventory\InventoryPurchaseReturnController;
 use App\Http\Controllers\Transaction\Inventory\InventoryReceivingController;
 use App\Http\Controllers\Transaction\Inventory\InventorySalesReturnController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Controllers\Transaction\PurchaseOrderRequestController;
 use App\Http\Controllers\Transaction\SkuPricelistController;
 use App\Http\Controllers\Transaction\SkuMinOfStockController;
 use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Controllers\Transaction\Approval\ApprovalPurchaseRequestController;
-use App\Http\Middleware\OnlyMemberMiddleware;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {

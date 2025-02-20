@@ -66,6 +66,13 @@ class MasterSkuController
         ]);
     }
 
+    public function get_set_code()
+    {
+        $data = $this->service->get_set_code();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
     public function add(Request $request)
     {
         $this->service->add($request);
