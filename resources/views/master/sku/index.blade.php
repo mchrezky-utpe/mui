@@ -28,7 +28,7 @@
               <div class="d-flex">
               <button id="add_button" type="button" class="btn btn-primary btn_part_information" data-toggle="modal" data-target="#add_modal">+ Part Information</button>
               <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_production_material_modal">+ Production Material</button>
-              <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_general_item_modal">+ General Item</button>
+              <button id="add_button" type="button" class="btn btn-primary btn_general_item" data-toggle="modal" data-target="#add_general_item_modal">+ General Item</button>
               </div>
            </div>
           <div class="card-body">
@@ -38,6 +38,7 @@
                   <tr> 
                     <th>No</th>
                     <th>Item Code</th>
+                    <th>Type</th>
                     <th>Item Name</th>
                     <th>Item Type</th>
                     <th>Business Type</th>
@@ -48,6 +49,16 @@
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->sku_id }}</td>
+                    <td>
+                    @if($value->flag_sku_type  == 1)         
+                          Finished Goods
+                    @elseif($value->flag_sku_type  == 2)  
+                          Production material   
+                    @else
+                          General Item        
+                    @endif  
+
+                    </td>
                     <td>{{ $value->sku_name }}</td>
                     <td>{{ $value->sku_material_type }}</td>
                     <td>{{ $value->sku_business_type }}</td>

@@ -3,11 +3,272 @@ note :
 2. generated_id length -> 64
 3. mst_sku add column counter
 4. mst sku add column set code
-5. history pricelist
-6. pricelist edit -> insert data
-7. price list flag status = 1
-8. insert product production material base on type
-9. general item
+
+5. history pricelist >>>>>>>>>> 4 done
+6. pricelist edit -> insert data >>>>>>> 3 done 
+7. price list flag status = 1 >>>>>>> done
+8. insert product production material base on type >>>> 1 done
+9. general item >>>>>>>>>>> 2
+10. print clean up >>>>> 5
+
 10. sds
 11. source code delpi
 12. discount flag & vat pr & po
+
+hackerrank 
+1. Competitive Gaming
+
+
+- SDS 
+- RECEIVING
+
+
+1. edi database
+2. daftar department & user
+3. purchase item type di PR
+
+ITEM : 
+DI PISAH TAMPILAN JADI 3
+PRICELIST : AUTO ISI RETAIL PRICE
+Purchase Requestion
+review manual id d hilangkan
+
+
+select from accounts ac 
+left join 
+(select r.account_id, sum(r.amount) as amount from reports r where r.dt between (date) and (date)) q1 
+left join 
+(select r.account_id, sum(r.amount) as amount from reports r where r.dt between (date) and (date)) q2
+left join 
+(select r.account_id, sum(r.amount) as amount from reports r where r.dt between (date) and (date)) q3
+left join 
+(select r.account_id, sum(r.amount) as amount from reports r where r.dt between (date) and (date)) q4
+
+
+
+
+Irfan :
+komunikasi bagus
+pemahaman bagus terhadap bbrp teknologi
+baru belajar it tapi pengetahuan sudah cukup bagus dan dalam
+mampu mengerjakan live code
+
+cons
+pengetahuan java masih awam
+belum prnh menangani projek yang sampai live prod
+
+Irfan merupkan lulusan baru dan baru berpengalaman setahun, meskipun bukan dari jurusan it dan baru belajar kemampuan nya cukup bagus
+dan berpotensi, dari tanya jawab hingga live code, kemudian pr project mampu d selesaikan.
+hanya saja kemampuan koding d java masih perlu jam terbang dan lebih ditingkatkan,
+
+Irfan
+PROS
+✅ Memiliki komunikasi yang baik.
+✅ Memahami beberapa teknologi dengan cukup baik.
+✅ Meskipun baru belajar di bidang IT, pengetahuannya sudah cukup luas dan mendalam.
+✅ Mampu mengerjakan live coding dengan baik.
+
+CONS
+Area yang perlu ditingkatkan:
+🔸 Masih dalam tahap awal dalam memahami Java.
+🔸 Belum memiliki pengalaman menangani proyek hingga tahap produksi (live production).
+
+
+
+Quesrtion irfan:
+1. Pengalaman 1 th.  
+tantangan
+2. Business aplikasi yg d develop gmn
+2. Kalau belajar materi2 programming lewat apa dan suka baca dokumentasi resmi tidak?
+3. mongo db itu gmn? design efisiensi mongo db gmn yg d d3sain?
+3.Pertanyaan mengenai database : 
+Relational dtabase one to manya and other
+
+Syarat join gmn, apa bedanya left join dan right join
+Apa yang d ketahui tentang normalisasi tabel
+proses mengubah struktur tabel dalam database menjadi lebih terorganisir dan mengurangi duplikasi data
+Apa ada proyek atau pencapaian yang paling irfan banggakan, kl ada apa proses yang irfan lakukan untuk mencapainya
+
+
+
+komunikasi bagus  
+VERSI NON SNAP & SNAP
+
+
+1. generate qris
+  - generate signature for oauth token
+  - get access token
+  - get signature from signature service api
+  - create invoice trx api
+2. status qris
+  - recall api create invoice trx with same request as create
+3. cancel qris
+  - avoid if acquirer netzme (hide in FE) / cancel with not
+4. notify 
+  - api notify from netzme
+5. refund
+  - avoid if acquirer netzme (hide in FE) : perlu pastikan ke requirement apakah ada fitur refund manual?
+6. reconciliation
+  - api reconciliation
+
+
+
+internal server retry: 
+	- payload sama as request
+	- or inquery status
+        - credential sama kyk qris kah?
+
+
+1. generate signature for oauth
+2. get token access : 1 meinggu
+3. signature service before trx service	
+4. create invoice -> create qris (payment link) - tidak d pakai
+5. create invoice trx
+6. with draw status
+6. NOTIFY max hit gagal 5x
+7. 5 menit periodicaly
+900 seconds expired
+8. tidak support cancel & refund (kerugian merchan mdr d tanggung merchant)
+9. harus chargeback -> Waktu 
+
+
+- API generate qris
+- API status qris
+- API cancel avoid if acquirer NETZME
+- API refund avoid if acquirer NETZME
+- API reconciliation
+- FITUR refund manual/chargeback perlu?
+
+
+
+LABA
+	K8S 
+	GCP CONSOLE
+	SQL PROXY
+	INTELLIJ PROJ
+	GIT CMD
+	DEPLOYMENT EXCEL
+	GIT BRANCHING EXCEL
+	DOCUMENTATION
+		
+PG
+	K8S
+	GCP CONSOLE
+	SQL PROXY
+	INTELLIJ PROJ
+	GIT CMD
+	DEPLOYMETN EXCEL
+	GIT BRANCHING
+PRJ
+	VS CODE
+	XAMPP
+OTHER
+	TEAMS
+	TODOLIST
+	INTERVIEW NOTE
+
+
+
+
+
+
+
+
+
+
+NILAI DETAIL :
+NILAI AKHIR ZIKRI 60/100
+1. interview 10/10
+2. live code 10/40
+     -> menjelaskan algoritma = 25% => 10/10
+     -> menyelesaikan task =   75% => 0/30
+3. project api 27,5/50
+  a. product 27/70
+      - spec 10/10
+     - logic auto code 5/25 (masih gagal d code input 2x bentrok, case edit tidak d handle)
+        handle auto code exist increase = 5/ 5
+        handle auto code input 2x code yg sama = 0/5
+        handle multi format = 0/5
+        handle d edit ->  0/10
+     - functional  12/30
+         api add = 3/5 (kode d kosongkan error)
+         api edit = 3/5 (kode d koosongkan error)
+         delete = 0/5
+        list = 3/5 (category desc null)
+        get by id = 3/5 (category desc null)
+        tidak ada error = 0/5
+  b. category 28/30
+     - spec => 10/10
+	API list =  5/5
+        api add = 3/5 (response tidak sesuai)
+     - functional > 20/20
+  c. plus value -> 10/30
+	- api doc =  10/10
+              - dockerize = 0/20
+hasil akhir penilaian keseluruhan dari backend untuk kandidat tersebut adalah 60%.
+dari kesimpulan yg didapat kandidat belum memenuhi kriteria untuk bergabung diimpacto.
+
+
+
+NILAI DETAIL ZHIKRI
+1. interview 10/10
+2. live code 10/40
+     -> menjelaskan algoritma = 25% => 10/10
+     -> menyelesaikan task =   75% => 30/30
+3. project api 27,5/50
+  a. product 27/70
+      - spec 10/10
+     - logic auto code 5/25 (masih gagal d code input 2x bentrok, case edit tidak d handle)
+        handle auto code exist increase = 5/ 5
+        handle auto code input 2x code yg sama = 0/5
+        handle multi format = 0/5
+        handle d edit ->  0/10
+     - functional  12/30
+         api add = 3/5 (kode d kosongkan error)
+         api edit = 3/5 (kode d koosongkan error)
+         delete = 0/5
+        list = 3/5 (category desc null)
+        get by id = 3/5 (category desc null)
+        tidak ada error = 0/5
+  b. category 28/30
+     - spec => 10/10
+	API list =  5/5
+        api add = 3/5 (response tidak sesuai)
+     - functional > 20/20
+  c. plus value -> 10/30
+	- api doc =  10/10
+              - dockerize = 0/20
+
+
+
+IRFAN
+
+NILAI DETAIL :
+
+1. interview 10/10
+2. live code 40/40
+     -> menjelaskan algoritma = 25% => 10/10
+     -> menyelesaikan task =   75% => 30/30
+3. project api 63, 50% ->  31,5/50
+  a. product 28/70
+      - spec 10/10
+     - logic auto code 0/30 (masih gagal)
+        handle auto code exist increase = 0/ 5
+        handle auto code input 2x code yg sama = 0/5
+        handle multi format = 0/5
+        handle d edit ->  0/10
+     - functional  18/30
+         api add = 3/5 (kode d koosongkan tidak tergenerate auto)
+         api edit = 5/5
+         delete = 5/5
+        list = 5/5
+        get by id = 5/5 (category desc null)
+        tidak ada error = 0/10
+  b. category 25/25
+     - spec => 10/10
+	API list =  5/5
+        api add = 5/5 
+     - functional > 15/15
+  c. plus value -> 10/30
+	- api doc =  10/10
+              - dockerize = 0/20

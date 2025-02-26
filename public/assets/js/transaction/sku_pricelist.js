@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     
 $(document).on('click', '.edit', function (e) {
     var id = this.dataset.id;
@@ -8,14 +7,16 @@ $(document).on('click', '.edit', function (e) {
         url: base_url + 'sku-pricelist/' + id,
         success: function (data) {
             var data = data.data;
-
             $('[name=id]').val(data.id);
-            $('[name=manual_id]').val(data.manual_id);
             $('[name=sku_id]').val(data.sku_id);
-            $('[name=price]').val(data.price);
-            $('[name=gen_currency_id]').val(data.gen_currency_id);
             $('[name=prs_supplier_id]').val(data.prs_supplier_id);
-
+            $('[name=gen_currency_id]').val(data.gen_currency_id);
+            $('[name=lead_time]').val(data.lead_time);
+            $('[name=valid_date_from]').val(data.valid_date_from);
+            $('[name=flag_status]').val(data.flag_status);
+            $('[name=price]').val(data.price);
+            $('[name=price_retail]').val(data.price_retail);
+            $('[name=sku_id]').change();
             $('#edit_modal').modal('show');
 
         },
@@ -25,13 +26,12 @@ $(document).on('click', '.edit', function (e) {
     });
 });
 
-
-
 $(document).on('change', '[name=sku_id]', function (e) {
     var selectedOption = $('[name=sku_id] option:selected');
     $('[name=material_code]').val(selectedOption.attr('sku_id'));
     $('[name=procurement_unit]').val(selectedOption.attr('unit'));
 });
+
 
 // =========== HANDLING PARAM
  
@@ -127,6 +127,52 @@ function populateSelect(title, master_data, element) {
         element.append(`<option value="${data.id}">${data.description}</option>`);
     });
 }
+
+});
+
+
+
+
+let detailRowCount = 0;
+$(document).on('click', '.history', function (e) {
+    var prs_supplier_id = this.dataset.prs_supplier_id;
+    var item_id = this.dataset.item_id;
+    $.ajax({
+        type: 'GET',
+        url: base_url + 'sku-pricelist/api/history?prs_supplier_id='+prs_supplier_id+'&item_id='+item_id,
+        success: function (data) {
+
+            var data = data.data;
+            $('#history_table tbody').empty();
+            detailRowCount = 0 ;
+            for (let index = 0; index < data.length; index++) {
+                detailRowCount++;
+                const newRow = `
+                    <tr>
+                        <td>${detailRowCount}</td>
+                        <td>${data[index].sku_id}</td>
+                        <td>${data[index].sku_name}</td>
+                        <td>${data[index].sku_type}</td>
+                        <td>${data[index].sku_procurement_unit}</td>
+                        <td>${data[index].currency}</td>
+                        <td>${data[index].price}</td>
+                        <td>${data[index].price_retail}</td>
+                        <td>${data[index].pricelist_status}</td>
+                        <td>${data[index].valid_date_from}</td>
+                        <td>${data[index].valid_date_to}</td>
+                    </tr>
+                `;
+        
+                $("#history_table tbody").append(newRow);  
+            }
+
+            $('#history_modal').modal('show');
+
+        },
+        error: function (err) {
+            debugger;
+        }
+    });
 
 });
     

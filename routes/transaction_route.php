@@ -55,6 +55,7 @@ Route::controller(SkuPricelistController::class)->group(function () {
     Route::get("/sku-pricelist/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-pricelist/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-pricelist/api/history", "getHistory")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {

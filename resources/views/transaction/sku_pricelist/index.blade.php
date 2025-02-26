@@ -25,7 +25,10 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
+            <div class="d-flex">
+            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">+ Production Material Prices</button>
+            <button id="add_general_item_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_general_item_modal">+ General Item Prices</button>
+          </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -61,7 +64,12 @@
                     <td>{{ $value->valid_date_to }}</td>
                     <td>{{ $value->valid_date_status}}</td>
                     <td>
+                    <div class="d-flex">
                       <form action="/sku-pricelist/{{ $value->id }}/delete" method="post"> @csrf 
+                      <div class="d-flex">
+                        <button data-item_id="{{ $value->item_id }}" data-prs_supplier_id="{{ $value->prs_supplier_id }}" type="button" class="history btn btn-secondary">
+                          <span class="fas fa-list"></span>
+                      </button>
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
@@ -79,7 +87,14 @@
     </div>
   </div>
 </div>
+<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-pricelist">
+  sdsadsa
+
+  </form>  
+  
 <!-- MODAL --> 
+ @include('transaction.sku_pricelist._history') 
+ @include('transaction.sku_pricelist._add_general_item') 
  @include('transaction.sku_pricelist._add') 
  @include('transaction.sku_pricelist._edit') 
  @endsection 

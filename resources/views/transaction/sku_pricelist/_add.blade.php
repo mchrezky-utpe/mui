@@ -1,15 +1,17 @@
-<x-modals.modal id="add_modal" title="Add Sku Pricelist">
+<x-modals.modal id="add_modal" title="Add Production Material Price" >
+  
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-pricelist">
+<!-- <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-pricelist"> -->
     @csrf
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label>Material Code</label>
-          <input readonly name="material_code" class="form-control" type="text">
+          <input readonly name="material_code" class="form-control" type="text" />
         </div>
         <div class="form-group">
           <label>Material Name</label>
-          <select required name="sku_id" class="form-control">
+          <select id="sku_id_edit" required name="sku_id" class="form-control">
           </select >
         </div>
         <div class="form-group">
@@ -27,30 +29,31 @@
           </select >
         </div>
       </div>
+
       <div class="col-md-6">
         <div class="form-group">
           <label>Lead Time</label>
-          <input required name="lead_time" class="form-control" type="number">
+          <input required name="lead_time" class="form-control" type="number" />
         </div>
         <div class="form-group">
           <label>Valid From</label>
-          <input required name="valid_date_from" class="form-control" type="date" value="{{ date('Y-m-d') }}">
+          <input required name="valid_date_from" class="form-control" type="date" value="{{ date('Y-m-d') }}" />
         </div>
         <div class="form-group">
           <label>Valid To</label>
-          <input required name="valid_date_to" class="form-control" type="date" value="{{ date('Y-m-d') }}">
+          <input required name="valid_date_to" class="form-control" type="date" value="{{ date('Y-m-d') }}" />
         </div>
         <div class="form-group">
           <label>Activated Status</label>
-          <input required name="flag_status" class="form-control" type="checkbox">
+          <input required name="flag_status" class="form-control" type="checkbox" checked />
         </div>
         <div class="form-group">
           <label>Price</label>
-          <input required name="price" class="form-control" type="text">
+          <input required name="price" class="form-control" type="text" />
         </div>
         <div class="form-group">
           <label>Retail Price</label>
-          <input required name="price_retail" class="form-control" type="text">
+          <input required name="price_retail" class="form-control" type="text" />
         </div>
       </div>
     </div>

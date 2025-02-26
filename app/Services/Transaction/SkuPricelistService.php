@@ -5,6 +5,7 @@ namespace App\Services\Transaction;
 use App\Helpers\HelperCustom;
 use App\Models\Transaction\SkuPricelist;
 use App\Models\Transaction\Pricelist\SkuPricelistVw;
+use App\Models\Transaction\Pricelist\SkuPricelistHistoryVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -13,7 +14,7 @@ use Carbon\Carbon;
 class SkuPricelistService
 {
     public function list(){
-          return SkuPricelistVw::all();
+          return SkuPricelistVw::where('flag_pricelist_status', 1)->get();;
     }
 
     public function get_by(Request $request){
@@ -25,6 +26,11 @@ class SkuPricelistService
             }
         }
        return $query->get();
+    }
+
+    public function getHistory(Request $request){
+        $query = SkuPricelistHistoryVw::where('flag_active', 0)->where('prs_supplier_id', $request->prs_supplier_id)->where('item_id', $request->item_id)->get();
+       return $query;
     }
 
     public function add(Request $request){
@@ -61,6 +67,12 @@ class SkuPricelistService
     function edit(Request $request)
     {
         $data = SkuPricelist::where('id', $request->id)->firstOrFail();
+        // set off old data
+        $data->flag_active = 0;
+        $data->save();
+
+        // copy new data
+        $data = $data->replicate();
         $data->sku_id = $request->sku_id;
         $data->prs_supplier_id = $request->prs_supplier_id;
         $data->gen_currency_id = $request->gen_currency_id;
@@ -70,6 +82,8 @@ class SkuPricelistService
         $data->flag_status = $request->flag_status;
         $data->price = $request->price;
         $data->price_retail = $request->price_retail;
+        $data->flag_active = 1;
+        $data->flag_status= 1;
         $data->save();
     }
 }

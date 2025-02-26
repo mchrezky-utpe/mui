@@ -66,6 +66,14 @@ class MasterSkuController
         ]);
     }
 
+    public function get_code(Request $request)
+    {
+        $data = $this->service->generateCode($request->sku_type_id, $request->flag_sku_type);
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function get_set_code()
     {
         $data = $this->service->get_set_code();
@@ -73,6 +81,7 @@ class MasterSkuController
             'data' => $data
         ]);
     }
+
     public function add(Request $request)
     {
         $this->service->add($request);

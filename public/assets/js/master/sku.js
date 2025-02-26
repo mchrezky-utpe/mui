@@ -9,15 +9,25 @@ $(document).on('click', '.edit', function (e) {
             $('[name=id]').val(data.id);
             $('[name=manual_id]').val(data.manual_id);
             $('[name=description]').val(data.description);
+            $('[name=group_tag]').val(data.group_tag);
+            $('[name=specification_code]').val(data.specification_code);
+            $('[name=specification_detail]').val(data.specification_detail);
+            $('[name=val_weight]').val(data.val_weight);
+            $('[name=val_area]').val(data.val_area);
+            $('[name=sku_model_id]').val(data.sku_model_id);
+            $('[name=val_conversion]').val(data.val_conversion);
+            $('[name=flag_inventory_register]').val(data.flag_inventory_register);
             $('[name=type_id]').val(data.sku_type_id).prop('selected', true);
             $('[name=model_id]').val(data.sku_model_id).prop('selected', true);
             $('[name=process_id]').val(data.sku_process_id).prop('selected', true);
-            $('[name=business_type_id]').val(data.sku_business_type_id).prop('selected', true);
-            $('[name=packaging_id]').val(data.sku_packaging_id).prop('selected', true);
-            $('[name=detail_id]').val(data.sku_detail_id).prop('selected', true);
-            $('[name=unit_id]').val(data.sku_unit_id).prop('selected', true);
+            $('[name=sku_business_type_id]').val(data.sku_business_type_id).prop('selected', true);
+            $('[name=sku_sales_category_id]').val(data.sku_sales_category_id).prop('selected', true);
+            $('[name=sku_model_id]').val(data.sku_model_id).prop('selected', true);
+            $('[name=sku_inventory_unit_id]').val(data.sku_inventory_unit_id).prop('selected', true);
 
+			if(data.flag_sku_type == 2){
             $('#edit_modal').modal('show');
+			}
 
         },
         error: function (err) {
@@ -27,6 +37,55 @@ $(document).on('click', '.edit', function (e) {
 });
 
 
+$(document).on('click', '.history', function (e) {
+    var id = this.dataset.id;
+    $.ajax({
+        type: 'GET',
+        url: base_url + 'sku/' + id +'/history',
+        success: function (data) {
+            var data = data.data;
+
+            $('#history_modal').modal('show');
+
+        },
+        error: function (err) {
+            debugger;
+        }
+    });
+});
+
+
+$(document).on('change', '[name=sku_type_id]', function() {
+	const sku_type_id = this.value;
+	fetchCode(sku_type_id)
+		.then(data => {
+			$('[name=group_tag]').val(data.code);
+			$('[name=manual_id]').val(data.code);
+			$('[name=specification_code]').val(data.code);
+			console.log("Succesfully fetchCode Sku:", data.sku);
+		})
+		.catch(err => {
+			console.error("Error get fetchCode:", err);
+		});
+
+});
+
+
+function fetchCode(sku_type_id) {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'api/sku/get-code?sku_type_id='+sku_type_id+'&flag_sku_type=3',
+			success: function(data) {
+				resolve(data.data);
+			},
+			error: function(err) {
+				console.error("Error fetching code:", err);
+				reject(err);
+			}
+		});
+	});
+}
 
 
 function populateSelect(master_data, element) {
@@ -167,17 +226,44 @@ function fetchSkuBusinessType() {
 fetchSkuModel()
 .then(data => {
     console.log("Succesfully fetchSkuModel:", data);
+    populateSelect(data, $('[name=sku_model_id]'));
+})
+.catch(err => {
+    console.error("Error fetchSkuModel:", err);
+});
+
+fetchSkuBusinessType()
+.then(data => {
+    console.log("Succesfully fetchSkuBusinessType:", data);
     populateSelect(data, $('[name=sku_business_type_id]'));
 })
 .catch(err => {
     console.error("Error fetchSkuModel:", err);
 });
 
+
 function fetchSkuModel() {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'GET',
 			url: base_url + 'api/sku-model/droplist',
+			success: function(data) {
+				resolve(data.data);
+			},
+			error: function(err) {
+				console.error("Error fetchSkuModel:", err);
+				reject(err);
+			}
+		});
+	});
+}
+
+
+function fetchSkuModel() {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'api/sku-business/droplist',
 			success: function(data) {
 				resolve(data.data);
 			},

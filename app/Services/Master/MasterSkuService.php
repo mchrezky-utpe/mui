@@ -4,6 +4,7 @@ namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
 use App\Models\MasterSku;
+use App\Models\Master\Sku\MasterSkuType;
 use App\Models\Master\Sku\SkuListVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,8 @@ class MasterSkuService
       );
     }
 
-    function generateCode($sku_type_id, $flag_sku_type){
+
+    public function generateCode($sku_type_id, $flag_sku_type){
         $prefix;
         switch($flag_sku_type){
             case 1:
@@ -50,7 +52,7 @@ class MasterSkuService
 
       $result = DB::selectOne(" SELECT generate_sku(?, ?, ?) AS sku ", [$prefix, $flag_sku_type, $sku_type_id]);
       
-      $code = $result->sku;;
+      $code = $result->sku;   
       $parts = explode("-", $code);
       $counter = (int)$parts[1];
       return  array(
@@ -60,11 +62,13 @@ class MasterSkuService
     }
 
     public function add(Request $request){
-      
-            $sku_type_id = 5;
+        
+           // handling if part information then sku type finish goods (5) else get from request
+            $sku_type_id = 5; 
             if($request->flag_sku_type != 1){
                 $sku_type_id = $request->sku_type_id;
             }
+
             $result_code =  $this->generateCode($sku_type_id,$request->flag_sku_type);
          
             $data = new MasterSku();
@@ -72,7 +76,7 @@ class MasterSkuService
             $data->manual_id = $result_code['code'];
             $data->counter = $result_code['counter'];
             
-            $data->group_tag = $request->$group_tag;
+            $data->group_tag = $request->group_tag;
             $data->set_code_counter = $request->set_code_counter;
 
             $data->flag_sku_type = $request->flag_sku_type;
@@ -90,7 +94,7 @@ class MasterSkuService
             $data->sku_inventory_unit_id = $request->sku_inventory_unit_id; 
             $data->val_conversion = $request->val_conversion; 
             $data->flag_inventory_register = $this->convertCheckboxToBoolean($request->flag_inventory_register);
-            $data->sku_type_id = $request->sku_type_id;
+            $data->sku_type_id = $sku_type_id;
             $data->flag_sku_procurement_type = $request->flag_sku_procurement_type;
             $data->sku_procurement_unit_id = $request->sku_procurement_unit_id;
 
@@ -99,7 +103,38 @@ class MasterSkuService
             $data->flag_active = 1;
             $data->flag_show = 1;
 
-            $data = $data->save();
+            // handle item production material insert item base on type
+            if($request->flag_sku_type == 2){   
+                $this->handleAddItemProduction($data);
+            }else{
+                $data->save();
+            }
+    }
+
+    function handleAddItemProduction($data){
+        // get type by id
+        $type = MasterSkuType::where('id', $data->sku_type_id)->firstOrFail();
+        // $group_tags = $types->map(function ($type) {
+        //     return $type->group_tag;
+        // })->toArray();
+    
+        // get type by group tag
+        $group_types = MasterSkuType::where('group_tag', $type->group_tag)->get();
+        
+
+        foreach ($group_types as $group_type) {
+            $copyData = $data->replicate();
+
+            // FIXME BUG CODE
+            $result_code =  $this->generateCode($data->sku_type_id,$data->flag_sku_type);
+            $copyData->manual_id = $result_code['code'];
+            $copyData->counter = $result_code['counter'];
+
+            $copyData->sku_type_id = $group_type->id;
+            
+            $copyData->save();
+        } 
+        
     }
 
     public function delete($id){

@@ -71,6 +71,8 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::get("/api/sku", "api_all")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/sku/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
+    
+    Route::get("/api/sku/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuProcessController::class)->group(function () {

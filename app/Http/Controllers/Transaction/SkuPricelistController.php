@@ -23,6 +23,15 @@ class SkuPricelistController
          ['data' =>  $this->service->list()]);
     }
 
+    public function getHistory(Request $request)
+    {     
+      $data = $this->service->getHistory($request);
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
+
     public function get_api_by(Request $request)
     {
         $data = $this->service->get_by($request);

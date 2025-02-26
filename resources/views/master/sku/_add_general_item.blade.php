@@ -7,47 +7,56 @@
       <!-- REGION SIDE 1 -->
       <div class="col-md-5">
         <div class="form-group">
-          <label>Item Code</label>
+            <label>Material Type</label>
+            <select required name="sku_type_id" class="form-control"></select>
+        </div>
+        <div class="form-group"> 
+          <label>Material Code</label>
           <input readonly name="manual_id" class="form-control" type="text" value="IC-XXXXX-XXX">
         </div>
         <div class="form-group">
-          <label>Item Group Code</label>
-          <input required name="group_tag" class="form-control" type="text">
-        </div>
-        <div class="form-group">
-          <label>Item Name</label>
+          <label>Material Name</label>
           <input required name="description" class="form-control" type="text">
         </div>
         <div class="form-group">
           <label>Spesification Code</label>
           <input required name="specification_code" class="form-control" type="text">
         </div>
-          <div class="form-group">
-            <label>Spesification Description</label>
-            <input required name="specification_description" class="form-control" type="text"/>
-          </div>
       </div>
 
       <!-- REGION SIDE 2 -->
       <div class="col-md-7">
 
+      <div class="form-group">
+            <label>Spesification Description</label>
+            <input required name="specification_description" class="form-control" type="text"/>
+          </div>
         <div class="d-flex align-items-end mt-3">
           <div class="form-group flex-fill mr-2" style="width: 45%;">
-            <label>Item Type</label>
-            <select required name="sku_type_id" class="form-control"></select>
-          </div>
-          <div class="form-group flex-fill ml-2"  style="width: 35%;">
-            <label>Sales Category</label>
-            <select required name="sku_sales_category_id" class="form-control"></select>
+          <label>Procurement Type</label>
+          <select required name="flag_sku_procurement_type" class="form-control">
+            <option value="">-- select --</option>
+            <option value="1">in-house</option>
+            <option value="2">purchase</option>
+            <option value="3">supply</option>
+            <option value="4">purchase & in-house</option>
+          </select>
           </div>
         </div>
 
-      <div class="d-flex align-items-end mt-3">
-        <div class="form-group flex-fill mr-2"  style="width: 30%;">
+      <div class="d-flex align-items-end mt-3">   
+          <div class="form-group flex-fill mr-2" style="width: 45%;">
+            <label>Procurement Unit</label>
+            <select required name="sku_procurement_unit_id" class="form-control"></select>
+          </div>
+        <div class="form-group flex-fill ml-2"  style="width: 35%;">
           <label>Inventory Unit</label>
           <select required name="sku_inventory_unit_id" class="form-control"></select>
         </div>
-          <div class="form-group flex-fill ml-2" style="width: 30%;">
+      </div>
+
+      <div class="d-flex align-items-end mt-3">
+          <div class="form-group flex-fill ml-2" style="width: 40%;">
           <label>Conversion value</label>
           <input required name="val_conversion" class="form-control" type="text">
           </div>
