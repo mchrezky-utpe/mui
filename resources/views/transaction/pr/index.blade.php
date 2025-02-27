@@ -5,11 +5,12 @@
         max-height: 400px; 
         overflow-y: auto;
         border: 1px solid #ccc;
-        overflow-y: auto;
+        overflow-x: auto;
     }
 
     .table-container table {
-        width: 100%;
+      max-width: 150%;
+        width: 150%;
         border-collapse: collapse;
     }
 </style>
@@ -49,7 +50,6 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Manual ID</th>
                     <th>Doc Number</th>
                     <th>Date</th>
                     <th>Type</th>

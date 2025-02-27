@@ -5,6 +5,8 @@ use App\Helpers\NumberGenerator;
 
 use App\Helpers\HelperCustom;
 use App\Models\Transaction\PurchaseOrder;
+use App\Models\Transaction\VwPoDroplist;
+use App\Models\Transaction\VwPoItemList;
 use App\Models\Transaction\PurchaseOrderDetail;
 use App\Models\Transaction\PurchaseOrderDeduction;
 use App\Models\Transaction\PurchaseOrderOtherCost;
@@ -23,6 +25,14 @@ class PurchaseOrderService
     public function list(){
           return PurchaseOrder::where('flag_active', 1)->get();
     }
+
+    public function get_droplist($request){
+        return VwPoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
+     }
+
+     public function get_item_by(Request $request){
+         return VwPoItemList::where('trans_po_id', $request->input('id'))->get();
+      }
 
     public function get_all(Request $request){
         $start = $request->input('start'); // Start index untuk pagination

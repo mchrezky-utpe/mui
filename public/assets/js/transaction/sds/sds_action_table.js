@@ -1,12 +1,72 @@
 import {
-	skuMaster,
-	table_pr
-} from './pr_global_variable.js';
+	skuMaster
+} from './sds_global_variable.js';
 import {
 	calculateTotal
-} from './pr_calculate.js';
+} from './sds_calculate.js';
 
 export function handleActionTable() {
+
+	var selectedRow = null;
+
+	$(document).on('click','#item_table tbody tr', function() {
+	  $('#qty_input').val("")
+	  selectedRow = $(this);
+	  $('#qty_sds_modal').modal('show'); 
+	  $('#add_modal').hide(); 
+	});
+
+	$('#btn_confirm').click(function() {
+		if (selectedRow) {
+		  $('#target_table tbody').append(selectedRow);
+		  $('#qty_sds_modal').modal('hide'); 
+		  $('#add_modal').show(); 
+
+		  // update value qty sds
+		  const id = selectedRow.attr('id');
+		  const qty = $('#qty_input').val()
+		  $('#'+id).find('td:eq(4)').text(qty);
+		  $('#'+id).find('td:eq(5)').text(0);
+		  $('#' + id).find('[name=qty\\[\\]]').val(qty);
+		  selectedRow = null; // Reset selectedRow
+		}
+	  });
+
+
+	$(document).on('change', '#supplier_select, #po_select', function() {
+		const po_id = $('#po_select').val();
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'api/po/item',
+			data:{id : po_id},
+			success: function(response) {
+				$("#item_table tbody tr").remove();
+				$("#target_table tbody tr").remove();
+
+				response.data.forEach(data => {
+					const newRow = `
+					<tr id="${data.po_detail_id}">
+						<td>${data.item_code}<input type="hidden" name="po_detail_id[]" value="${data.po_detail_id}" /><input name="qty[]" type="hidden" /></td>
+						<td>${data.item_name}</td>
+						<td>${data.specification_code}</td>
+						<td>${data.item_type}</td>
+						<td>${data.qty_po}</td>
+						<td>${data.qty_outstanding_sds}</td>
+						<td>${data.req_date}</td>
+					</tr>
+				`;
+				$("#item_table tbody").append(newRow);
+				});	
+
+			},
+			error: function(err) {
+				console.error("Error fetching supplier master:", err);
+			}
+		});
+
+	});
+
+
 
 	$(document).on('click','.create_po',function(){
 		var id = this.dataset.id;
@@ -87,4 +147,17 @@ export function handleActionTable() {
 	});
 
 	calculateTotal();
+
+	// SDS MAIN TABLE
+
+	$(document).on('click', '.btn_reschedule', function (e) {
+		var id = this.dataset.id;
+		$('[name=id]').val(id);
+		const doc_number_old = $(this).closest('tr').find('td').eq(2).text();
+		$('[name=doc_number_old]').val(doc_number_old);
+		// $('[name=name]').val(data.name);
+		// $('[name=password]').val(data.password);
+
+		$('#reschedule_modal').modal('show');
+	});
 }

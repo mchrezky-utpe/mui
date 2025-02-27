@@ -1,6 +1,6 @@
 import {
 	setGlobalVariable
-} from './global_variable.js';
+} from './sds_global_variable.js';
 
 export function handleTableServerSide() {
 	const table_pr = $('#table-pr').DataTable({

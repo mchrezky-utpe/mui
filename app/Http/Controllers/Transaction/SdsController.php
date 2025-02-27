@@ -3,24 +3,26 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Helpers\HelperCustom;
-use App\Services\Transaction\PurchaseOrderService;
+use App\Services\Transaction\SdsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-class PurchaseOrderController
+class SdsController
 {
 
-    private PurchaseOrderService $service;
+    private SdsService $service;
 
-    public function __construct(PurchaseOrderService $service)
+    public function __construct(SdsService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()->view('transaction.po.index',
-         ['data' =>  $this->service->list()]);
+        return response()->view('transaction.sds.index',
+         ['data' => 
+         $this->service->list()
+        ]);
     }
 
     public function api_all(Request $request)
@@ -34,32 +36,37 @@ class PurchaseOrderController
         ]);
     }
     
-    public function api_droplist(Request $request)
+    
+    public function send_to_edi(Request $request)
     {
-        $data = $this->service->get_droplist($request);
-        return response()->json([
-            'data' => $data
-        ]);
+        $this->service->send_to_edi($request);
+        return redirect("/sds");
     }
     
-    public function api_item_by(Request $request)
+    
+    public function reschedule(Request $request)
     {
-        $data = $this->service->get_item_by($request);
-        return response()->json([
-            'data' => $data
-        ]);
+        $this->service->reschedule($request);
+        return redirect("/sds");
+    }
+    
+    
+    public function pull_back(Request $request)
+    {
+        $this->service->pull_back($request);
+        return redirect("/sds");
     }
 
     public function add(Request $request)
     {
         $this->service->add($request);
-        return redirect("/po");
+        return redirect("/sds");
     }
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
-        return redirect("/po");
+        return redirect("/sds");
     }
     
     public function get(Request $request, int $id)
@@ -73,17 +80,6 @@ class PurchaseOrderController
     public function edit(Request $request)
     {
         $this->service->edit($request);
-        return redirect("/po");
+        return redirect("/sds");
     }
-
-
-    public function print(Request $request, int $id)
-    {
-        // dd($request);
-        $response = $this->service->print($id);
-  
-        return view('transaction.po.print_po', $response);
-    }
-    
-
 }
