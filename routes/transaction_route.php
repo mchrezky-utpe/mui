@@ -15,6 +15,7 @@ use App\Http\Controllers\Transaction\SkuMinOfStockController;
 use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Controllers\Transaction\Approval\ApprovalPurchaseRequestController;
 use App\Http\Controllers\Transaction\SdsController;
+use App\Http\Controllers\Transaction\SdoController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -134,6 +135,17 @@ Route::controller(SdsController::class)->group(function () {
     Route::post("/sds/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/reschedule", "reschedule")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/pull-back", "pull_back")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(SdoController::class)->group(function () {
+    Route::get("/sdo", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sdo", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sdo/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sdo/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sdo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sdo/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sdo/reschedule", "reschedule")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sos/pull-back", "pull_back")->middleware(OnlyMemberMiddleware::class);
 });
 
 

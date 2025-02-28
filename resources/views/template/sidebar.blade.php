@@ -259,6 +259,15 @@
                             </ul>
                         </li>
 
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-shipping-fast"></i>Receiving</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/sdo">SDO</a>
+                            </ul>
+                        </li>
+
                         <!-- Sales Menu -->
                         <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
