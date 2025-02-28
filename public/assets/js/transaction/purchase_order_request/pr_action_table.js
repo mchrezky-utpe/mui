@@ -10,8 +10,8 @@ export function handleActionTable() {
 
 	$(document).on('click','.create_po',function(){
 		var id = this.dataset.id;
-		var supplier = $(this).closest('tr').find('td').eq(6).text();
-		var pr_doc_numb = $(this).closest('tr').find('td').eq(2).text();
+		var supplier = $(this).closest('tr').find('td').eq(5).text();
+		var pr_doc_numb = $(this).closest('tr').find('td').eq(1).text();
 		var supplier_id = $(this).closest('tr').find('[name=supplier_id]').val();
 		$('[name=id]').val(id);
 		$('[name=pr_doc_numb]').val(pr_doc_numb);
@@ -30,8 +30,16 @@ export function handleActionTable() {
 		const newRow = `
             <tr>
                 <td>${row}</td>
-                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" step="0.01"></td>
-                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"></td>
+				<td>
+					<select name="flag_type_detail[]" class="form-control item_sku">
+                        <option value="">
+                            -- Pick Purchase Item Type --
+							<option value="1"> New Order </option>
+							<option value="2"> Addition </option>
+							<option value="3"> Replacement </option>
+							<option value="4"> Services </option>
+                        </option>
+				</td>
                 <td>
                     <select name="sku_id[]" class="form-control item_sku">
                         <option value="">
@@ -42,15 +50,13 @@ export function handleActionTable() {
 			`
                     </select>
                 </td>
-                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" placeholder="Price" step="0.01"></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]" placeholder="Price" step="0.01"></td>
+                <!--<td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>-->
+                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"></td>
+                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
                 <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"></td>
-                <td><input type="number" class="sub_total form-control" name="sub_total[]" placeholder="Sub Total" step="0.01" readonly></td>
-                <td><input type="number" class="discount form-control" name="discount_percentage[]" placeholder="Discount %" step="0.01"></td>
-                <td><input type="number" class="after_discount form-control" name="after_discount[]" placeholder="After Discount" step="0.01" readonly></td>
-                <td><input type="number" class="vat_percentage form-control" name="vat_percentage[]" placeholder="VAT" step="0.01"></td>
-                <td><input type="number" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
+                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" step="0.01"></td>
+                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"></td>
+                <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
             </tr>
         `;

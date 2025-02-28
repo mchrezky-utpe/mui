@@ -133,7 +133,7 @@ function fetchSkuMaster(supplier_id) {
 				resolve(data.data);
 			},
 			error: function(err) {
-				console.error("Error fetching terms master:", err);
+				console.error("Error fetching SKU master:", err);
 				reject(err);
 			}
 		});

@@ -36,6 +36,15 @@
           </select>
         </div>
       </div>
+      <div class="col-md-2">
+        <div class="form-group">
+            <label for="manual_id_right">Currency</label>
+            <select required id="currency_select" name="gen_currency_id" class="form-control">
+              <option value="">-- Select Currency --</option>
+            </select>
+          </div>
+      </div>
+
       <!-- REGION SIDE 3 --
       <!-- REGION SIDE 4 -->
       <!-- HIDE FIELD -->

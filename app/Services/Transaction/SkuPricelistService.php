@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
- 
+
 class SkuPricelistService
 {
     public function list(){
@@ -18,8 +18,16 @@ class SkuPricelistService
     }
 
     public function get_by(Request $request){
-        $query = SkuPricelist::with(['sku'])
-        ->where('flag_active', 1);
+    //     $query = SkuPricelist::with(['sku'])
+    //     ->where('flag_active', 1);
+    //     foreach ($request->all() as $field => $value) {
+    //         if (!empty($value)) {
+    //             $query->where($field, $value);
+    //         }
+    //     }
+    //    return $query->get();
+
+       $query = SkuPricelistVw::where('flag_pricelist_status', 1);
         foreach ($request->all() as $field => $value) {
             if (!empty($value)) {
                 $query->where($field, $value);
@@ -58,11 +66,11 @@ class SkuPricelistService
         $data->deleted_by  = Auth::id();
         $data->save();
     }
-    
+
     public function get(int $id)
     {
         return SkuPricelist::where('id', $id)->firstOrFail();
-    } 
+    }
 
     function edit(Request $request)
     {

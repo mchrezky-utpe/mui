@@ -7,17 +7,11 @@
     <thead>
       <tr>
         <th>No</th>
-        <th>Request Date</th>
-        <th>Description</th>
-        <th>Sku</th>
-        <th>Price</th>
+        <th>Purchase Item Type</th>
+        <th>Item Name</th>
         <th>Qty</th>
-        <th>Sub Total</th>
-        <th>Discount</th>
-        <th>After Discount</th>
-        <th>Vat</th>
-        <th>Total</th>
-        <th></th>
+        <th>Request Date</th>
+        <th>Remark</th>
       </tr>
     </thead>
     <tbody></tbody>

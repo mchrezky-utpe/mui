@@ -125,7 +125,7 @@
                                 <i class="fas fa-check"></i>Approval</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/approval-pr">Purchase Request(PR)</a>
+                                    <a href="/approval-pr">Purchase Requisition(PR)</a>
                                 </li>
                             </ul>
                         </li>
@@ -233,7 +233,7 @@
                                 <i class="fas fa-shopping-bag"></i>Purchase</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/pr">Purchase Requesiton (PR)</a>
+                                    <a href="/pr">Purchase Requisition (PR)</a>
                                 </li>
                                 <li>
                                     <a href="/po">Purchase Order (PO)</a>

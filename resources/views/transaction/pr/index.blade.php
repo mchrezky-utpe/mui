@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">Purchase Requesition</h2>
+          <h2 class="pageheader-title">Purchase Requisition</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -49,13 +49,11 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Manual ID</th>
-                    <th>Doc Number</th>
+                    <th>Doc. #</th>
                     <th>Date</th>
                     <th>Type</th>
                     <th>Purpose</th>
                     <th>Supplier</th>
-                    <th>Description</th>
                     <th>Status</th>
                     <!-- <th>Total</th> -->
                     <th>Action</th>

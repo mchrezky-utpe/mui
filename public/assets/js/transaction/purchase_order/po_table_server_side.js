@@ -23,22 +23,22 @@ export function handleTableServerSide() {
 				data: null
 			}, // Kolom nomor urut
 			{
-				data: "manual_id"
-			},
-			{
 				data: "doc_num"
 			},
 			{
 				data: "trans_date"
 			},
 			{
-				data: "flag_type"
+				data: "po_type"
 			},
 			{
-				data: "supplier_name"
+				data: "supplier"
 			},
 			{
 				data: "description"
+			},
+            {
+				data: "pr_doc_num"
 			},
 			// { data: "description" },
 			{
@@ -52,7 +52,7 @@ export function handleTableServerSide() {
 				render: function(data, type, row, meta) {
 					return meta.row + 1; // Menampilkan nomor urut
 				}
-			},{
+			},/*{
 				targets: 4,
 				render: function(data, type, row, meta) {
 					let flag_type = "";
@@ -63,7 +63,7 @@ export function handleTableServerSide() {
 					}
 					return flag_type;
 				}
-			},
+			},*/
 			{
 				targets: 7, // Kolom nomor urut
 				orderable: false, // Nomor urut tidak perlu sorting
@@ -71,7 +71,7 @@ export function handleTableServerSide() {
 				render: function(data, type, row, meta) {
 					const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 					return `
-                        <form action="/po/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')"> 
+                        <form action="/po/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
                             <input type="hidden" name="_token" value="${csrfToken}">
 							<a  target="_blank"  href="po/` + data.id + `/print" class="print btn btn-secondary">
 							 <span class="fas fa-print"></span>

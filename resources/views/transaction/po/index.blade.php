@@ -1,8 +1,8 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
-@extends('template.main') @section('content') 
+@extends('template.main') @section('content')
 <style>
   .table-container {
-        max-height: 400px; 
+        max-height: 400px;
         overflow-y: auto;
         border: 1px solid #ccc;
         overflow-y: auto;
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="row"> 
+    <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
@@ -49,12 +49,12 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Manual ID</th>
-                    <th>Doc Number</th>
+                    <th>Doc. #</th>
                     <th>Date</th>
                     <th>Type</th>
                     <th>Supplier</th>
                     <th>Description</th>
+                    <th>PR Doc. #</th>
                     <!-- <th>Total</th> -->
                     <th>Action</th>
                   </tr>
@@ -68,7 +68,7 @@
                     <td>{{ $value->description  }}</td>
                     <td>{{ 0 }}</td>
                     <td>
-                      <form action="/po/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      <form action="/po/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
@@ -77,7 +77,7 @@
                         </button>
                       </form>
                     </td>
-                  </tr> @endforeach 
+                  </tr> @endforeach
                 </tbody> -->
                 </table>
             </div>
@@ -87,11 +87,11 @@
     </div>
   </div>
 </div>
-<!-- MODAL --> 
- @include('transaction.po._add') 
- @include('transaction.po._edit') 
- @endsection 
- 
- @section('extra_javascript') 
- <script  type="module" src="{{ asset('assets/js/transaction/purchase_order/po_main.js') }}" type="text/javascript"></script> 
+<!-- MODAL -->
+ @include('transaction.po._add')
+ @include('transaction.po._edit')
+ @endsection
+
+ @section('extra_javascript')
+ <script  type="module" src="{{ asset('assets/js/transaction/purchase_order/po_main.js') }}" type="text/javascript"></script>
  @endsection

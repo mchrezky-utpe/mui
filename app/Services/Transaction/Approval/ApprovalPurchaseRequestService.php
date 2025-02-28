@@ -20,7 +20,8 @@ class ApprovalPurchaseRequestService
     public function approve(Request $request)
     {
         $user = $request->session()->get('user');
-        $userId = $user['id']; 
+        //$userId = $user['id'];
+        $userId = 'jeruk';
         $selected_ids = explode(",", $request->input('selected_ids'));
 
         DB::beginTransaction();
@@ -41,7 +42,7 @@ class ApprovalPurchaseRequestService
     public function deny(Request $request)
     {
         $user = $request->session()->get('user');
-        $userId = $user['id']; 
+        $userId = $user['id'];
         $selected_ids = explode(",", $request->input('selected_ids'));
 
         DB::beginTransaction();
@@ -62,7 +63,7 @@ class ApprovalPurchaseRequestService
     public function hold(Request $request)
     {
         $user = $request->session()->get('user');
-        $userId = $user['id']; 
+        $userId = $user['id'];
         $selected_ids = explode(",", $request->input('selected_ids'));
 
         DB::beginTransaction();
@@ -113,5 +114,5 @@ class ApprovalPurchaseRequestService
             dd($e);
         }
     }
-    
+
 }
