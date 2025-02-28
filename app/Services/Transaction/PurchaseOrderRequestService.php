@@ -104,7 +104,7 @@ class PurchaseOrderRequestService
                 'manual_id' => $request->manual_id,
                 'trans_date' => $request->trans_date,
                 'flag_type' => $request->flag_type,
-                'gen_terms_detail_id' => $request->gen_terms_detail_id,
+                // 'gen_terms_detail_id' => $request->gen_terms_detail_id,
                 'gen_department_id' => $request->gen_department_id,
                 'gen_currency_id' => $request->gen_currency_id,
                 'description' => $request->description,

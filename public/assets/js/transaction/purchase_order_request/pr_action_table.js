@@ -1,33 +1,33 @@
 import {
-	skuMaster,
-	table_pr
+    skuMaster,
+    table_pr
 } from './pr_global_variable.js';
 import {
-	calculateTotal
+    calculateTotal
 } from './pr_calculate.js';
 
 export function handleActionTable() {
 
-	$(document).on('click','.create_po',function(){
-		var id = this.dataset.id;
-		var supplier = $(this).closest('tr').find('td').eq(5).text();
-		var pr_doc_numb = $(this).closest('tr').find('td').eq(1).text();
-		var supplier_id = $(this).closest('tr').find('[name=supplier_id]').val();
-		$('[name=id]').val(id);
-		$('[name=pr_doc_numb]').val(pr_doc_numb);
-		$('[name=supplier_name]').val(supplier);
-		$('[name=prs_supplier_id]').val(supplier_id);
-		$('#add_modal_po').modal('show');
-	});
+    $(document).on('click', '.create_po', function () {
+        var id = this.dataset.id;
+        var supplier = $(this).closest('tr').find('td').eq(5).text();
+        var pr_doc_numb = $(this).closest('tr').find('td').eq(1).text();
+        var supplier_id = $(this).closest('tr').find('[name=supplier_id]').val();
+        $('[name=id]').val(id);
+        $('[name=pr_doc_numb]').val(pr_doc_numb);
+        $('[name=supplier_name]').val(supplier);
+        $('[name=prs_supplier_id]').val(supplier_id);
+        $('#add_modal_po').modal('show');
+    });
 
-	let rowCount = 0;
-	$("#add_row").on("click", function() {
-		const row = rowCount + 1;
-		let sku_item
-		skuMaster.forEach(data => {
-			sku_item +=`"  req_date="` + data.req_date +  `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" >` + data.sku.manual_id + " - " + data.sku.description + `</option>`
-		});
-		const newRow = `
+    let rowCount = 0;
+    $("#add_row").on("click", function () {
+        const row = rowCount + 1;
+        let sku_item
+        skuMaster.forEach(data => {
+            sku_item += `"  req_date="` + data.req_date + `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" spec_code="` + data.sku.specification_code + `" >` + data.sku.manual_id + " - " + data.sku.description + `</option>`
+        });
+        const newRow = `
             <tr>
                 <td>${row}</td>
 				<td>
@@ -46,8 +46,8 @@ export function handleActionTable() {
                             -- Select SKU --
                         </option>
                         ` +
-			sku_item +
-			`
+            sku_item +
+            `
                     </select>
                 </td>
                 <!--<td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>-->
@@ -61,31 +61,33 @@ export function handleActionTable() {
             </tr>
         `;
 
-		$("#item_table tbody").append(newRow);
-		rowCount++;
-	});
+        $("#item_table tbody").append(newRow);
+        rowCount++;
+    });
 
-	$('#item_table').on('change', '.item_sku', function() {
-		const price = $(this).find('option:selected').attr('price');
-		const sku_description = $(this).find('option:selected').attr('sku_description');
-		const prefix = $(this).find('option:selected').attr('sku_prefix');
-		$(this).closest('tr').find('.price').val(price);
-		$(this).closest('tr').find('.sku_description').val(sku_description);
-		$(this).closest('tr').find('.sku_prefix').val(prefix);
-	});
+    $('#item_table').on('change', '.item_sku', function () {
+        const price = $(this).find('option:selected').attr('price');
+        const sku_description = $(this).find('option:selected').attr('sku_description');
+        const prefix = $(this).find('option:selected').attr('sku_prefix');
+        const spec_code = $(this).find('option:selected').attr('spec_code');
+        $(this).closest('tr').find('.price').val(price);
+        $(this).closest('tr').find('.sku_description').val(sku_description);
+        $(this).closest('tr').find('.specification_code').val(spec_code);
+        $(this).closest('tr').find('.sku_prefix').val(prefix);
+    });
 
-	$('#item_table').on('input', '.price, .qty, .discount, .vat_percentage', function() {
-		calculateTotal();
-	});
+    $('#item_table').on('input', '.price, .qty, .discount, .vat_percentage', function () {
+        calculateTotal();
+    });
 
-	$('#tax_rate').on('input', function() {
-		calculateTotal();
-	});
+    $('#tax_rate').on('input', function () {
+        calculateTotal();
+    });
 
-	$("#item_table").on("click", ".delete_row", function() {
-		$(this).closest("tr").remove();
-		calculateTotal();
-	});
+    $("#item_table").on("click", ".delete_row", function () {
+        $(this).closest("tr").remove();
+        calculateTotal();
+    });
 
-	calculateTotal();
+    calculateTotal();
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\Transaction\SkuPricelistController;
 use App\Http\Controllers\Transaction\SkuMinOfStockController;
 use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Controllers\Transaction\Approval\ApprovalPurchaseRequestController;
+use App\Http\Controllers\Transaction\SdsController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -46,6 +47,8 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::post("/po/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/{id}/print", "print")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/po/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/po/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {
@@ -120,6 +123,17 @@ Route::controller(InventoryAdjustmentController::class)->group(function () {
     Route::post("/inventory-adjustment/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/inventory-adjustment/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/inventory-adjustment/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(SdsController::class)->group(function () {
+    Route::get("/sds", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sds", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sds/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sd/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sds/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sds/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sds/reschedule", "reschedule")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sds/pull-back", "pull_back")->middleware(OnlyMemberMiddleware::class);
 });
 
 

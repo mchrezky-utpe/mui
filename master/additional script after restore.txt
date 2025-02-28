@@ -1,0 +1,260 @@
+create or replace
+view vw_app_po_droplist as
+select id,doc_num as description from trans_purchase_order where flag_status = 2;
+
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Feb 27, 2025 at 10:42 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db_mrp3`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '0001_01_01_000000_create_users_table', 1),
+(2, '2025_01_12_095946_create_sku_table', 1),
+(3, '2025_01_12_101100_create_mst_sku_unit_table', 1),
+(4, '2025_01_12_101349_create_mst_sku_model_table', 1),
+(5, '2025_01_12_101530_create_mst_sku_process_table', 1),
+(6, '2025_01_12_101643_create_mst_sku_packaging_table', 1),
+(7, '2025_01_12_101708_create_mst_sku_detail_table', 1),
+(8, '2025_01_12_101744_create_mst_sku_type_table', 1),
+(9, '2025_01_13_151653_create_mst_sku_business_type_table', 1),
+(10, '2025_01_13_154235_create_mst_person_supplier_table', 1),
+(11, '2025_01_18_032226_create_trans_purchase_order_table', 1),
+(12, '2025_01_18_032424_create_trans_purchase_order_detail_table', 1),
+(13, '2025_01_18_032432_create_trans_purchase_order_deduction_table', 1),
+(14, '2025_01_18_032441_create_trans_purchase_order_othercost_table', 1),
+(15, '2025_01_18_123551_create_mst_general_terms', 1),
+(16, '2025_01_18_142800_create_mst_general_department', 1),
+(17, '2025_01_18_224108_create_mst_general_currency', 1),
+(18, '2025_01_18_230950_create_mst_general_tax_table', 1),
+(19, '2025_01_19_084533_create_mst_general_deductor_table', 1),
+(20, '2025_01_19_092117_create_mst_general_other_cost_table', 1),
+(21, '2025_01_19_102322_create_mst_general_exchange_rates_table', 1),
+(23, '2025_01_21_113334_create_trans_sku_pricelist_table', 1),
+(24, '2025_01_21_113920_create_trans_sku_minofstock_table', 1),
+(25, '2025_01_21_113934_create_trans_sku_minofqty_table', 1),
+(26, '2025_01_21_094300_create_mst_person_customer_table', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mst_user`
+--
+
+CREATE TABLE `mst_user` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `prefix` varchar(50) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `flag_active` tinyint(1) NOT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_by` varchar(50) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` varchar(50) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `mst_user`
+--
+
+INSERT INTO `mst_user` (`id`, `username`, `name`, `prefix`, `password`, `flag_active`, `created_by`, `created_at`, `updated_by`, `updated_at`, `deleted_by`, `deleted_at`) VALUES
+(1, 'admin', 'ahmad', 'US0001', '202cb962ac59075b964b07152d234b70', 1, NULL, '2025-01-21 09:50:34', NULL, '2025-01-21 09:50:35', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` varchar(255) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `user_agent` text DEFAULT NULL,
+  `payload` longtext NOT NULL,
+  `last_activity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+('B0t8byG4gMERmzPGnTJ2FFn21HgPPR0ndMsZN62i', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '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', 1740674439),
+('o0aSAg9Kdf6J6TD8IVPSPuWrqMwgPWr29gVnxCGz', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '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', 1740692313);
+
+-- --------------------------------------------------------
+
+create or replace
+view `dbmrp`.`vw_purchase_order_print_dt` as
+select
+    `tprd`.`trans_po_id` as `trans_po_id`,
+    `tprd`.`id` as `id`,
+    `tprd`.`sku_prefix` as `item_code`,
+    `tprd`.`sku_description` as `item_name`,
+    '' as `spe_code`,
+    `tprd`.`qty` as `qty`,
+    '' as `unit`,
+    `tprd`.`price_d` as `price`,
+    `tprd`.`price_d` as `amount`,
+    null as `req_date`
+from
+    `dbmrp`.`trans_purchase_order_detail` `tprd`
+
+
+create or replace
+view `dbmrp`.`vw_app_po_droplist` as
+select
+    `dbmrp`.`trans_purchase_order`.`id` as `id`,
+    `dbmrp`.`trans_purchase_order`.`doc_num` as `description`
+from
+    `dbmrp`.`trans_purchase_order`
+where
+    `dbmrp`.`trans_purchase_order`.`flag_status` = 2;
+
+create or replace
+view `dbmrp`.`vw_app_po_item_list` as
+select
+    `tpd`.`id` as `id`,
+    `tpd`.`trans_po_id` as `trans_po_id`,
+    `ms`.`manual_id` as `item_code`,
+    `ms`.`description` as `item_name`,
+    `ms`.`specification_code` as `spec_code`,
+    `mt`.`description` as `item_type`,
+    `mu`.`description` as `item_unit`,
+    `tpd`.`qty` as `qty`,
+    null as `os_sds`,
+    `tpd`.`req_date` as `required_date`
+from
+    ((((`dbmrp`.`trans_purchase_order_detail` `tpd`
+join `dbmrp`.`trans_purchase_order` `tp` on
+    (`tpd`.`trans_po_id` = `tp`.`id`))
+left join `dbmrp`.`mst_sku` `ms` on
+    (`ms`.`id` = `tpd`.`sku_id`))
+left join `dbmrp`.`mst_sku_type` `mt` on
+    (`mt`.`id` = `ms`.`sku_type_id`))
+left join `dbmrp`.`mst_sku_unit` `mu` on
+    (`mu`.`id` = `ms`.`sku_unit_id`));
+
+create or replace
+view `dbmrp`.`vw_app_po_item_list` as
+select
+    `tpd`.`id` as `id`,
+    `tpd`.`trans_po_id` as `trans_po_id`,
+    `ms`.`manual_id` as `item_code`,
+    `ms`.`description` as `item_name`,
+    `ms`.`specification_code` as `spec_code`,
+    `mt`.`description` as `item_type`,
+    `mu`.`description` as `item_unit`,
+    `tpd`.`qty` as `qty`,
+    null as `os_sds`,
+    `tpd`.`req_date` as `required_date`
+from
+    ((((`dbmrp`.`trans_purchase_order_detail` `tpd`
+join `dbmrp`.`trans_purchase_order` `tp` on
+    (`tpd`.`trans_po_id` = `tp`.`id`))
+left join `dbmrp`.`mst_sku` `ms` on
+    (`ms`.`id` = `tpd`.`sku_id`))
+left join `dbmrp`.`mst_sku_type` `mt` on
+    (`mt`.`id` = `ms`.`sku_type_id`))
+left join `dbmrp`.`mst_sku_unit` `mu` on
+    (`mu`.`id` = `ms`.`sku_unit_id`));
+
+create or replace
+view `dbmrp`.`vw_purchase_order_print_hd` as
+select
+    `tpo`.`id` as `id`,
+    `mps`.`description` as `supplier_name`,
+    `mps`.`address_01` as `address`,
+    `mps`.`phone_01` as `phone`,
+    `mps`.`fax_01` as `fax`,
+    `mps`.`email_01` as `attention_to`,
+    `tpo`.`doc_num` as `po_number`,
+    `tpo`.`trans_date` as `po_date`,
+    `mgt`.`description` as `terms`,
+    `mgc`.`description` as `currency`,
+    `mgd`.`description` as `department`,
+    `tpod`.`sub_total` as `sub_total`,
+    `tpod`.`discount` as `discount`,
+    `tpod`.`ppn` as `ppn`,
+    `tpod`.`sub_total` - `tpod`.`discount` + `tpod`.`ppn` as `total_order`
+from
+    (((((`dbmrp`.`trans_purchase_order` `tpo`
+join `dbmrp`.`mst_person_supplier` `mps` on
+    (`tpo`.`prs_supplier_id` = `mps`.`id`))
+left join `dbmrp`.`mst_general_terms_detail` `mgt` on
+    (`mgt`.`id` = `tpo`.`gen_terms_detail_id`))
+left join `dbmrp`.`mst_general_currency` `mgc` on
+    (`mgc`.`id` = `tpo`.`gen_currency_id`))
+left join `dbmrp`.`mst_general_department` `mgd` on
+    (`mgd`.`id` = `tpo`.`gen_department_id`))
+left join (
+    select
+        `tpod`.`trans_po_id` as `trans_po_id`,
+        sum(`tpod`.`subtotal_d`) as `sub_total`,
+        sum(`tpod`.`discount_d`) as `discount`,
+        sum(`tpod`.`vat_d`) as `ppn`
+    from
+        `dbmrp`.`trans_purchase_order_detail` `tpod`
+    group by
+        `tpod`.`trans_po_id`) `tpod` on
+    (`tpod`.`trans_po_id` = `tpo`.`id`))
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vw_purchase_order_print_dt`
+--
+DROP TABLE IF EXISTS `vw_purchase_order_print_dt`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_purchase_order_print_dt`  AS SELECT `tprd`.`trans_po_id` AS `trans_po_id`, `tprd`.`id` AS `id`, `tprd`.`sku_prefix` AS `item_code`, `tprd`.`sku_description` AS `item_name`, '' AS `spe_code`, `tprd`.`qty` AS `qty`, '' AS `unit`, `tprd`.`price_d` AS `price`, `tprd`.`price_d` AS `amount`, NULL AS `req_date` FROM `trans_purchase_order_detail` AS `tprd` ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vw_purchase_order_print_hd`
+--
+DROP TABLE IF EXISTS `vw_purchase_order_print_hd`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_purchase_order_print_hd`  AS SELECT `tpo`.`id` AS `id`, `mps`.`description` AS `supplier_name`, `mps`.`address_01` AS `address`, `mps`.`phone_01` AS `phone`, `mps`.`fax_01` AS `fax`, `mps`.`email_01` AS `attention_to`, `tpo`.`doc_num` AS `po_number`, `tpo`.`revision` AS `revision`, `tpo`.`trans_date` AS `po_date`, `mgt`.`description` AS `terms`, `mgc`.`description` AS `currency`, `mgd`.`description` AS `department`, `tpod`.`sub_total` AS `sub_total`, `tpod`.`discount` AS `discount`, `tpod`.`ppn` AS `ppn`, `tpod`.`sub_total`- `tpod`.`discount` + `tpod`.`ppn` AS `total_order` FROM (((((`trans_purchase_order` `tpo` join `mst_person_supplier` `mps` on(`tpo`.`prs_supplier_id` = `mps`.`id`)) left join `mst_general_terms_detail` `mgt` on(`mgt`.`id` = `tpo`.`gen_terms_detail_id`)) left join `mst_general_currency` `mgc` on(`mgc`.`id` = `tpo`.`gen_currency_id`)) left join `mst_general_department` `mgd` on(`mgd`.`id` = `tpo`.`gen_department_id`)) left join (select `tpod`.`trans_po_id` AS `trans_po_id`,sum(`tpod`.`subtotal_d`) AS `sub_total`,sum(`tpod`.`discount_d`) AS `discount`,sum(`tpod`.`vat_d`) AS `ppn` from `trans_purchase_order_detail` `tpod` group by `tpod`.`trans_po_id`) `tpod` on(`tpod`.`trans_po_id` = `tpo`.`id`)) ;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

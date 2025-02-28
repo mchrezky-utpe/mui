@@ -1,6 +1,6 @@
 import {
 	setGlobalVariable
-} from './global_variable.js';
+} from './sds_global_variable.js';
 
 export function handleTableServerSide() {
 	const table_pr = $('#table-pr').DataTable({
@@ -15,10 +15,10 @@ export function handleTableServerSide() {
 				d.customer = $('#customer').val();
 			}
 		},
-		/*order: [
+		order: [
 			[3, 'desc'],
 			[2, 'desc']
-		],*/
+		],
 		columns: [{
 				data: null
 			},
@@ -29,29 +29,32 @@ export function handleTableServerSide() {
 				data: "trans_date"
 			},
 			{
-				data: "transaction_type"
+				data: "flag_type"
 			},
 			{
-				data: "transaction_purpose"
+				data: null
 			},
 			{
-				data: "supplier"
+				data: null
 			},
 			{
-				data: "transaction_status"
+				data: "description"
+			},
+			{ 
+				data: null 
 			},
 			{
 				data: null
 			}
 		],
 		columnDefs: [{
-				targets: 0,
-				orderable: false,
-				searchable: false,
+				targets: 0, 
+				orderable: false, 
+				searchable: false, 
 				render: function(data, type, row, meta) {
 					return meta.row + 1;
 				}
-			}/*,{
+			},{
 				targets: 3,
 				render: function(data, type, row, meta) {
 					let flag_type = "";
@@ -78,7 +81,7 @@ export function handleTableServerSide() {
 					return purpose;
 				}
 			},{
-				targets: 6,
+				targets: 7,
 				render: function(data, type, row, meta) {
 					let status = "";
 					if(data.flag_status == 1){
@@ -92,9 +95,9 @@ export function handleTableServerSide() {
 					}
 					return status;
 				}
-			}*/,
+			},
 			{
-				targets: 7,
+				targets: 8, 
 				orderable: false,
 				searchable: false,
 				render: function(data, type, row, meta) {
@@ -103,7 +106,7 @@ export function handleTableServerSide() {
 					if(data.flag_status == 2){
 						button_action = `
 							<button data-id="` + data.id + `" type="button" class="create_po btn btn-primary">
-                            	<span>Create PO</span>
+                            	<span>+ PO</span>
                             </button>
 							`;
 					}else if(data.flag_status == 1){
@@ -116,19 +119,19 @@ export function handleTableServerSide() {
 								</button>`
 					}
 					return `
-                        <form action="/pr/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
+                        <form action="/pr/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')"> 
                             <input type="hidden" name="_token" value="${csrfToken}">
 							`+button_action+`
                         </form>
                     `; // Menampilkan nomor urut
 				}
 			},
-			/*{
+			{
 				targets: 5,
 				render: function(data, type, row, meta) {
 					return data.supplier_name + `<input type="hidden" name="supplier_id" value="${data.prs_supplier_id}">`;
 				}
-			}*/
+			}
 		]
 	});
 	setGlobalVariable('table_pr', table_pr);
