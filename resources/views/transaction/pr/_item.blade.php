@@ -7,21 +7,12 @@
   <table id="item_table" class="table table-scroll" id="add_table">
     <thead>
       <tr>
-        <th>No</th> 
-        <th>Required Date</th>
-        <th>Remark</th>
-        <th>Item</th>
-        <th>Spesification Code</th>
-        <th>Item Type</th>
-        <th>Purchase Type</th>
-        <th>Price</th>
+        <th>No</th>
+        <th>Purchase Item Type</th>
+        <th>Item Name</th>
         <th>Qty</th>
-        <th>Sub Total</th>
-        <th>Discount</th>
-        <th>After Discount</th>
-        <th>Vat</th>
-        <th>Total</th>
-        <th></th>
+        <th>Request Date</th>
+        <th>Remark</th>
       </tr>
     </thead>
     <tbody></tbody>

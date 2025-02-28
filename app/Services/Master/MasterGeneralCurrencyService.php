@@ -4,6 +4,7 @@ namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
 use App\Models\MasterGeneralCurrency;
+use App\Models\Master\General\GeneralCurrencyVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -14,7 +15,8 @@ class MasterGeneralCurrencyService
 {
     public function list(){
         //   return MasterGeneralCurrency::all();
-          return MasterGeneralCurrency::where('flag_active', 1)->get();
+        //  return MasterGeneralCurrency::where('flag_active', 1)->orderBy('')->get();
+        return MasterGeneralCurrency::orderBy('prefix', 'asc')->get();
     }
     public function list2(){
         //   return MasterGeneralCurrency::all();
@@ -50,11 +52,11 @@ class MasterGeneralCurrencyService
         $data = MasterGeneralCurrency::where('id', $id)->firstOrFail();
         $data->delete();
     }
-    
+
     public function get(int $id)
     {
         return MasterGeneralCurrency::where('id', $id)->firstOrFail();
-    } 
+    }
 
     function edit(Request $request)
     {

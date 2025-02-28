@@ -15,10 +15,10 @@ export function handleTableServerSide() {
 				d.customer = $('#customer').val();
 			}
 		},
-		order: [
+		/*order: [
 			[3, 'desc'],
 			[2, 'desc']
-		],
+		],*/
 		columns: [{
 				data: null
 			},
@@ -29,32 +29,29 @@ export function handleTableServerSide() {
 				data: "trans_date"
 			},
 			{
-				data: "flag_type"
+				data: "transaction_type"
 			},
 			{
-				data: null
+				data: "transaction_purpose"
 			},
 			{
-				data: null
+				data: "supplier"
 			},
 			{
-				data: "description"
-			},
-			{ 
-				data: null 
+				data: "transaction_status"
 			},
 			{
 				data: null
 			}
 		],
 		columnDefs: [{
-				targets: 0, 
-				orderable: false, 
-				searchable: false, 
+				targets: 0,
+				orderable: false,
+				searchable: false,
 				render: function(data, type, row, meta) {
 					return meta.row + 1;
 				}
-			},{
+			}/*,{
 				targets: 3,
 				render: function(data, type, row, meta) {
 					let flag_type = "";
@@ -81,7 +78,7 @@ export function handleTableServerSide() {
 					return purpose;
 				}
 			},{
-				targets: 7,
+				targets: 6,
 				render: function(data, type, row, meta) {
 					let status = "";
 					if(data.flag_status == 1){
@@ -95,9 +92,9 @@ export function handleTableServerSide() {
 					}
 					return status;
 				}
-			},
+			}*/,
 			{
-				targets: 8, 
+				targets: 7,
 				orderable: false,
 				searchable: false,
 				render: function(data, type, row, meta) {
@@ -106,7 +103,7 @@ export function handleTableServerSide() {
 					if(data.flag_status == 2){
 						button_action = `
 							<button data-id="` + data.id + `" type="button" class="create_po btn btn-primary">
-                            	<span>+ PO</span>
+                            	<span>Create PO</span>
                             </button>
 							`;
 					}else if(data.flag_status == 1){
@@ -119,19 +116,19 @@ export function handleTableServerSide() {
 								</button>`
 					}
 					return `
-                        <form action="/pr/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')"> 
+                        <form action="/pr/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
                             <input type="hidden" name="_token" value="${csrfToken}">
 							`+button_action+`
                         </form>
                     `; // Menampilkan nomor urut
 				}
 			},
-			{
+			/*{
 				targets: 5,
 				render: function(data, type, row, meta) {
 					return data.supplier_name + `<input type="hidden" name="supplier_id" value="${data.prs_supplier_id}">`;
 				}
-			}
+			}*/
 		]
 	});
 	setGlobalVariable('table_pr', table_pr);

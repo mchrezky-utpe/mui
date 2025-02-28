@@ -42,23 +42,25 @@ class PurchaseOrderService
         $orderDirection = $request->input('order.0.dir'); // Arah pengurutan (asc/desc)
         $columns = $request->input('columns'); // Semua kolom
 
-        $orderColumn = $columns[$orderColumnIndex]['data'];
+        //$orderColumn = $columns[$orderColumnIndex]['data'];
 
-        $query = DB::table('trans_purchase_order')
-            ->select(
-                'trans_purchase_order.id',
-                'trans_purchase_order.trans_date',
-                'trans_purchase_order.manual_id',
-                'trans_purchase_order.doc_num',
-                'trans_purchase_order.flag_type',
-                'trans_purchase_order.prs_supplier_id',
-                'trans_purchase_order.description',
-                'mst_person_supplier.description as supplier_name'
-            )
-            ->leftJoin('mst_person_supplier', 'trans_purchase_order.prs_supplier_id', '=', 'mst_person_supplier.id');
 
-            
-        $query->where('trans_purchase_order.flag_active', [1]);
+        // $query = DB::table('trans_purchase_order')
+        //     ->select(
+        //         'trans_purchase_order.id',
+        //         'trans_purchase_order.trans_date',
+        //         'trans_purchase_order.manual_id',
+        //         'trans_purchase_order.doc_num',
+        //         'trans_purchase_order.flag_type',
+        //         'trans_purchase_order.prs_supplier_id',
+        //         'trans_purchase_order.description',
+        //         'mst_person_supplier.description as supplier_name'
+        //     )
+        //     ->leftJoin('mst_person_supplier', 'trans_purchase_order.prs_supplier_id', '=', 'mst_person_supplier.id');
+
+        $query = DB::table('vw_app_list_trans_po_hd');
+
+        //$query->where('trans_purchase_order.flag_active', [1]);
 
         if ($request->has('start_date') && $request->has('end_date')) {
             $query->whereBetween('trans_purchase_order.trans_date', [$request->start_date, $request->end_date]);
@@ -77,28 +79,30 @@ class PurchaseOrderService
 
         $recordsFiltered = $query->count();
 
+        /*
         if($orderColumn){
             $query->orderBy($orderColumn, $orderDirection);
         }
+        */
 
-        $data = $query->offset($start)->limit($length)->get();
-
+        //$data = $query->offset($start)->limit($length)->get();
+        $data = $query->get();
         return [
             'data' => $data,
             'recordsTotal' => $recordsTotal,
             'recordsFiltered' =>  $recordsFiltered
         ];
     }
-    
+
     public function add(Request $request)
     {
         // Mulai transaksi
         DB::beginTransaction();
-    
+
         try {
             // Generate nomor dokumen
             $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_order', 'MUI/P0');
-    
+
             // PO Header Data
             $data = [
                 'manual_id' => $request->manual_id,
@@ -119,18 +123,18 @@ class PurchaseOrderService
                 'generated_id' => Str::uuid()->toString(),
                 'flag_active' => 1,
             ];
-    
+
             // Simpan data PO Header
             $poHeader = PurchaseOrder::create($data);
             $items;
-    
+
             // PO Detail Data
             foreach ($request->sku_id as $index => $sku_id) {
                 $price = $request->price[$index];
                 $qty = $request->qty[$index];
                 $discount_percentage = $request->discount_percentage[$index] ?? 0;
                 $vat_percentage = $request->vat_percentage[$index] ?? 0;
-    
+
                 $subtotal = CalcHelper::calcSubtotal($data['val_exchangerates'], $qty, $price);
                 $discount = CalcHelper::calcDiscount($subtotal['sub_total_f'], $subtotal['sub_total_d'], $discount_percentage);
                 $vat = CalcHelper::calcVat($discount['after_discount_f'], $discount['after_discount_d'], $vat_percentage);
@@ -158,14 +162,14 @@ class PurchaseOrderService
                     'total_f' => $vat['total_f'],
                     'total_d' => $vat['total_d'],
                     'generated_id' => Str::uuid()->toString(),
-                    'trans_po_id' => $poHeader->id, 
+                    'trans_po_id' => $poHeader->id,
                     'manual_id' => '',
                 ];
             }
-    
+
             // Simpan data PO Detail
             PurchaseOrderDetail::insert($items);
-    
+
             // Commit transaksi jika semua berhasil
             DB::commit();
         } catch (\Exception $e) {
@@ -185,14 +189,14 @@ class PurchaseOrderService
 
         try {
             $purchaseOrder = PurchaseOrder::where('id', $id)->firstOrFail();
-    
+
             $purchaseOrder->flag_active = 0;
             $purchaseOrder->deleted_at = Carbon::now();
             $purchaseOrder->deleted_by = Auth::id();
             $purchaseOrder->save();
 
             DB::commit();
-    
+
         } catch (\Exception $e) {
             // Rollback jika ada error
             DB::rollBack();
@@ -203,21 +207,21 @@ class PurchaseOrderService
             ], 500);
         }
     }
-    
+
     public function get(int $id)
     {
         return PurchaseOrder::where('id', $id)->firstOrFail();
-    } 
+    }
     public function print(int $id)
     {
         $header = PurchaseOrdePrintHdVw::where('id', $id)->first();
         $detail = PurchaseOrdePrintDtVw::where('trans_po_id', $id)->get();
-        
+
         return [
             'header' => $header,
             'detail' => $detail,
         ];
-    } 
+    }
 
     function edit(Request $request)
     {

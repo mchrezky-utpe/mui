@@ -6,6 +6,7 @@ use App\Helpers\NumberGenerator;
 use App\Helpers\HelperCustom;
 use App\Models\Transaction\PurchaseOrderRequest;
 use App\Models\Transaction\PurchaseOrderRequestDetail;
+use App\Models\Transaction\PurchaseRequisition\TransPurchaseRequisitionHDVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -30,23 +31,27 @@ class PurchaseOrderRequestService
 
         $orderColumn = $columns[$orderColumnIndex]['data']  ?? 'trans_date';
   
-        $query = DB::table('trans_purchase_request')
-            ->select( 
-                'trans_purchase_request.id',
-                'trans_purchase_request.trans_date',
-                'trans_purchase_request.manual_id',
-                'trans_purchase_request.doc_num',
-                'trans_purchase_request.flag_type',
-                'trans_purchase_request.flag_status',
-                'trans_purchase_request.flag_purpose',
-                'trans_purchase_request.description',
-                'mst_person_supplier.description as supplier_name',
-                'trans_purchase_request.prs_supplier_id'
-            )
-            ->leftJoin('mst_person_supplier', 'trans_purchase_request.prs_supplier_id', '=', 'mst_person_supplier.id');
+        // $query = DB::table('trans_purchase_request')
+        //     ->select( 
+        //         'trans_purchase_request.id',
+        //         'trans_purchase_request.trans_date',
+        //         'trans_purchase_request.manual_id',
+        //         'trans_purchase_request.doc_num',
+        //         'trans_purchase_request.flag_type',
+        //         'trans_purchase_request.flag_status',
+        //         'trans_purchase_request.flag_purpose',
+        //         'trans_purchase_request.description',
+        //         'mst_person_supplier.description as supplier_name',
+        //         'trans_purchase_request.prs_supplier_id'
+        //     )
+        //     ->leftJoin('mst_person_supplier', 'trans_purchase_request.prs_supplier_id', '=', 'mst_person_supplier.id');
 
             
-        $query->where('trans_purchase_request.flag_active', [1]);
+        $query = DB::table('vw_app_list_trans_pr_hd');
+
+        //$query = TransPurchaseRequisitionHDVw::all();
+
+        //$query->where('trans_purchase_request.flag_active', [1]);
 
         if ($request->has('start_date') && $request->has('end_date')) {
             $query->whereBetween('trans_purchase_request.trans_date', [$request->start_date, $request->end_date]);
@@ -54,8 +59,11 @@ class PurchaseOrderRequestService
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('trans_purchase_request.manual_id', 'like', '%' . $search . '%')
-                    ->orWhere('trans_purchase_request.doc_num', 'like', '%' . $search . '%')
+                // $q->where('trans_purchase_request.manual_id', 'like', '%' . $search . '%')
+                //     ->orWhere('trans_purchase_request.doc_num', 'like', '%' . $search . '%')
+                //     ->orWhere('trans_purchase_request.description', 'like', '%' . $search . '%');
+
+                $q->Where('trans_purchase_request.doc_num', 'like', '%' . $search . '%')
                     ->orWhere('trans_purchase_request.description', 'like', '%' . $search . '%');
             });
         }
@@ -68,7 +76,12 @@ class PurchaseOrderRequestService
             $query->orderBy($orderColumn, $orderDirection);
         }
 
-        $data = $query->offset($start)->limit($length)->get();
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
+        }
+        else{
+            $data = $query->get();
+        }
 
         return [
             'data' => $data,
@@ -114,7 +127,8 @@ class PurchaseOrderRequestService
             $now = Carbon::now();
 
             foreach ($request->sku_id as $index => $sku_id) {
-                $price = $request->price[$index];
+                //$price = $request->price[$index];
+                $price = 0;
                 $qty = $request->qty[$index];
                 $discount_percentage = $request->discount_percentage[$index] ?? 0;
                 $vat_percentage = $request->vat_percentage[$index] ?? 0;
@@ -150,6 +164,7 @@ class PurchaseOrderRequestService
                     'trans_pr_id' => $prHeader->id, 
                     'manual_id' => '',
                     'flag_status' => 0,
+                    'flag_type' => $request->flag_type_detail[$index],
                     'created_by' => $userId,
                     'created_at' => $now,
                 ];
