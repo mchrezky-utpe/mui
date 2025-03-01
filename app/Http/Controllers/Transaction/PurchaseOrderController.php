@@ -50,6 +50,12 @@ class PurchaseOrderController
         ]);
     }
 
+    public function upload(Request $request)
+    {
+        $this->service->upload($request);
+        return redirect("/po");
+    }
+
     public function add(Request $request)
     {
         $this->service->add($request);

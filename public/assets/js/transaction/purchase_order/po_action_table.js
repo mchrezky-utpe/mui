@@ -6,6 +6,35 @@ import {
 } from './po_calculate.js';
 
 export function handleActionTable() {
+
+	// action upload
+	$(document).on('click','.upload', function(){
+		const id = this.dataset.id;
+		$('#po_id').val(id);
+		$('#upload_modal').modal('show');
+	});
+
+	$(document).ready(function() {
+		$('#fileInput').on('change', function() {
+			var file = this.files[0];
+			if (file) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					if (file.type === 'application/pdf') {
+						$('#preview').html('<embed src="' + e.target.result + '" type="application/pdf" width="100%" height="400px" />');
+					} else if (file.type === 'text/html') {
+						$('#preview').html('<iframe src="' + e.target.result + '" width="100%" height="600px"></iframe>');
+					} else {
+						$('#preview').html('Unsupported file type');
+					}
+				};
+				reader.readAsDataURL(file);
+			}
+		});
+	});
+
+
+
 	let rowCount = 0;
 	$("#add_row").on("click", function() {
 		const row = rowCount + 1;

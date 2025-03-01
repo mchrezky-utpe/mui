@@ -94,6 +94,34 @@ class PurchaseOrderService
         ];
     }
 
+    public function upload(Request $request){
+        DB::beginTransaction();
+
+        try {
+
+        // Ambil file dari request
+        $file = $request->file('file');
+        // $fileName = $file->getClientOriginalName();
+        // $mimeType = $file->getMimeType();
+        $fileData = file_get_contents($file->getRealPath()); // Baca file sebagai binary data
+
+            
+        $purchaseOrder = PurchaseOrder::where('id', $request->id)->firstOrFail();
+        $purchaseOrder->file = $fileData;
+        $purchaseOrder->save();
+
+        DB::commit();
+        }catch (\Exception $e) {
+            // Rollback jika terjadi error
+            DB::rollBack();
+            dd($e);
+            return response()->json([
+                'message' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
     public function add(Request $request)
     {
         // Mulai transaksi

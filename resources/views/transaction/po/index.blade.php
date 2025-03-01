@@ -55,30 +55,13 @@
                     <th>Supplier</th>
                     <th>Description</th>
                     <th>PR Doc. #</th>
-                    <!-- <th>Total</th> -->
+                    <th>PO</th>
+                    <th>PDF</th>
+                    <th>EDI</th>
+                    <th>Revison</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <!-- <tbody> @foreach($data as $key => $value) <tr>
-                    <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->manual_id }}</td>
-                    <td>{{ $value->doc_num }}</td>
-                    <td>{{ $value->flag_type == 1 ? 'Produciton Project Material' : 'General Item' }}</td>
-                    <td>{{ $value->supplier->description ?? 0 }}</td>
-                    <td>{{ $value->description  }}</td>
-                    <td>{{ 0 }}</td>
-                    <td>
-                      <form action="/po/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf
-                        <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
-                          <span class="fas fa-pencil-alt"></span>
-                        </button>
-                        <button type="submit" class="btn btn-danger">
-                          <span class="fas fa-trash"></span>
-                        </button>
-                      </form>
-                    </td>
-                  </tr> @endforeach
-                </tbody> -->
                 </table>
             </div>
           </div>
@@ -90,6 +73,7 @@
 <!-- MODAL -->
  @include('transaction.po._add')
  @include('transaction.po._edit')
+ @include('transaction.po._upload')
  @endsection
 
  @section('extra_javascript')

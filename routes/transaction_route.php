@@ -50,6 +50,7 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::get("/po/{id}/print", "print")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/po/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/po/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/po/upload", "upload")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {

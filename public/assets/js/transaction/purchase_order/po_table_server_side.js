@@ -4,6 +4,14 @@ import {
 
 export function handleTableServerSide() {
 	const table_po = $('#table-po').DataTable({
+		fixedColumns: {
+			start: 0,
+			end: 5
+		},
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 300,
+
 		processing: true,
 		serverSide: true,
 		ajax: {
@@ -40,39 +48,52 @@ export function handleTableServerSide() {
             {
 				data: "pr_doc_num"
 			},
-			// { data: "description" },
+			{
+				data: null
+			},
+			{
+				data: "file"
+			},
+			{
+				data: "pr_doc_num"
+			},
+			{
+				data: "pr_doc_num"
+			},
 			{
 				data: null
 			},
 		],
-		columnDefs: [{
-				targets: 0, // Kolom nomor urut
-				orderable: false, // Nomor urut tidak perlu sorting
-				searchable: false, // Nomor urut tidak perlu pencarian
-				render: function(data, type, row, meta) {
-					return meta.row + 1; // Menampilkan nomor urut
-				}
-			},/*{
-				targets: 4,
-				render: function(data, type, row, meta) {
-					let flag_type = "";
-					if(data.flag_type == 1){
-						flag_type = "Production Project Material";
-					}else {
-						flag_type = "General Item";
-					}
-					return flag_type;
-				}
-			},*/
+		columnDefs: [
 			{
-				targets: 7, // Kolom nomor urut
-				orderable: false, // Nomor urut tidak perlu sorting
-				searchable: false, // Nomor urut tidak perlu pencarian
+				targets: 0,
+				orderable: false,
+				searchable: false,
+				render: function(data, type, row, meta) {
+					return meta.row + 1;
+				}
+			},
+			{
+				targets: 7,
+				orderable: false,
+				searchable: false,
+				render: function(data, type, row, meta) {
+					return 'Preparation';
+				}
+			},
+			{
+				targets: 11,
+				orderable: false,
+				searchable: false,
 				render: function(data, type, row, meta) {
 					const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 					return `
                         <form action="/po/` + data.id + `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
-                            <input type="hidden" name="_token" value="${csrfToken}">
+						<div class="d-flex">
+							<input type="hidden" name="_token" value="${csrfToken}">
+							<button data-id="${data.id}" type="button" target="_blank" class="upload btn btn-primary">
+							 <span class="fas fa-upload"></span>
+                            </button>
 							<a  target="_blank"  href="po/` + data.id + `/print" class="print btn btn-secondary">
 							 <span class="fas fa-print"></span>
                             </a>
@@ -82,8 +103,9 @@ export function handleTableServerSide() {
                             <button type="submit" class="btn btn-danger">
                             <span class="fas fa-trash"></span>
                             </button>
+						</div>
 						</form>
-                    `; // Menampilkan nomor urut
+                    `;
 				}
 			}
 		]

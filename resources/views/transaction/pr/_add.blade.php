@@ -1,9 +1,9 @@
-<x-modals.modal id="add_modal" title="Add Purchase Order Request" modalClass="custom-modal-dialog-large">
+<x-modals.modal id="add_modal" title="Add Purchase Order Request" modalClass="custom-modal-dialog-medium">
   <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pr">
      @csrf
     <!-- TAB TRANSACTION -->
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-4">
         <div class="form-group">
           <label for="description_left">PR Date</label>
           <input required name="trans_date" class="form-control" type="date" value="{{ date('Y-m-d') }}">
@@ -18,7 +18,7 @@
         </div>
       </div>
       <!-- REGION SIDE 2 -->
-      <div class="col-md-2">
+      <div class="col-md-4">
         <div class="form-group">
           <label for="manual_id_right">PR Propose</label>
           <select required name="flag_purpose" class="form-control">
@@ -36,7 +36,7 @@
           </select>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
         <div class="form-group">
             <label for="manual_id_right">Currency</label>
             <select required id="currency_select" name="gen_currency_id" class="form-control">
