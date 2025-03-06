@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Helpers\HelperCustom;
 use App\Services\Master\MasterSkuUnitService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,8 +18,7 @@ class MasterSkuUnitController
 
     public function index(): Response
     {
-        return response()->view('master.sku_unit.index',
-         ['data' =>  $this->service->list()]);
+        return response()->view('master.sku_unit.index', ['data' =>  $this->service->list()]);
     }
 
     public function api_all()

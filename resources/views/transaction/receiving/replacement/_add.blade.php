@@ -1,4 +1,4 @@
-<x-modals.modal buttonName="Received" id="add_modal" title="Receiving" modalClass="custom-modal-dialog-medium">
+<x-modals.modal buttonName="Received" id="add_modal" title="Replacement Receiving" modalClass="custom-modal-dialog-medium">
   <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sdo/receive">
      @csrf
     <!-- TAB TRANSACTION -->
@@ -21,9 +21,9 @@
       <!-- REGION SIDE 3 -->
       <div class="col-md-4">
         <div class="form-group">
-          <label for="description_right">SDO Number</label>
+          <label for="description_right">DO Number</label>
           <select required id="po_select" name="purchase_order_id" class="form-control">
-            <option value="">-- Select SDO --</option>
+            <option value="">-- Select DO --</option>
           </select>
         </div>
       </div>
@@ -33,7 +33,7 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <!-- Tab Navigation -->
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaksi" aria-selected="true"> Item Po </button>
+        <button class="nav-link active" id="transaksi-tab" data-bs-toggle="tab" data-bs-target="#transaksi" type="button" role="tab" aria-controls="transaksi" aria-selected="true"> Item DO </button>
       </li>
     </ul>
     <div class="tab-content mt-3" id="myTabContent">

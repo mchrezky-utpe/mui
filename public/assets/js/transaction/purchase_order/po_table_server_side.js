@@ -29,7 +29,7 @@ export function handleTableServerSide() {
 	],
 		columns: [{
 				data: null
-			}, // Kolom nomor urut
+			}, 
 			{
 				data: "doc_num"
 			},
@@ -55,7 +55,7 @@ export function handleTableServerSide() {
 				data: "file"
 			},
 			{
-				data: "pr_doc_num"
+				data: "status_sent_to_edi"
 			},
 			{
 				data: "pr_doc_num"

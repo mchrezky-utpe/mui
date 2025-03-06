@@ -58,13 +58,13 @@ function fetchPoDroplist(supplier_id) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'api/po/droplist',
+			url: base_url + 'api/sdo/droplist',
 			data:{supplier_id : supplier_id},
 			success: function(data) {
 				resolve(data.data);
 			},
 			error: function(err) {
-				console.error("Error fetching po droplist:", err);
+				console.error("Error fetching SDO droplist:", err);
 				reject(err);
 			}
 		});

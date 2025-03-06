@@ -265,6 +265,22 @@
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="/sdo">SDO</a>
+                                </li>
+                                <li>
+                                    <a href="/gpo">General Purchase Order</a>
+                                </li>
+                                <li>
+                                    <a href="/supply">Supply</a>
+                                </li>
+                                <li>
+                                    <a href="/replacement">Replacement</a>
+                                </li>
+                                <li>
+                                    <a href="/internal">Internal</a>
+                                </li>
+                                <li>
+                                <a href="/returnable-packaging">Returnable Packaging</a>
+                                </li>
                             </ul>
                         </li>
 

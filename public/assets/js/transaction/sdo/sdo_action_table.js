@@ -4,7 +4,7 @@ export function handleActionTable() {
 		const po_id = $('#po_select').val();
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'api/po/item',
+			url: base_url + 'api/sdo/item',
 			data:{id : po_id},
 			success: function(response) {
 				$("#item_table tbody tr").remove();
@@ -12,14 +12,13 @@ export function handleActionTable() {
 
 				response.data.forEach(data => {
 					const newRow = `
-					<tr id="${data.po_detail_id}">
-						<td>${data.item_code}<input type="hidden" name="po_detail_id[]" value="${data.po_detail_id}" /><input name="qty[]" type="hidden" /></td>
+					<tr id="${data.id}">
+						<td>${data.item_code}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
 						<td>${data.item_name}</td>
-						<td>${data.specification_code}</td>
+						<td>${data.spec_code}</td>
 						<td>${data.item_type}</td>
-						<td>${data.qty_po}</td>
-						<td>${data.qty_outstanding_sds}</td>
-						<td>${data.req_date}</td>
+						<td>${data.qty}</td>
+						<td>${data.qty_outstanding}</td>
 					</tr>
 				`;
 				$("#item_table tbody").append(newRow);

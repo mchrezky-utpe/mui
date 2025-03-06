@@ -1,35 +1,30 @@
 <?php
 
-namespace App\Services\Transaction;
+namespace App\Services\Transaction\Receiving;
 use App\Helpers\NumberGenerator;
-use App\Models\Transaction\VwSdoList;
-use App\Models\Transaction\VwSdoDroplist;
-use App\Models\Transaction\VwSdoItemList;
-use App\Models\Transaction\Sdo;
-use App\Models\Transaction\SdoDetail;
-use App\Models\Transaction\PurchaseOrder;
+use App\Models\Transaction\Receiving\VwGpoList;
+use App\Models\Transaction\Receiving\VwGpoDroplist;
+use App\Models\Transaction\Receiving\VwGpoItemList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Models\Transaction\PurchaseOrdePrintDtVw;
-use App\Models\Transaction\PurchaseOrdePrintHdVw;
 use Illuminate\Support\Facades\DB;
 
 
-class SdoService
+class GpoService
 {
     public function list(){
-        return VwSdoList::get();
+        return VwGpoList::get();
     }
 
     
     public function get_droplist($request){
-        return VwSdoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
+        return VwGpoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
     }
     
     public function get_item(Request $request){
-        return VwSdoItemList::where('trans_do_id', $request->input('id'))->get();
+        return VwGpoItemList::where('trans_do_id', $request->input('id'))->get();
      }
         
     public function receive(Request $request){
@@ -75,7 +70,7 @@ class SdoService
             ];
     
             // Simpan data PO Header
-            $sdsHeader = Sdo::create($data);
+            $sdsHeader = Gpo::create($data);
             $items;
     
             // SDS Detail Data
@@ -89,7 +84,7 @@ class SdoService
             }
     
             // Simpan data PO Detail
-            SdoDetail::insert($items);
+            GpoDetail::insert($items);
     
             // Commit transaksi jika semua berhasil
             DB::commit();

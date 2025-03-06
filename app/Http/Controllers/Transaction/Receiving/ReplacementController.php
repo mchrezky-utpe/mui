@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Transaction;
+namespace App\Http\Controllers\Transaction\Receiving;
 
-use App\Services\Transaction\SdoService;
+use App\Services\Transaction\Receiving\ReplacementService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class SdoController
+class ReplacementController
 {
 
-    private SdoService $service;
+    private ReplacementService $service;
 
-    public function __construct(SdoService $service)
+    public function __construct(ReplacementService $service)
     {
         $this->service = $service;
     }
@@ -19,7 +19,7 @@ class SdoController
     public function index(): Response
     {
         return response()->view(
-            'transaction.sdo.index',
+            'transaction.receiving.replacement.index',
             ['data' =>     $this->service->list()]
         );
     }
@@ -43,19 +43,19 @@ class SdoController
     public function receive(Request $request)
     {
         $this->service->receive($request);
-        return redirect("/sdo");
+        return redirect("/replacement");
     }
 
     public function add(Request $request)
     {
         $this->service->add($request);
-        return redirect("/sdo");
+        return redirect("/replacement");
     }
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
-        return redirect("/sdo");
+        return redirect("/replacement");
     }
 
     public function get(Request $request, int $id)
@@ -69,6 +69,6 @@ class SdoController
     public function edit(Request $request)
     {
         $this->service->edit($request);
-        return redirect("/sdo");
+        return redirect("/replacement");
     }
 }

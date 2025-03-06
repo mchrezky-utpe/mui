@@ -5,11 +5,11 @@ namespace App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VwPoDroplist extends Model
+class VwSdoItemList extends Model
 {
     use HasFactory;
   
-    protected $table = 'vw_app_pick_trans_po_hd';
+    protected $table = 'testdb_edi.vw_app_pick_trans_do_dt';
 
 
 }

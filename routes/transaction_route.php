@@ -16,6 +16,11 @@ use App\Http\Controllers\Transaction\SkuMinOfQtyController;
 use App\Http\Controllers\Transaction\Approval\ApprovalPurchaseRequestController;
 use App\Http\Controllers\Transaction\SdsController;
 use App\Http\Controllers\Transaction\SdoController;
+use App\Http\Controllers\Transaction\Receiving\GpoController;
+use App\Http\Controllers\Transaction\Receiving\SupplyController;
+use App\Http\Controllers\Transaction\Receiving\ReplacementController;
+use App\Http\Controllers\Transaction\Receiving\InternalController;
+use App\Http\Controllers\Transaction\Receiving\ReturnablePackagingController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -138,15 +143,66 @@ Route::controller(SdsController::class)->group(function () {
     Route::post("/sds/pull-back", "pull_back")->middleware(OnlyMemberMiddleware::class);
 });
 
+// RECEIVING
 Route::controller(SdoController::class)->group(function () {
     Route::get("/sdo", "index")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sdo", "add")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sdo/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sdo/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sdo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/sdo/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/sdo/reschedule", "reschedule")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/sos/pull-back", "pull_back")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sdo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sdo/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sdo/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(GpoController::class)->group(function () {
+    Route::get("/gpo", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/gpo", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/gpo/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/gpo/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/gpo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/gpo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/gpo/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/gpo/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(SupplyController::class)->group(function () {
+    Route::get("/supply", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/supply", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/supply/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/supply/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/supply/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/supply/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/supply/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/supply/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(ReplacementController::class)->group(function () {
+    Route::get("/replacement", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/replacement", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/replacement/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/replacement/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/replacement/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/replacement/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/replacement/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/replacement/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(InternalController::class)->group(function () {
+    Route::get("/internal", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/internal", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/internal/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/internal/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/internal/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/internal/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/internal/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/internal/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(ReturnablePackagingController::class)->group(function () {
+    Route::get("/returnable-packaging", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/returnable-packaging", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/returnable-packaging/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/returnable-packaging/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/returnable-packaging/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/returnable-packaging/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/returnable-packaging/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/returnable-packaging/receive", "receive")->middleware(OnlyMemberMiddleware::class);
 });
 
 
