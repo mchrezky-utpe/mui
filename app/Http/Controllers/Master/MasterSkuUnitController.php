@@ -20,7 +20,23 @@ class MasterSkuUnitController
     {
         $this->service->add($request);
         return response()->json([
-            'message' => 'Sucesss'
+            'message' => 'Save Sucesssfuly'
+        ]);
+    }
+
+    public function api_edit(Request $request)
+    {
+        $this->service->edit($request);
+        return response()->json([
+            'message' => 'Edit Sucesssfuly'
+        ]);
+    }
+
+    public function api_delete(Request $request, int $id)
+    {
+        $this->service->delete($id);
+        return response()->json([
+            'message' => 'Delete Sucesssfuly'
         ]);
     }
 

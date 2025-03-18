@@ -54,13 +54,15 @@ Route::controller(MasterSkuUnitController::class)->group(function () {
     Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/sku-unit/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    // API GET ALL DATA
-    Route::get("/api/sku-unit", "api_all")->middleware(OnlyMemberMiddleware::class);
     
     Route::get("/api/sku-unit/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 
     // API 
+    Route::get("/api/sku-unit", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/sku-unit", "api_add")->middleware(OnlyMemberMiddleware::class);
+    Route::put("/api/sku-unit", "api_edit")->middleware(OnlyMemberMiddleware::class);
+    Route::delete("/api/sku-unit", "api_delete")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuModelController::class)->group(function () {
