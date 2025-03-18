@@ -58,6 +58,9 @@ Route::controller(MasterSkuUnitController::class)->group(function () {
     Route::get("/api/sku-unit", "api_all")->middleware(OnlyMemberMiddleware::class);
     
     Route::get("/api/sku-unit/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+
+    // API 
+    Route::post("/api/sku-unit", "api_add")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuModelController::class)->group(function () {

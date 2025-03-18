@@ -16,6 +16,16 @@ class MasterSkuUnitController
         $this->service = $service;
     }
 
+    public function api_add(Request $request)
+    {
+        $this->service->add($request);
+        return response()->json([
+            'message' => 'Sucesss'
+        ]);
+    }
+
+
+
     public function index(): Response
     {
         return response()->view('master.sku_unit.index', ['data' =>  $this->service->list()]);

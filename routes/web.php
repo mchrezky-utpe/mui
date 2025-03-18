@@ -22,9 +22,6 @@ use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
 
 
-
-
-
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
 
