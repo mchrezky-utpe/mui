@@ -62,7 +62,7 @@ Route::controller(MasterSkuUnitController::class)->group(function () {
     Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/sku-unit", "api_add")->middleware(OnlyMemberMiddleware::class);
     Route::put("/api/sku-unit", "api_edit")->middleware(OnlyMemberMiddleware::class);
-    Route::delete("/api/sku-unit", "api_delete")->middleware(OnlyMemberMiddleware::class);
+    Route::delete("/api/sku-unit/{id}", "api_delete")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuModelController::class)->group(function () {
