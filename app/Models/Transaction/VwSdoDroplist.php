@@ -9,7 +9,7 @@ class VwSdoDroplist extends Model
 {
     use HasFactory;
   
-    protected $table = 'testdb_edi.vw_app_pick_trans_do_hd';
+    protected $table = 'vw_app_pick_trans_do_hd';
 
 
 }

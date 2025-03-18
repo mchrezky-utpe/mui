@@ -24,27 +24,14 @@ class SupplyController
         );
     }
 
-    public function api_droplist(Request $request)
+    public function api_item(Request $request)
     {
-        $data = $this->service->get_droplist($request);
+        $data = $this->service->get_item();
         return response()->json([
             'data' => $data
         ]);
     }
     
-    public function api_item_by(Request $request)
-    {
-        $data = $this->service->get_item($request);
-        return response()->json([
-            'data' => $data
-        ]);
-    }
-
-    public function receive(Request $request)
-    {
-        $this->service->receive($request);
-        return redirect("/supply");
-    }
 
     public function add(Request $request)
     {

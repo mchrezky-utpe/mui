@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Transaction;
+namespace App\Models\Transaction\Receiving;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VwSdoItemList extends Model
+class VwReceivingList extends Model
 {
     use HasFactory;
   
-    protected $table = 'vw_app_pick_trans_do_dt';
+    protected $table = 'vw_app_list_trans_rr_hd';
 
 
 }

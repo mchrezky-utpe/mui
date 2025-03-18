@@ -4,15 +4,33 @@
   <!-- <button id="add_row" type="button" class="btn btn-primary">+</button> -->
 </div>
 <div class="table-container">
-  <table id="item_table" class="table table-scroll" id="add_table">
+  <table id="item_table" class="table table-scroll">
     <thead>
       <tr>
         <th>Item Code</th>
         <th>Item Name</th>
         <th>Spec Code</th>
         <th>Item Type</th>
-        <th>Qty SDO</th>
-        <th>OS SDO</th>
+        <th>Unit</th>
+        <th>Qty </th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+
+<div class="table-container">
+  <table id="target_table" class="table table-scroll">
+    <thead>
+      <tr>
+        <th>Item Code</th>
+        <th>Item Name</th>
+        <th>Spec Code</th>
+        <th>Item Type</th>
+        <th>Unit</th>
+        <th>Qty</th>
+        <th></th>
       </tr>
     </thead>
     <tbody></tbody>

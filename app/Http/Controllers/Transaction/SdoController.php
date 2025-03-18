@@ -46,11 +46,6 @@ class SdoController
         return redirect("/sdo");
     }
 
-    public function add(Request $request)
-    {
-        $this->service->add($request);
-        return redirect("/sdo");
-    }
 
     public function delete(Request $request, int $id)
     {
@@ -58,9 +53,9 @@ class SdoController
         return redirect("/sdo");
     }
 
-    public function get(Request $request, int $id)
+    public function detail(Request $request)
     {
-        $data = $this->service->get($id);
+        $data = $this->service->get($request->id);
         return response()->json([
             'data' => $data
         ]);

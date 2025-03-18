@@ -1,10 +1,39 @@
+import {
+	skuMaster
+} from './supply_global_variable.js';
+
 export function handleActionTable() {
+
+	var selectedRow = null;
+
+	$(document).on('click','#item_table tbody tr', function() {
+	  $('#qty_input').val("")
+	  selectedRow = $(this);
+	  $('#qty_sds_modal').modal('show'); 
+	  $('#add_modal').hide(); 
+	});
+
+	$('#btn_confirm').click(function() {
+		if (selectedRow) {
+		 const id = selectedRow.attr('id');
+		 const qty = $('#qty_input').val()
+		 const additional = `<input type="hidden" name="detail_id[]" value="${id}" /><input value="${qty}" name="qty[]" type="hidden" />`;
+		  $('#target_table tbody').append(selectedRow.append(additional));
+		  $('#qty_sds_modal').modal('hide'); 
+		  $('#add_modal').show(); 
+
+		  // update value qty sds
+		  $('#'+id).find('td:eq(5)').text(qty);
+		  selectedRow = null; // Reset selectedRow
+		}
+	  });
+
 
 	$(document).on('change', '#supplier_select, #po_select', function() {
 		const po_id = $('#po_select').val();
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'api/sdo/item',
+			url: base_url + 'api/supply/item',
 			data:{id : po_id},
 			success: function(response) {
 				$("#item_table tbody tr").remove();
@@ -13,12 +42,12 @@ export function handleActionTable() {
 				response.data.forEach(data => {
 					const newRow = `
 					<tr id="${data.id}">
-						<td>${data.sku_prefix}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
-						<td>${data.sku_description}</td>
-						<td>${data.spec_code}</td>
-						<td>${data.item_type}</td>
-						<td>${data.qty}</td>
-						<td>${data.qty_outstanding}</td>
+						<td>${data.sku_id}</td>
+						<td>${data.sku_name}</td>
+						<td>${data.sku_specification_code}</td>
+						<td>${data.sku_type}</td>
+						<td>${data.sku_inventory_unit}</td>
+						<td></td>
 					</tr>
 				`;
 				$("#item_table tbody").append(newRow);
@@ -30,7 +59,8 @@ export function handleActionTable() {
 			}
 		});
 
-	})
+	});
+	
 
 	// DETAIL CLICK
 	$(document).on('click', '.btn_detail', function() {

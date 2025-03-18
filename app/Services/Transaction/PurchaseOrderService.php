@@ -24,7 +24,21 @@ class PurchaseOrderService
     }
 
     public function get_droplist($request){
-        return VwPoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
+        
+        $supplierId =  $request->input('id');
+        $flag_purpose =  $request->input('flag_purpose');
+      
+         $query = VwPoDroplist::query();
+
+         $query->when($supplierId, function ($query) use ($supplierId) {
+             return $query->where('prs_supplier_id', $supplierId);
+         });
+
+         $query->when($flag_purpose, function ($query) use ($flag_purpose) {
+             return $query->where('flag_purpose', $flag_purpose);
+         });
+
+       return $query->get();
      }
 
      public function get_item_by(Request $request){
