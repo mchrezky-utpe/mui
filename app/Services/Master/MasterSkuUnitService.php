@@ -40,9 +40,9 @@ class MasterSkuUnitService
         return MasterSkuUnit::where('id', $id)->firstOrFail();
     } 
 
-    function edit(Request $request)
+    function edit(Request $request,int $id)
     {
-        $data = MasterSkuUnit::where('id', $request->id)->firstOrFail();
+        $data = MasterSkuUnit::where('id', $id)->firstOrFail();
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
         $data->save();

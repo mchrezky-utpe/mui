@@ -24,9 +24,9 @@ class MasterSkuUnitController
         ]);
     }
 
-    public function api_edit(Request $request)
+    public function api_edit(Request $request, int $id)
     {
-        $this->service->edit($request);
+        $this->service->edit($request, $id);
         return response()->json([
             'message' => 'Edit Sucesssfuly'
         ]);
@@ -75,9 +75,9 @@ class MasterSkuUnitController
         ]);
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request,int $id)
     {
-        $this->service->edit($request);
+        $this->service->edit($request,$id);
         return redirect("/sku-unit");
     }
 
