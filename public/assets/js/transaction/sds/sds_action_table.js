@@ -18,16 +18,17 @@ export function handleActionTable() {
 
 	$('#btn_confirm').click(function() {
 		if (selectedRow) {
-		  $('#target_table tbody').append(selectedRow);
+		  const id = selectedRow.attr('id');
+		  const qty = $('#qty_input').val()
+		  const additional = `<input type="hidden" name="po_detail_id[]" value="${id}" /><input name="qty[]"  value="${qty}" type="hidden" />`;
+		
+		  $('#target_table tbody').append(selectedRow.append(additional));
 		  $('#qty_sds_modal').modal('hide'); 
 		  $('#add_modal').show(); 
 
 		  // update value qty sds
-		  const id = selectedRow.attr('id');
-		  const qty = $('#qty_input').val()
 		  $('#'+id).find('td:eq(4)').text(qty);
 		  $('#'+id).find('td:eq(5)').text(0);
-		  $('#' + id).find('[name=qty\\[\\]]').val(qty);
 		  selectedRow = null; // Reset selectedRow
 		}
 	  });
@@ -46,7 +47,7 @@ export function handleActionTable() {
 				response.data.forEach(data => {
 					const newRow = `
 					<tr id="${data.po_detail_id}">
-						<td>${data.item_code}<input type="hidden" name="po_detail_id[]" value="${data.po_detail_id}" /><input name="qty[]" type="hidden" /></td>
+						<td>${data.item_code}</td>
 						<td>${data.item_name}</td>
 						<td>${data.specification_code}</td>
 						<td>${data.item_type}</td>

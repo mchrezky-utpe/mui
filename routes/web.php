@@ -8,7 +8,6 @@ use App\Http\Controllers\Master\MasterGeneralCurrencyController;
 use App\Http\Controllers\Master\MasterGeneralDeductorController;
 use App\Http\Controllers\Master\MasterGeneralDepartmentController;
 use App\Http\Controllers\Master\MasterGeneralExchageRatesController;
-use App\Http\Controllers\Master\MasterGeneralExchangeRatesController;
 use App\Http\Controllers\Master\MasterGeneralOtherCostController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
@@ -19,9 +18,9 @@ use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
-use App\Http\Controllers\Transaction\Inventory\InventoryReceivingController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
+
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');

@@ -21,6 +21,7 @@ use App\Http\Controllers\Transaction\Receiving\SupplyController;
 use App\Http\Controllers\Transaction\Receiving\ReplacementController;
 use App\Http\Controllers\Transaction\Receiving\InternalController;
 use App\Http\Controllers\Transaction\Receiving\ReturnablePackagingController;
+use App\Http\Controllers\Transaction\StockViewController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -153,6 +154,7 @@ Route::controller(SdoController::class)->group(function () {
     Route::get("/api/sdo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/sdo/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sdo/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sdo/detail", "detail")->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(GpoController::class)->group(function () {
     Route::get("/gpo", "index")->middleware(OnlyMemberMiddleware::class);
@@ -161,8 +163,6 @@ Route::controller(GpoController::class)->group(function () {
     Route::get("/gpo/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/gpo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/gpo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
-    Route::get("/api/gpo/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/gpo/receive", "receive")->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(SupplyController::class)->group(function () {
     Route::get("/supply", "index")->middleware(OnlyMemberMiddleware::class);
@@ -170,9 +170,7 @@ Route::controller(SupplyController::class)->group(function () {
     Route::post("/supply/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/supply/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/supply/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    Route::get("/api/supply/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
-    Route::get("/api/supply/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/supply/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/supply/item", "api_item")->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(ReplacementController::class)->group(function () {
     Route::get("/replacement", "index")->middleware(OnlyMemberMiddleware::class);
@@ -203,6 +201,12 @@ Route::controller(ReturnablePackagingController::class)->group(function () {
     Route::get("/api/returnable-packaging/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/returnable-packaging/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
     Route::post("/returnable-packaging/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(StockViewController::class)->group(function () {
+    Route::get("/stock-view", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/stock-view", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/api/stock-view/sync", "sync")->middleware(OnlyMemberMiddleware::class);
 });
 
 

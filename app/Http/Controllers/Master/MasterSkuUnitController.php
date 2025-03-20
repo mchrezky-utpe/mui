@@ -16,6 +16,32 @@ class MasterSkuUnitController
         $this->service = $service;
     }
 
+    public function api_add(Request $request)
+    {
+        $this->service->add($request);
+        return response()->json([
+            'message' => 'Save Sucesssfuly'
+        ]);
+    }
+
+    public function api_edit(Request $request, int $id)
+    {
+        $this->service->edit($request, $id);
+        return response()->json([
+            'message' => 'Edit Sucesssfuly'
+        ]);
+    }
+
+    public function api_delete(Request $request, int $id)
+    {
+        $this->service->delete($id);
+        return response()->json([
+            'message' => 'Delete Sucesssfuly'
+        ]);
+    }
+
+
+
     public function index(): Response
     {
         return response()->view('master.sku_unit.index', ['data' =>  $this->service->list()]);
@@ -49,9 +75,9 @@ class MasterSkuUnitController
         ]);
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request,int $id)
     {
-        $this->service->edit($request);
+        $this->service->edit($request,$id);
         return redirect("/sku-unit");
     }
 

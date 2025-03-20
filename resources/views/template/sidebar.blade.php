@@ -281,11 +281,21 @@
                                 <li>
                                     <a href="/replacement">Replacement</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="/internal">Internal</a>
                                 </li>
                                 <li>
                                 <a href="/returnable-packaging">Returnable Packaging</a>
+                                </li> --}}
+                            </ul>
+                        </li>
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-file"></i>Stock View</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/stock-view">Main</a>
                                 </li>
                             </ul>
                         </li>

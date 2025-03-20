@@ -7,12 +7,12 @@
         border: 1px solid #ccc;
         overflow-x: auto;
     }
-
+/* 
     .table-container table {
       max-width: 150%;
         width: 150%;
         border-collapse: collapse;
-    }
+    } */
 </style>
 
 <div class="section__content section__content--p30">
@@ -54,6 +54,7 @@
                     <th>Receiving Date</th>
                     <th>DO Number</th>
                     <th>Supplier</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) 
@@ -61,6 +62,11 @@
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->doc_num }}</td>
                     <td>{{ $value->supplier }}</td>
+                    <td>
+                      <button data-id="{{ $value->id }}" type="button" class="btn_detail btn btn-info">
+                        <span class="fas fa-eye"></span>
+                      </button>
+                    </td>
                   </tr> @endforeach 
                 </tbody>
                 </table>
@@ -73,6 +79,7 @@
   </div>
 </div>
 <!-- MODAL -->
+ @include('transaction.sdo._detail') 
  @include('transaction.receiving.replacement._add') 
  @include('transaction.receiving.replacement._edit') 
  @include('transaction.receiving.replacement._qty_sds') 
@@ -80,5 +87,5 @@
  @endsection 
  
  @section('extra_javascript') 
- <script  type="module" src="{{ asset('assets/js/transaction/sdo/sdo_main.js') }}" type="text/javascript"></script> 
+ <script  type="module" src="{{ asset('assets/js/transaction/receiving/replacement/replacement_main.js') }}" type="text/javascript"></script> 
  @endsection

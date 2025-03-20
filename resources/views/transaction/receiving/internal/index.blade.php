@@ -8,11 +8,11 @@
         overflow-x: auto;
     }
 
-    .table-container table {
+    /* .table-container table {
       max-width: 150%;
         width: 150%;
         border-collapse: collapse;
-    }
+    } */
 </style>
 
 <div class="section__content section__content--p30">

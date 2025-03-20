@@ -13,8 +13,8 @@ export function handleActionTable() {
 				response.data.forEach(data => {
 					const newRow = `
 					<tr id="${data.id}">
-						<td>${data.item_code}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
-						<td>${data.item_name}</td>
+						<td>${data.sku_prefix}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
+						<td>${data.sku_description}</td>
 						<td>${data.spec_code}</td>
 						<td>${data.item_type}</td>
 						<td>${data.qty}</td>
@@ -30,18 +30,40 @@ export function handleActionTable() {
 			}
 		});
 
-	});
+	})
 
-	// SDO MAIN TABLE
+	// DETAIL CLICK
+	$(document).on('click', '.btn_detail', function() {
+		const id = this.dataset.id;
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'api/sdo/detail',
+			data:{id : id},
+			success: function(response) {
+				$("#detail_table tbody tr").remove();
 
-	$(document).on('click', '.btn_reschedule', function (e) {
-		var id = this.dataset.id;
-		$('[name=id]').val(id);
-		const doc_number_old = $(this).closest('tr').find('td').eq(2).text();
-		$('[name=doc_number_old]').val(doc_number_old);
-		// $('[name=name]').val(data.name);
-		// $('[name=password]').val(data.password);
+				response.data.forEach(data => {
+					const newRow = `
+					<tr id="${data.id}">
+						<td>${data.do_doc_num}</td>
+						<td>${data.do_date}</td>
+						<td>${data.po_doc_num}</td>
+						<td>${data.description}</td>
+						<td>${data.qty}</td>
+						<td>${data.sku_description}</td>
+						<td>${data.sku_prefix}</td>
+					</tr>
+				`;
+				$("#detail_table tbody").append(newRow);
+				});	
+				
+				$('#detail_modal').modal('show');
 
-		$('#reschedule_modal').modal('show');
+			},
+			error: function(err) {
+				console.error("Error fetching supplier master:", err);
+			}
+		});
+
 	});
 }

@@ -32,20 +32,6 @@ class GpoController
         ]);
     }
     
-    public function api_item_by(Request $request)
-    {
-        $data = $this->service->get_item($request);
-        return response()->json([
-            'data' => $data
-        ]);
-    }
-
-    public function receive(Request $request)
-    {
-        $this->service->receive($request);
-        return redirect("/gpo");
-    }
-
     public function add(Request $request)
     {
         $this->service->add($request);

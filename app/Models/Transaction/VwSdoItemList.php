@@ -9,7 +9,7 @@ class VwSdoItemList extends Model
 {
     use HasFactory;
   
-    protected $table = 'testdb_edi.vw_app_pick_trans_do_dt';
+    protected $table = 'vw_app_pick_trans_do_dt';
 
 
 }

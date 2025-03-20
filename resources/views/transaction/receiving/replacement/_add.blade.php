@@ -1,5 +1,5 @@
 <x-modals.modal buttonName="Received" id="add_modal" title="Replacement Receiving" modalClass="custom-modal-dialog-medium">
-  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sdo/receive">
+  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/replacement">
      @csrf
     <!-- TAB TRANSACTION -->
     <div class="row">

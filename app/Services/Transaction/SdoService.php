@@ -1,16 +1,13 @@
 <?php
 
 namespace App\Services\Transaction;
-use App\Helpers\NumberGenerator;
 use App\Models\Transaction\VwSdoList;
+use App\Models\Transaction\Receiving\VwSdoDetail;
 use App\Models\Transaction\VwSdoDroplist;
 use App\Models\Transaction\VwSdoItemList;
-use App\Models\Transaction\Sdo;
-use App\Models\Transaction\SdoDetail;
 use App\Models\Transaction\PurchaseOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Models\Transaction\PurchaseOrdePrintDtVw;
 use App\Models\Transaction\PurchaseOrdePrintHdVw;
@@ -20,9 +17,8 @@ use Illuminate\Support\Facades\DB;
 class SdoService
 {
     public function list(){
-        return VwSdoList::get();
+        return VwSdoList::where('flag_transaction', 1)->get();
     }
-
     
     public function get_droplist($request){
         return VwSdoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
@@ -38,9 +34,8 @@ class SdoService
             $userId =  Auth::id();
 
             foreach ($request->detail_id as $index => $do_detail_id) {
-                DB::statement('CALL sp_trans_rr_import_do(?,?,?,?,?,?)',
-                 [$request->trans_date,$request->prs_supplier_id, $request->detail_id[$index], "REMARK", $userId, $request->qty[$index]]);
-              
+                DB::statement('CALL sp_trans_rr_import_do(?,?,?,?,?,?,?)',
+                 [$request->trans_date,$request->prs_supplier_id, $request->detail_id[$index], "REMARK", $userId, $request->qty[$index], 1]);
             }
             DB::commit();
         } catch (\Exception $e) {
@@ -48,57 +43,6 @@ class SdoService
             dd($e);
             return response()->json([
                 'message' => 'Terjadi kesalahan saat kirim ke EDI.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
-
-    public function add(Request $request)
-    {
-        DB::beginTransaction();
-    
-        try {
-            // Generate nomor dokumen
-            $doc_num_generated = NumberGenerator::generateNumber('trans_supplier_delivery_schedule', 'SDS');
-          
-            // SDS Header Data
-            $data = [
-                'trans_po_id' => $request->trans_po_id,
-                'prs_supplier_id' => $request->prs_supplier_id,
-                'trans_date' => $request->trans_date,
-                'doc_num' => $doc_num_generated['doc_num'],
-                'doc_counter' => $doc_num_generated['doc_counter'],
-                'flag_status' => 1,
-                'revision' => 0,
-                'flag_active' => 1,
-                'generated_id' => Str::uuid()->toString()
-            ];
-    
-            // Simpan data PO Header
-            $sdsHeader = Sdo::create($data);
-            $items;
-    
-            // SDS Detail Data
-            foreach ($request->po_detail_id as $index => $po_detail_id) {
-                $items[] = [
-                    'qty' => $request->qty[$index],
-                    'generated_id' => Str::uuid()->toString(),
-                    'trans_sds_id' => $sdsHeader->id, 
-                    'po_detail_id' => $po_detail_id
-                ];
-            }
-    
-            // Simpan data PO Detail
-            SdoDetail::insert($items);
-    
-            // Commit transaksi jika semua berhasil
-            DB::commit();
-        } catch (\Exception $e) {
-            // Rollback jika terjadi error
-            DB::rollBack();
-            dd($e);
-            return response()->json([
-                'message' => 'Terjadi kesalahan saat membuat sds.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -131,7 +75,7 @@ class SdoService
     
     public function get(int $id)
     {
-        return PurchaseOrder::where('id', $id)->firstOrFail();
+        return VwSdoDetail::where('trans_rr_id', $id)->get();
     } 
     public function print(int $id)
     {
