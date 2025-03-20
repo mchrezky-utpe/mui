@@ -1,338 +1,345 @@
-$(document).on('click', '.edit', function (e) {
+$(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
     $.ajax({
-        type: 'GET',
-        url: base_url + 'sku/' + id,
+        type: "GET",
+        url: base_url + "sku-part-information/" + id,
         success: function (data) {
             var data = data.data;
 
-            $('[name=id]').val(data.id);
-            $('[name=manual_id]').val(data.manual_id);
-            $('[name=description]').val(data.description);
-            $('[name=group_tag]').val(data.group_tag);
-            $('[name=specification_code]').val(data.specification_code);
-            $('[name=specification_detail]').val(data.specification_detail);
-            $('[name=val_weight]').val(data.val_weight);
-            $('[name=val_area]').val(data.val_area);
-            $('[name=sku_model_id]').val(data.sku_model_id);
-            $('[name=val_conversion]').val(data.val_conversion);
-            $('[name=flag_inventory_register]').val(data.flag_inventory_register);
-            $('[name=type_id]').val(data.sku_type_id).prop('selected', true);
-            $('[name=model_id]').val(data.sku_model_id).prop('selected', true);
-            $('[name=process_id]').val(data.sku_process_id).prop('selected', true);
-            $('[name=sku_business_type_id]').val(data.sku_business_type_id).prop('selected', true);
-            $('[name=sku_sales_category_id]').val(data.sku_sales_category_id).prop('selected', true);
-            $('[name=sku_model_id]').val(data.sku_model_id).prop('selected', true);
-            $('[name=sku_inventory_unit_id]').val(data.sku_inventory_unit_id).prop('selected', true);
+            $("[name=id]").val(data.id);
+            $("[name=manual_id]").val(data.manual_id);
+            $("[name=description]").val(data.description);
+            $("[name=group_tag]").val(data.group_tag);
+            $("[name=specification_code]").val(data.specification_code);
+            $("[name=specification_detail]").val(data.specification_detail);
+            $("[name=val_weight]").val(data.val_weight);
+            $("[name=val_area]").val(data.val_area);
+            $("[name=sku_model_id]").val(data.sku_model_id);
+            $("[name=val_conversion]").val(data.val_conversion);
+            $("[name=flag_inventory_register]").val(
+                data.flag_inventory_register
+            );
+            $("[name=type_id]").val(data.sku_type_id).prop("selected", true);
+            $("[name=model_id]").val(data.sku_model_id).prop("selected", true);
+            $("[name=process_id]")
+                .val(data.sku_process_id)
+                .prop("selected", true);
+            $("[name=sku_business_type_id]")
+                .val(data.sku_business_type_id)
+                .prop("selected", true);
+            $("[name=sku_sales_category_id]")
+                .val(data.sku_sales_category_id)
+                .prop("selected", true);
+            $("[name=sku_model_id]")
+                .val(data.sku_model_id)
+                .prop("selected", true);
+            $("[name=sku_inventory_unit_id]")
+                .val(data.sku_inventory_unit_id)
+                .prop("selected", true);
 
-			if(data.flag_sku_type == 2){
-            $('#edit_modal').modal('show');
-			}
-
+            if (data.flag_sku_type == 1) {
+                $("#edit_modal").modal("show");
+            }
         },
         error: function (err) {
             debugger;
-        }
+        },
     });
 });
 
-
-$(document).on('click', '.history', function (e) {
+$(document).on("click", ".history", function (e) {
     var id = this.dataset.id;
     $.ajax({
-        type: 'GET',
-        url: base_url + 'sku/' + id +'/history',
+        type: "GET",
+        url: base_url + "sku-part-information/" + id + "/history",
         success: function (data) {
             var data = data.data;
 
-            $('#history_modal').modal('show');
-
+            $("#history_modal").modal("show");
         },
         error: function (err) {
             debugger;
-        }
+        },
     });
 });
 
-
-$(document).on('change', '[name=sku_type_id]', function() {
-	const sku_type_id = this.value;
-	fetchCode(sku_type_id)
-		.then(data => {
-			$('[name=group_tag]').val(data.code);
-			$('[name=manual_id]').val(data.code);
-			$('[name=specification_code]').val(data.code);
-			console.log("Succesfully fetchCode Sku:", data.sku);
-		})
-		.catch(err => {
-			console.error("Error get fetchCode:", err);
-		});
-
+$(document).on("change", "[name=sku_type_id]", function () {
+    const sku_type_id = this.value;
+    fetchCode(sku_type_id)
+        .then((data) => {
+            $("[name=group_tag]").val(data.code);
+            $("[name=manual_id]").val(data.code);
+            $("[name=specification_code]").val(data.code);
+            console.log("Succesfully fetchCode Sku:", data.sku);
+        })
+        .catch((err) => {
+            console.error("Error get fetchCode:", err);
+        });
 });
-
 
 function fetchCode(sku_type_id) {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku/get-code?sku_type_id='+sku_type_id+'&flag_sku_type=3',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetching code:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url:
+                base_url +
+                "api/sku-part-information/get-code?sku_type_id=" +
+                sku_type_id +
+                "&flag_sku_type=3",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetching code:", err);
+                reject(err);
+            },
+        });
+    });
 }
-
 
 function populateSelect(master_data, element) {
-	element.empty();
-	element.append('<option value=""> -- Select -- </option>');
-	master_data.forEach(data => {
-		element.append(`<option value="${data.id}">${data.description}</option>`);
-	});
-  }
+    element.empty();
+    element.append('<option value=""> -- Select -- </option>');
+    master_data.forEach((data) => {
+        element.append(
+            `<option value="${data.id}">${data.description}</option>`
+        );
+    });
+}
 
 // ================================
 
-$('.btn_part_information').click(function(){
-	fetchSetCode()
-	.then(data => {
-		console.log("Succesfully fetchSetCode:", data);
-		$('[name=group_tag]').val(data);
-	})
-	.catch(err => {
-		console.error("Error fetchSkuType:", err);
-	});
-
-
+$(".btn_part_information").click(function () {
+    fetchSetCode()
+        .then((data) => {
+            console.log("Succesfully fetchSetCode:", data);
+            $("[name=group_tag]").val(data);
+        })
+        .catch((err) => {
+            console.error("Error fetchSkuType:", err);
+        });
 });
-
 
 fetchSkuType()
-.then(data => {
-    console.log("Succesfully fetchSkuType:", data);
-    populateSelect(data, $('[name=sku_type_id]'));
-})
-.catch(err => {
-    console.error("Error fetchSkuType:", err);
-});
+    .then((data) => {
+        console.log("Succesfully fetchSkuType:", data);
+        populateSelect(data, $("[name=sku_type_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuType:", err);
+    });
 
 function fetchSkuType() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku-type/droplist',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetchSkuType:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-type/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuType:", err);
+                reject(err);
+            },
+        });
+    });
 }
 // ================================
-
 
 // ================================
 fetchSkuSalesCategory()
-.then(data => {
-    console.log("Succesfully fetchSkuSalesCategory:", data);
-    populateSelect(data, $('[name=sku_sales_category_id]'));
-})
-.catch(err => {
-    console.error("Error fetchSkuSalesCategory:", err);
-});
+    .then((data) => {
+        console.log("Succesfully fetchSkuSalesCategory:", data);
+        populateSelect(data, $("[name=sku_sales_category_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuSalesCategory:", err);
+    });
 
 function fetchSkuSalesCategory() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku-sales/droplist',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetchSkuSalesCategory:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-sales/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuSalesCategory:", err);
+                reject(err);
+            },
+        });
+    });
 }
 // ================================
 
 // ================================
 fetchSkuUnit()
-.then(data => {
-    console.log("Succesfully fetchSkuUnit:", data);
-    populateSelect(data, $('[name=sku_procurement_unit_id]'));
-    populateSelect(data, $('[name=sku_inventory_unit_id]'));
-})
-.catch(err => {
-    console.error("Error fetchSkuUnit:", err);
-});
+    .then((data) => {
+        console.log("Succesfully fetchSkuUnit:", data);
+        populateSelect(data, $("[name=sku_procurement_unit_id]"));
+        populateSelect(data, $("[name=sku_inventory_unit_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuUnit:", err);
+    });
 
 function fetchSkuUnit() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku-unit/droplist',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetchSkuUnit:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-unit/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuUnit:", err);
+                reject(err);
+            },
+        });
+    });
 }
 // ================================
 
 // ================================
 fetchSkuBusinessType()
-.then(data => {
-    console.log("Succesfully fetchSkuBusinessType:", data);
-    populateSelect(data, $('[name=sku_category_id]'));
-})
-.catch(err => {
-    console.error("Error fetchSkuBusinessType:", err);
-});
+    .then((data) => {
+        console.log("Succesfully fetchSkuBusinessType:", data);
+        populateSelect(data, $("[name=sku_category_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuBusinessType:", err);
+    });
 
 function fetchSkuBusinessType() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku-business/droplist',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetchSkuBusinessType:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-business/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuBusinessType:", err);
+                reject(err);
+            },
+        });
+    });
 }
 // ================================
-
 
 // ================================
 fetchSkuModel()
-.then(data => {
-    console.log("Succesfully fetchSkuModel:", data);
-    populateSelect(data, $('[name=sku_model_id]'));
-})
-.catch(err => {
-    console.error("Error fetchSkuModel:", err);
-});
+    .then((data) => {
+        console.log("Succesfully fetchSkuModel:", data);
+        populateSelect(data, $("[name=sku_model_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuModel:", err);
+    });
 
 fetchSkuBusinessType()
-.then(data => {
-    console.log("Succesfully fetchSkuBusinessType:", data);
-    populateSelect(data, $('[name=sku_business_type_id]'));
-})
-.catch(err => {
-    console.error("Error fetchSkuModel:", err);
-});
-
+    .then((data) => {
+        console.log("Succesfully fetchSkuBusinessType:", data);
+        populateSelect(data, $("[name=sku_business_type_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuModel:", err);
+    });
 
 function fetchSkuModel() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku-model/droplist',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetchSkuModel:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-model/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuModel:", err);
+                reject(err);
+            },
+        });
+    });
 }
 
-
 function fetchSkuModel() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			type: 'GET',
-			url: base_url + 'api/sku-business/droplist',
-			success: function(data) {
-				resolve(data.data);
-			},
-			error: function(err) {
-				console.error("Error fetchSkuModel:", err);
-				reject(err);
-			}
-		});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-business/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuModel:", err);
+                reject(err);
+            },
+        });
+    });
 }
 
 function fetchSetCode() {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-			url: "/api/sku/get-set-code", // Endpoint backend
-				method: "GET",
-				success: function(response) {
-					resolve(response.data.code);
-				},
-				error: function(xhr, status, error) {
-					console.error("Error fetching data:", error);
-				}
-			});
-	});
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/api/sku-part-information/get-set-code", // Endpoint backend
+            method: "GET",
+            success: function (response) {
+                resolve(response.data.code);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data:", error);
+            },
+        });
+    });
 }
 // ================================
 
-  // Ketika input diklik, tampilkan modal
-  $("[name=group_tag]").on("click", function() {
-	// Ambil data dari backend
-	$.ajax({
-	url: "/api/sku/get-set-code", // Endpoint backend
-		method: "GET",
-		success: function(response) {
-			var list = $("#setCodeList");
-			list.empty(); // Kosongkan list sebelum menambahkan data baru
+// Ketika input diklik, tampilkan modal
+$("[name=group_tag]").on("click", function () {
+    // Ambil data dari backend
+    $.ajax({
+        url: "/api/sku-part-information/get-set-code", // Endpoint backend
+        method: "GET",
+        success: function (response) {
+            var list = $("#setCodeList");
+            list.empty(); // Kosongkan list sebelum menambahkan data baru
 
-			// Tambahkan data ke dalam list
-			response.data.forEach(function(item) {
-				list.append('<li data-value="' + item.id + '">' + item.name + '</li>');
-			});
+            // Tambahkan data ke dalam list
+            response.data.forEach(function (item) {
+                list.append(
+                    '<li data-value="' + item.id + '">' + item.name + "</li>"
+                );
+            });
 
-            $('#set_code_modal').modal('show');
-		},
-		error: function(xhr, status, error) {
-			console.error("Error fetching data:", error);
-		}
-	});
+            $("#set_code_modal").modal("show");
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        },
+    });
 });
 
+$("[name=group_tag]").on("click", function () {
+    // Ambil data dari backend
+    $.ajax({
+        url: "/api/sku-part-information/get-set-code", // Endpoint backend
+        method: "GET",
+        success: function (response) {
+            var list = $("#setCodeList");
+            list.empty(); // Kosongkan list sebelum menambahkan data baru
 
-$("[name=group_tag]").on("click", function() {
-	// Ambil data dari backend
-	$.ajax({
-	url: "/api/sku/get-set-code", // Endpoint backend
-		method: "GET",
-		success: function(response) {
-			var list = $("#setCodeList");
-			list.empty(); // Kosongkan list sebelum menambahkan data baru
+            // Tambahkan data ke dalam list
+            response.data.forEach(function (item) {
+                list.append(
+                    '<li data-value="' + item.id + '">' + item.name + "</li>"
+                );
+            });
 
-			// Tambahkan data ke dalam list
-			response.data.forEach(function(item) {
-				list.append('<li data-value="' + item.id + '">' + item.name + '</li>');
-			});
-
-            $('#set_code_modal').modal('show');
-		},
-		error: function(xhr, status, error) {
-			console.error("Error fetching data:", error);
-		}
-	});
+            $("#set_code_modal").modal("show");
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching data:", error);
+        },
+    });
 });

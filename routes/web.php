@@ -58,21 +58,37 @@ Route::controller(UserController::class)->group(function () {
 
 Route::controller(MasterSkuController::class)->group(function () {
     // LIST
-    Route::get("/sku", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-part-information", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-production-material", "index_production_material")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-general-item", "index_general_item")->middleware(OnlyMemberMiddleware::class);
     // ADD
-    Route::post("/sku", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-part-information", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-production-material", "add_production_material")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-general-item", "add_general_item")->middleware(OnlyMemberMiddleware::class);
     // DELETE
-    Route::post("/sku/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-part-information/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-production-material/{id}/delete", "delete_production_material")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-general-item/{id}/delete", "delete_general_item")->middleware(OnlyMemberMiddleware::class);
     // GET
-    Route::get("/sku/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-part-information/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-production-material/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-general-item/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
-    Route::post("/sku/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-part-information/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-production-material/edit", "edit_production_material")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-general-item/edit", "edit_general_item")->middleware(OnlyMemberMiddleware::class);
     // API ALL
-    Route::get("/api/sku", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-part-information", "api_all")->middleware(OnlyMemberMiddleware::class);
+    // Route::get("/api/sku-production-material", "api_all")->middleware(OnlyMemberMiddleware::class);
+    // Route::get("/api/sku-general-item", "api_all")->middleware(OnlyMemberMiddleware::class);
 
-    Route::get("/api/sku/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-part-information/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
+    // Route::get("/api/sku-production-material/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
+    // Route::get("/api/sku-general-item/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
     
-    Route::get("/api/sku/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-part-information/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
+    // Route::get("/api/sku-production-material/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
+    // Route::get("/api/sku-general-item/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuProcessController::class)->group(function () {
