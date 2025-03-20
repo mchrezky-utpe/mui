@@ -45,7 +45,7 @@
           </div>
       </div>
 
-      <!-- REGION SIDE 3 --
+      <!-- REGION SIDE 3 -->
       <!-- REGION SIDE 4 -->
       <!-- HIDE FIELD -->
     </div>

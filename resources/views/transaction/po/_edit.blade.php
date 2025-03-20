@@ -1,5 +1,5 @@
 <x-modals.modal id="edit_modal" title="Edit Purchase Order">
-<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-unit/edit">
+<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/po/edit">
     @csrf
     <div class="form-group">
       <label>Manual ID</label>

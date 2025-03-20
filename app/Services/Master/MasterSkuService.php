@@ -17,8 +17,14 @@ class MasterSkuService
     }
 
     public function list(){
-          return SkuListVw::all();
-    }
+          return SkuListVw::where('flag_sku_type', 1)->take(50)->get();
+     }
+    // public function list2(){
+    //       return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
+    // }
+    // // public function list3(){
+    // //       return SkuListVw::where('flag_sku_type', 3)->take(50)->get();
+    // // }
 
     public function get_set_code(){
      $type = 2;
@@ -151,8 +157,8 @@ class MasterSkuService
         $data->manual_id = $request->manual_id;
         $data->description = $request->description;
         $data->group_tag = $request->group_tag;
-        $data->spesification_code = $request->spesification_code;
-        $data->spesification_description = $request->spesification_description;
+        $data->specification_code = $request->specification_code;
+        $data->specification_detail = $request->specification_detail;
       
         $data->sku_sales_category_id = $request->sku_sales_category_id;
         $data->sku_business_type_id = $request->sku_business_type_id;
@@ -162,16 +168,17 @@ class MasterSkuService
 
         $data->sku_inventory_unit_id = $request->sku_inventory_unit_id; 
         $data->val_conversion = $request->val_conversion; 
-        $data->flag_inventory_register = $request->flag_inventory_register; 
+        $data->flag_inventory_register = $this->convertCheckboxToBoolean ($request->flag_inventory_register); 
 
         $data->sku_type_id = $request->sku_type_id;
         $data->flag_sku_procurement_type = $request->flag_sku_procurement_type;
         $data->sku_procurement_unit_id = $request->sku_procurement_unit_id;
 
-        $data->sku_category = $request->sku_category;
-        $data->sku_sub_category = $request->sku_sub_category;
+        // $data->sku_category = $request->sku_category;
+        // $data->sku_sub_category = $request->sku_sub_category;
 
         $data->save();
     }
 
 }
+

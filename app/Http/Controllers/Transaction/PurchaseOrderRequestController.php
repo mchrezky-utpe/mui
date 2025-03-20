@@ -50,7 +50,7 @@ class PurchaseOrderRequestController
         return redirect("/pr");
     }
     
-    public function get(Request $request, int $id)
+    public function get(/*Request $request,*/ int $id)
     {
         $data = $this->service->get($id);
         return response()->json([

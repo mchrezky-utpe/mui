@@ -45,7 +45,7 @@ class MasterSkuController
     public function index(): Response
     {
         return response()
-            ->view('master.sku.index',
+            ->view('master.sku_part_information.index',
              [
                 'data' =>  $this->service->list(),
                 'type' => $this->typeService->list(),
@@ -58,6 +58,40 @@ class MasterSkuController
             ]);
     }
 
+        public function index_production_material(): Response
+        {
+            return response()
+            ->view('master.sku_production_material.index',
+             [
+                'data' =>  $this->service->list(),
+                'type' => $this->typeService->list(),
+                'detail' => $this->detailService->list(),
+                'unit' => $this->unitService->list(),
+                'model' => $this->modelService->list(),
+                'packaging' => $this->packagingService->list(),
+                'process' => $this->processService->list(),
+                'business' => $this->businessService->list()
+            ]);
+        }
+        
+        public function index_general_item(): Response
+        {
+            return response()
+            ->view('master.sku_general_item.index',
+             [
+                'data' =>  $this->service->list(),
+                'type' => $this->typeService->list(),
+                'detail' => $this->detailService->list(),
+                'unit' => $this->unitService->list(),
+                'model' => $this->modelService->list(),
+                'packaging' => $this->packagingService->list(),
+                'process' => $this->processService->list(),
+                'business' => $this->businessService->list()
+            ]);
+        }
+        
+    
+
     public function api_all()
     {
         $data = $this->service->list();
@@ -65,6 +99,20 @@ class MasterSkuController
             'data' => $data
         ]);
     }
+    // public function api_all_production_material()
+    // {
+    //     $data = $this->service->list();
+    //      return response()->json([
+    //         'data' => $data
+    //     ]);
+    // }
+    // public function api_all_general_item()
+    // {
+    //     $data = $this->service->list();
+    //      return response()->json([
+    //         'data' => $data
+    //     ]);
+    // }
 
     public function get_code(Request $request)
     {
@@ -73,6 +121,20 @@ class MasterSkuController
             'data' => $data
         ]);
     }
+    // public function get_code_production_material(Request $request)
+    // {
+    //     $data = $this->service->generateCode($request->sku_type_id, $request->flag_sku_type);
+    //      return response()->json([
+    //         'data' => $data
+    //     ]);
+    // }
+    // public function get_code_general_item(Request $request)
+    // {
+    //     $data = $this->service->generateCode($request->sku_type_id, $request->flag_sku_type);
+    //      return response()->json([
+    //         'data' => $data
+    //     ]);
+    // }
 
     public function get_set_code()
     {
@@ -81,20 +143,57 @@ class MasterSkuController
             'data' => $data
         ]);
     }
+    // public function get_set_code_production_material()
+    // {
+    //     $data = $this->service->get_set_code();
+    //      return response()->json([
+    //         'data' => $data
+    //     ]);
+    // }
+    // public function get_set_code_general_item()
+    // {
+    //     $data = $this->service->get_set_code();
+    //      return response()->json([
+    //         'data' => $data
+    //     ]);
+    // }
 
     public function add(Request $request)
     {
         $this->service->add($request);
-        return redirect("/sku");
+        return redirect("/sku-part-information");
     }
+    public function add_production_material(Request $request)
+    {
+        $this->service->add($request);
+        return redirect("/sku-production-material");
+    }
+    public function add_general_item(Request $request)
+    {
+        $this->service->add($request);
+        return redirect("/sku-general-item");
+    }
+
+// -------------------------------------------------------------------------------------------
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
-        return redirect("/sku");
+        return redirect("/sku-part-information");
+    }
+    public function delete_general_item(Request $request, int $id)
+    {
+        $this->service->delete($id);
+        return redirect("/sku-general-item");
+    }
+    public function delete_production_material(Request $request, int $id)
+    {
+        $this->service->delete($id);
+        return redirect("/sku-production-material");
     }
 
-    
+    // ------------------------------------------------------------------------
+
     public function get(Request $request, int $id)
     {
         $sku = $this->service->get($id);
@@ -103,9 +202,21 @@ class MasterSkuController
         ]);
     }
 
+    // -------------------------------------------------------------------------
+
     public function edit(Request $request)
     {
         $this->service->edit($request);
-        return redirect("/sku");
+        return redirect("/sku-part-information");
+    }
+    public function edit_production_material(Request $request)
+    {
+        $this->service->edit($request);
+        return redirect("/sku-production-material");
+    }
+    public function edit_general_item(Request $request)
+    {
+        $this->service->edit($request);
+        return redirect("/sku-general-item");
     }
 }

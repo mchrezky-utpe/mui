@@ -26,7 +26,13 @@
                                 <i class="fas fa-tags"></i>Item</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/sku">Information</a>
+                                    <a href="/sku-part-information">Part Information</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-production-material">Production Material Information</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-general-item">General Item Information</a>
                                 </li>
                                 <li>
                                     <a href="/sku-type">Type</a>

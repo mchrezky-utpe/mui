@@ -67,7 +67,7 @@
                     <div class="d-flex">
                       <form action="/sku-pricelist/{{ $value->id }}/delete" method="post"> @csrf 
                       <div class="d-flex">
-                        <button data-item_id="{{ $value->item_id }}" data-prs_supplier_id="{{ $value->prs_supplier_id }}" type="button" class="history btn btn-secondary">
+                        <button data-prs_supplier_id="{{ $value->prs_supplier_id}}"  data-item_id="{{ $value->item_id }}"  type="button" class="history btn btn-secondary">
                           <span class="fas fa-list"></span>
                       </button>
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
@@ -87,10 +87,8 @@
     </div>
   </div>
 </div>
-<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-pricelist">
-  sdsadsa
-
-  </form>  
+{{-- <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-pricelist">
+ </form>   --}}
   
 <!-- MODAL --> 
  @include('transaction.sku_pricelist._history') 
