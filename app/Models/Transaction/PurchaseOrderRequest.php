@@ -18,7 +18,7 @@ class PurchaseOrderRequest extends Model
     
     public function items()
     {
-        return $this->hasOne(PurchaseOrderRequestDetail::class, 'trans_pr_id','id');
+        return $this->hasMany(PurchaseOrderRequestDetail::class, 'trans_pr_id','id');
     }
 
 
