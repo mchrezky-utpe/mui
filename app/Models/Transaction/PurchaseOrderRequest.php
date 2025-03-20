@@ -16,10 +16,10 @@ class PurchaseOrderRequest extends Model
     protected $table = 'trans_purchase_request';
 
     
-    // public function supplier()
-    // {
-    //     return $this->hasOne(MasterPersonSupplier::class, 'id','prs_supplier_id');
-    // }
+    public function items()
+    {
+        return $this->hasOne(PurchaseOrderRequestDetail::class, 'trans_pr_id','id');
+    }
 
 
     use HasUserTracking;

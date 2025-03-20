@@ -16,6 +16,23 @@ class MasterSkuUnitController
         $this->service = $service;
     }
 
+/**
+     * @OA\Post(
+     *     path="/api/sku-unit",
+     *     summary="Create a sku unit",
+     *     tags={"Sku Unit"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"description", "prefix"},
+     *             @OA\Property(property="description", type="string", example="BAG"),
+     *             @OA\Property(property="prefix", type="string", example="BAG"),
+     *             @OA\Property(property="manual_id", type="integer", nullable=true, example=null)
+     *         )
+     *     )
+     *     )
+     * )
+     */
     public function api_add(Request $request)
     {
         $this->service->add($request);
@@ -47,6 +64,30 @@ class MasterSkuUnitController
         return response()->view('master.sku_unit.index', ['data' =>  $this->service->list()]);
     }
 
+    
+/**
+ * @OA\Get(
+ *     path="/api/items",
+ *     summary="Get list of sku unit",
+ *     tags={"Sku Unit"},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="data",
+ *                 type="array",
+ *             @OA\Items(ref="#/components/schemas/SkuUnit")
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Server error"
+ *     )
+ * )
+ */
     public function api_all()
     {
         $data = $this->service->list();
