@@ -1,0 +1,102 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/api/sku-unit": {
+            "post": {
+                "tags": [
+                    "Sku Unit"
+                ],
+                "summary": "Create a sku unit",
+                "operationId": "692cb16755f97245e926938289adbb90",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "description",
+                                    "prefix"
+                                ],
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "BAG"
+                                    },
+                                    "prefix": {
+                                        "type": "string",
+                                        "example": "BAG"
+                                    },
+                                    "manual_id": {
+                                        "type": "integer",
+                                        "example": null,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/items": {
+            "get": {
+                "tags": [
+                    "Sku Unit"
+                ],
+                "summary": "Get list of sku unit",
+                "operationId": "47d24ebe8d3dd5249cfe034534f876f4",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SkuUnit"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SkuUnit": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "prefix": {
+                        "type": "string"
+                    },
+                    "manual_id": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Sku Unit",
+            "description": "Sku Unit"
+        }
+    ]
+}

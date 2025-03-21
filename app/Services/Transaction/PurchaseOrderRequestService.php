@@ -228,7 +228,7 @@ class PurchaseOrderRequestService
     
     public function get(int $id)
     {
-        return PurchaseOrderRequest::where('id', $id)->firstOrFail();
+        return PurchaseOrderRequest::with('items')->where('id', $id)->firstOrFail();
     } 
 
     function edit(Request $request)

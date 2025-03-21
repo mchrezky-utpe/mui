@@ -90,6 +90,7 @@ class SkuPricelistService
         $data->flag_status = $request->flag_status;
         $data->price = $request->price;
         $data->price_retail = $request->price_retail;
+        $data->generated_id = Str::uuid()->toString();
         $data->flag_active = 1;
         $data->flag_status= 1;
         $data->save();
