@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Helpers\HelperCustom;
-use App\Services\Transaction\PurchaseOrderService;
 use Illuminate\Http\Request;
+use App\Services\Transaction\PurchaseOrderService;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Models\Transaction\PurchaseOrder;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class PurchaseOrderController
 {
 
@@ -90,6 +93,32 @@ class PurchaseOrderController
   
         return view('transaction.po.print_po', $response);
     }
+
+    public function generatePDF($id)
+    {
+        $po = PurchaseOrder::with('supplier')->findOrFail($id); // Tambahkan relasi supplier juga
+    
+        // Dummy data items, karena tidak ambil dari DB (belum ada relasi)
+        $items = [
+            [
+                'item_code' => null,
+                'item_name' => 'FR BODY KIT-SILVER',
+                'spe_code' => null,
+                'qty' => 1,
+                'unit' => 'PCS',
+                'price' => 191800,
+                'amount' => 191800,
+                'req_date' => now()->format('Y-m-d')
+            ]
+        ];
+    
+        // Ganti karakter ilegal
+        $filename = 'PO-' . str_replace(['/', '\\'], '-', $po->doc_num) . '.pdf';
+    
+        $pdf = Pdf::loadView('transaction.po.pdf', compact('po', 'items'));
+        return $pdf->download($filename);
+    }
+    
     
 
 }
