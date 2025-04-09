@@ -65,6 +65,7 @@
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="/person-supplier">Supplier</a>
+                                    <a href="/person-employee">Employee</a>
                                 </li>
                                 <!-- <li>
                                     <a href="/person-customer">Customer</a>
