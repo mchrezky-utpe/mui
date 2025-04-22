@@ -12,15 +12,18 @@ use App\Http\Controllers\Master\MasterGeneralOtherCostController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterPersonCustomerController;
+use App\Http\Controllers\Master\MasterPersonEmployeeController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
-
+use App\Models\Transaction\PurchaseOrder;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
@@ -322,3 +325,23 @@ Route::controller(MasterFactoryMachineController::class)->group(function () {
     // EDIT    
     Route::post("/factory-machine/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
+
+Route::controller(MasterPersonEmployeeController::class)->group(function () {
+    // LIST
+    Route::get("/person-employee", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/person-employee", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/person-employee/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-employee/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-employee/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/person-employee/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/person-employee/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/person-employee", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::get('/person-employee/export/pdf', [MasterPersonEmployeeController::class, 'exportPdf'])->name('employee.export.pdf');
+Route::get('/po/{id}/pdf', [PurchaseOrderController::class, 'generatePDF']);
