@@ -300,6 +300,18 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-file"></i>Production</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/production_cycle">Production Cycle Time</a>
+                                </li>
+                                <li>
+                                    <a href="/production_process">Production Process Information</a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <!-- Sales Menu -->
                         <!-- <li class="has-sub">
