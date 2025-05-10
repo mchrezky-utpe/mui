@@ -149,6 +149,9 @@
                                 <li>
                                     <a href="/sku-minofqty">Minimum Qty</a>
                                 </li>
+                                <li>
+                                    <a href="/bom">Bill Of Material</a>
+                                </li>
                                 <!-- <li>
                                     <a href="/bom">Bill of Material</a>
                                 </li> -->

@@ -21,6 +21,7 @@ use App\Http\Controllers\Transaction\Receiving\SupplyController;
 use App\Http\Controllers\Transaction\Receiving\ReplacementController;
 use App\Http\Controllers\Transaction\Receiving\InternalController;
 use App\Http\Controllers\Transaction\Receiving\ReturnablePackagingController;
+use App\Http\Controllers\Transaction\Bom\BomController;
 use App\Http\Controllers\Transaction\StockViewController;
 
 
@@ -208,6 +209,10 @@ Route::controller(StockViewController::class)->group(function () {
     Route::get("/stock-view", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/stock-view", "api_all")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/stock-view/sync", "sync")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(BomController::class)->group(function () {
+    Route::get("/bom", "index")->middleware(OnlyMemberMiddleware::class);
 });
 
 
