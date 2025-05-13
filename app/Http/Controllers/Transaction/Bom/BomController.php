@@ -39,8 +39,17 @@ class BomController
         return redirect("/bom");
     }
 
-     public function edit_detail(Request $request)
+     public function edit_detail(Request $request, int $id)
     {
-        return response()->view('transaction.bom.edit');
+        $data =  $this->service->get_detail($id);
+        return response()->view('transaction.bom.edit',['data' => $data]);
+    }
+
+     public function do_edit_detail(Request $request)
+    {
+        $bom_id = $request->bom_id;
+        $data = json_decode($request->data, true);
+        $this->service->do_edit_detail($bom_id,$data);
+        return redirect("/bom");
     }
 }

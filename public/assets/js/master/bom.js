@@ -30,7 +30,22 @@ $(document).ready(function () {
                 data: "sku_id",
             },
             {
+                data: "sku_name",
+            },
+            {
+                data: "sku_model",
+            },
+            {
                 data: "remark",
+            },
+            {
+                data: "verficiation",
+            },
+            {
+                data: "status",
+            },
+            {
+                data: "main_priority",
             },
             {
                 data: null,
@@ -46,7 +61,7 @@ $(document).ready(function () {
                 },
             },
             {
-                targets: 3,
+                targets: 8,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {

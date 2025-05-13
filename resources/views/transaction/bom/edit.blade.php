@@ -95,14 +95,30 @@
     </div>
     <div class="row">
       <div class="container">
+          <h2>BOM : </h2>
+          <h4>{{ $data->sku_id }} - {{ $data->sku_name }}</h4>
+            <input type="hidden" id="bom_id" value="{{ $data->id }}">
         <div class="form-group">
-            <label for="dataName">Name:</label>
-            <input type="text" id="dataName" placeholder="Enter Name">
         </div>
-        
         <div class="form-group">
-            <label for="dataValue">Desc:</label>
-            <input type="text" id="dataValue" placeholder="Enter Desc">
+            <label for="dataName">Part Name:</label>
+          <select  required name="sku_id" id="sku_id" class="form-control">
+          </select >
+        </div>
+
+        <div class="form-group">
+            <label for="dataName">Qty capacity:</label>
+            <input type="text" id="qty_capacity">
+        </div>
+
+        <div class="form-group">
+            <label for="dataName">Qty each unit:</label>
+            <input type="text" id="qty_each_unit">
+        </div>
+
+        <div class="form-group">
+            <label for="dataName">Description:</label>
+            <input type="text" id="description">
         </div>
         
         <div class="form-group" id="levelGroup">
@@ -117,8 +133,8 @@
             <select id="parent"></select>
         </div>
         
-        <button class="btn btn-success" id="addBtn">Add Data</button>
-        <button class="btn btn-primary" id="saveBtn">Save Data</button>
+        <button class="btn btn-success" id="addBtn">Add</button>
+        <button class="btn btn-primary" id="saveBtn">Save</button>
         
         <div class="tree-container">
             <h2>Result</h2>

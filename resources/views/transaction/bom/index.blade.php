@@ -49,9 +49,14 @@
               <table id="table-bom" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
-                    <th>Id</th>
+                    <th></th>
                     <th>Part Code</th>
+                    <th>Part Name</th>
+                    <th>Model</th>
                     <th>Remark</th>
+                    <th>Verification</th>
+                    <th>Status</th>
+                    <th>Main Priority</th>
                     <th></th>
                   </tr>
                 </thead>
