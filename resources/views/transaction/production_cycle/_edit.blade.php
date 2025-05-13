@@ -1,8 +1,8 @@
-<x-modals.modal id="add_modal" title="Add Data Prodcution Cycle Time">
-  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/production_cycle">
+<x-modals.modal id="edit_modal" title="Edit Prodcution Cycle">
+  <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/production_cycle/edit">
       @csrf
-      <div class="row">
-        <div class="col-md-12">
+      <input type="hidden" name="id" />
+       
       <div class="form-group">
         <label>Description</label>
         <input required name="description" class="form-control" type="text" placeholder="Description">
@@ -38,8 +38,6 @@
       <div class="form-group">
         <label>Buffing</label>
         <input required name="num_buffing" class="form-control" type="text" placeholder="Buffing">
-      </div>      
-      </div>
-    </div>
-  </form>   
-</x-modals.modal>
+      </div>    
+    </form>   
+  </x-modals.modal>

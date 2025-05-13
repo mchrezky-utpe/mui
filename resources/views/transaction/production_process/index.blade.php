@@ -30,7 +30,7 @@
             <div>
               <!-- <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a> -->
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
-            <a href="{{ route('employee.export.pdf') }}" class="btn btn-danger">Export PDF</a>
+            {{-- <a href="{{ route('employee.export.pdf') }}" class="btn btn-danger">Export PDF</a> --}}
             </div>
           </div>
           <div class="card-body">
@@ -38,15 +38,13 @@
               <table class="table data-table table-striped table-bordered first">
                 <thead>
                   <tr>
-                    <th>Item Code</th>
-                    <th>Item Name</th>
-                    <th>Item Type</th>
-                    <th>Process Type</th>
+                    <th>No</th>
+                    <th>Description</th>
                     <th>Process Classification</th>
                     <th>Checking Input</th>
-                    <th>Item Size</th>
+                    <th>Size Category</th>
                     <th>Line Part Code</th>
-                    <th>SA</th>
+                    <th>Val Area</th>
                     <th>Weight</th>
                     <th>Qty. Standard</th>
                     <th>Qty. Target</th>
@@ -54,29 +52,35 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody> 
-                  {{-- @foreach($data as $key => $value)  --}}
-                  <tr>
-                    {{-- <td>{{ $loop->index + 1 }}</td> --}}
-                    {{-- <td>{{ $value->firstname }}</td>
-                    <td>{{ $value->middlename }}</td>
-                    <td>{{ $value->lastname }}</td>
-                    <td>{{ $value->fullname }}</td>
-                    <td>{{ $value->flag_gender == 1 ? 'Laki-laki' : 'Perempuan' }}</td> --}}
-                    <td>Test</td>
+                <tbody> @foreach($data as $key => $value) <tr>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $value->description }}</td>
+                    <td>{{ $value->flag_process_classification == 1 ? 'Regular' : 'Satin' }}</td>
+                    <td>{{ $value->flag_checking_input_method == 1 ? 'Normal' : 'Hourly' }}</td>
+                    <td>{{ $value->flag_item_size_category == 1 ? 'Small' : 'Big' }}</td>
+                    <td>{{ $value->line_part_code }}</td>
+                    <td>{{ $value->val_area}}</td>
+                    <td>{{ $value->val_weight}}</td>
+                    <td>{{ $value->qty_standard}}</td>
+                   <td>{{ $value->qty_target}}</td>
+                    @if ($value->flag_status === 1)
+                        <td class="btn-success" align="center"> Aktif
+                    @elseif ($value->flag_status === 2)
+                        <td class="btn-danger"> Gagal
+                    @else
+                        <td>
+                    @endif
                     <td>
-                      {{-- <form action="/person-employee/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      <form action="/production_process/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button type="submit" class="btn btn-danger">
                           <span class="fas fa-trash"></span>
                         </button>
-                      </form> --}}
+                      </form>
                     </td>
-                  </tr> 
-                  {{-- @endforeach --}}
-                 </tbody>
+                  </tr> @endforeach</tbody>
               </table>
             </div>
           </div>
@@ -87,9 +91,9 @@
 </div>
 <!-- MODAL --> 
  @include('transaction.production_process._add') 
- {{-- @include('master.person_employee._edit')  --}}
+ @include('transaction.production_process._edit') 
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/master/person_employee.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/transaction/production_process/production_process.js') }}" type="text/javascript"></script> 
  @endsection
