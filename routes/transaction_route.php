@@ -213,6 +213,9 @@ Route::controller(StockViewController::class)->group(function () {
 
 Route::controller(BomController::class)->group(function () {
     Route::get("/bom", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/bom/all/pageable", "get_list_pageable")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/bom", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/bom/{id}/edit-detail", "edit_detail")->middleware(OnlyMemberMiddleware::class);
 });
 
 

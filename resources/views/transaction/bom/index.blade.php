@@ -30,7 +30,7 @@
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">Item</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Bill Of Material(Bom)</li>
+                <li class="breadcrumb-item active" aria-current="page">Bill Of Material</li>
               </ol>
             </nav>
           </div>
@@ -46,18 +46,13 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table id="table-pr" class="table table-striped table-bordered first">
+              <table id="table-bom" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>Doc. #</th>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Purpose</th>
-                    <th>Supplier</th>
-                    <th>Status</th>
-                    <!-- <th>Total</th> -->
-                    <th>Action</th>
+                    <th>Id</th>
+                    <th>Part Code</th>
+                    <th>Remark</th>
+                    <th></th>
                   </tr>
                 </thead>
                 </table>
@@ -69,11 +64,13 @@
   </div>
 </div>
 <!-- MODAL -->
+
+ @include('transaction.bom._add')
  {{-- @include('transaction.bom._edit')
  @include('transaction.bom._add')
  @include('transaction.bom._edit') --}}
  @endsection
 
  @section('extra_javascript')
- <script  type="module" src="{{ asset('assets/js/transaction/purchase_order_request/pr_main.js') }}" type="text/javascript"></script>
+ <script  type="module" src="{{ asset('assets/js/master/bom.js') }}" type="text/javascript"></script>
  @endsection

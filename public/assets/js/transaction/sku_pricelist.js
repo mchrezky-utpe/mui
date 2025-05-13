@@ -39,7 +39,7 @@ $(document).ready(function () {
 			},
 			{
 				data: "currency"
-			},
+			}, 
             {
 				data: "price"
 			},
@@ -144,6 +144,7 @@ $(document).ready(function () {
     }
 
     initParam();
+    
     function initParam() {
         fetchSkuMaster()
             .then((data) => {

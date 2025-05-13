@@ -41,9 +41,9 @@ class PurchaseOrderService
        return $query->get();
      }
 
-     public function get_item_by(Request $request){
-         return VwPoItemList::where('trans_po_id', $request->input('id'))->get();
-      }
+    public function get_item_by(Request $request){
+        return VwPoItemList::where('trans_po_id', $request->input('id'))->get();
+    }
 
     public function get_all(Request $request){
         $start = $request->input('start');
