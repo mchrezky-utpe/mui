@@ -3,6 +3,7 @@
 namespace App\Services\Master\Bom;
 use App\Models\Master\Bom\VwBomList;
 use App\Models\Master\Bom\Bom;
+use App\Models\Master\Bom\BomDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -21,14 +22,14 @@ class BomService
         $orderDirection = $request->input('order.0.dir');
         $columns = $request->input('columns');
 
-        $query = DB::table('mst_sku_bom');
+        $query = DB::table('vw_app_list_mst_sku_bom');
         
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('mst_sku_bom.manual_id', 'like', '%' . $search . '%')
-                    ->orWhere('mst_sku_bom.doc_num', 'like', '%' . $search . '%')
-                    ->orWhere('mst_sku_bom.description', 'like', '%' . $search . '%')
-                    ->orWhere('mst_sku_bom.description', 'like', '%' . $search . '%');
+                $q->where('vw_app_list_mst_sku_bom.manual_id', 'like', '%' . $search . '%')
+                    ->orWhere('vw_app_list_mst_sku_bom.doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('vw_app_list_mst_sku_bom.description', 'like', '%' . $search . '%')
+                    ->orWhere('vw_app_list_mst_sku_bom.description', 'like', '%' . $search . '%');
             });
         }
 
@@ -57,6 +58,45 @@ class BomService
                 'generated_id' => Str::uuid()->toString()
             ];
             Bom::create($data);
+
+            // Commit transaksi jika semua berhasil
+            DB::commit();
+        } catch (\Exception $e) {
+            // Rollback jika terjadi error
+            DB::rollBack();
+            dd($e);
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat add.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function get_detail($id)
+    {
+        return VwBomList::where('id', $id)->firstOrFail();
+    }
+
+    public function do_edit_detail($bom_id, $data)
+    {
+        DB::beginTransaction();
+    
+        try {
+            $detail;
+            foreach ($data as $value) {
+                $detail[] = [
+                    'sku_id' => $value['sku_id'],
+                    'description' => $value['description'],
+                    'qty_capacity' => $value['qty_capacity'],
+                    'qty_each_unit' => $value['qty_each_unit'],
+                    'sku_bom_id' => $bom_id,
+                    'rec_key' => $value['rec_key'],
+                    'rec_parent_key' => $value['rec_parent_key'],
+                    'flag_active' => 1,
+                    'generated_id' => Str::uuid()->toString()
+                ];
+            }
+            BomDetail::insert($detail);
 
             // Commit transaksi jika semua berhasil
             DB::commit();

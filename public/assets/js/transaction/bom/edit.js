@@ -72,7 +72,7 @@ $(document).ready(function() {
             parents.forEach(parent => {
                 $('#parent').append($('<option>', {
                     value: parent.id,
-                    text: `${parent.name} (${parent.value}) - ID: ${parent.id}`
+                    text: `${parent.sku_name} (${parent.value}) - ID: ${parent.id}`
                 }));
             });
             $('#addBtn').prop('disabled', false);
@@ -81,19 +81,26 @@ $(document).ready(function() {
     
     // Function to add data to the tree
     function addDataToTree() {
-        const name = $('#dataName').val().trim();
-        const value = $('#dataValue').val().trim();
+        const sku_id = $('#sku_id').val().trim();
+        const sku_name = $('#sku_id :selected').text().trim();
+        const qty_capacity = $('#qty_capacity').val().trim();
+        const qty_each_unit = parseInt($('#qty_each_unit').val());
+        const description = $('#description').val().trim();
+
         const level = parseInt($('#level').val());
         
-        if (!name || !value) {
-            alert('Please enter both name and desc');
+        if (!sku_id || !qty_capacity) {
+            alert('Please correct data');
             return;
         }
         
         const newItem = {
             id: generateId(), // Use our auto-increment ID
-            name,
-            value,
+            sku_id,
+            sku_name,
+            qty_capacity,
+            qty_each_unit,
+            description,
             level,
             children: []
         };
@@ -122,7 +129,7 @@ $(document).ready(function() {
         }
         
         // Clear inputs
-        $('#dataName, #dataValue').val('');
+        $('#sku_id, #qty_capacity, #qty_each_unit, #description').val('');
         
         // Update UI
         updateLevelOptions();
@@ -165,11 +172,11 @@ $(document).ready(function() {
         function renderItems(items) {
             items.forEach(item => {
                 html += `<div class="tree-node" data-id="${item.id}">
-                    <span class="node-label">${item.name}</span>: 
-                    <span class="node-value">${item.value}</span> 
+                    <span class="node-label">${item.sku_name}</span>: 
+                    <span class="node-value">${item.qty_capacity}</span> 
                     <span>(Level ${item.level}, ID: ${item.id})</span>
                     <span class="node-actions">
-                        <button class="btn btn-danger" data-id="${item.id}">Delete</button>
+                        <button class="btn btn-danger delete" data-id="${item.id}">Delete</button>
                     </span>`;
                 
                 if (item.children && item.children.length > 0) {
@@ -196,19 +203,125 @@ $(document).ready(function() {
     
     // Function to save/export tree data
     function saveTreeData() {
-        const jsonData = JSON.stringify(treeData, null, 2);
-        $('#jsonOutput').html('<pre>' + jsonData + '</pre>');
-        
+
         console.log('Tree data to save:', treeData);
-        alert('Tree data has been prepared for saving (check console or the JSON output below)');
+        console.log('Flatten data to save:',  flattenHierarchy(treeData));
+        
+        // Flatten the tree data
+        var flatData = flattenHierarchy(treeData);
+        
+        // Create a form dynamically
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/bom/edit-detail'; // Sesuaikan dengan route Laravel Anda
+        
+        // Add CSRF token (Laravel requirement)
+        var csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = document.querySelector('meta[name="csrf-token"]').content;
+        form.appendChild(csrfToken);
+        
+        // Add the flattened data as JSON
+        var dataInput = document.createElement('input');
+        dataInput.type = 'hidden';
+        dataInput.name = 'data';
+        dataInput.value = JSON.stringify(flatData);
+        form.appendChild(dataInput);
+
+        // Add the flattened data as JSON
+        var bomIdInput = document.createElement('input');
+        bomIdInput.type = 'hidden';
+        bomIdInput.name = 'bom_id';
+        bomIdInput.value = $('#bom_id').val();
+        form.appendChild(bomIdInput);
+        
+        // Append form to body and submit
+        document.body.appendChild(form);
+        form.submit();
+        
+        // Clean up
+        document.body.removeChild(form);
     }
+
+    function flattenHierarchy(data, parentId = null) {
+    let result = [];
     
+    $.each(data, function(index, item) {
+        // Buat objek flat dengan properti yang diinginkan
+        let flatItem = {
+            rec_key: item.id,
+            sku_id: item.sku_id,
+            sku_name: item.sku_name,
+            qty_capacity: item.qty_capacity,
+            qty_each_unit: item.qty_each_unit,
+            level: item.level,
+            description: item.level,
+            rec_parent_key: parentId
+        };
+        
+        // Tambahkan ke hasil
+        result.push(flatItem);
+        
+        // Jika ada children, proses recursively
+        if (item.children && item.children.length > 0) {
+            let childItems = flattenHierarchy(item.children, item.id);
+            result = result.concat(childItems);
+        }
+    });
+    
+    return result;
+}
+
     // Event listeners
     $('#level').on('change', updateParentOptions);
     $('#addBtn').on('click', addDataToTree);
     $('#saveBtn').on('click', saveTreeData);
     
+
+    
+    // =========== HANDLING PARAM
+    function populateSelectSku(title, master_data, element) {
+        element.empty();
+        element.append('<option value="">-- Select ' + title + " --</option>");
+        master_data.forEach((data) => {
+            element.append(
+                `<option sku_id="${data.sku_id}" unit="${data.sku_procurement_unit}" value="${data.id}">${data.sku_name}</option>`
+            );
+        });
+    }
+
+    function initParam() {
+        fetchSkuMaster()
+            .then((data) => {
+                console.log("Succesfully get Sku:", data);
+                populateSelectSku("Sku", data, $("[name=sku_id]"));
+            })
+            .catch((err) => {
+                console.error("Error get Sku:", err);
+            });
+    }
+    
+    function fetchSkuMaster() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: base_url + "api/sku-part-information",
+                success: function (data) {
+                    resolve(data.data);
+                },
+                error: function (err) {
+                    console.error("Error fetching terms master:", err);
+                    reject(err);
+                },
+            });
+        });
+    }
+
     // Initialize
     updateLevelOptions();
     updateParentOptions();
+    initParam();
+
+    
 });
