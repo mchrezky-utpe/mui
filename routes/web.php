@@ -21,6 +21,7 @@ use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Transaction\Production\ProductionController;
+use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Middleware\OnlyGuestMiddleware;
@@ -379,4 +380,20 @@ Route::controller(ProductionProcessController::class)->group(function () {
     Route::post("/production_process/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     // API GET ALL DATA
     Route::get("/api/production_process", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(ProductionCostController::class)->group(function () {
+    // LIST
+    Route::get("/production_cost", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/production_cost", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/production_cost/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_cost/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_cost/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/production_cost/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/production_cost/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/production_cost", "api_all")->middleware(OnlyMemberMiddleware::class);
 });

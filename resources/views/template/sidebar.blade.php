@@ -313,6 +313,9 @@
                                 <li>
                                     <a href="/production_process">Production Process Information</a>
                                 </li>
+                                <li>
+                                    <a href="/production_cost">Production Cost</a>
+                                </li>
                             </ul>
                         </li>
 
