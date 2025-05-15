@@ -12,15 +12,21 @@ use App\Http\Controllers\Master\MasterGeneralOtherCostController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterPersonCustomerController;
+use App\Http\Controllers\Master\MasterPersonEmployeeController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\Transaction\Production\ProductionController;
+use App\Http\Controllers\Transaction\Production\ProductionCostController;
+use App\Http\Controllers\Transaction\Production\ProductionProcessController;
+use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
-
+use App\Models\Transaction\PurchaseOrder;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
@@ -321,4 +327,73 @@ Route::controller(MasterFactoryMachineController::class)->group(function () {
     Route::get("/factory-machine/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/factory-machine/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(MasterPersonEmployeeController::class)->group(function () {
+    // LIST
+    Route::get("/person-employee", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/person-employee", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/person-employee/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-employee/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/person-employee/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/person-employee/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/person-employee/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/person-employee", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::get('/person-employee/export/pdf', [MasterPersonEmployeeController::class, 'exportPdf'])->name('employee.export.pdf');
+Route::get('/po/{id}/pdf', [PurchaseOrderController::class, 'generatePDF']);
+
+Route::controller(ProductionController::class)->group(function () {
+    // LIST
+    Route::get("/production_cycle", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/production_cycle", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/production_cycle/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_cycle/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_cycle/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/production_cycle/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/production_cycle/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/production_cycle", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(ProductionProcessController::class)->group(function () {
+    // LIST
+    Route::get("/production_process", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/production_process", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/production_process/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_process/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_process/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/production_process/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/production_process/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/production_process", "api_all")->middleware(OnlyMemberMiddleware::class);
+});
+Route::controller(ProductionCostController::class)->group(function () {
+    // LIST
+    Route::get("/production_cost", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/production_cost", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/production_cost/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_cost/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/production_cost/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/production_cost/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/production_cost/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // API GET ALL DATA
+    Route::get("/api/production_cost", "api_all")->middleware(OnlyMemberMiddleware::class);
 });

@@ -1,3 +1,4 @@
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @extends('template.main') @section('content') <div class="section__content section__content--p30">
   <div class="container-fluid">
     <div class="row">
@@ -32,7 +33,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first">
+              <table  id="table-pagination" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -50,7 +51,8 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) <tr>
+                <tbody> 
+                  {{-- @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->sku_id }}</td>
                     <td>{{ $value->sku_name }}</td>
@@ -78,7 +80,8 @@
                         </button>
                       </form>
                     </td>
-                  </tr> @endforeach </tbody>
+                  </tr> @endforeach  --}}
+                </tbody>
               </table>
             </div>
           </div>

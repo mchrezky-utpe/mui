@@ -21,6 +21,7 @@ use App\Http\Controllers\Transaction\Receiving\SupplyController;
 use App\Http\Controllers\Transaction\Receiving\ReplacementController;
 use App\Http\Controllers\Transaction\Receiving\InternalController;
 use App\Http\Controllers\Transaction\Receiving\ReturnablePackagingController;
+use App\Http\Controllers\Transaction\Bom\BomController;
 use App\Http\Controllers\Transaction\StockViewController;
 
 
@@ -67,6 +68,7 @@ Route::controller(SkuPricelistController::class)->group(function () {
     Route::post("/sku-pricelist/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/api/history", "getHistory")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-pricelist/api/all/pagination", "getAllPagination")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {
@@ -207,6 +209,14 @@ Route::controller(StockViewController::class)->group(function () {
     Route::get("/stock-view", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/stock-view", "api_all")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/stock-view/sync", "sync")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(BomController::class)->group(function () {
+    Route::get("/bom", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/bom/all/pageable", "get_list_pageable")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/bom", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/bom/{id}/edit-detail", "edit_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/bom/edit-detail", "do_edit_detail")->middleware(OnlyMemberMiddleware::class);
 });
 
 

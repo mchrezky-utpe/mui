@@ -10,11 +10,47 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SkuPricelistService
 {
     public function list(){
           return SkuPricelistVw::where('flag_pricelist_status', 1)->get();;
+    }
+
+    public function list_pagination(Request $request){
+        $start = $request->input('start');
+        $length = $request->input('length'); 
+        $search = $request->input('search.value');
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDirection = $request->input('order.0.dir');
+        $columns = $request->input('columns');
+
+        $query = DB::table('vw_app_list_trans_sku_pricelist');
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $query->whereBetween('valid_date_from', [$request->start_date, $request->end_date]);
+        }
+
+        $recordsTotal = $query->count();
+
+        $recordsFiltered = $query->count();
+
+        
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
+        }
+        else{
+            $data = $query->get();
+        }
+
+
+        $data = $query->get();
+        return [
+            'data' => $data,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' =>  $recordsFiltered
+        ];
     }
 
     public function get_by(Request $request){
