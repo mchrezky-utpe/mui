@@ -2,15 +2,16 @@
 
 namespace App\Services\Transaction;
 
+use App\Models\Transaction\Production\VwListProducitonCost;
+use App\Models\Transaction\Production\VwListProducitonCostDt;
 use App\Models\Transaction\ProductionCost;
-use App\Models\Transaction\ProductionCostDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductionCostService
 {
     public function list(){
-        return ProductionCost::all();
+        return VwListProducitonCost::all();
     }
     
     /**
@@ -21,15 +22,17 @@ class ProductionCostService
         DB::beginTransaction();
         try {
 
-            DB::statement('CALL  sp_trans_prod_cost_update_status(?)',
-             [$request->flag_active]);
+            DB::statement('CALL sp_trans_prod_cost_update_status(?, ?)', [
+                $request->id,
+                $request->status
+            ]);
           
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
             return response()->json([
-                'message' => 'Terjadi kesalahan saat membuat Purchase Order.',
+                'message' => 'Terjadi kesalahan saat update status.',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -63,7 +66,7 @@ class ProductionCostService
      */
     public function get(int $id)
     {
-        return ProductionCostDetail::where('id', $id)->firstOrFail();
+        return VwListProducitonCostDt::where('id', $id)::all();
     }
 
     /**

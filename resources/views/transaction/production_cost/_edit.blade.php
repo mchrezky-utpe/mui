@@ -9,7 +9,7 @@
       </div>
       <div class="form-group">
         <label>Model</label>
-        <input required name="sku_model" class="form-control" type="text" placeholder="Model">
+        <select required id="sku_model" name="sku_model" class="form-control"></select>
       </div>
     </form>   
   </x-modals.modal>

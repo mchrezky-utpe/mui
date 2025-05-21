@@ -1,4 +1,5 @@
 @extends('template.main') @section('content') <div class="section__content section__content--p30">
+  <meta name="csrf-token" content="{{ csrf_token() }}"> 
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -29,7 +30,7 @@
             </div>
             <div>
               <!-- <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a> -->
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
+            {{-- <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button> --}}
             {{-- <a href="{{ route('employee.export.pdf') }}" class="btn btn-danger">Export PDF</a> --}}
             </div>
           </div>
@@ -57,14 +58,15 @@
                         <td>
                     @endif
                     <td>
-                      <form action="/production_cost/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      <input class="status-switch" disabled type="checkbox" {{ $value->flag_active ? "checked" : "" }} data-width="100">
+                      {{-- <form action="/production_cost/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button type="submit" class="btn btn-danger">
                           <span class="fas fa-trash"></span>
                         </button>
-                      </form>
+                      </form> --}}
                     </td>
                   </tr> @endforeach</tbody>
               </table>
@@ -78,6 +80,7 @@
 <!-- MODAL --> 
  @include('transaction.production_cost._add') 
  @include('transaction.production_cost._edit') 
+ @include('transaction.production_cost._detail') 
  @endsection 
  
  @section('extra_javascript') 
