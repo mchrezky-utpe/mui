@@ -39,7 +39,10 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Description</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Process Type</th>
                     <th>Jigging</th>
                     <th>Line Process</th>
                     <th>Unjigging</th>
@@ -53,7 +56,10 @@
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->description }}</td>
+                    <td>{{ $value->sku_id }}</td>
+                    <td>{{ $value->sku_name }}</td>
+                    <td>{{ $value->sku_material_type }}</td>
+                    <td>{{ $value->process_type }}</td>
                     <td>{{ $value->num_jigging }}</td>
                     <td>{{ $value->num_lineprocess }}</td>
                     <td>{{ $value->num_unjigging }}</td>

@@ -4,10 +4,6 @@
       <div class="row">
         <div class="col-md-12">
       <div class="form-group">
-        <label>Description</label>
-        <input required name="description" class="form-control" type="text" placeholder="Description">
-      </div>
-      <div class="form-group">
         <label>Jigging</label>
         <input required name="num_jigging" class="form-control" type="text" placeholder="Jigging">
       </div>

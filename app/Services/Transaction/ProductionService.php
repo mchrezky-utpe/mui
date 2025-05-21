@@ -2,24 +2,21 @@
 
 namespace App\Services\Transaction;
 
-use App\Models\Transaction\ProductionCycle;
+use App\Models\Transaction\Production\ProductionCycle;
+use App\Models\Transaction\Production\VwListProductionCycle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductionService
 {
     public function list(){
-        return ProductionCycle::where('flag_active', 1)->get();
-    }
-    public function list2(){
-        return ProductionCycle::where('flag_active', 0)->get();
+        return VwListProductionCycle::all();
     }
 
     /**
      * Add new production record
      */
     public function add(Request $request){
-        $data['description'] = $request->description;
         $data['num_jigging'] = $request->num_jigging;
         $data['num_lineprocess'] = $request->num_lineprocess;
         $data['num_unjigging'] = $request->num_unjigging;

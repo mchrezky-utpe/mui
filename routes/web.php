@@ -381,14 +381,15 @@ Route::controller(ProductionProcessController::class)->group(function () {
     // API GET ALL DATA
     Route::get("/api/production_process", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
-Route::controller(ProductionCostController::class)->group(function () {
+   Route::controller(ProductionCostController::class)->group(function () {
     // LIST
     Route::get("/production_cost", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/production_cost", "add")->middleware(OnlyMemberMiddleware::class);
+    // ACTIVE DEACTIVE
+    Route::post("/production_cost/active_deactive", "active_deactive")->middleware(OnlyMemberMiddleware::class);
     // DELETE
     Route::post("/production_cost/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/production_cost/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
     Route::post("/production_cost/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/production_cost/{id}", "get")->middleware(OnlyMemberMiddleware::class);

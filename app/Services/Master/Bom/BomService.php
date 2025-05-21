@@ -74,7 +74,12 @@ class BomService
 
     public function get_detail($id)
     {
-        return VwBomList::where('id', $id)->firstOrFail();
+        $header = VwBomList::where('id', $id)->firstOrFail();
+        $details = BomDetail::where("sku_bom_id", $id)->get();
+    return (object) [
+        "header" => $header,
+        "details" => $details
+    ];
     }
 
     public function do_edit_detail($bom_id, $data)
@@ -138,7 +143,13 @@ class BomService
     
     public function get(int $id)
     {
-        return Bom::where('id', $id)->firstOrFail();
+
+        $header = Bom::where('id', $id)->firstOrFail();
+        $details = BomDetail::where("bom_id", $id);
+        return array(
+            "header" => $header,
+            "details" => $details
+        );
     } 
     
     function edit(Request $request)

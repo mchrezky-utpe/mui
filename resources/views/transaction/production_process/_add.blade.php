@@ -4,10 +4,6 @@
       <div class="row">
         <div class="col-md-12">
       <div class="form-group">
-        <label>Description</label>
-        <input required name="description" class="form-control" type="text" placeholder="Description">
-      </div>
-      <div class="form-group">
         <label for="flag_process_classification">Process Classification</label>
         <select required name="flag_process_classification" class="form-control" id="flag_process_classification">
           <option value="">Pilih Classification</option>
@@ -16,7 +12,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="flag_checking_input_method">Input Method</label>
+        <label for="flag_checking_input_method">Checking Input Method</label>
         <select required name="flag_checking_input_method" class="form-control" id="flag_checking_input_method">
           <option value="">Pilih Input</option>
           <option value="1">Normal</option>
@@ -36,11 +32,11 @@
         <input required name="line_part_code" class="form-control" type="text" placeholder="Line Part Code">
       </div>
       <div class="form-group">
-        <label>Val Area</label>
+        <label>Surface Area</label>
         <input required name="val_area" class="form-control" type="text" placeholder="val area">
       </div>
       <div class="form-group">
-        <label>Val Weight</label>
+        <label>Weight</label>
         <input required name="val_weight" class="form-control" type="text" placeholder="Val Weight">
       </div>
       <div class="form-group">

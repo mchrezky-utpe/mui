@@ -3,17 +3,38 @@
 namespace App\Services\Transaction;
 
 use App\Models\Transaction\ProductionCost;
+use App\Models\Transaction\ProductionCostDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductionCostService
 {
     public function list(){
-        return ProductionCost::where('flag_active', 1)->get();
+        return ProductionCost::all();
     }
-    public function list2(){
-        return ProductionCost::where('flag_active', 0)->get();
+    
+    /**
+     * Active Deactive
+     */
+    public function active_deactive(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            DB::statement('CALL  sp_trans_prod_cost_update_status(?)',
+             [$request->flag_active]);
+          
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat membuat Purchase Order.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+
 
     /**
      * Add new production record
@@ -42,7 +63,7 @@ class ProductionCostService
      */
     public function get(int $id)
     {
-        return ProductionCost::where('id', $id)->firstOrFail();
+        return ProductionCostDetail::where('id', $id)->firstOrFail();
     }
 
     /**

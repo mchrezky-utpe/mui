@@ -21,6 +21,12 @@ class ProductionCostController extends Controller
         );
     }
 
+    public function active_deactive(Request $request)
+    {
+        $this->service->active_deactive($request);
+        return redirect("/production_cost");
+    }
+
     public function add(Request $request)
     {
         $this->service->add($request);

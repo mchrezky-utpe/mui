@@ -1,6 +1,6 @@
 @extends('template.main') @section('content') <div class="section__content section__content--p30">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row"> 
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
           <h2 class="pageheader-title">Production Process Information</h2>
@@ -39,12 +39,15 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Description</th>
+                    <th>Item Code</th>
+                    <th>Item Name</th>
+                    <th>Item Type</th>
+                    <th>Process Type</th>
                     <th>Process Classification</th>
                     <th>Checking Input</th>
-                    <th>Size Category</th>
+                    <th>Item Size</th>
                     <th>Line Part Code</th>
-                    <th>Val Area</th>
+                    <th>SA</th>
                     <th>Weight</th>
                     <th>Qty. Standard</th>
                     <th>Qty. Target</th>
@@ -54,13 +57,16 @@
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->description }}</td>
+                    <td>{{ $value->sku_id }}</td>
+                    <td>{{ $value->sku_name }}</td>
+                    <td>{{ $value->sku_material_type }}</td>
+                    <td>{{ $value->process_type }}</td>
                     <td>{{ $value->flag_process_classification == 1 ? 'Regular' : 'Satin' }}</td>
                     <td>{{ $value->flag_checking_input_method == 1 ? 'Normal' : 'Hourly' }}</td>
                     <td>{{ $value->flag_item_size_category == 1 ? 'Small' : 'Big' }}</td>
                     <td>{{ $value->line_part_code }}</td>
-                    <td>{{ $value->val_area}}</td>
-                    <td>{{ $value->val_weight}}</td>
+                    <td>{{ $value->surface_area }}</td>
+                    <td>{{ $value->weight}}</td>
                     <td>{{ $value->qty_standard}}</td>
                    <td>{{ $value->qty_target}}</td>
                     @if ($value->flag_status === 1)

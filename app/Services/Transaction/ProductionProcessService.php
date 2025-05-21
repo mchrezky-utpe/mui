@@ -2,19 +2,17 @@
 
 namespace App\Services\Transaction;
 
-use App\Models\Transaction\ProductionProcess;
+use App\Models\Transaction\Production\ProductionProcess;
+use App\Models\Transaction\Production\VwListProductionProcess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductionProcessService
 {
     public function list(){
-        return ProductionProcess::where('flag_active', 1)->get();
+        return VwListProductionProcess::all();
     }
-    public function list2(){
-        return ProductionProcess::where('flag_active', 0)->get();
-    }
-
+  
     /**
      * Add new production record
      */

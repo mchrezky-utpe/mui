@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\Transaction\Production;
 
 use App\Http\Controllers\Controller;
-use App\Services\Production\ProductionService;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\Production\ProductionCycle;
-use App\Models\Transaction\ProductionCycle as TransactionProductionCycle;
 use App\Services\Transaction\ProductionService as TransactionProductionService;
 
 class ProductionController extends Controller

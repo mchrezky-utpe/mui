@@ -96,8 +96,9 @@
     <div class="row">
       <div class="container">
           <h2>BOM : </h2>
-          <h4>{{ $data->sku_id }} - {{ $data->sku_name }}</h4>
-            <input type="hidden" id="bom_id" value="{{ $data->id }}">
+          <?php json_encode($data->details); ?>
+          <h4>{{ $data->header->sku_id }} - {{ $data->header->sku_name }}</h4>
+            <input type="hidden" id="bom_id" value="{{ $data->header->id }}">
         <div class="form-group">
         </div>
         <div class="form-group">
