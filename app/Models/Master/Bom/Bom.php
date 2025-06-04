@@ -12,7 +12,7 @@ class Bom extends Model
   
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
-    protected $table = 'mst_sku_bom_detail';
+    protected $table = 'mst_sku_bom';
 
     use HasUserTracking;
 }

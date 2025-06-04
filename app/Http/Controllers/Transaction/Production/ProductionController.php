@@ -12,6 +12,7 @@ class ProductionController extends Controller
     //  * @var ProductionService
      */
     private $service;
+    
     public function __construct(TransactionProductionService $service)
     {
         $this->service = $service;

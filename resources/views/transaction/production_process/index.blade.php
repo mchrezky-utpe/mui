@@ -77,7 +77,7 @@
                         <td>
                     @endif
                     <td>
-                      <form action="/production_process/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      {{-- <form action="/production_process/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
@@ -85,7 +85,7 @@
                           <span class="fas fa-trash"></span>
                         </button>
                       </form>
-                    </td>
+                    </td> --}}
                   </tr> @endforeach</tbody>
               </table>
             </div>

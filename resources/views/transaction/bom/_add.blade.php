@@ -10,5 +10,9 @@
       <label>Remark</label>
       <input required name="remark" class="form-control" type="text" placeholder="Remark">
     </div>
+    <div class="form-group">
+      <label>Is Priority</label>
+      <input  name="flag_main_priority" class="form-control" type="checkbox" placeholder="Priority">
+    </div>
   </form>   
 </x-modals.modal>

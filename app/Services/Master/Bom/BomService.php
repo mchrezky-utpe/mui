@@ -48,15 +48,18 @@ class BomService
     public function add(Request $request)
     {
         DB::beginTransaction();
-    
+
         try {
             $data = [
                 'sku_id' => $request->sku_id,
                 'remark' => $request->remark,
+                'flag_main_priority' => $request->flag_main_priority == "on" ? 1 : 0,
                 'flag_status' => 1,
                 'flag_active' => 1,
                 'generated_id' => Str::uuid()->toString()
             ];
+
+        
             Bom::create($data);
 
             // Commit transaksi jika semua berhasil
@@ -85,32 +88,59 @@ class BomService
     public function do_edit_detail($bom_id, $data)
     {
         DB::beginTransaction();
-    
+
         try {
-            $detail;
+            // Ambil semua ID yang dikirim (jika ada)
+            $submittedIds = collect($data)->pluck('id')->filter()->toArray();
+
+            // Hapus record yang tidak ada dalam data yang dikirim
+            BomDetail::where('sku_bom_id', $bom_id)
+                    ->when(!empty($submittedIds), function($query) use ($submittedIds) {
+                        $query->whereNotIn('id', $submittedIds);
+                    })
+                    ->delete();
+
+            $details = [];
             foreach ($data as $value) {
-                $detail[] = [
+                $detailData = [
                     'sku_id' => $value['sku_id'],
                     'description' => $value['description'],
                     'qty_capacity' => $value['qty_capacity'],
                     'qty_each_unit' => $value['qty_each_unit'],
                     'sku_bom_id' => $bom_id,
                     'rec_key' => $value['rec_key'],
+                    'level' => $value['level'],
                     'rec_parent_key' => $value['rec_parent_key'],
                     'flag_active' => 1,
-                    'generated_id' => Str::uuid()->toString()
                 ];
-            }
-            BomDetail::insert($detail);
 
-            // Commit transaksi jika semua berhasil
+                if (!empty($value['id'])) {
+                    // Update existing record
+                    BomDetail::where('id', $value['id'])->update($detailData);
+                } else {
+                    // Insert new record
+                    $detailData['generated_id'] = Str::uuid()->toString();
+                    $details[] = $detailData;
+                }
+            }
+
+            // Insert records baru sekaligus
+            if (!empty($details)) {
+                BomDetail::insert($details);
+            }
+
             DB::commit();
-        } catch (\Exception $e) {
-            // Rollback jika terjadi error
-            DB::rollBack();
-            dd($e);
+
             return response()->json([
-                'message' => 'Terjadi kesalahan saat add.',
+                'message' => 'Data BOM detail berhasil diperbarui',
+                'success' => true
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui data',
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -121,12 +151,12 @@ class BomService
         DB::beginTransaction();
 
         try {
-            $purchaseOrder = Bom::where('id', $id)->firstOrFail();
+            $bom = Bom::where('id', $id)->firstOrFail();
     
-            $purchaseOrder->flag_active = 0;
-            $purchaseOrder->deleted_at = Carbon::now();
-            $purchaseOrder->deleted_by = Auth::id();
-            $purchaseOrder->save();
+            $bom->flag_active = 0;
+            $bom->deleted_at = Carbon::now();
+            $bom->deleted_by = Auth::id();
+            $bom->save();
 
             DB::commit();
     

@@ -66,7 +66,7 @@ class ProductionCostService
      */
     public function get(int $id)
     {
-        return VwListProducitonCostDt::where('id', $id)::all();
+        return VwListProducitonCostDt::where('sku_id', $id)->get();
     }
 
     /**

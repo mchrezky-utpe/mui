@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // Data structure to hold our tree with enhanced IDs
     const treeData = [];
+    var skuData;
     let nextId = 1; // Auto-increment ID for easier tracking
     
     // Function to generate unique ID
@@ -72,7 +73,7 @@ $(document).ready(function() {
             parents.forEach(parent => {
                 $('#parent').append($('<option>', {
                     value: parent.id,
-                    text: `${parent.sku_name} (${parent.value}) - ID: ${parent.id}`
+                    text: `${parent.sku_name} (${parent.qty_capacity}) - ID: ${parent.id}`
                 }));
             });
             $('#addBtn').prop('disabled', false);
@@ -292,9 +293,10 @@ $(document).ready(function() {
     }
 
     function initParam() {
-        fetchSkuMaster()
+      return fetchSkuMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
+                skuData = data;
                 populateSelectSku("Sku", data, $("[name=sku_id]"));
             })
             .catch((err) => {
@@ -318,10 +320,69 @@ $(document).ready(function() {
         });
     }
 
+
+ function loadSavedItem(){
+    const data = JSON.parse($('[name=data_saved]').val());
+    //   const id = item.id // Use our auto-increment ID
+    //     const sku_id = item.sku_id
+    //     const sku_name = item.description
+    //     const qty_capacity =  item.qty_capacity
+    //     const qty_each_unit =  item.qty_each_unit
+    //     const  description = item.description
+    data.forEach(item => {  
+        const level =item.level
+        const itemMaster = skuData.find(i => i.id == item.sku_id)
+            const newItem = {
+               id:  parseInt(item.rec_key), // Use our auto-increment ID
+               sku_id: item.sku_id,
+                sku_name: itemMaster.sku_name,
+               qty_capacity:  item.qty_capacity,
+               qty_each_unit:  item.qty_each_unit,
+                description: item.description,
+               level: item.level,
+                children: []
+            };
+            
+            if (level === 1) {
+                // Add to root level
+                treeData.push(newItem);
+            } else {
+                // Find the parent and add to its children
+                const parentId = parseInt(item.rec_parent_key);
+                
+                function findParent(items) {
+                    for (const item of items) {
+                        if (item.id === parentId) {
+                            item.children.push(newItem);
+                            return true;
+                        }
+                        if (item.children && item.children.length > 0) {
+                            if (findParent(item.children)) return true;
+                        }
+                    }
+                    return false;
+                }
+                
+                findParent(treeData);
+            }
+            
+            // Clear inputs
+            $('#sku_id, #qty_capacity, #qty_each_unit, #description').val('');
+            
+            // Update UI
+            updateLevelOptions();
+            updateParentOptions();
+            renderTree();
+            debugger;
+        });
+    }
+
     // Initialize
     updateLevelOptions();
     updateParentOptions();
-    initParam();
+    initParam().then(() => {
+        loadSavedItem();
+    });
 
     
 });

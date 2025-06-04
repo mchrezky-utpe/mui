@@ -69,14 +69,14 @@
                     <td>{{ $value->num_masking }}</td>
                     <td>{{ $value->num_buffing }}</td>
                     <td>
-                      <form action="/production_cycle/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      {{-- <form action="/production_cycle/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button type="submit" class="btn btn-danger">
                           <span class="fas fa-trash"></span>
                         </button>
-                      </form>
+                      </form> --}}
                     </td>
                   </tr> @endforeach</tbody>
               </table>

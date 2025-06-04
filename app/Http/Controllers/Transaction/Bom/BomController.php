@@ -52,4 +52,12 @@ class BomController
         $this->service->do_edit_detail($bom_id,$data);
         return redirect("/bom");
     }
+    
+
+    public function delete(Request $request, int $id)
+    {
+        $this->service->delete($id);
+        return redirect("/bom");
+    }
+    
 }

@@ -7,7 +7,8 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="has-sub">
+                    
+                        {{-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -15,7 +16,7 @@
                                     <a href="/">Dashboard 1</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         <li>
                             <a href="#">Master</a>

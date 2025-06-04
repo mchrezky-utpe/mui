@@ -39,7 +39,7 @@ $(document).ready(function () {
                 data: "remark",
             },
             {
-                data: "verficiation",
+                data: "verification",
             },
             {
                 data: "status",
@@ -70,7 +70,7 @@ $(document).ready(function () {
                         .getAttribute("content");
                     return (
                         `
-                        <form action="/po/` +
+                        <form action="/bom/` +
                         data.id +
                         `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
 						<div class="d-flex">

@@ -217,6 +217,7 @@ Route::controller(BomController::class)->group(function () {
     Route::post("/bom", "add")->middleware(OnlyMemberMiddleware::class);
     Route::get("/bom/{id}/edit-detail", "edit_detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/bom/edit-detail", "do_edit_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/bom/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
 });
 
 

@@ -1,4 +1,4 @@
-<x-modals.modal id="detail_modal" title="Edit Prodcution Cycle">
+<x-modals.modal id="detail_modal" title="Detail Prodcution Cost"  modalClass="custom-modal-dialog-medium">
   <table id="production_cost_detail_table" class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
