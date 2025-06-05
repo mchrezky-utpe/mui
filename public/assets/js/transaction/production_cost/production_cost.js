@@ -20,9 +20,9 @@ $(document).on("click", ".detail", function (e) {
                     <tr>
                         <td>${item.process_type}</td>
                         <td>${item.procurement_type}</td>
-                        <td class="text-right">${item.val_material_cost}</td>
-                        <td class="text-right">${item.val_process_cost}</td>
-                        <td class="text-right">${item.val_production_cost}</td>
+                        <td class="text-right">${item.material_cost}</td>
+                        <td class="text-right">${item.process_cost}</td>
+                        <td class="text-right">${item.production_cost}</td>
                         <td>${item.valid_date_from}</td>
                         <td>${item.valid_date_to}</td>
                         <td><span class="badge ${getStatus(item.valid_date_to) === 'OUT OF DATE' ? 'badge-danger' : 'badge-success'}">${getStatus(item.valid_date_to)}</span></td>
