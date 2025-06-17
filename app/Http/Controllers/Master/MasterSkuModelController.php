@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Master;
+namespace App\Http\Controllers\Master; 
 
 use App\Helpers\HelperCustom;
 use App\Services\Master\MasterSkuModelService;

@@ -41,37 +41,19 @@ class PurchaseOrderService
        return $query->get();
      }
 
-     public function get_item_by(Request $request){
-         return VwPoItemList::where('trans_po_id', $request->input('id'))->get();
-      }
+    public function get_item_by(Request $request){
+        return VwPoItemList::where('trans_po_id', $request->input('id'))->get();
+    }
 
     public function get_all(Request $request){
-        $start = $request->input('start'); // Start index untuk pagination
-        $length = $request->input('length'); // Jumlah data per halaman
-        $search = $request->input('search.value'); // Pencarian global
-        $orderColumnIndex = $request->input('order.0.column'); // Indeks kolom yang diurutkan
-        $orderDirection = $request->input('order.0.dir'); // Arah pengurutan (asc/desc)
-        $columns = $request->input('columns'); // Semua kolom
-
-        //$orderColumn = $columns[$orderColumnIndex]['data'];
-
-
-        // $query = DB::table('trans_purchase_order')
-        //     ->select(
-        //         'trans_purchase_order.id',
-        //         'trans_purchase_order.trans_date',
-        //         'trans_purchase_order.manual_id',
-        //         'trans_purchase_order.doc_num',
-        //         'trans_purchase_order.flag_type',
-        //         'trans_purchase_order.prs_supplier_id',
-        //         'trans_purchase_order.description',
-        //         'mst_person_supplier.description as supplier_name'
-        //     )
-        //     ->leftJoin('mst_person_supplier', 'trans_purchase_order.prs_supplier_id', '=', 'mst_person_supplier.id');
+        $start = $request->input('start');
+        $length = $request->input('length'); 
+        $search = $request->input('search.value');
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDirection = $request->input('order.0.dir');
+        $columns = $request->input('columns');
 
         $query = DB::table('vw_app_list_trans_po_hd');
-
-        //$query->where('trans_purchase_order.flag_active', [1]);
 
         if ($request->has('start_date') && $request->has('end_date')) {
             $query->whereBetween('trans_purchase_order.trans_date', [$request->start_date, $request->end_date]);
@@ -96,7 +78,6 @@ class PurchaseOrderService
         }
         */
 
-        //$data = $query->offset($start)->limit($length)->get();
         $data = $query->get();
         return [
             'data' => $data,

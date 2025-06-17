@@ -7,7 +7,8 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="has-sub">
+                    
+                        {{-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
@@ -15,7 +16,7 @@
                                     <a href="/">Dashboard 1</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
                         <li>
                             <a href="#">Master</a>
@@ -43,6 +44,9 @@
                                 <li>
                                     <a href="/sku-model">Model</a>
                                 </li>
+                                <li>
+                                    <a href="/bom">Bill Of Material</a>
+                                </li>   
                                 <!-- <li>
                                     <a href="/sku-process">Process</a>
                                 </li>
@@ -65,6 +69,7 @@
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="/person-supplier">Supplier</a>
+                                    <a href="/person-employee">Employee</a>
                                 </li>
                                 <!-- <li>
                                     <a href="/person-customer">Customer</a>
@@ -296,6 +301,21 @@
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
                                     <a href="/stock-view">Main</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-file"></i>Production</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/production_cycle">Production Cycle Time</a>
+                                </li>
+                                <li>
+                                    <a href="/production_process">Production Process Information</a>
+                                </li>
+                                <li>
+                                    <a href="/production_cost">Production Cost</a>
                                 </li>
                             </ul>
                         </li>
