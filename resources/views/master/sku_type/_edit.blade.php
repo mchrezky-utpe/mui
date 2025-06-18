@@ -5,14 +5,14 @@
       <div class="col-md-4">
         <div class="form-group">
         <input type="hidden" name="id" />
-          <label>Item Type Code</label>
+          <label>Item Type Code (legacy)</label>
           <input required name="manual_id" class="form-control" type="text">
         </div>
         <div class="form-group">
           <label>Category</label>
           <select required name="sku_category_id" class="form-control">
             <option value=""> === Select === </option>
-          </select >   
+          </select >
         </div>
         <div class="form-group">
           <label>Sub Category</label>
@@ -46,7 +46,7 @@
             <option value=""> === Select === </option>
             <option value="1">Sell</option>
             <option value="2">Buy</option>
-          </select >   
+          </select >
         </div>
         <div class="form-group">
           <label>Primary Status</label>
@@ -64,14 +64,14 @@
             <option value="2">Not Good</option>
             <option value="3">Return</option>
             <option value="4">Unchecked</option>
-          </select >   
+          </select >
         </div>
         <div class="form-group">
           <label>Bom Status</label>
           <input required name="flag_bom" class="form-control" type="checkbox" >
         </div>
       </div>
-      
+
       <div class="col-md-4">
         <div class="form-group">
           <label>Allowance Status</label>
@@ -87,5 +87,5 @@
         </div>
     </div>
     </div>
-  </form>   
+  </form>
 </x-modals.modal>

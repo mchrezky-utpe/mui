@@ -263,21 +263,21 @@ function fetchSkuModel() {
     });
 }
 
-function fetchSkuModel() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: base_url + "api/sku-business/droplist",
-            success: function (data) {
-                resolve(data.data);
-            },
-            error: function (err) {
-                console.error("Error fetchSkuModel:", err);
-                reject(err);
-            },
-        });
-    });
-}
+// function fetchSkuModel() {
+//     return new Promise((resolve, reject) => {
+//         $.ajax({
+//             type: "GET",
+//             url: base_url + "api/sku-business/droplist",
+//             success: function (data) {
+//                 resolve(data.data);
+//             },
+//             error: function (err) {
+//                 console.error("Error fetchSkuModel:", err);
+//                 reject(err);
+//             },
+//         });
+//     });
+// }
 
 function fetchSetCode() {
     return new Promise((resolve, reject) => {
