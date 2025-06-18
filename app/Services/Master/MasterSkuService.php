@@ -16,8 +16,16 @@ class MasterSkuService
         return $value === 'on';
     }
 
-    public function list(){
+    public function list_part_information(){
           return SkuListVw::where('flag_sku_type', 1)->take(50)->get();
+     }
+
+    public function list_production_material_information(){
+          return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
+     }
+
+    public function list_general_information(){
+          return SkuListVw::where('flag_sku_type', 3)->take(50)->get();
      }
     // public function list2(){
     //       return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
@@ -53,8 +61,8 @@ class MasterSkuService
         }
 
       $result = DB::selectOne(" SELECT generate_sku(?, ?, ?) AS sku ", [$prefix, $flag_sku_type, $sku_type_id]);
-      
-      $code = $result->sku;   
+
+      $code = $result->sku;
       $parts = explode("-", $code);
       $counter = (int)$parts[1];
       return  array(
@@ -64,20 +72,20 @@ class MasterSkuService
     }
 
     public function add(Request $request){
-        
+
            // handling if part information then sku type finish goods (5) else get from request
-            $sku_type_id = 5; 
+            $sku_type_id = 5;
             if($request->flag_sku_type != 1){
                 $sku_type_id = $request->sku_type_id;
             }
 
             $result_code =  $this->generateCode($sku_type_id,$request->flag_sku_type);
-         
+
             $data = new MasterSku();
 
             $data->manual_id = $result_code['code'];
             $data->counter = $result_code['counter'];
-            
+
             $data->group_tag = $request->group_tag;
             $data->set_code_counter = $request->set_code_counter;
 
@@ -86,15 +94,15 @@ class MasterSkuService
             $data->group_tag = $request->group_tag;
             $data->specification_code = $request->specification_code;
             $data->specification_detail = $request->specification_detail;
-          
+
             $data->sku_sales_category_id = $request->sku_sales_category_id;
             $data->sku_business_type_id = $request->sku_business_type_id;
             $data->val_weight = $request->val_weight;
             $data->val_area = $request->val_area;
             $data->sku_model_id = $request->sku_model_id;
 
-            $data->sku_inventory_unit_id = $request->sku_inventory_unit_id; 
-            $data->val_conversion = $request->val_conversion; 
+            $data->sku_inventory_unit_id = $request->sku_inventory_unit_id;
+            $data->val_conversion = $request->val_conversion;
             $data->flag_inventory_register = $this->convertCheckboxToBoolean($request->flag_inventory_register);
             $data->sku_type_id = $sku_type_id;
             $data->flag_sku_procurement_type = $request->flag_sku_procurement_type;
@@ -106,7 +114,7 @@ class MasterSkuService
             $data->flag_show = 1;
 
             // handle item production material insert item base on type
-            if($request->flag_sku_type == 2){   
+            if($request->flag_sku_type == 2){
                 $this->handleAddItemProduction($data);
             }else{
                 $data->save();
@@ -119,10 +127,10 @@ class MasterSkuService
         // $group_tags = $types->map(function ($type) {
         //     return $type->group_tag;
         // })->toArray();
-    
+
         // get type by group tag
         $group_types = MasterSkuType::where('group_tag', $type->group_tag)->get();
-        
+
 
         foreach ($group_types as $group_type) {
             $copyData = $data->replicate();
@@ -133,10 +141,10 @@ class MasterSkuService
             $copyData->counter = $result_code['counter'];
 
             $copyData->sku_type_id = $group_type->id;
-            
+
             $copyData->save();
-        } 
-        
+        }
+
     }
 
     public function delete($id){
@@ -144,31 +152,31 @@ class MasterSkuService
         $data->flag_active = 0;
         $data->save();
     }
-    
+
     public function get(int $id)
     {
         return MasterSku::where('id', $id)->firstOrFail();
-    } 
+    }
 
     function edit(Request $request)
     {
         $data = MasterSku::where('id', $request->id)->firstOrFail();
-        
+
         $data->manual_id = $request->manual_id;
         $data->description = $request->description;
         $data->group_tag = $request->group_tag;
         $data->specification_code = $request->specification_code;
         $data->specification_detail = $request->specification_detail;
-      
+
         $data->sku_sales_category_id = $request->sku_sales_category_id;
         $data->sku_business_type_id = $request->sku_business_type_id;
         $data->val_weight = $request->val_weight;
         $data->val_area = $request->val_area;
         $data->sku_model_id = $request->sku_model_id;
 
-        $data->sku_inventory_unit_id = $request->sku_inventory_unit_id; 
-        $data->val_conversion = $request->val_conversion; 
-        $data->flag_inventory_register = $this->convertCheckboxToBoolean ($request->flag_inventory_register); 
+        $data->sku_inventory_unit_id = $request->sku_inventory_unit_id;
+        $data->val_conversion = $request->val_conversion;
+        $data->flag_inventory_register = $this->convertCheckboxToBoolean ($request->flag_inventory_register);
 
         $data->sku_type_id = $request->sku_type_id;
         $data->flag_sku_procurement_type = $request->flag_sku_procurement_type;

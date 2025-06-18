@@ -1,11 +1,11 @@
 <x-modals.modal id="edit_modal" title="Edit" modalClass="custom-modal-dialog-medium">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-part-information/edit">
-<div class="row">  
+<div class="row">
 @csrf
     <input type="hidden" name="id" />
       <div class="col-md-5">
         <div class="form-group">
-          <label>Part Code</label>
+          <label>Part Code (legacy)</label>
           <input readonly name="manual_id" class="form-control" type="text" value="PC-XXXXX-XXX">
         </div>
         <div class="form-group">
@@ -77,5 +77,5 @@
         </div>
       </div>
       </div>
-  </form>   
+  </form>
 </x-modals.modal>
