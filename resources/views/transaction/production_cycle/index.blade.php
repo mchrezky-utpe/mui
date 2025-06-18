@@ -29,7 +29,7 @@
             </div>
             <div>
               <!-- <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a> -->
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
+            {{-- <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button> --}}
             {{-- <a href="{{ route('employee.export.pdf') }}" class="btn btn-danger">Export PDF</a> --}}
             </div>
           </div>
@@ -69,14 +69,14 @@
                     <td>{{ $value->num_masking }}</td>
                     <td>{{ $value->num_buffing }}</td>
                     <td>
-                      {{-- <form action="/production_cycle/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
+                      <form action="/production_cycle/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
-                        <button type="submit" class="btn btn-danger">
+                        {{-- <button type="submit" class="btn btn-danger">
                           <span class="fas fa-trash"></span>
-                        </button>
-                      </form> --}}
+                        </button> --}}
+                      </form>
                     </td>
                   </tr> @endforeach</tbody>
               </table>

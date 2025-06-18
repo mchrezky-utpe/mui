@@ -59,7 +59,7 @@
                     @endif
                     <td>
                       <input class="status-switch" disabled type="checkbox" {{ $value->flag_active ? "checked" : "" }} data-width="100">
-                        <button data-id="{{ $value->id }}" type="button" class="detail btn btn-success">
+                        <button data-id="{{ $value->bom_id }}" type="button" class="detail btn btn-success">
                           <span class="fas fa-eye">Detail</span>
                         </button>
                       {{-- <form action="/production_cost/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
