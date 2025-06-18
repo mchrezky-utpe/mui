@@ -31,7 +31,7 @@ class MasterSkuController
         MasterSkuBusinessService $businessService,
         MasterSkuPackagingService $packagingService
     )
-    { 
+    {
         $this->service = $service;
         $this->detailService = $detailService;
         $this->modelService = $modelService;
@@ -47,7 +47,7 @@ class MasterSkuController
         return response()
             ->view('master.sku_part_information.index',
              [
-                'data' =>  $this->service->list(),
+                'data' =>  $this->service->list_part_information(),
                 'type' => $this->typeService->list(),
                 'detail' => $this->detailService->list(),
                 'unit' => $this->unitService->list(),
@@ -63,7 +63,7 @@ class MasterSkuController
             return response()
             ->view('master.sku_production_material.index',
              [
-                'data' =>  $this->service->list(),
+                'data' =>  $this->service->list_production_material_information(),
                 'type' => $this->typeService->list(),
                 'detail' => $this->detailService->list(),
                 'unit' => $this->unitService->list(),
@@ -73,13 +73,13 @@ class MasterSkuController
                 'business' => $this->businessService->list()
             ]);
         }
-        
+
         public function index_general_item(): Response
         {
             return response()
             ->view('master.sku_general_item.index',
              [
-                'data' =>  $this->service->list(),
+                'data' =>  $this->service->list_general_information(),
                 'type' => $this->typeService->list(),
                 'detail' => $this->detailService->list(),
                 'unit' => $this->unitService->list(),
@@ -89,8 +89,8 @@ class MasterSkuController
                 'business' => $this->businessService->list()
             ]);
         }
-        
-    
+
+
 
     public function api_all()
     {

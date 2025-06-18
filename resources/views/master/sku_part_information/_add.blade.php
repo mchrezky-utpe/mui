@@ -6,7 +6,7 @@
       <!-- REGION SIDE 1 -->
       <div class="col-md-5">
         <div class="form-group">
-          <label>Part Code</label>
+          <label>Part Code (legacy)</label>
           <input readonly name="manual_id" class="form-control" type="text" value="PC-XXXXX-XXX">
         </div>
         <div class="form-group">
