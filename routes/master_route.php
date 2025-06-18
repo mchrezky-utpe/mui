@@ -37,9 +37,9 @@ Route::controller(MasterSkuTypeController::class)->group(function () {
     Route::post("/sku-type/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/sku-type/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT    
+    // EDIT
     Route::post("/sku-type/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    
+
     Route::get("/api/sku-type/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 
     // API 
@@ -59,13 +59,17 @@ Route::controller(MasterSkuUnitController::class)->group(function () {
     Route::post("/sku-unit/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT    
+    // EDIT
     Route::post("/sku-unit/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+<<<<<<< HEAD
+
+=======
     Route::get("/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     
+>>>>>>> 75f0cb07bb9c0f3043266a6279d80bc29890ba15
     Route::get("/api/sku-unit/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 
-    // API 
+    // API
     Route::get("/api/sku-unit", "api_all")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/sku-unit/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/sku-unit", "api_add")->middleware(OnlyMemberMiddleware::class);
@@ -82,9 +86,9 @@ Route::controller(MasterSkuModelController::class)->group(function () {
     Route::post("/sku-model/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/sku-model/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT    
+    // EDIT
     Route::post("/sku-model/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    
+
     Route::get("/api/sku-model/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 });
 
@@ -97,8 +101,8 @@ Route::controller(MasterSkuBusinessController::class)->group(function () {
     Route::post("/sku-business/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/sku-business/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT    
+    // EDIT
     Route::post("/sku-business/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    
+
     Route::get("/api/sku-business/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 });
