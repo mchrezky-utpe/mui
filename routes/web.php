@@ -19,14 +19,12 @@ use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
-use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Transaction\Production\ProductionController;
 use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
-use App\Models\Transaction\PurchaseOrder;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
