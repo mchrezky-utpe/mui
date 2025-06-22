@@ -36,6 +36,14 @@ $(document).on("click", ".edit", function (e) {
             $("[name=sku_inventory_unit_id]")
                 .val(data.sku_inventory_unit_id)
                 .prop("selected", true);
+                
+            $("[name=sku_type_id]")
+                .val(data.sku_type_id)
+                .prop("selected", true);
+                
+            $("[name=flag_sku_procurement_type]")
+                .val(data.flag_sku_procurement_type)
+                .prop("selected", true);
 
             if (data.flag_sku_type == 1) {
                 $("#edit_modal").modal("show");
@@ -227,21 +235,6 @@ function fetchSkuBusinessType() {
     });
 }
 
-// function fetchSkuItemType() {
-//     return new Promise((resolve, reject) => {
-//         $.ajax({
-//             type: "GET",
-//             url: base_url + "api/sku-type/droplist",
-//             success: function (data) {
-//                 resolve(data.data);
-//             },
-//             error: function (err) {
-//                 console.error("Error fetchSkuType:", err);
-//                 reject(err);
-//             },
-//         });
-//     });
-// }
 // ================================
 
 // ================================
@@ -263,16 +256,6 @@ fetchSkuBusinessType()
         console.error("Error fetchSkuModel:", err);
     });
 
-    
-
-// fetchSkuItemType()
-//     .then((data) => {
-//         console.log("Succesfully fetchSkuItemType:", data);
-//         populateSelect(data, $("[name=sku_item_type_id]"));
-//     })
-//     .catch((err) => {
-//         console.error("Error fetchSkuModel:", err);
-//     });
 
 function fetchSkuModel() {
     return new Promise((resolve, reject) => {
@@ -289,22 +272,6 @@ function fetchSkuModel() {
         });
     });
 }
-
-// function fetchSkuModel() {
-//     return new Promise((resolve, reject) => {
-//         $.ajax({
-//             type: "GET",
-//             url: base_url + "api/sku-business/droplist",
-//             success: function (data) {
-//                 resolve(data.data);
-//             },
-//             error: function (err) {
-//                 console.error("Error fetchSkuModel:", err);
-//                 reject(err);
-//             },
-//         });
-//     });
-// }
 
 function fetchSetCode() {
     return new Promise((resolve, reject) => {

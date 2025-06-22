@@ -139,8 +139,8 @@ class MasterSkuController
     public function get_set_code()
     {
         $data = $this->service->get_set_code();
-         return response()->json([
-            'data' => $data
+        return response()->json([
+            $data
         ]);
     }
     // public function get_set_code_production_material()

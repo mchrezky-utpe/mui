@@ -3,7 +3,7 @@
   @csrf
     <div class="form-group">
       <label>Unit Code (legacy)</label>
-      <input required name="manual_id" class="form-control" type="text" placeholder="Unit Code">
+         <input readonly name="manual_id" class="form-control" type="text" value="UC-XXXX">
     </div>
     <div class="form-group">
       <label>Unit Name</label>

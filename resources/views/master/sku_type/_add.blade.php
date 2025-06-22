@@ -4,7 +4,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Item Type Code (legacy)</label>
-          <input required name="manual_id" class="form-control" type="text">
+          <input readonly name="manual_id" class="form-control" type="text" value="ITC-XXX">
         </div>
         <div class="form-group">
           <label>Category</label>
