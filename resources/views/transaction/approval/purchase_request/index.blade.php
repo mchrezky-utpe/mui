@@ -43,6 +43,7 @@
                     <th>No</th>
                     <th>ID</th>
                     <th>Doc Number</th>
+                    <th>Supplier</th>
                     <th>Date</th>
                     <th>Description</th>
                     <th>Status</th>
@@ -58,6 +59,7 @@
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->doc_num }}</td>
+                    <td>{{ $value->supplier }}</td>
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->description }}</td>
                     @if ($value->flag_status === 2)

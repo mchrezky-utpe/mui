@@ -90,6 +90,11 @@ class MasterSkuTypeService
     }
     
 
+    public function get_group_tag(){
+      $result = DB::selectOne(" SELECT max(counter) AS counter from mst_sku_type");
+      return $result->counter;
+    }
+
     public function generateCode(){
 
       $result = DB::selectOne(" SELECT generate_item_type_code(?) AS code ",["ITC"]);

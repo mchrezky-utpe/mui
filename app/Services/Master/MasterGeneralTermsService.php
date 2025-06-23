@@ -9,13 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class MasterGeneralTermsService
 {
     public function list(){
         //   return MasterGeneralTerms::all();
-          return MasterGeneralTerms::where('flag_active', 1)->get();
+          return MasterGeneralTerms::where('flag_active', 1)->orderBy('created_at','DESC')->get();
     }
     public function list2(){
         //   return MasterGeneralTerms::all();
@@ -23,8 +24,12 @@ class MasterGeneralTermsService
     }
 
     public function add(Request $request){
+        
+            $result_code =  $this->generateCode();
+            $data['manual_id'] = $result_code['code'];
+            $data['counter'] = $result_code['counter'];
+
             $data['description'] = $request->description;
-            $data['manual_id'] = $request->manual_id;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterGeneralTerms::create($data);
@@ -45,6 +50,22 @@ class MasterGeneralTermsService
                 }
                 MasterGeneralTermsDetail::insert($items);
         }
+    }
+
+    
+    
+
+    public function generateCode(){
+
+      $result = DB::selectOne(" SELECT generate_term_code(?) AS code ",["TC"]);
+
+      $code = $result->code;
+      $parts = explode("-", $code);
+      $counter = (int)$parts[1];
+      return  array(
+        'code' => $code,
+        'counter' => $counter
+      );
     }
 
     public function delete($id){

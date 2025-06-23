@@ -82,7 +82,8 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::post("/sku-general-item/edit", "edit_general_item")->middleware(OnlyMemberMiddleware::class);
     // API ALL
     Route::get("/api/sku-part-information", "api_all")->middleware(OnlyMemberMiddleware::class);
-    // Route::get("/api/sku-production-material", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-production-material", "api_production_material_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-general-item", "api_general_information_all")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-general-item", "api_all")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/sku-part-information/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);

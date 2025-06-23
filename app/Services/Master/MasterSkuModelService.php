@@ -9,22 +9,41 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Models\Master\Sku\SkuModelListVw;
+use Illuminate\Support\Facades\DB;
 
 class MasterSkuModelService
 {
     public function list(){
-          return MasterSkuModel::where('flag_active', 1)->get();
+          return MasterSkuModel::where('flag_active', 1)->orderBy('created_at','DESC')->get();
     }
 
     public function add(Request $request){
+        
+            $result_code =  $this->generateCode();
+            $data['manual_id'] = $result_code['code'];
+            $data['counter'] = $result_code['counter'];
+            
             $data['description'] = $request->description;
-            $data['manual_id'] = $request->manual_id;
             $data['generated_id'] = Str::uuid()->toString();
             $data['image_path'] = 'tes'; // TODO IMPLEMENT UPLOAD
             $data['flag_active'] = 1;
             $data = MasterSkuModel::create($data);
             $data['prefix'] = HelperCustom::generateTrxNo('SKUM', $data->id);
             $data->save();
+    }
+    
+
+    public function generateCode(){
+
+      $result = DB::selectOne(" SELECT generate_item_model_code(?) AS code ",["MC"]);
+
+      $code = $result->code;
+      $parts = explode("-", $code);
+      $counter = (int)$parts[1];
+      return  array(
+        'code' => $code,
+        'counter' => $counter
+      );
     }
 
     public function delete($id){
@@ -45,7 +64,6 @@ class MasterSkuModelService
         $data = MasterSkuModel::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
         $data->image_path = $request->image_path; // TODO UPLOAD
-        $data->manual_id= $request->manual_id;
         $data->save();
     }
     

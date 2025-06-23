@@ -6,7 +6,7 @@
         <div class="form-group">
         <input type="hidden" name="id" />
           <label>Item Type Code (legacy)</label>
-          <input required name="manual_id" class="form-control" type="text">
+          <input readonly required name="manual_id" class="form-control" type="text">
         </div>
         <div class="form-group">
           <label>Category</label>

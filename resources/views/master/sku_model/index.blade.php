@@ -34,7 +34,7 @@
                   <tr>
                     <th>No</th>
                     <th>ID</th>
-                    <th>Manual ID</th>
+                    <th>Model Code</th>
                     <th>Description</th>
                     <th>Action</th>
                   </tr>

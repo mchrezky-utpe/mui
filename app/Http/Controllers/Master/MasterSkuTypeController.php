@@ -58,4 +58,13 @@ class MasterSkuTypeController
             'data' => $data
         ]);
     }
+
+    
+    public function api_group_tag()
+    {
+        $data = $this->service->get_group_tag();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
 }

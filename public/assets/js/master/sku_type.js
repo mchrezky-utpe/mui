@@ -108,6 +108,33 @@ function fetchSkuCategory() {
 	});
 }
 
+
+fetchGroupTag()
+.then(data => {
+    console.log("Succesfully group tag ", data);
+    $("[name=group_tag]").val(data);
+})
+.catch(err => {
+    console.error("Error get sku category:", err);
+});
+
+
+function fetchGroupTag() {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'api/sku-type/group-tag',
+			success: function(data) {
+				resolve(data.data);
+			},
+			error: function(err) {
+				console.error("Error fetching sku sub category:", err);
+				reject(err);
+			}
+		});
+	});
+}
+
 function fetchSkuSubCategory() {
 	return new Promise((resolve, reject) => {
 		$.ajax({
