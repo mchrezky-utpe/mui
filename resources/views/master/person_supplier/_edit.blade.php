@@ -4,32 +4,32 @@
     <input type="hidden" name="id" />
      
     <div class="form-group">
-      <label>Manual ID</label>
-      <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
+      <label>Initial</label>
+      <input required name="description" class="form-control" type="text" placeholder="Initial">
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <label>Con. Person Name</label>
+      <input required name="contact_person_01" class="form-control" type="text" placeholder="Con. Person Name">
     </div>
     <div class="form-group">
-      <label>Address</label>
-      <input required name="address_01" class="form-control" type="text" placeholder="Address">
+      <label>Con. Person Phone</label>
+      <input required name="phone_02" class="form-control" type="text" placeholder="Con. Person Phone">
     </div>
     <div class="form-group">
-      <label>Phone</label>
-      <input required name="phone" class="form-control" type="text" placeholder="Phone">
+      <label>WH/Del PIC Name</label>
+      <input required name="contact_person_02" class="form-control" type="text" placeholder="WH/Del PIC Name">
     </div>
     <div class="form-group">
-      <label>Fax</label>
-      <input required name="fax" class="form-control" type="text" placeholder="Fax">
+      <label>WH/Del PIC Email</label>
+      <input required name="email_02" class="form-control" type="text" placeholder="WH/Del PIC Email">
     </div>
     <div class="form-group">
-      <label>Email</label>
-      <input required name="email" class="form-control" type="email" placeholder="Email@mail.com">
+      <label>QC PIC Name</label>
+      <input required name="contact_person_03" class="form-control" type="text" placeholder="QC PIC Name">
     </div>
     <div class="form-group">
-      <label>Contact Person</label>
-      <input required name="contact_person" class="form-control" type="email" placeholder="Contact Person">
+      <label>QC PIC Email</label>
+      <input required name="email_03" class="form-control" type="text" placeholder="QC PIC Email">
     </div>
   </form>   
 </x-modals.modal>
