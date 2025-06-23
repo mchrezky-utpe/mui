@@ -27,6 +27,10 @@
             <h5 class="mb-0">List</h5>
               <div class="d-flex">
               <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">+ Production Material</button>
+              <a href="{{ route('sku.export_production_material') }}" class="mr-2 btn btn-success">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </a>
+              </div>
               </div>
            </div>
           <div class="card-body">
