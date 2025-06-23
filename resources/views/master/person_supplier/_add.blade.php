@@ -2,25 +2,41 @@
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/person-supplier">
     @csrf
     <div class="row">
-      <div class="col-md-6">
-    <div class="form-group">
+      <div class="col-md-12">
+    {{-- <div class="form-group">
       <label>Manual ID</label>
       <input value="{{ Str::random(10) }}" required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
+    </div> --}}
+    <div class="form-group">
+      <label>Initial</label>
+      <input required name="description" class="form-control" type="text" placeholder="Initial">
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <label>Con. Person Name</label>
+      <input required name="contact_person_01" class="form-control" type="text" placeholder="Con. Person Name">
     </div>
     <div class="form-group">
-      <label>Address</label>
-      <input required name="address_01" class="form-control" type="text" placeholder="Address">
+      <label>Con. Person Phone</label>
+      <input required name="phone_02" class="form-control" type="text" placeholder="Con. Person Phone">
     </div>
     <div class="form-group">
-      <label>Phone</label>
-      <input required name="phone" class="form-control" type="text" placeholder="Phone">
+      <label>WH/Del PIC Name</label>
+      <input required name="contact_person_02" class="form-control" type="text" placeholder="WH/Del PIC Name">
+    </div>
+    <div class="form-group">
+      <label>WH/Del PIC Email</label>
+      <input required name="email_02" class="form-control" type="text" placeholder="WH/Del PIC Email">
+    </div>
+    <div class="form-group">
+      <label>QC PIC Name</label>
+      <input required name="contact_person_03" class="form-control" type="text" placeholder="QC PIC Name">
+    </div>
+    <div class="form-group">
+      <label>QC PIC Email</label>
+      <input required name="email_03" class="form-control" type="text" placeholder="QC PIC Email">
     </div>
 </div>
-<div class="col-md-6">
+{{-- <div class="col-md-6">
     <div class="form-group">
       <label>Fax</label>
       <input required name="fax" class="form-control" type="text" placeholder="Fax">
@@ -33,7 +49,7 @@
       <label>Contact Person</label>
       <input required name="contact_person" class="form-control" type="text" placeholder="Contact Person">
     </div>
-    </div>
+</div> --}}
     </div>
   </form>   
 </x-modals.modal>

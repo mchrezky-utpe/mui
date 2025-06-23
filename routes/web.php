@@ -93,6 +93,12 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::get("/api/sku-part-information/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-production-material/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-general-item/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
+
+    // Route::get('/sku/export', 'export')->name('sku.export')->middleware(OnlyMemberMiddleware::class);
+    route::get('/sku/export', 'export')->name('sku.export');
+    route::get('/sku/export/production-material','export_production_material')->name('sku.export_production_material');
+    route::get('/sku/export/general-item',  'export_general_item')->name('sku.export_general_item');
+
 });
 
 Route::controller(MasterSkuProcessController::class)->group(function () {
@@ -145,11 +151,14 @@ Route::controller(MasterPersonSupplierController::class)->group(function () {
     Route::post("/person-supplier/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
     Route::post("/person-supplier/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
+    Route::get('/person-supplier/export', 'export_person_supplier')->name('person-supplier.export_person_supplier');
+
     Route::get("/person-supplier/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/person-supplier/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     // API GET ALL DATA
     Route::get("/api/person-supplier", "api_all")->middleware(OnlyMemberMiddleware::class);
+    // route::get('/person-supplier/export/person-supplier', 'export_person_supplier')->name('person-supplier.export_person_supplier');
 });
 
 Route::controller(MasterPersonCustomerController::class)->group(function () {
@@ -397,3 +406,4 @@ Route::controller(ProductionProcessController::class)->group(function () {
     // API GET ALL DATA
     Route::get("/api/production_cost", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
+
