@@ -17,7 +17,7 @@
     </div>
     <div class="form-group">
       <label>Con. Person Phone</label>
-      <input required name="phone_02" class="form-control" type="text" placeholder="Con. Person Phone">
+      <input required name="phone_01" class="form-control" type="text" placeholder="Con. Person Phone">
     </div>
     <div class="form-group">
       <label>WH/Del PIC Name</label>
