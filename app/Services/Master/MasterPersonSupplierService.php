@@ -21,6 +21,12 @@ class MasterPersonSupplierService
 
     public function add(Request $request){
         $data['description'] = $request->description;
+        $data['contact_person_01'] = $request->contact_person_01;
+        $data['phone_02'] = $request->phone_02;
+        $data['contact_person_02'] = $request->contact_person_02;
+        $data['email_02'] = $request->email_02;
+        $data['contact_person_03'] = $request->contact_person_03;
+        $data['email_03'] = $request->email_03;
         $data['address_01'] = $request->address_01;
         $data['phone_01'] = $request->phone;
         $data['fax_01'] = $request->fax;
@@ -53,12 +59,27 @@ class MasterPersonSupplierService
     public function get(int $id)
     {
         return MasterPersonSupplier::where('id', $id)->firstOrFail();
-    } 
+    }
+    
+    // public function get($id)
+    // {
+    //     if (is_numeric($id)) {
+    //         return MasterPersonSupplier::where('id', $id)->firstOrFail();
+    //     } else {
+    //         return MasterPersonSupplier::where('manual_id', $id)->firstOrFail();
+    //     }
+    // }
 
     function edit(Request $request)
     {
         $data = MasterPersonSupplier::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
+        $data->contact_person_01 = $request->contact_person_01;
+        $data->phone_02 = $request->phone_02;
+        $data->contact_person_02 = $request->contact_person_02;
+        $data->email_02 = $request->email_02;
+        $data->contact_person_03 = $request->contact_person_03;
+        $data->email_03 = $request->email_03;
         $data->address_01 = $request->address_01;
         $data->phone_01 = $request->phone;
         $data->fax_01 = $request->fax;

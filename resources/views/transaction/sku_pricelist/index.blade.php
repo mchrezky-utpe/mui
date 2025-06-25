@@ -27,8 +27,8 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
             <div class="d-flex">
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">+ Production Material Prices</button>
-            <button id="add_general_item_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_general_item_modal">+ General Item Prices</button>
+            <button id="add_button"  type="button" class="btn btn-primary btn_production_item" data-toggle="modal" data-target="#add_modal">+ Production Material Prices</button>
+            <button id="add_general_item_button" type="button" class="btn btn-primary btn_general_item" data-toggle="modal" data-target="#add_general_item_modal">+ General Item Prices</button>
           </div>
           </div>
           <div class="card-body">

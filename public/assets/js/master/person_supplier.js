@@ -9,11 +9,12 @@ $(document).on('click', '.edit', function (e) {
             $('[name=id]').val(data.id);
             $('[name=manual_id]').val(data.manual_id);
             $('[name=description]').val(data.description);
-            $('[name=address_01]').val(data.address_01);
-            $('[name=phone_01]').val(data.phone);
+            $('[name=contact_person_01]').val(data.contact_person_01);
+            $('[name=contact_person_02]').val(data.contact_person_02);
+            $('[name=phone_01]').val(data.phone_01);
             $('[name=fax_01]').val(data.fax);
-            $('[name=email_01]').val(data.email);
-            $('[name=contact_person_01]').val(data.contact_person);
+            $('[name=email_02]').val(data.email_02);
+            $('[name=contact_person_01]').val(data.contact_person_02);
 
             $('#edit_modal').modal('show');
 

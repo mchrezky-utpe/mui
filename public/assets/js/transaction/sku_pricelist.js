@@ -143,10 +143,10 @@ $(document).ready(function () {
         });
     }
 
-    initParam();
-    
-    function initParam() {
 
+    
+
+$(".btn_production_item").click(function () {
         fetchSkuProductionMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
@@ -156,6 +156,10 @@ $(document).ready(function () {
                 console.error("Error get Sku:", err);
             });
 
+});
+
+
+$(".btn_general_item").click(function () {
         fetchSkuGeneralMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
@@ -164,6 +168,11 @@ $(document).ready(function () {
             .catch((err) => {
                 console.error("Error get Sku:", err);
             });
+});
+
+    initParam();
+    
+    function initParam() {
 
         fetchCurrency()
             .then((data) => {

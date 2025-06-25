@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
 use App\Models\Master\Sku\MasterSkuType;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterSku extends Model
 {
@@ -50,5 +51,21 @@ class MasterSku extends Model
     {
         return $this->hasOne(MasterSkuBusiness::class, 'id','sku_business_type_id');
     }
+
+    public function export()
+    {
+        return Excel::download(new \App\Exports\SkuExport, 'sku.xlsx');
+    }
+
+    public function export_production_material()
+    {
+        return Excel::download(new \App\Exports\SkuProductionMaterialExport, 'sku_production_material.xlsx');
+    }
+    
+    public function export_general_item()
+    {
+        return Excel::download(new \App\Exports\SkuGeneralItemExport, 'sku_general_item.xlsx');
+    }
+
     
 }

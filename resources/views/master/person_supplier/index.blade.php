@@ -55,7 +55,7 @@
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->description }}</td>
                     <td>{{ $value->contact_person_01 }}</td>
-                    <td>{{ $value->phone_02 }}</td>
+                    <td>{{ $value->phone_01 }}</td>
                     <td>{{ $value->contact_person_02 }}</td>
                     <td>{{ $value->email_02 }}</td>
                     <td>{{ $value->contact_person_03 }}</td>
