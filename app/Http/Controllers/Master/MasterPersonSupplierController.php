@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Exports\PersonSupplierExport;
 use App\Helpers\HelperCustom;
 use App\Services\Master\MasterPersonSupplierService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterPersonSupplierController
 {
@@ -53,7 +55,7 @@ class MasterPersonSupplierController
         return redirect("/person-supplier/index2");
     }
     
-    public function get(Request $request, int $id)
+    public function get(Request $request, $id)
     {
         $data = $this->service->get($id);
         return response()->json([
@@ -65,5 +67,10 @@ class MasterPersonSupplierController
     {
         $this->service->edit($request);
         return redirect("/person-supplier");
+    }
+    
+    public function export_person_supplier()
+    {
+        return Excel::download(new PersonSupplierExport, 'person_supplier.xlsx');
     }
 }

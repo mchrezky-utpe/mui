@@ -30,7 +30,10 @@
             <div>
               <!-- <a href="/person-supplier/index2"  class="btn btn-warning">list deleted</a> -->
             <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
-            </div>
+            <a href="{{ route('person-supplier.export_person_supplier') }}" class="mr-2 btn btn-success">
+              <i class="fas fa-file-excel"></i> Export Excel
+            </a>
+          </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -38,17 +41,25 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>ID</th>
-                    <th>Manual ID</th>
-                    <th>Description</th>
+                    <th>Initial</th>
+                    <th>Con. Person Name</th>
+                    <th>Con. Person Phone</th>
+                    <th>WH/Del PIC Name</th>
+                    <th>WH/Del PIC Email</th>
+                    <th>QC PIC Name</th>
+                    <th>QC PIC Email</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->prefix }}</td>
-                    <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
+                    <td>{{ $value->contact_person_01 }}</td>
+                    <td>{{ $value->phone_02 }}</td>
+                    <td>{{ $value->contact_person_02 }}</td>
+                    <td>{{ $value->email_02 }}</td>
+                    <td>{{ $value->contact_person_03 }}</td>
+                    <td>{{ $value->email_03 }}</td>
                     <td>
                       <form action="/person-supplier/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
