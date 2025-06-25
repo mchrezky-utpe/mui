@@ -146,7 +146,17 @@ $(document).ready(function () {
     initParam();
     
     function initParam() {
-        fetchSkuMaster()
+
+        fetchSkuProductionMaster()
+            .then((data) => {
+                console.log("Succesfully get Sku:", data);
+                populateSelectSku("Sku", data, $("[name=sku_id]"));
+            })
+            .catch((err) => {
+                console.error("Error get Sku:", err);
+            });
+
+        fetchSkuGeneralMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
                 populateSelectSku("Sku", data, $("[name=sku_id]"));
@@ -175,16 +185,32 @@ $(document).ready(function () {
             });
     }
 
-    function fetchSkuMaster() {
+    function fetchSkuProductionMaster() {
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: "GET",
-                url: base_url + "api/sku-part-information",
+                url: base_url + "api/sku-production-material",
                 success: function (data) {
                     resolve(data.data);
                 },
                 error: function (err) {
-                    console.error("Error fetching terms master:", err);
+                    console.error("Error fetching master:", err);
+                    reject(err);
+                },
+            });
+        });
+    }
+
+    function fetchSkuGeneralMaster() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: base_url + "api/sku-general-item",
+                success: function (data) {
+                    resolve(data.data);
+                },
+                error: function (err) {
+                    console.error("Error fetching master:", err);
                     reject(err);
                 },
             });

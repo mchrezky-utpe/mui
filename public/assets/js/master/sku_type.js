@@ -39,6 +39,23 @@ $(document).on('click', '.edit', function (e) {
 });
 
 
+function populateSelectSubCategory(master_data, element) {
+    element.empty();
+    element.append('<option value=""> === Select === </option>');
+    master_data.forEach(data => {
+        element.append(`<option value="${data.id}">${data.sku_sub_category}</option>`);
+    });
+}
+
+
+function populateSelectClassification(master_data, element) {
+    element.empty();
+    element.append('<option value=""> === Select === </option>');
+    master_data.forEach(data => {
+        element.append(`<option value="${data.id}">${data.sku_classification}</option>`);
+    });
+}
+
 function populateSelect(master_data, element) {
     element.empty();
     element.append('<option value=""> === Select === </option>');
@@ -60,7 +77,7 @@ fetchSkuCategory()
 fetchSkuSubCategory()
 .then(data => {
     console.log("Succesfully get sku ub category:", data);
-    populateSelect(data, $('[name=sku_sub_category_id]'));
+    populateSelectSubCategory(data, $('[name=sku_sub_category_id]'));
 })
 .catch(err => {
     console.error("Error get sku category:", err);
@@ -69,7 +86,7 @@ fetchSkuSubCategory()
 fetchSkuClassification()
 .then(data => {
     console.log("Succesfully get sku classification:", data);
-    populateSelect(data, $('[name=sku_classification_id]'));
+    populateSelectClassification(data, $('[name=sku_classification_id]'));
 })
 .catch(err => {
     console.error("Error get sku category:", err);
@@ -80,6 +97,33 @@ function fetchSkuCategory() {
 		$.ajax({
 			type: 'GET',
 			url: base_url + 'api/sku-category/droplist',
+			success: function(data) {
+				resolve(data.data);
+			},
+			error: function(err) {
+				console.error("Error fetching sku sub category:", err);
+				reject(err);
+			}
+		});
+	});
+}
+
+
+fetchGroupTag()
+.then(data => {
+    console.log("Succesfully group tag ", data);
+    $("[name=group_tag]").val(data);
+})
+.catch(err => {
+    console.error("Error get sku category:", err);
+});
+
+
+function fetchGroupTag() {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: 'GET',
+			url: base_url + 'api/sku-type/group-tag',
 			success: function(data) {
 				resolve(data.data);
 			},

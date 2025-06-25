@@ -17,15 +17,15 @@ class MasterSkuService
     }
 
     public function list_part_information(){
-          return SkuListVw::where('flag_sku_type', 1)->take(50)->get();
+          return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
 
     public function list_production_material_information(){
-          return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
+          return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
 
     public function list_general_information(){
-          return SkuListVw::where('flag_sku_type', 3)->take(50)->get();
+          return SkuListVw::where('flag_sku_type', 3)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
     // public function list2(){
     //       return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
@@ -48,7 +48,7 @@ class MasterSkuService
 
 
     public function generateCode($sku_type_id, $flag_sku_type){
-        $prefix;
+        $prefix = "";
         switch($flag_sku_type){
             case 1:
                 $prefix = 'PC';
@@ -73,12 +73,7 @@ class MasterSkuService
 
     public function add(Request $request){
 
-           // handling if part information then sku type finish goods (5) else get from request
-            $sku_type_id = 5;
-            if($request->flag_sku_type != 1){
-                $sku_type_id = $request->sku_type_id;
-            }
-
+            $sku_type_id = $request->sku_type_id;
             $result_code =  $this->generateCode($sku_type_id,$request->flag_sku_type);
 
             $data = new MasterSku();

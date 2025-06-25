@@ -16,6 +16,7 @@
             <th>Discount</th>
             <th>Vat</th>
             <th>Total</th>
+            <th>Req Date</th>
             <th>Status</th>
             <th></th>
           </tr>

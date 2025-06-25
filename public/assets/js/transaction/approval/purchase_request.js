@@ -60,6 +60,7 @@ $(document).ready(function () {
                             <td>${data[index].val_discount}</td>
                             <td>${data[index].val_vat}</td>
                             <td>${data[index].val_total}</td>
+                            <td>${data[index].req_date}</td>
                             <td>${data[index].item_status}</td>
                             <td>
                             ${button_action}

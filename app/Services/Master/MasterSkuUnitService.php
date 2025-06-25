@@ -9,21 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MasterSkuUnitService
 {
 
     public function list(){
-          return SkuUnitListVw::all();
+          return SkuUnitListVw::orderBy('created_at','DESC')->get();
     }
 
     public function add(Request $request){
+        
             $data['description'] = $request->description;
-            $data['manual_id'] = $request->manual_id;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterSkuUnit::create($data);
-            $data['prefix'] = HelperCustom::generateTrxNo('SKUT', $data->id);
+            $data['manual_id'] = HelperCustom::generateTrxNo('UC-', $data->id);
+            $data['prefix'] = $request->prefix;
             $data->save();
     }
 
@@ -44,11 +46,24 @@ class MasterSkuUnitService
     {
         $data = MasterSkuUnit::where('id', $id)->firstOrFail();
         $data->description = $request->description;
-        $data->manual_id= $request->manual_id;
+        // $data->manual_id= $request->manual_id;
         $data->save();
     }
 
     public function droplist(){
         return SkuUnitListVw::all();
     }
+    
+    public function generateCode(){
+
+        $result = DB::selectOne(" SELECT generate_unit_code(?) AS code ",["UC"]);
+
+        $code = $result->code;
+        $parts = explode("-", $code);
+        $counter = (int)$parts[1];
+        return  array(
+            'code' => $code,
+            'counter' => $counter
+        );
+        }
 }

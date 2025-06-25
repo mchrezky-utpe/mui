@@ -2,9 +2,10 @@ $(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
     $.ajax({
         type: "GET",
-        url: base_url + "sku-part-information/" + id,
+        url: base_url + "sku-general-item/" + id,
         success: function (data) {
             var data = data.data;
+
 
             $("[name=id]").val(data.id);
             $("[name=manual_id]").val(data.manual_id);
@@ -12,6 +13,7 @@ $(document).on("click", ".edit", function (e) {
             $("[name=group_tag]").val(data.group_tag);
             $("[name=specification_code]").val(data.specification_code);
             $("[name=specification_detail]").val(data.specification_detail);
+            $("[name=specification_description]").val(data.specification_description);
             $("[name=val_weight]").val(data.val_weight);
             $("[name=val_area]").val(data.val_area);
             $("[name=sku_model_id]").val(data.sku_model_id);
@@ -36,10 +38,17 @@ $(document).on("click", ".edit", function (e) {
             $("[name=sku_inventory_unit_id]")
                 .val(data.sku_inventory_unit_id)
                 .prop("selected", true);
-
-            if (data.flag_sku_type == 1) {
+                
+            $("[name=flag_sku_procurement_type]")
+                .val(data.flag_sku_procurement_type)
+                .prop("selected", true);
+                
+            $("[name=sku_procurement_unit_id]")
+                .val(data.sku_procurement_unit_id)
+                .prop("selected", true);
+            
                 $("#edit_modal").modal("show");
-            }
+
         },
         error: function (err) {
             debugger;
@@ -227,21 +236,6 @@ function fetchSkuBusinessType() {
     });
 }
 
-// function fetchSkuItemType() {
-//     return new Promise((resolve, reject) => {
-//         $.ajax({
-//             type: "GET",
-//             url: base_url + "api/sku-type/droplist",
-//             success: function (data) {
-//                 resolve(data.data);
-//             },
-//             error: function (err) {
-//                 console.error("Error fetchSkuType:", err);
-//                 reject(err);
-//             },
-//         });
-//     });
-// }
 // ================================
 
 // ================================
@@ -263,16 +257,6 @@ fetchSkuBusinessType()
         console.error("Error fetchSkuModel:", err);
     });
 
-    
-
-// fetchSkuItemType()
-//     .then((data) => {
-//         console.log("Succesfully fetchSkuItemType:", data);
-//         populateSelect(data, $("[name=sku_item_type_id]"));
-//     })
-//     .catch((err) => {
-//         console.error("Error fetchSkuModel:", err);
-//     });
 
 function fetchSkuModel() {
     return new Promise((resolve, reject) => {
@@ -290,22 +274,6 @@ function fetchSkuModel() {
     });
 }
 
-// function fetchSkuModel() {
-//     return new Promise((resolve, reject) => {
-//         $.ajax({
-//             type: "GET",
-//             url: base_url + "api/sku-business/droplist",
-//             success: function (data) {
-//                 resolve(data.data);
-//             },
-//             error: function (err) {
-//                 console.error("Error fetchSkuModel:", err);
-//                 reject(err);
-//             },
-//         });
-//     });
-// }
-
 function fetchSetCode() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -322,51 +290,51 @@ function fetchSetCode() {
 }
 // ================================
 
-// Ketika input diklik, tampilkan modal
-$("[name=group_tag]").on("click", function () {
-    // Ambil data dari backend
-    $.ajax({
-        url: "/api/sku-part-information/get-set-code", // Endpoint backend
-        method: "GET",
-        success: function (response) {
-            var list = $("#setCodeList");
-            list.empty(); // Kosongkan list sebelum menambahkan data baru
+// // Ketika input diklik, tampilkan modal
+// $("[name=group_tag]").on("click", function () {
+//     // Ambil data dari backend
+//     $.ajax({
+//         url: "/api/sku-part-information/get-set-code", // Endpoint backend
+//         method: "GET",
+//         success: function (response) {
+//             var list = $("#setCodeList");
+//             list.empty(); // Kosongkan list sebelum menambahkan data baru
 
-            // Tambahkan data ke dalam list
-            response.data.forEach(function (item) {
-                list.append(
-                    '<li data-value="' + item.id + '">' + item.name + "</li>"
-                );
-            });
+//             // Tambahkan data ke dalam list
+//             response.data.forEach(function (item) {
+//                 list.append(
+//                     '<li data-value="' + item.id + '">' + item.name + "</li>"
+//                 );
+//             });
 
-            $("#set_code_modal").modal("show");
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-        },
-    });
-});
+//             $("#set_code_modal").modal("show");
+//         },
+//         error: function (xhr, status, error) {
+//             console.error("Error fetching data:", error);
+//         },
+//     });
+// });
 
-$("[name=group_tag]").on("click", function () {
-    // Ambil data dari backend
-    $.ajax({
-        url: "/api/sku-part-information/get-set-code", // Endpoint backend
-        method: "GET",
-        success: function (response) {
-            var list = $("#setCodeList");
-            list.empty(); // Kosongkan list sebelum menambahkan data baru
+// $("[name=group_tag]").on("click", function () {
+//     // Ambil data dari backend
+//     $.ajax({
+//         url: "/api/sku-part-information/get-set-code", // Endpoint backend
+//         method: "GET",
+//         success: function (response) {
+//             var list = $("#setCodeList");
+//             list.empty(); // Kosongkan list sebelum menambahkan data baru
 
-            // Tambahkan data ke dalam list
-            response.forEach(function (item) {
-                list.append(
-                    '<li data-value="' + item.code + '">' + item.code + "</li>"
-                );
-            });
+//             // Tambahkan data ke dalam list
+//             response.forEach(function (item) {
+//                 list.append(
+//                     '<li data-value="' + item.code + '">' + item.code + "</li>"
+//                 );
+//             });
 
-            $("#set_code_modal").modal("show");
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-        },
-    });
-});
+//             $("#set_code_modal").modal("show");
+//         },
+//         error: function (xhr, status, error) {
+//             console.error("Error fetching data:", error);
+//         },
+//     });
+// });

@@ -2,7 +2,7 @@
 
 namespace App\Services\Master;
 
-use App\Helpers\HelperCustom;
+use Illuminate\Support\Facades\DB;
 use App\Models\Master\Sku\MasterSkuType;
 use App\Models\Master\Sku\SkuTypeListVw;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ use Carbon\Carbon;
 class MasterSkuTypeService
 {
     public function list(){
-          return SkuTypeListVw::all();
+          return SkuTypeListVw::orderBy('created_at','DESC')->get();
     }
 
     function convertCheckboxToBoolean($value)
@@ -24,7 +24,12 @@ class MasterSkuTypeService
 
     public function add(Request $request){
         $data = new MasterSkuType();
-        $data->manual_id = $request->manual_id;
+
+        
+        $result_code =  $this->generateCode();
+        $data->manual_id = $result_code['code'];
+        $data->counter = $result_code['counter'];
+
         $data->sku_category_id = $request->sku_category_id;
         $data->sku_sub_category_id = $request->sku_sub_category_id;
         $data->description = $request->description;
@@ -61,7 +66,7 @@ class MasterSkuTypeService
     function edit(Request $request)
     {
         $data = MasterSkuType::where('id', $request->id)->firstOrFail();
-        $data->manual_id = $request->manual_id;
+        // $data->manual_id = $request->manual_id;
         $data->sku_category_id = $request->sku_category_id;
         $data->sku_sub_category_id = $request->sku_sub_category_id;
         $data->description = $request->description;
@@ -82,5 +87,24 @@ class MasterSkuTypeService
 
     public function droplist(){
         return SkuTypeListVw::all();
+    }
+    
+
+    public function get_group_tag(){
+      $result = DB::selectOne(" SELECT max(counter) AS counter from mst_sku_type");
+      return $result->counter;
+    }
+
+    public function generateCode(){
+
+      $result = DB::selectOne(" SELECT generate_item_type_code(?) AS code ",["ITC"]);
+
+      $code = $result->code;
+      $parts = explode("-", $code);
+      $counter = (int)$parts[1];
+      return  array(
+        'code' => $code,
+        'counter' => $counter
+      );
     }
 }

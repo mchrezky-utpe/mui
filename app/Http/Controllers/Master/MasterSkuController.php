@@ -94,7 +94,34 @@ class MasterSkuController
 
     public function api_all()
     {
-        $data = $this->service->list();
+        $data = $this->service->list_part_information();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
+    
+    public function api_part_information_all()
+    {
+        $data = $this->service->list_part_information();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+    
+
+    public function api_production_material_all()
+    {
+        $data = $this->service->list_production_material_information();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+    
+
+    public function api_general_information_all()
+    {
+        $data = $this->service->list_general_information();
          return response()->json([
             'data' => $data
         ]);
@@ -139,8 +166,8 @@ class MasterSkuController
     public function get_set_code()
     {
         $data = $this->service->get_set_code();
-         return response()->json([
-            'data' => $data
+        return response()->json([
+            $data
         ]);
     }
     // public function get_set_code_production_material()

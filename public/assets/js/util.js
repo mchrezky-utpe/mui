@@ -43,7 +43,7 @@ $(document).on('click', '.btn_submit_modal', function (e) {
 
 
 $('#add_button , .add_modal').click(function() {
-    $("input[type=text], textarea, select").not("[name=manual_id], [name=gen_currency_id], [name=doc_number]").val("");
+    $("input[type=text], textarea, select").not("[name=manual_id], [name=gen_currency_id], [name=doc_number] [name=group_tag]").val("");
     $("input[type=checkbox]").prop('checked', false);
 });
 

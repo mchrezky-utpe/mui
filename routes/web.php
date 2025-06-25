@@ -19,14 +19,12 @@ use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
-use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Transaction\Production\ProductionController;
 use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
-use App\Models\Transaction\PurchaseOrder;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
@@ -84,7 +82,8 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::post("/sku-general-item/edit", "edit_general_item")->middleware(OnlyMemberMiddleware::class);
     // API ALL
     Route::get("/api/sku-part-information", "api_all")->middleware(OnlyMemberMiddleware::class);
-    // Route::get("/api/sku-production-material", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-production-material", "api_production_material_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-general-item", "api_general_information_all")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-general-item", "api_all")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/sku-part-information/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);

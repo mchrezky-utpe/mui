@@ -2,8 +2,8 @@
 <form id="form_modal" autocomplete="off" class="form-horizontal add_modal" method="post" action="/general-terms">
     @csrf
     <div class="form-group">
-      <label>Manual ID</label>
-      <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
+      <label>Term Code</label>
+      <input readonly name="manual_id" class="form-control" type="text" placeholder="TC-XXX">
     </div>
     <div class="form-group">
       <label>Description</label>
