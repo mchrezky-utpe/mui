@@ -2,8 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Master\Sku\SkuListVw;
-use App\Models\MasterSku;
+use App\Models\VwMasterSkuProductionMaterial;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,20 +11,20 @@ class SkuProductionMaterialExport implements FromCollection, WithHeadings, Shoul
 {
     public function collection()
     {
-        return MasterSku::select(
-            'manual_id', //material code
-            'description', //material description
-            'specification_code', //specification code
-            'specification_detail', //specification descr
-            'sku_business_type_id', //sales category
-            'sku_type_id', //item sub category
-            'sku_type_id', //item type
-            'flag_sku_procurement_type',    //procurement type
-            'sku_inventory_unit_id',    //inventory unit
-            'sku_procurement_unit_id',   //procurement unit
-            'val_conversion',   //conversion'
-            'flag_inventory_register',  //inventory register
-        )->where('flag_sku_type', 2)->get();
+        return VwMasterSkuProductionMaterial::select(
+            'material_code', //material code
+            'material_description', //material description
+            'spesification_code', //specification code
+            'spesification_description', //specification descr
+            'sales_category', //sales category
+            'item_sub_category', //item sub category
+            'item_type', //item type
+            'porcurement_type',    //procurement type
+            'inventory_unit',    //inventory unit
+            'procurement_unit',   //procurement unit
+            'con_value',   //conversion'
+            'inv_reg',  //inventory register
+        )->get();
     }
 
     public function headings(): array
@@ -40,6 +39,7 @@ class SkuProductionMaterialExport implements FromCollection, WithHeadings, Shoul
             'Item Type',
             'Procurement Type',
             'Inventory Unit',
+            'Procurement Unit',
             'Con. Value',
             'Inv. Reg',
         ];
