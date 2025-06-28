@@ -19,7 +19,7 @@ use App\Helpers\CalcHelper;
 use App\Models\Transaction\PurchaseOrdePrintDtVw;
 use App\Models\Transaction\PurchaseOrdePrintHdVw;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 class SdsService
 {
@@ -70,32 +70,24 @@ class SdsService
         }
     }
 
-    public function pull_back(Request $request){
-        DB::beginTransaction();
-
-        try {
-            $userId =  Auth::id();
-            $sds = Sds::where('id', $request->id)->firstOrFail();
-    
-            $sds->flag_status = 3;
-            $sds->save();
-
-            // DB::statement('CALL sp_log_sds_status(?,?,?)',
-            // [$request->id,3,$userId]);
-         
-
-            DB::commit();
-    
-        } catch (\Exception $e) {
-            // Rollback jika ada error
-            DB::rollBack();
-            dd($e);
-            return response()->json([
-                'message' => 'Terjadi kesalahan.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+   public function pull_back(Request $request){
+    DB::beginTransaction();
+    try {
+        $userId = Auth::id();
+        $sds = Sds::findOrFail($request->id);
+        $sds->update(['flag_status' => 3]);
+        DB::commit();
+        return response()->json(['message' => 'Berhasil pull back SDS']);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        report($e);
+        return response()->json([
+            'message' => 'Terjadi kesalahan.',
+            'error' => $e->getMessage(),
+        ], 500);
     }
+}
+
 
     public function add(Request $request)
     {
@@ -120,7 +112,7 @@ class SdsService
     
             // Simpan data PO Header
             $sdsHeader = Sds::create($data);
-            $items;
+            $items = [];
     
             // SDS Detail Data
             foreach ($request->po_detail_id as $index => $po_detail_id) {
@@ -140,6 +132,7 @@ class SdsService
         } catch (\Exception $e) {
             // Rollback jika terjadi error
             DB::rollBack();
+            // Log::alert("message");
             dd($e);
             return response()->json([
                 'message' => 'Terjadi kesalahan saat membuat sds.',
@@ -153,7 +146,7 @@ class SdsService
         DB::beginTransaction();
 
         try {
-            $purchaseOrder = PurchaseOrder::where('id', $id)->firstOrFail();
+            $purchaseOrder = Sds::where('id', $id)->firstOrFail();
     
             $purchaseOrder->flag_active = 0;
             $purchaseOrder->deleted_at = Carbon::now();
@@ -175,7 +168,7 @@ class SdsService
     
     public function get(int $id)
     {
-        return PurchaseOrder::where('id', $id)->firstOrFail();
+        return Sds::where('id', $id)->firstOrFail();
     } 
     public function print(int $id)
     {
@@ -190,7 +183,7 @@ class SdsService
 
     function edit(Request $request)
     {
-        $data = PurchaseOrder::where('id', $request->id)->firstOrFail();
+        $data = Sds::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
         $data->save();

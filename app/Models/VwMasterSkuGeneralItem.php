@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Models\Transaction\Production;
+namespace App\Models;
 
 use App\Traits\HasUserTracking;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VwListProductionCycle extends Model
+class VwMasterSkuGeneralItem extends Model
 {
     use HasFactory;
-
-    protected $table = 'trans_production_cycle_time';
-
-    public $timestamps = false;
+    protected $guarded = [];
+    protected $table = 'vw_export_sku_general_item';
 
     use HasUserTracking;
 }
