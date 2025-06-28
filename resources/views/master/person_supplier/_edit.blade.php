@@ -13,11 +13,7 @@
     </div>
     <div class="form-group">
       <label>Con. Person Phone</label>
-<<<<<<< HEAD
-      <input required name="phone_02" class="form-control" type="text" placeholder="Con. Person Phone">
-=======
       <input required name="phone_01" class="form-control" type="text" placeholder="Con. Person Phone">
->>>>>>> 3d31e7942764e2ae93045588826a5ceb205bb2b3
     </div>
     <div class="form-group">
       <label>WH/Del PIC Name</label>

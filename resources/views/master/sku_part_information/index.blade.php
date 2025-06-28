@@ -92,5 +92,5 @@
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/master/sku_part_information.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/master/sku.js') }}" type="text/javascript"></script> 
  @endsection

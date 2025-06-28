@@ -14,14 +14,8 @@
           <input required name="description" class="form-control" type="text">
         </div>
         <div class="form-group">
-          <label for="browser">Set Code</label>
-          <input class="form-control" list="setCodes" name="group_tag">
-
-          <datalist id="setCodes">
-            <option value="empty">
-          </datalist>
-          {{-- <label>Set Code</label>
-          <input readonly name="group_tag" class="form-control" type="text"/> --}}
+          <label>Set Code</label>
+          <input readonly name="group_tag" class="form-control" type="text"/>
         </div>
         <div class="form-group">
           <label>Spesification Code</label>
@@ -43,25 +37,14 @@
         </div>
 
         <div class="d-flex align-items-end mt-3">
-            <div class="form-group flex-fill mr-2" style="width: 45%;">
-              <label>Item Type</label>
-              <select required name="sku_type_id" class="form-control"></select>
-            </div>
-            <div class="form-group flex-fill mr-2" style="width: 45%;">
-              <label>Business Type</label>
-              <select required name="sku_business_type_id" class="form-control"></select>
-            </div>
-            
           <div class="form-group flex-fill mr-2" style="width: 45%;">
-            <label>Procurement Type</label>
-            <select required name="flag_sku_procurement_type" class="form-control">
-              <option value="">-- select --</option>
-              <option value="1">in-house</option>
-              <option value="2">purchase</option>
-              <option value="3">supply</option>
-              <option value="4">purchase & in-house</option>
-            </select>
+            <label>Business Type</label>
+            <select required name="sku_business_type_id" class="form-control"></select>
           </div>
+          <!-- <div class="form-group flex-fill ml-2" style="width: 55%;">
+            <label>&nbsp;</label>
+            <select required name="type_id" class="form-control"></select>
+          </div> -->
         </div>
 
         <div class="d-flex align-items-end mt-3">
