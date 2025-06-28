@@ -4,9 +4,10 @@ namespace App\Exports;
 
 use App\Models\MasterPersonSupplier;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PersonSupplierExport implements FromCollection,WithHeadings
+class PersonSupplierExport implements FromCollection,WithHeadings, ShouldAutoSize
 {
     public function collection()
     {
