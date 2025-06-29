@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Exports\SkuExport;
 use App\Exports\SkuGeneralItemExport;
 use App\Exports\SkuProductionMaterialExport;
+use App\Helpers\HelperCustom;
 use App\Services\Master\MasterSkuService;
 use App\Services\Master\MasterSkuTypeService;
 use App\Services\Master\MasterSkuDetailService;
@@ -47,111 +48,80 @@ class MasterSkuController
     public function index(): Response
     {
         return response()
-            ->view('master.sku_part_information.index',
-             [
-                'data' =>  $this->service->list_part_information(),
-                'type' => $this->typeService->list(),
-                // 'detail' => $this->detailService->list(),
-                // 'unit' => $this->unitService->list(),
-                // 'model' => $this->modelService->list(),
-                // 'packaging' => $this->packagingService->list(),
-                // 'process' => $this->processService->list(),
-                'business' => $this->businessService->list()
-            ]);
+            ->view(
+                'master.sku_part_information.index',
+                [
+                    'data' =>  $this->service->list_part_information(),
+                    'type' => $this->typeService->list(),
+                    // 'detail' => $this->detailService->list(),
+                    // 'unit' => $this->unitService->list(),
+                    // 'model' => $this->modelService->list(),
+                    // 'packaging' => $this->packagingService->list(),
+                    // 'process' => $this->processService->list(),
+                    'business' => $this->businessService->list()
+                ]
+            );
     }
 
-        public function index_production_material(): Response
-        {
-            return response()
-            ->view('master.sku_production_material.index',
-             [
-                'data' =>  $this->service->list_production_material_information(),
-                'type' => $this->typeService->list(),
-                // 'detail' => $this->detailService->list(),
-                // 'unit' => $this->unitService->list(),
-                // 'model' => $this->modelService->list(),
-                // 'packaging' => $this->packagingService->list(),
-                // 'process' => $this->processService->list(),
-                'business' => $this->businessService->list()
-            ]);
-        }
+    public function index_production_material(): Response
+    {
+        return response()
+            ->view(
+                'master.sku_production_material.index',
+                [
+                    'data' =>  $this->service->list_production_material_information(),
+                    'type' => $this->typeService->list(),
+                    // 'detail' => $this->detailService->list(),
+                    // 'unit' => $this->unitService->list(),
+                    // 'model' => $this->modelService->list(),
+                    // 'packaging' => $this->packagingService->list(),
+                    // 'process' => $this->processService->list(),
+                    'business' => $this->businessService->list()
+                ]
+            );
+    }
 
-        public function index_general_item(): Response
-        {
-            return response()
-            ->view('master.sku_general_item.index',
-             [
-                'data' =>  $this->service->list_general_information(),
-                'type' => $this->typeService->list(),
-                // 'detail' => $this->detailService->list(),
-                // 'unit' => $this->unitService->list(),
-                // 'model' => $this->modelService->list(),
-                // 'packaging' => $this->packagingService->list(),
-                // 'process' => $this->processService->list(),
-                'business' => $this->businessService->list()
-            ]);
-        }
+    public function index_general_item(): Response
+    {
+        return response()
+            ->view(
+                'master.sku_general_item.index',
+                [
+                    'data' =>  $this->service->list_general_information(),
+                    'type' => $this->typeService->list(),
+                    // 'detail' => $this->detailService->list(),
+                    // 'unit' => $this->unitService->list(),
+                    // 'model' => $this->modelService->list(),
+                    // 'packaging' => $this->packagingService->list(),
+                    // 'process' => $this->processService->list(),
+                    'business' => $this->businessService->list()
+                ]
+            );
+    }
 
 
 
-    public function api_all()
+    public function api_sku_part_information()
     {
         $data = $this->service->list_part_information();
          return response()->json([
             'data' => $data
         ]);
     }
-
-    
-    public function api_part_information_all()
+    public function api_all_production_material()
     {
-        $data = $this->service->list_part_information();
+        $data = $this->service->list();
          return response()->json([
             'data' => $data
         ]);
     }
-    
-
-    public function api_production_material_all()
+    public function api_all_general_item()
     {
-        $data = $this->service->list_production_material_information();
+        $data = $this->service->list();
          return response()->json([
             'data' => $data
         ]);
     }
-    
-
-    public function api_general_information_all()
-    {
-        $data = $this->service->list_general_information();
-         return response()->json([
-            'data' => $data
-        ]);
-    }
-
-
-
-    // public function api_all()
-    // {
-    //     $data = $this->service->list();
-    //      return response()->json([
-    //         'data' => $data
-    //     ]);
-    // }
-    // public function api_all_production_material()
-    // {
-    //     $data = $this->service->list();
-    //      return response()->json([
-    //         'data' => $data
-    //     ]);
-    // }
-    // public function api_all_general_item()
-    // {
-    //     $data = $this->service->list();
-    //      return response()->json([
-    //         'data' => $data
-    //     ]);
-    // }
 
     public function get_code(Request $request)
     {
@@ -179,7 +149,7 @@ class MasterSkuController
     {
         $data = $this->service->get_set_code();
         return response()->json([
-            $data
+            'data' => $data
         ]);
     }
     // public function get_set_code_production_material()
