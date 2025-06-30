@@ -95,17 +95,20 @@ export function handleTableServerSide() {
                         `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
 						<div class="d-flex">
 							<input type="hidden" name="_token" value="${csrfToken}">
-							<button data-id="${data.id}" type="button" target="_blank" class="upload btn btn-primary">
+							<button data-id="${data.id}" type="button" class="btn_detail btn btn-info me-1">
+								<span class="fas fa-eye"></span>
+							</button>
+							<button data-id="${data.id}" type="button" target="_blank" class="upload btn btn-primary me-1">
 							 <span class="fas fa-upload"></span>
-              </button>
+                            </button>
 							<a  target="_blank"   href="po/` +
                         data.id +
-                        `/pdf" class="print btn btn-secondary">
+                        `/pdf" class="print btn btn-secondary me-1">
 							 <span class="fas fa-print"></span>
                             </a>
 							<button data-id="` +
                         data.id +
-                        `" type="button" class="edit btn btn-success">
+                        `" type="button" class="edit btn btn-success me-1">
                             <span class="fas fa-pencil-alt"></span>
                             </button>
                             <button type="submit" class="btn btn-danger">
