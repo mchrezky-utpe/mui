@@ -354,9 +354,14 @@ Route::controller(MasterPersonEmployeeController::class)->group(function () {
     Route::get("/api/person-employee", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
-Route::get('/person-employee/export/pdf', [MasterPersonEmployeeController::class, 'exportPdf'])->name('employee.export.pdf');
-Route::get('/po/{id}/pdf', [PurchaseOrderController::class, 'generatePDF']);
-
+    Route::get('/person-employee/export/pdf', [MasterPersonEmployeeController::class, 'exportPdf'])->name('employee.export.pdf');
+    // Route::get('/po/{id}/pdf', [PurchaseOrderController::class, 'generatePDF']);
+    Route::group(['prefix' => 'po'], function () {
+    Route::get('/{id}/pdf', [PurchaseOrderController::class, 'generatePDF'])->name('po.pdf');
+    Route::get('/{id}/items', [PurchaseOrderController::class, 'getItems'])->name('po.items');
+    Route::get('/po/{id}/items', [PurchaseOrderController::class, 'getItems']);
+    // Route lainnya...
+});
 Route::controller(ProductionController::class)->group(function () {
     // LIST
     Route::get("/production_cycle", "index")->middleware(OnlyMemberMiddleware::class);
