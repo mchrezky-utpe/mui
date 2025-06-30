@@ -14,7 +14,7 @@
                 <button tgit ype="button" class="btn btn-secondary closeParentModalButton" data-dismiss="modal">Close</button>
                 @if (@!($notUsingSave ?? false) )
                 <button type="button" class="btn btn-primary btn_submit_modal" id="btn_submit_modal"> {{ $buttonName ?? 'Save Changes' }}</button>
-                <button type="button" class="btn btn-primary" id="addBtn"> {{ $buttonName ?? 'Save Data' }}</button>
+                {{-- <button type="button" class="btn btn-primary" id="addBtn"> {{ $buttonName ?? 'Save Data' }}</button> --}}
                 @endif     
             </div>
         </div>

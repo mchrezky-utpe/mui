@@ -13,7 +13,7 @@
             <div class="modal-footer">
                 <button type="button" class="close btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="{{ $id }}Submit">Save changes</button>
-                <button type="button" class="btn btn-primary" id="addBtn">Save Data</button>
+                {{-- <button type="button" class="btn btn-primary" id="addBtn">Save Data</button> --}}
             </div>
         </div>
     </div>
