@@ -10,7 +10,7 @@ class VwMasterSkuPartInformation extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $table = 'vw_export_sku_part_information';
+    protected $table = 'vw_app_export_mst_sku';
 
     use HasUserTracking;
 }

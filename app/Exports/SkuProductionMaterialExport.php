@@ -12,24 +12,27 @@ class SkuProductionMaterialExport implements FromCollection, WithHeadings, Shoul
     public function collection()
     {
         return VwMasterSkuProductionMaterial::select(
-            'material_code', //material code
-            'material_description', //material description
-            'spesification_code', //specification code
-            'spesification_description', //specification descr
-            'sales_category', //sales category
-            'item_sub_category', //item sub category
-            'item_type', //item type
-            'porcurement_type',    //procurement type
-            'inventory_unit',    //inventory unit
-            'procurement_unit',   //procurement unit
-            'con_value',   //conversion'
-            'inv_reg',  //inventory register
+            'blob_image',
+            'sku_id', //material code
+            'sku_name', //material description
+            'sku_specification_code', //specification code
+            'sku_specification_detail', //specification descr
+            'sku_sales_category', //sales category
+            'sku_sub_category', //item sub category
+            'sku_material_type', //item type
+            'sku_procurement_type',    //procurement type
+            'sku_inventory_unit',    //inventory unit
+            'sku_procurement_unit',   //procurement unit
+            'val_conversion',   //conversion'
+            'is_inventory_register',  //inventory register
+            'created_at',
         )->get();
     }
 
     public function headings(): array
     {
         return [
+            'Image',
             'Material Code',
             'Material Description',
             'Specification Code',
@@ -42,6 +45,7 @@ class SkuProductionMaterialExport implements FromCollection, WithHeadings, Shoul
             'Procurement Unit',
             'Con. Value',
             'Inv. Reg',
+            'Created At',
         ];
     }
 }

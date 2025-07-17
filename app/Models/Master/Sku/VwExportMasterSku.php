@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Master\Sku;
 
-use App\Traits\HasUserTracking;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VwMasterSkuProductionMaterial extends Model
+class VwExportMasterSku extends Model
 {
     use HasFactory;
-    protected $guarded = [];
     protected $table = 'vw_app_export_mst_sku';
-
-    use HasUserTracking;
+    public $timestamps = false;
+    protected $guarded = [];  
 }

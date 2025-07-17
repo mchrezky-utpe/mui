@@ -11,29 +11,32 @@ class SkuExport implements FromCollection, WithHeadings, ShouldAutoSize
    public function collection()
     {
         return VwMasterSkuPartInformation::select(
-            'part_code',    //Part Code
-            'part_name',  //Part Name
-            'Specification_Code', //Specification code
-            'Specification_Description', //Specification Description
-            'Sales_category',   //Sales category
-            'set_code',    //Set Code
-            'Item_Sub_Category',    //Item Sub Category
-            'Item_type',    //Item type
-            'business_type', //model
-            'model', //surace area
-            'surace_area',   //weight
-            'weight',    //inventory unit
-            'inventory_unit',    //procurement type
-            'procurement_type',   //procurement unit
-            'procurement_unit',   //conversion'
-            'conversion',  //inventory register
-            'inventory_register',  //inventory register
+            'blob_image',
+            'sku_id',    //Part Code
+            'sku_name',  //Part Name
+            'sku_specification_code', //Specification code
+            'sku_specification_detail', //Specification Description
+            'sku_sales_category',   //Sales category
+            'group_tag',    //Set Code
+            'sku_material_type',    //Item Sub Category
+            'sku_sub_category',    //Item type
+            'sku_business_type', //model
+            'sku_model', //surace area
+            'val_area',   //weight
+            'val_weight',    //inventory unit
+            'sku_inventory_unit',    //procurement type
+            'sku_procurement_type',   //procurement unit
+            'sku_procurement_unit',   //conversion'
+            'val_conversion',  //inventory register
+            'is_inventory_register',  //inventory register
+            'created_at',
         )->get();
     }
 
     public function headings(): array
     {
         return [
+            'Image',
             'Part Code',
             'Part Name',
             'Specification Code',
@@ -51,6 +54,7 @@ class SkuExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Procurement Unit',
             'Conversion Value',
             'Inventory Register',
+            'Created At',
         ];
     }
 }

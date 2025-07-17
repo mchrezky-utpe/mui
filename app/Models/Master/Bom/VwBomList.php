@@ -15,4 +15,8 @@ class VwBomList extends Model
     protected $table = 'vw_app_list_mst_sku_bom';
 
     use HasUserTracking;
+//     public function details()
+// {
+//     return $this->hasMany(BomDetail::class, 'sku_bom_id', 'id');
+// }
 }

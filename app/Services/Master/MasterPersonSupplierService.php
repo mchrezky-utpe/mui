@@ -4,6 +4,7 @@ namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
 use App\Models\MasterPersonSupplier;
+use App\Models\VwExportMasterPerson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -13,10 +14,10 @@ class MasterPersonSupplierService
 {
 
     public function list(){
-        return MasterPersonSupplier::where('flag_active', 1)->get();
+        return VwExportMasterPerson::where('flag_active', 1)->orderBy('created_at', 'DESC')->take(1000)->get();
     }
     public function list2(){
-        return MasterPersonSupplier::where('flag_active', 0)->get();
+        return VwExportMasterPerson::where('flag_active', 0)->orderBy('created_at', 'DESC')->take(1000)->get();
     }
 
     public function add(Request $request){

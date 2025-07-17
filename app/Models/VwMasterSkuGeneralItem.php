@@ -10,7 +10,7 @@ class VwMasterSkuGeneralItem extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $table = 'vw_export_sku_general_item';
+    protected $table = 'vw_app_export_mst_sku';
 
     use HasUserTracking;
 }
