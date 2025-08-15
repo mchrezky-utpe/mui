@@ -18,7 +18,7 @@ export function initParam() {
 			fetchPoDroplist(supplier_id)
 				.then(data => {
 					// setGlobalVariable('poMaster', data);
-					populateSelect('Po', data, $('#po_select'));
+					populateSelectPo('Po', data, $('#po_select'));
 				})
 				.catch(err => {
 					console.error("Error get po:", err);
@@ -26,14 +26,16 @@ export function initParam() {
 	
 		});
 		
-	// fetchPoDroplist()
-	// .then(data => {
-	// 	console.log("Succesfully get po:", data);
-	// 	populateSelect('Po', data, $('#po_select'));
-	// })
-	// .catch(err => {
-	// 	console.error("Error get po:", err);
-	// });
+
+	  function populateSelectPo(title, master_data, element) {
+        element.empty();
+        element.append('<option value="">-- Select ' + title + " --</option>");
+        master_data.forEach((data) => {
+            element.append(
+                `<option value="${data.id}">${data.doc_num}</option>`
+            );
+        });
+    }
 
 }
 		

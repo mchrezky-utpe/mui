@@ -2,7 +2,7 @@ import { setGlobalVariable } from "./pr_global_variable.js";
 
 export function initParam() {
     $(document).on("change", "[name=prs_supplier_id]", function () {
-        const supplier_id = $("[name=prs_supplier_id]").val();
+        const supplier_id = this.value;
         fetchSkuMaster(supplier_id)
             .then((data) => {
                 setGlobalVariable("skuMaster", data);

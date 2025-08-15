@@ -54,6 +54,6 @@ function populateSelect(title, master_data, element) {
     element.empty();
     element.append('<option value="">-- Select '+title+' --</option>');
     master_data.forEach(data => {
-        element.append(`<option value="${data.id}">${data.description}</option>`);
+        element.append(`<option value="${data.id}">${data.sku_name}</option>`);
     });
 }

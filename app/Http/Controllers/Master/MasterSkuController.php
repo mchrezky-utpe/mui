@@ -6,6 +6,7 @@ use App\Exports\SkuExport;
 use App\Exports\SkuGeneralItemExport;
 use App\Exports\SkuProductionMaterialExport;
 use App\Helpers\HelperCustom;
+use App\Models\MasterSku;
 use App\Services\Master\MasterSkuService;
 use App\Services\Master\MasterSkuTypeService;
 use App\Services\Master\MasterSkuDetailService;
@@ -123,6 +124,16 @@ class MasterSkuController
         ]);
     }
 
+    
+    public function api_all_sku()
+    {
+        $data = $this->service->get_all_sku();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+    
+
     public function get_code(Request $request)
     {
         $data = $this->service->generateCode($request->sku_type_id, $request->flag_sku_type);
@@ -169,8 +180,31 @@ class MasterSkuController
 
     public function add(Request $request)
     {
-        $this->service->add($request);
-        return redirect("/sku-part-information");
+        $request->validate([
+            'blob_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'val_area' => 'required|numeric',
+            'val_weight' => 'required|numeric',
+            'val_conversion' => 'required|numeric',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('blob_image')) {
+            $image = $request->file('blob_image');
+            $folder = 'sku_images/' . now()->format('Y-m');
+            
+            // Simpan ke storage/app/public/sku_images/...
+            $path = $image->store($folder, 'public');
+            
+            // Simpan path relatif tanpa 'public/' prefix
+            $data['blob_image'] = $path;
+        }
+
+        $data['flag_inventory_register'] = $request->has('flag_inventory_register') ? 1 : 0;
+
+        MasterSku::create($data);
+
+        return redirect("/sku-part-information")->with('success', 'SKU berhasil ditambahkan!');
     }
     public function add_production_material(Request $request)
     {
@@ -244,5 +278,15 @@ class MasterSkuController
     public function export_general_item()
     {
         return Excel::download(new SkuGeneralItemExport, 'sku_general_item.xlsx');
+    }
+    public function showImage($id)
+    {
+        $sku = \App\Models\MasterSku::findOrFail($id);
+
+        if (!$sku->blob_image) {
+            abort(404);
+        }
+
+        return response($sku->blob_image)->header('Content-Type', 'image/jpeg'); // atau sesuaikan dengan tipe gambar
     }
 }
