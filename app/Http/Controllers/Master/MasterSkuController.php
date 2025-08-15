@@ -123,6 +123,16 @@ class MasterSkuController
         ]);
     }
 
+    
+    public function api_all_sku()
+    {
+        $data = $this->service->get_all_sku();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+    
+
     public function get_code(Request $request)
     {
         $data = $this->service->generateCode($request->sku_type_id, $request->flag_sku_type);

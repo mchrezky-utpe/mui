@@ -54,12 +54,12 @@
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->description }}</td>
-                    <td>{{ $value->contact_person_01 }}</td>
-                    <td>{{ $value->phone_01 }}</td>
-                    <td>{{ $value->contact_person_02 }}</td>
-                    <td>{{ $value->email_02 }}</td>
-                    <td>{{ $value->contact_person_03 }}</td>
-                    <td>{{ $value->email_03 }}</td>
+                    <td>{{ $value->contact_person}}</td>
+                    <td>{{ $value->contact_person_phone }}</td>
+                    <td>{{ $value->wh_del_pic_name }}</td>
+                    <td>{{ $value->wh_del_pic_email }}</td>
+                    <td>{{ $value->qc_pic_name }}</td>
+                    <td>{{ $value->qc_pic_email }}</td>
                     <td>
                       <form action="/person-supplier/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">

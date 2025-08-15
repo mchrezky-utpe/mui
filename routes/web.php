@@ -64,6 +64,7 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::get("/sku-part-information", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-production-material", "index_production_material")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-general-item", "index_general_item")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku", "api_all_sku")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/sku-part-information", "add")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-production-material", "add_production_material")->middleware(OnlyMemberMiddleware::class);

@@ -28,6 +28,11 @@ class MasterSkuService
     public function list_general_information(){
           return VwExportMasterSku::where('flag_sku_type', 3)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
+
+    public function get_all_sku(){
+          return VwExportMasterSku::orderBy('created_at', 'DESC')->take(1000)->get();
+     }
+     
     // public function list2(){
     //       return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
     // }
