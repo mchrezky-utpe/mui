@@ -12,7 +12,7 @@ class VwListProductionProcess extends Model
   
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $table = 'vw_app_list_trans_prod_pi';
+    protected $table = 'trans_production_process_information';
 
     public $timestamps = false;
 

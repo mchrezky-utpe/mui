@@ -35,6 +35,32 @@ $(document).ready(function () {
 
     let detailRowCount = 0;
     $(document).on("click", ".btn_detail", function (e) {
+        var table = $("#table-pr").DataTable();
+        var row = table.row($(this).closest("tr"));
+        var data = row.data();
+
+        var $row = $(this).closest("tr");
+        var rowData = {
+            id: $row.find("td:nth-child(3)").text().trim(),
+            doc_num: $row.find("td:nth-child(4)").text().trim(),
+            supplier: $row.find("td:nth-child(5)").text().trim(),
+            date: $row.find("td:nth-child(6)").text().trim(),
+            description: $row.find("td:nth-child(7)").text().trim(),
+            status: $row.find("td:nth-child(8)").text().trim(),
+        };
+
+        console.log(rowData);
+
+        // Tampilkan data header di modal
+        $("#detail_supplier").text(rowData.supplier);
+        $("#detail_date").text(rowData.date);
+        $("#detail_description").text(rowData.description);
+        $("#detail_status").text(rowData.status);
+        $("#detail_doc_num").text(rowData.doc_num);
+        $("#detail_id").text(rowData.id);
+
+        console.log(data);
+        debugger;
         var id = this.dataset.id;
         $.ajax({
             type: "GET",

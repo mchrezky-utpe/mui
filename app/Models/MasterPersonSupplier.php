@@ -13,7 +13,7 @@ class MasterPersonSupplier extends Model
   
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $table = 'mst_person_supplier';
+    protected $table = 'vw_app_export_mst_person_supplier';
 
     public $timestamps = false;
 

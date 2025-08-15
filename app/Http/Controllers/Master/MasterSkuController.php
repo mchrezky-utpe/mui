@@ -101,27 +101,27 @@ class MasterSkuController
 
 
 
-    // public function api_all()
-    // {
-    //     $data = $this->service->list();
-    //      return response()->json([
-    //         'data' => $data
-    //     ]);
-    // }
-    // public function api_all_production_material()
-    // {
-    //     $data = $this->service->list();
-    //      return response()->json([
-    //         'data' => $data
-    //     ]);
-    // }
-    // public function api_all_general_item()
-    // {
-    //     $data = $this->service->list();
-    //      return response()->json([
-    //         'data' => $data
-    //     ]);
-    // }
+    public function api_sku_part_information()
+    {
+        $data = $this->service->list_part_information();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+    public function api_all_production_material()
+    {
+        $data = $this->service->list();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+    public function api_all_general_item()
+    {
+        $data = $this->service->list();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
 
     public function get_code(Request $request)
     {

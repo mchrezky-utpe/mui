@@ -36,7 +36,7 @@
 
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first">
+              <table class="table data-table table-striped table-bordered first" id="table-pr">
                 <thead>
                   <tr>
                     <th></th>

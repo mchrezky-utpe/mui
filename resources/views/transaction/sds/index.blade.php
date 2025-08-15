@@ -64,6 +64,7 @@
                     <th>Reschedule</th>
                     <th>Date Reschdule</th>
                     <th>Date Revision</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr data-id="{{ $value->id }}">
@@ -115,6 +116,11 @@
                     <td>{{ $value->status_reschedule }}</td>
                     <td>{{ $value->rev_date }}</td>
                     <td>{{ $value->date_reschedule }}</td>
+                    <td>
+                       <button data-id="{{ $value->trans_pr_id }}" type="button" class="btn_detail btn btn-info">
+                          <span class="fas fa-eye"></span>
+                        </button>
+                    </td>
                   </tr> @endforeach </tbody>
                 </table>
                 </div>
@@ -130,6 +136,7 @@
  @include('transaction.sds._edit') 
  @include('transaction.sds._qty_sds') 
  @include('transaction.sds._reschedule') 
+ @include('transaction.sds.sds_item') 
  @endsection 
  
  @section('extra_javascript') 

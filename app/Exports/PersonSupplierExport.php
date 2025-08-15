@@ -15,16 +15,17 @@ class PersonSupplierExport implements FromCollection,WithHeadings, ShouldAutoSiz
             'manual_id',               // Supplier Code
             'description',             // Supplier Name
             'prefix',                  // Initials
-            'address_01',              // Address
-            'phone_01',                // Phone
-            'fax_01',                  // Fax
-            'contact_person_01',       // Con. Person Name
-            'phone_02',                // Con. Person Phone
-            'email_01',                // Email
-            'contact_person_02',       // WH/Del PIC Name
-            'email_02',                // WH/Del PIC Email
-            'contact_person_03',       // QC PIC Name
-            'email_03'                 // QC PIC Email
+            'main_address',              // Address
+            'main_phone',                // Phone
+            'main_fax',                  // Fax
+            'contact_person',       // Con. Person Name
+            'contact_person_phone',                // Con. Person Phone
+            'main_email',                // Email
+            'wh_del_pic_name',       // WH/Del PIC Name
+            'wh_del_pic_email',                // WH/Del PIC Email
+            'qc_pic_name',       // QC PIC Name
+            'qc_pic_email',
+            'created_at',                 // QC PIC Email
         )->get();
     }
 
@@ -44,6 +45,7 @@ class PersonSupplierExport implements FromCollection,WithHeadings, ShouldAutoSiz
             'WH/Del PIC Email',
             'QC PIC Name',
             'QC PIC Email',
+            'Created At',
         ];
     }
 }

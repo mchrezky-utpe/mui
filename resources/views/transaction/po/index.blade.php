@@ -74,6 +74,7 @@
  @include('transaction.po._add')
  @include('transaction.po._edit')
  @include('transaction.po._upload')
+ @include('transaction.po._detail')
  @endsection
 
  @section('extra_javascript')

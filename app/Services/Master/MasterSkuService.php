@@ -5,6 +5,7 @@ namespace App\Services\Master;
 use App\Models\MasterSku;
 use App\Models\Master\Sku\MasterSkuType;
 use App\Models\Master\Sku\SkuListVw;
+use App\Models\Master\Sku\VwExportMasterSku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,16 +17,16 @@ class MasterSkuService
         return $value === 'on';
     }
 
-    public function list_part_information(){
-          return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take(1000)->get();
+    public function list_part_information($limit = 1000){
+          return VwExportMasterSku::query('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
      }
 
     public function list_production_material_information(){
-          return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(1000)->get();
+          return VwExportMasterSku::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
 
     public function list_general_information(){
-          return SkuListVw::where('flag_sku_type', 3)->orderBy('created_at', 'DESC')->take(1000)->get();
+          return VwExportMasterSku::where('flag_sku_type', 3)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
     // public function list2(){
     //       return SkuListVw::where('flag_sku_type', 2)->take(50)->get();

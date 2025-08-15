@@ -15,4 +15,10 @@ class BomDetail extends Model
     protected $table = 'mst_sku_bom_detail';
 
     use HasUserTracking;
+
+    public function sku()
+{
+    return $this->belongsTo(\App\Models\MasterSku::class, 'sku_id');
+}
+
 }
