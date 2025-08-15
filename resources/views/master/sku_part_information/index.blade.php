@@ -38,6 +38,7 @@
                 <thead>
                   <tr> 
                     <th>No</th>
+                    <th>Image</th>
                     <th>Item Code</th>
                     <th>Type</th>
                     <th>Item Name</th>
@@ -49,6 +50,14 @@
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
+                    <td>
+                      @if($value->blob_image)
+                      <img src="{{ asset($value->blob_image) }}" width="80">
+
+                      @else
+                        <span class="text-muted">No image</span>
+                      @endif
+                    </td>
                     <td>{{ $value->sku_id }}</td>
                     <td>
                     @if($value->flag_sku_type  == 1)         
@@ -65,16 +74,18 @@
                     <td>{{ $value->sku_business_type }}</td>
                     <td>{{ $value->sku_sales_category }}</td>
                     <td>
-                      <form action="/sku-part-information/{{ $value->id }}/delete" method="post"> @csrf 
-                      <div class="d-flex">
-                        <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
-                          <span class="fas fa-pencil-alt"></span>
-                        </button>
-                        <button class="btn btn-danger">
-                          <span class="fas fa-trash"></span>
-                        </button>
-                      </div>
-                      </form>
+                      {{-- <form action="/sku-part-information/{{ $value->id }}/delete" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <div class="d-flex">
+                            <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
+                                <span class="fas fa-pencil-alt"></span>
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </div>
+                    </form> --}}
                     </td>
                   </tr> @endforeach </tbody>
               </table>
