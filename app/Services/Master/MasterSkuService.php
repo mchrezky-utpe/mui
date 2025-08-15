@@ -18,11 +18,11 @@ class MasterSkuService
     }
 
     public function list_part_information($limit = 1000){
-          return VwExportMasterSku::query('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
+          return MasterSku::query('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
      }
 
     public function list_production_material_information(){
-          return VwExportMasterSku::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(1000)->get();
+          return MasterSku::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
 
     public function list_general_information(){

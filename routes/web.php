@@ -98,6 +98,7 @@ Route::controller(MasterSkuController::class)->group(function () {
     route::get('/sku/export', 'export')->name('sku.export');
     route::get('/sku/export/production-material','export_production_material')->name('sku.export_production_material');
     route::get('/sku/export/general-item',  'export_general_item')->name('sku.export_general_item');
+    Route::get('/sku-image/{id}', 'showImage');
 
 });
 
