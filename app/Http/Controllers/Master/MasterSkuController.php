@@ -109,22 +109,22 @@ class MasterSkuController
             'data' => $data
         ]);
     }
-    public function api_all_production_material()
+    public function api_production_material_all()
     {
-        $data = $this->service->list();
+        $data = $this->service->list_production_material_information();
          return response()->json([
             'data' => $data
         ]);
     }
-    public function api_all_general_item()
+    public function api_general_information_all()
     {
-        $data = $this->service->list();
+        $data = $this->service->list_general_information();
          return response()->json([
             'data' => $data
         ]);
     }
 
-    
+
     public function api_all_sku()
     {
         $data = $this->service->get_all_sku();
