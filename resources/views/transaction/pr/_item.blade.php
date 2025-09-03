@@ -1,7 +1,7 @@
 
 <div class="card-header d-flex justify-content-between align-items-center">
   <h5 class="mb-0">Items</h5>
-  <button id="add_row" type="button" class="btn btn-primary">+</button>
+  <button id="add_row" type="button" class="btn btn-primary add_row">+</button>
 </div>
 <div class="table-container">
   <table id="item_table" class="table table-scroll" id="add_table">
@@ -10,8 +10,9 @@
         <th>No</th>
         <th>Purchase Item Type</th>
         <th>Item Name</th>
+        <th>Price</th>
         <th>Qty</th>
-        <th>Request Date</th>
+        <th>Required Date</th>
         <th>Remark</th>
       </tr>
     </thead>

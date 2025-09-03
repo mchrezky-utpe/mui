@@ -2,6 +2,13 @@ import { skuMaster, table_pr } from "./pr_global_variable.js";
 import { calculateTotal } from "./pr_calculate.js";
 
 export function handleActionTable() {
+
+
+    $('#btn-filter').click(function() {
+        table_pr.ajax.reload(); 
+    });
+
+
     $(document).on("click", ".create_po", function () {
         var id = this.dataset.id;
         var supplier = $(this).closest("tr").find("td").eq(5).text();
@@ -18,7 +25,7 @@ export function handleActionTable() {
     });
 
     let rowCount = 0;
-    $("#add_row").on("click", function () {
+    $(".add_row").on("click", function () {
         const row = rowCount + 1;
         let sku_item;
         skuMaster.forEach((data) => {
@@ -63,7 +70,7 @@ export function handleActionTable() {
             `
                     </select>
                 </td>
-                <!--<td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>-->
+                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>
                 <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"></td>
                 <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
                 <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"></td>
@@ -130,15 +137,21 @@ export function handleActionTable() {
                 $("[name=gen_currency_id]").val(data.gen_currency_id);
                 $("[name=flag_status]").val(data.flag_status);
 
-                console.log(data.items);
+               
+
+                fetchSkuMaster(data.prs_supplier_id)
+                .then((skuMaster) => {
                 $("#item_table tbody").empty();
                 let rowCount = 1;
                 for (let index = 0; index < data.items.length; index++) {
                     const item = data.items[index];
-                    let sku_item;
-                    skuMaster.forEach((data) => {
+                    let sku_item = "";
+                    skuMaster.forEach((datas) => {   
+                        const isSelected = item.sku_id ==  datas.sku_pk_id ? "selected" : ""
                         sku_item +=
-                            `<option sku_description="` +
+                            `<option 
+                            ${isSelected}
+                            sku_description="` +
                             datas.sku_name +
                             `" sku_prefix="` +
                             datas.sku_id +
@@ -180,7 +193,7 @@ export function handleActionTable() {
                         `
                     </select>
                 </td>
-                <!--<td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>-->
+                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" value="${item.price_f}"></td>
                 <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"></td>
                 <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
                 <td><input type="number" class="qty form-control" name="qty[]" value="${item.qty}" placeholder="Qty" step="1"></td>
@@ -197,10 +210,35 @@ export function handleActionTable() {
 
                 $("[name=prs_supplier_id]").change();
                 $("#edit_modal").modal("show");
+
+                })
+                .catch((err) => {
+                    console.error("Error get Supplier:", err);
+                });
             },
             error: function (err) {
                 debugger;
             },
         });
     });
+
+    
+    function fetchSkuMaster(supplier_id) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: base_url + "sku-pricelist/api/by",
+                data: {
+                    prs_supplier_id: supplier_id,
+                },
+                success: function (data) {
+                    resolve(data.data);
+                },
+                error: function (err) {
+                    console.error("Error fetching SKU master:", err);
+                    reject(err);
+                },
+            });
+        });
+    }
 }

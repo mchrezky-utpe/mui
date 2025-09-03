@@ -25,56 +25,22 @@ class PurchaseOrderRequestService
         $start = $request->input('start'); 
         $length = $request->input('length');
         $search = $request->input('search.value'); 
-        $orderColumnIndex = $request->input('order.0.column');
-        $orderDirection = $request->input('order.0.dir') ?? 'desc'; 
-        $columns = $request->input('columns'); 
-
-        $orderColumn = $columns[$orderColumnIndex]['data']  ?? 'trans_date';
-  
-        // $query = DB::table('trans_purchase_request')
-        //     ->select( 
-        //         'trans_purchase_request.id',
-        //         'trans_purchase_request.trans_date',
-        //         'trans_purchase_request.manual_id',
-        //         'trans_purchase_request.doc_num',
-        //         'trans_purchase_request.flag_type',
-        //         'trans_purchase_request.flag_status',
-        //         'trans_purchase_request.flag_purpose',
-        //         'trans_purchase_request.description',
-        //         'mst_person_supplier.description as supplier_name',
-        //         'trans_purchase_request.prs_supplier_id'
-        //     )
-        //     ->leftJoin('mst_person_supplier', 'trans_purchase_request.prs_supplier_id', '=', 'mst_person_supplier.id');
-
-            
         $query = DB::table('vw_app_list_trans_pr_hd');
 
-        //$query = TransPurchaseRequisitionHDVw::all();
-
-        //$query->where('trans_purchase_request.flag_active', [1]);
-
-        if ($request->has('start_date') && $request->has('end_date')) {
-            $query->whereBetween('trans_purchase_request.trans_date', [$request->start_date, $request->end_date]);
+        if ($request->start_date != null && $request->end_date != null) {
+            $query->whereBetween('trans_date', [$request->start_date, $request->end_date]);
         }
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
-                // $q->where('trans_purchase_request.manual_id', 'like', '%' . $search . '%')
-                //     ->orWhere('trans_purchase_request.doc_num', 'like', '%' . $search . '%')
-                //     ->orWhere('trans_purchase_request.description', 'like', '%' . $search . '%');
-
-                $q->Where('trans_purchase_request.doc_num', 'like', '%' . $search . '%')
-                    ->orWhere('trans_purchase_request.description', 'like', '%' . $search . '%');
+                $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('supplier', 'like', '%' . $search . '%');
             });
         }
 
         $recordsTotal = $query->count();
 
         $recordsFiltered = $query->count();
-
-        if($orderColumn){
-            $query->orderBy($orderColumn, $orderDirection);
-        }
 
         if ($length > 0){        
             $data = $query->limit($length)->offset($start)->get();
@@ -127,8 +93,8 @@ class PurchaseOrderRequestService
             $now = Carbon::now();
 
             foreach ($request->sku_id as $index => $sku_id) {
-                //$price = $request->price[$index];
-                $price = 0;
+                $price = $request->price[$index];
+                // $price = 0;
                 $qty = $request->qty[$index];
                 $discount_percentage = $request->discount_percentage[$index] ?? 0;
                 $vat_percentage = $request->vat_percentage[$index] ?? 0;
@@ -231,11 +197,105 @@ class PurchaseOrderRequestService
         return PurchaseOrderRequest::with('items')->where('id', $id)->firstOrFail();
     } 
 
-    function edit(Request $request)
+    // function edit(Request $request)
+    // {
+    //     $data = PurchaseOrderRequest::where('id', $request->id)->firstOrFail();
+    //     $data->description = $request->description;
+    //     $data->manual_id= $request->manual_id;
+    //     $data->save();
+    // }
+
+    public function edit(Request $request)
     {
-        $data = PurchaseOrderRequest::where('id', $request->id)->firstOrFail();
-        $data->description = $request->description;
-        $data->manual_id= $request->manual_id;
-        $data->save();
+        // Mulai transaksi
+        DB::beginTransaction();
+
+        try {
+            // Cari data PR Header yang akan diupdate
+            $prHeader = PurchaseOrderRequest::findOrFail($request->id);
+            
+            // Update PR Header Data
+            $data = [
+                'manual_id' => $request->manual_id,
+                'trans_date' => $request->trans_date,
+                'flag_type' => $request->flag_type,
+                'gen_department_id' => $request->gen_department_id,
+                'gen_currency_id' => $request->gen_currency_id,
+                'description' => $request->description,
+                'prs_supplier_id' => $request->prs_supplier_id,
+                'val_exchangerates' => $request->val_exchangerates ?? 1,
+                'flag_purpose' => $request->flag_purpose,
+                'updated_at' => Carbon::now(),
+            ];
+
+            // Update data PO Header
+            $prHeader->update($data);
+
+            $userId = Auth::id();
+            $now = Carbon::now();
+
+            // Hapus detail lama
+            PurchaseOrderRequestDetail::where('trans_pr_id', $request->id)->delete();
+
+            $items = [];
+
+            foreach ($request->sku_id as $index => $sku_id) {
+                $price = $request->price[$index];
+                $qty = $request->qty[$index];
+                $discount_percentage = $request->discount_percentage[$index] ?? 0;
+                $vat_percentage = $request->vat_percentage[$index] ?? 0;
+
+                $subtotal = CalcHelper::calcSubtotal($data['val_exchangerates'], $qty, $price);
+                $discount = CalcHelper::calcDiscount($subtotal['sub_total_f'], $subtotal['sub_total_d'], $discount_percentage);
+                $vat = CalcHelper::calcVat($discount['after_discount_f'], $discount['after_discount_d'], $vat_percentage);
+
+                $items[] = [
+                    'req_date' => $request->req_date[$index],
+                    'sku_description' => $request->sku_description[$index],
+                    'sku_prefix' => $request->sku_prefix[$index],
+                    'description' => $request->description_item[$index] ?? null,
+                    'sku_id' => $sku_id,
+                    'price_f' => $price,
+                    'price_d' => $price * $qty * $data['val_exchangerates'],
+                    'qty' => $qty,
+                    'subtotal_f' => $subtotal['sub_total_f'],
+                    'subtotal_d' => $subtotal['sub_total_d'],
+                    'discount_percentage' => $discount_percentage,
+                    'discount_flag' => null,
+                    'discount_f' => $discount['discount_f'],
+                    'discount_d' => $discount['discount_d'],
+                    'afterdiscount_f' => $discount['after_discount_f'],
+                    'afterdiscount_d' => $discount['after_discount_d'],
+                    'vat_percentage' => $vat_percentage,
+                    'vat_flag' => null,
+                    'vat_f' => $vat['vat_f'],
+                    'vat_d' => $vat['vat_d'],
+                    'total_f' => $vat['total_f'],
+                    'total_d' => $vat['total_d'],
+                    'generated_id' => Str::uuid()->toString(),
+                    'trans_pr_id' => $prHeader->id, 
+                    'manual_id' => '',
+                    'flag_status' => 0,
+                    'flag_type' => $request->flag_type_detail[$index],
+                    'created_by' => $userId,
+                    'created_at' => $now,
+                    'updated_by' => $userId,
+                    'updated_at' => $now,
+                ];
+            }
+
+            // Insert detail baru
+            PurchaseOrderRequestDetail::insert($items);
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

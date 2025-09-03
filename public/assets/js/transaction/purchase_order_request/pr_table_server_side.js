@@ -1,6 +1,8 @@
 import { setGlobalVariable } from "./pr_global_variable.js";
 
 export function handleTableServerSide() {
+
+
     const table_pr = $("#table-pr").DataTable({
         processing: true,
         serverSide: true,
@@ -145,5 +147,7 @@ export function handleTableServerSide() {
 			}*/
         ],
     });
+    
+    
     setGlobalVariable("table_pr", table_pr);
 }

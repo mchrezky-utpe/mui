@@ -1,6 +1,5 @@
-<x-modals.modal id="edit_modal" title="Edit Purchase Order"  modalClass="custom-modal-dialog-medium">
+<x-modals.modal id="edit_modal" title="Edit Purchase Order Request"  modalClass="custom-modal-dialog-medium">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pr/edit">
-    @csrf
     {{-- <div class="form-group">
       <label>Manual ID</label>
       <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
@@ -12,6 +11,8 @@
     </div> --}}
     @csrf
     <!-- TAB TRANSACTION -->
+    
+    <input type="hidden" name="id" />
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
@@ -69,5 +70,6 @@
     <div class="tab-content mt-3" id="myTabContent">
       <div class="tab-pane fade show active" id="transaksi" role="tabpanel" aria-labelledby="transaksi-tab"> @include('transaction.pr._item') </div>
     </div>
-  </form>   
+  </form> 
+
 </x-modals.modal>
