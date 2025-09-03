@@ -52,7 +52,7 @@
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>
-                      @if ($value->flag_status === 1)
+                      @if ($value->flag_status == 1)
                       <input type="checkbox" name="id" value="{{ $value->trans_pr_id }}"/>
                       @endif
                     </td>
