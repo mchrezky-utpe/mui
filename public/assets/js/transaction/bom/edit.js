@@ -343,7 +343,7 @@ $(document).ready(function() {
                 children: []
             };
             
-            if (level === 1) {
+            if (level == 1) {
                 // Add to root level
                 treeData.push(newItem);
             } else {
