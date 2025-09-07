@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Transaction;
 
-use App\Helpers\HelperCustom;
 use Illuminate\Http\Request;
 use App\Services\Transaction\PurchaseOrderService;
 use Illuminate\Http\Response;
@@ -10,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Transaction\PurchaseOrder;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Transaction\PurchaseOrdePrintDtVw;
+use App\Models\Transaction\PurchaseOrdePrintHdVw;
 
 class PurchaseOrderController
 {
@@ -97,24 +98,11 @@ class PurchaseOrderController
 
     public function generatePDF($id)
     {
-        $po = PurchaseOrder::with('supplier')->findOrFail($id); // Tambahkan relasi supplier juga
-    
-        // Dummy data items, karena tidak ambil dari DB (belum ada relasi)
-        $items = [
-            [
-                'item_code' => null,
-                'item_name' => 'FR BODY KIT-SILVER',
-                'spe_code' => null,
-                'qty' => 1,
-                'unit' => 'PCS',
-                'price' => 191800,
-                'amount' => 191800,
-                'req_date' => now()->format('Y-m-d')
-            ]
-        ];
-    
-        // Ganti karakter ilegal
-        $filename = 'PO-' . str_replace(['/', '\\'], '-', $po->doc_num) . '.pdf';
+        $po = PurchaseOrdePrintHdVw::where('id', $id)->first();
+        $items = PurchaseOrdePrintDtVw::where('trans_po_id', $id)->get();
+        
+        // dd($po);
+        $filename = 'PO-' . str_replace(['/', '\\'], '-', $po->po_number) . '.pdf';
     
         $pdf = Pdf::loadView('transaction.po.pdf', compact('po', 'items'));
         return $pdf->download($filename);
@@ -152,57 +140,12 @@ class PurchaseOrderController
             // METODE 2: Jika menggunakan Query Builder langsung
             else {
                 // Sesuaikan nama tabel dengan database Anda
-                $items = DB::table('trans_purchase_order')
-                    ->where('id', $id)
-                    ->orWhere('id', $id)
-                    ->orWhere('id', $id)
+                $items = DB::table('vw_app_list_trans_po_dt')
+                    ->where('trans_po_id', $id)
                     ->get();
             }
 
             // Jika tidak ada items, coba tabel dengan nama berbeda
-            if ($items->isEmpty()) {
-                $possibleTables = [
-                    'po_items',
-                    'po_details',
-                    'purchase_order_details',
-                    'po_detail_items'
-                ];
-
-                foreach ($possibleTables as $table) {
-                    if (Schema::hasTable($table)) {
-                        $items = DB::table($table)
-                            ->where('po_id', $id)
-                            ->orWhere('id', $id)
-                            ->orWhere('po_doc_id', $id)
-                            ->get();
-                        
-                        if (!$items->isEmpty()) {
-                            // \Log::info("Found items in table: " . $table);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            // Format response dengan pengecekan property yang aman
-            $formattedItems = $items->map(function ($item) {
-                // Convert stdClass ke array untuk kemudahan akses
-                $itemArray = (array) $item;
-                
-                return [
-                    'id' => $itemArray['id'] ?? null,
-                    'item_code' => $itemArray['item_code'] ?? $itemArray['code'] ?? $itemArray['product_code'] ?? '-',
-                    'item_name' => $itemArray['item_name'] ?? $itemArray['name'] ?? $itemArray['product_name'] ?? $itemArray['description'] ?? '-',
-                    'qty_ordered' => $itemArray['qty_ordered'] ?? $itemArray['qty'] ?? $itemArray['quantity'] ?? 0,
-                    'unit' => $itemArray['unit'] ?? $itemArray['uom'] ?? $itemArray['unit_measure'] ?? '-',
-                    'unit_price' => $itemArray['unit_price'] ?? $itemArray['price'] ?? $itemArray['cost'] ?? 0,
-                    'total_price' => $itemArray['total_price'] ?? $itemArray['total'] ?? $itemArray['amount'] ?? 
-                                   (($itemArray['qty_ordered'] ?? $itemArray['qty'] ?? 0) * ($itemArray['unit_price'] ?? $itemArray['price'] ?? 0)),
-                    'delivery_date' => $itemArray['delivery_date'] ?? $itemArray['due_date'] ?? $itemArray['expected_date'] ?? null,
-                    'status' => $itemArray['status'] ?? 'Pending',
-                    'remarks' => $itemArray['remarks'] ?? $itemArray['notes'] ?? $itemArray['comment'] ?? null
-                ];
-            });
 
             // Log untuk debugging
             // \Log::info("Found " . $items->count() . " items for PO ID: " . $id);
@@ -211,7 +154,7 @@ class PurchaseOrderController
             return response()->json([
                 'success' => true,
                 'message' => 'Items retrieved successfully',
-                'data' => $formattedItems,
+                'data' => $items,
                 'total' => $items->count()
             ]);
 

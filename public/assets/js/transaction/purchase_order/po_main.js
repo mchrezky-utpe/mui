@@ -118,82 +118,32 @@ $(document).ready(function () {
                         console.log(`Processing item ${index + 1}:`, item);
 
                         // Safe property access dengan fallback - disesuaikan dengan struktur tabel baru
-                        var description = safeGet(
-                            item,
-                            [
-                                "description",
-                                "item_name",
-                                "name",
-                                "product_name",
-                            ],
-                            "-"
-                        );
-                        var sku = safeGet(
-                            item,
-                            ["sku", "item_code", "code", "product_code"],
-                            "-"
-                        );
-                        var price = safeGet(
-                            item,
-                            ["price", "unit_price", "cost"],
-                            0
-                        );
-                        var qty = safeGet(
-                            item,
-                            ["qty", "qty_ordered", "quantity"],
-                            0
-                        );
-                        var subTotal = safeGet(
-                            item,
-                            ["sub_total", "subtotal"],
-                            price * qty
-                        );
-                        var discount = safeGet(
-                            item,
-                            ["discount", "discount_amount"],
-                            0
-                        );
-                        var afterDiscount = safeGet(
-                            item,
-                            ["after_discount", "net_amount"],
-                            subTotal - discount
-                        );
-                        var vat = safeGet(
-                            item,
-                            ["vat", "tax", "tax_amount"],
-                            0
-                        );
-                        var total = safeGet(
-                            item,
-                            ["total", "total_amount", "final_amount"],
-                            afterDiscount + vat
-                        );
 
                         var row = `
                             <tr>
                                 <td class="text-center">${index + 1}</td>
-                                <td>${description}</td>
-                                <td>${sku}</td>
+                                <td>${item.description}</td>
+                                <td>${item.sku_prefix} - ${item.sku_description}</td>
                                 <td class="text-right">${formatCurrency(
-                                    price
+                                    item.price_f
                                 )}</td>
                                 <td class="text-center">${formatNumber(
-                                    qty
+                                    item.qty
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
-                                    subTotal
+                                    item.sub_total_f
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
-                                    discount
+                                    item.discount_f
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
-                                    afterDiscount
+                                    item.afterdiscount_f
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
-                                    vat
+                                    item.vat_f
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
-                                    total
+                                    item.total_f
                                 )}</td>
                             </tr>
                         `;

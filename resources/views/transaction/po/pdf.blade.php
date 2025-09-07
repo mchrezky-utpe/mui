@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-size: 11px;
         }
         table {
             width: 100%;
@@ -16,7 +16,7 @@
             margin-bottom: 10px;
         }
         .details td {
-            padding: 2px 4px;
+            padding: 4px 4px;
         }
         .items th, .items td {
             border: 1px solid #000;
@@ -28,7 +28,7 @@
             text-align: center;
         }
         .info-label {
-            width: 120px;
+            width: 110px;
             font-weight: bold;
         }
     </style>
@@ -61,31 +61,31 @@
     <table class="details">
         <tr>
             <td class="info-label">SUPPLIER</td>
-            <td>: {{ $po->supplier->description ?? '-' }}</td>
+            <td>: {{ $po->supplier_name ?? '-' }}</td>
             <td class="info-label">PO NUMBER</td>
-            <td>: {{ $po->doc_num }}</td>
+            <td>: {{ $po->po_number }}</td>
         </tr>
         <tr>
             <td class="info-label">ADDRESS</td>
-            <td>: {{ $po->supplier->address_01 ?? '-' }}</td>
+            <td>: {{ $po->address ?? '-' }}</td>
             <td class="info-label">REVISION</td>
             <td>: </td>
         </tr>
         <tr>
             <td class="info-label">PHONE / FAX</td>
-            <td>: {{ $po->supplier->phone_01 ?? '' }} / {{ $po->supplier->phone_02 ?? '' }}</td>
+            <td>: {{ $po->phone ?? '' }} / {{ $po->fax ?? '' }}</td>
             <td class="info-label">PO DATE</td>
-            <td>: {{ \Carbon\Carbon::parse($po->trans_date)->format('Y-m-d') }}</td>
+            <td>: {{ \Carbon\Carbon::parse($po->po_date)->format('Y-m-d') }}</td>
         </tr>
         <tr>
             <td class="info-label">ATTENTION</td>
-            <td>: {{ $po->supplier->contact_person_02 ?? '-' }}</td>
+            <td>: {{ $po->attention_to ?? '-' }}</td>
             <td class="info-label">PR NUMBER</td>
-            <td>: </td>
+            <td>: {{ $po->pr_number }}</td>
         </tr>
         <tr>
             <td class="info-label">EMAIL</td>
-            <td>: {{ $po->supplier->email ?? '-' }}</td>
+            <td>: {{ $po->attention_to ?? '-' }}</td>
             <td class="info-label">TERMS</td>
             <td>: NET30</td>
         </tr>

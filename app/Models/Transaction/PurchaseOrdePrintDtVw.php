@@ -4,8 +4,6 @@ namespace App\Models\Transaction;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MasterPersonSupplier;
-use App\Traits\HasUserTracking;
 
 class PurchaseOrdePrintDtVw extends Model
 {
