@@ -37,6 +37,7 @@
                 <thead>
                   <tr>
                     <th>No</th>
+                    <th>Supplier</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Item Type</th>

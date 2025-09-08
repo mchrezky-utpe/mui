@@ -26,6 +26,9 @@ $(document).ready(function () {
 				data: null
 			}, 
 			{
+				data: "person_supplier"
+			}, 
+			{
 				data: "sku_id"
 			},
 			{
@@ -72,7 +75,7 @@ $(document).ready(function () {
 				}
 			},
 			{
-				targets: 12,
+				targets: 13,
 				orderable: false,
 				searchable: false,
 				render: function(data, type, row, meta) {
