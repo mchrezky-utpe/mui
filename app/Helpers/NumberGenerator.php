@@ -35,7 +35,7 @@ class NumberGenerator
         $formattedCounter = str_pad($newCounter, 4, '0', STR_PAD_LEFT);
 
         // Format nomor dokumen
-        $docNumber = "{$prefix}/{$currentYear}/{$currentMonth}/{$formattedCounter}";
+        $docNumber = "{$prefix}-{$currentYear}/{$currentMonth}/{$formattedCounter}";
 
         return [
             'doc_num' => $docNumber,

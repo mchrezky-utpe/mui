@@ -73,16 +73,17 @@
             <table class="table table-scroll table-striped" id="detail_table">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Description</th>
-                        <th>Sku</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Sub Total</th>
-                        <th>Discount</th>
-                        <th>After Discount</th>
-                        <th>Vat</th>
-                        <th>Total</th>
+        <th>No</th>
+        <th>Item Code</th>
+        <th>Item Name</th>
+        <th>Spec Code</th>
+        <th>Item Type</th>
+        <th>Unit</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Sub Total</th>
+        <th>Total</th>
+        <th></th>
                     </tr>
                 </thead>
                 <tbody></tbody>
