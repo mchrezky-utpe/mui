@@ -62,11 +62,11 @@
                     <td>{{ $value->supplier }}</td>
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->description }}</td>
-                    @if ($value->flag_status === 2)
+                    @if ($value->flag_status == 2)
                       <td class="btn-success">
-                    @elseif ($value->flag_status === 3)
+                    @elseif ($value->flag_status == 3)
                       <td  class="btn-danger">
-                    @elseif ($value->flag_status === 4)
+                    @elseif ($value->flag_status == 4)
                       <td  class="btn-warning">
                     @else
                       <td>
