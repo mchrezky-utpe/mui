@@ -52,10 +52,9 @@
             <th>Price</th>
             <th>Qty</th>
             <th>Sub Total</th>
-            <th>Discount</th>
-            <th>Vat</th>
             <th>Total</th>
             <th>Req Date</th>
+            <th>Remark</th>
             <th>Status</th>
             <th></th>
           </tr>

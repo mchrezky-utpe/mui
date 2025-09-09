@@ -122,8 +122,11 @@ $(document).ready(function () {
                         var row = `
                             <tr>
                                 <td class="text-center">${index + 1}</td>
-                                <td>${item.description}</td>
-                                <td>${item.sku_prefix} - ${item.sku_description}</td>
+                                <td>${item.sku_prefix}</td>
+                                <td>${item.sku_description}</td>
+                                <td>${item.sku_specification_code}</td>
+                                <td>${item.sku_type}</td>
+                                <td>${item.sku_inventory_unit}</td>
                                 <td class="text-right">${formatCurrency(
                                     item.price_f
                                 )}</td>
@@ -132,15 +135,6 @@ $(document).ready(function () {
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
                                     item.sub_total_f
-                                )}</td>
-                                <td class="text-right">${formatCurrency(
-                                    item.discount_f
-                                )}</td>
-                                <td class="text-right">${formatCurrency(
-                                    item.afterdiscount_f
-                                )}</td>
-                                <td class="text-right">${formatCurrency(
-                                    item.vat_f
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
                                     item.total_f

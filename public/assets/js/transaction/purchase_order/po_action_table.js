@@ -1,11 +1,17 @@
 import {
-	skuMaster
+	skuMaster, table_po
 } from './po_global_variable.js';
 import {
 	calculateTotal
 } from './po_calculate.js';
 
 export function handleActionTable() {
+
+
+	$('#btn-filter').click(function() {
+		table_po.ajax.reload(); 
+	});
+	
 
 	// action upload
 	$(document).on('click','.upload', function(){

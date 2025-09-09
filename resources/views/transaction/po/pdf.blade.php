@@ -87,7 +87,19 @@
             <td class="info-label">EMAIL</td>
             <td>: {{ $po->attention_to ?? '-' }}</td>
             <td class="info-label">TERMS</td>
-            <td>: NET30</td>
+            <td>: {{ $po->terms }}</td>
+        </tr>
+        <tr>
+            <td class="info-label"></td>
+            <td></td>
+            <td class="info-label">CURRENCY</td>
+            <td>: {{ $po->currency }}</td>
+        </tr>
+        <tr>
+            <td class="info-label"></td>
+            <td></td>
+            <td class="info-label">DEPARTMENT</td>
+            <td>: {{ $po->department }}</td>
         </tr>
     </table>
 

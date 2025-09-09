@@ -49,36 +49,30 @@ class PurchaseOrderService
         $start = $request->input('start');
         $length = $request->input('length'); 
         $search = $request->input('search.value');
-        $orderColumnIndex = $request->input('order.0.column');
-        $orderDirection = $request->input('order.0.dir');
-        $columns = $request->input('columns');
-
         $query = DB::table('vw_app_list_trans_po_hd');
 
-        if ($request->has('start_date') && $request->has('end_date')) {
-            $query->whereBetween('trans_purchase_order.trans_date', [$request->start_date, $request->end_date]);
+         if ($request->start_date != null && $request->end_date != null) {
+            $query->whereBetween('trans_date', [$request->start_date, $request->end_date]);
         }
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('trans_purchase_order.manual_id', 'like', '%' . $search . '%')
-                    ->orWhere('trans_purchase_order.doc_num', 'like', '%' . $search . '%')
-                    ->orWhere('mst_person_supplier.description', 'like', '%' . $search . '%')
-                    ->orWhere('trans_purchase_order.description', 'like', '%' . $search . '%');
+                $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('supplier', 'like', '%' . $search . '%');
             });
         }
 
         $recordsTotal = $query->count();
 
         $recordsFiltered = $query->count();
-
-        /*
-        if($orderColumn){
-            $query->orderBy($orderColumn, $orderDirection);
+        
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
         }
-        */
+        else{
+            $data = $query->get();
+        }
 
-        $data = $query->get();
         return [
             'data' => $data,
             'recordsTotal' => $recordsTotal,

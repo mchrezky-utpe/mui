@@ -37,6 +37,32 @@
       </div>
     </div>
     <div class="row">
+
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="start_date">Start Date</label>
+              <input type="date" class="form-control" id="start_date" name="start_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="end_date">End Date</label>
+              <input type="date" class="form-control" id="end_date" name="end_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group" style="margin-top: 32px;">
+              <button type="button" id="btn-filter" class="btn btn-primary">
+                <i class="fas fa-search"></i> Filter </button>
+              <button type="button" id="btn-reset" class="btn btn-secondary">
+                <i class="fas fa-sync"></i> Reset </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
