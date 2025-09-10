@@ -69,7 +69,7 @@
             <td class="info-label">ADDRESS</td>
             <td>: {{ $po->address ?? '-' }}</td>
             <td class="info-label">REVISION</td>
-            <td>: </td>
+            <td>: 0</td>
         </tr>
         <tr>
             <td class="info-label">PHONE / FAX</td>

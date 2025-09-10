@@ -82,7 +82,6 @@ $(document).ready(function () {
                             <td>${data[index].sku_name}</td>
                             <td>${data[index].val_price}</td>
                             <td>${data[index].qty}</td>
-                            <td>${data[index].val_subtotal}</td>
                             <td>${data[index].val_total}</td>
                             <td>${data[index].req_date}</td>
                             <td>${data[index].description}</td>

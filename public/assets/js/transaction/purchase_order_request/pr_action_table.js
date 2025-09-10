@@ -21,6 +21,55 @@ export function handleActionTable() {
         $("[name=pr_doc_numb]").val(pr_doc_numb);
         $("[name=supplier_name]").val(supplier);
         $("[name=prs_supplier_id]").val(supplier_id);
+        
+         $.ajax({
+            type: "GET",
+            url: base_url + "pr/" + id,
+            success: function (data) {
+            var data = data.data;
+
+            const sub_total = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.subtotal_f) , 0);
+            const total  = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.total_f) , 0);
+            $("[name=sub_total]").val(sub_total);
+            $("[name=total]").val(total);
+            $("#item_table tbody").empty();
+            let rowCount = 1;
+            for (let index = 0; index < data.items.length; index++) {
+                const item = data.items[index];
+                const newRow =
+                    `
+        <tr>
+            <td>${rowCount}</td>
+            <td> 
+            ${item.flag_type == 1 ? `New Order` : ``}
+            ${item.flag_type == 2 ? `Addition` : ``} 
+            ${item.flag_type == 3 ? `Replacement` : ``}
+            ${item.flag_type == 4 ? `Services` : ``} 
+            </td>
+            <td>
+               
+                ${item.sku_prefix} - ${item.sku_description}
+            </td>
+            <td>${item.price_f}</td>
+            <td style='display:none'></td>
+            <td style='display:none'></td>
+            <td>${item.qty}</td>
+            <td>${item.req_date}</td>
+            <td>${item.description}</td>
+            <td></td>
+            <td></td>
+        </tr>
+            `;
+
+                $("#item_table tbody").append(newRow);
+                rowCount++;
+            }
+            },
+            error: function (err) {
+                debugger;
+            },
+        });
+
         $("#add_modal_po").modal("show");
     });
 
@@ -70,12 +119,12 @@ export function handleActionTable() {
             `
                     </select>
                 </td>
-                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
-                <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"></td>
-                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" step="0.01"></td>
-                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"></td>
+                <td><input type="number" class="price form-control" name="price[]" placeholder="Price"  required>></td>
+                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"  required>></td>
+                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"  required>></td>
+                <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"  required>></td>
+                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" required></td>
+                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required>></td>
                 <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
             </tr>
@@ -139,7 +188,7 @@ export function handleActionTable() {
 
                
 
-                fetchSkuMaster(data.prs_supplier_id)
+            fetchSkuMaster(data.prs_supplier_id)
                 .then((skuMaster) => {
                 $("#item_table tbody").empty();
                 let rowCount = 1;
@@ -220,6 +269,7 @@ export function handleActionTable() {
                 debugger;
             },
         });
+
     });
 
     
