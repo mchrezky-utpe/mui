@@ -1,4 +1,4 @@
-<x-modals.modal id="add_modal" title="Add Purchase Order Request" modalClass="custom-modal-dialog-medium">
+<x-modals.modal id="add_modal" title="Add Purchase Order Request" modalClass="custom-modal-dialog-large">
   <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pr">
      @csrf
     <!-- TAB TRANSACTION -->
@@ -59,5 +59,6 @@
     <div class="tab-content mt-3" id="myTabContent">
       <div class="tab-pane fade show active" id="transaksi" role="tabpanel" aria-labelledby="transaksi-tab"> @include('transaction.pr._item') </div>
     </div>
+    
   </form>
 </x-modals.modal>

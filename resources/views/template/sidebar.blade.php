@@ -247,6 +247,9 @@
                                     <a href="/pr">Purchase Requisition (PR)</a>
                                 </li>
                                 <li>
+                                    <a href="/pr-detail">Purchase Requisition Detail (PR Detail)</a>
+                                </li>
+                                <li>
                                     <a href="/po">Purchase Order (PO)</a>
                                 </li>
                                 <!-- <li>

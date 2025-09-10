@@ -53,6 +53,43 @@ class PurchaseOrderRequestService
             'recordsFiltered' =>  $recordsFiltered
         ];
     }
+
+    
+
+    public function get_detail_all(Request $request){
+        $start = $request->input('start'); 
+        $length = $request->input('length');
+        $search = $request->input('search.value'); 
+        $query = DB::table('vw_app_list_trans_pr_dt');
+
+        if ($request->start_date != null && $request->end_date != null) {
+            $query->whereBetween('trans_date', [$request->start_date, $request->end_date]);
+        }
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('supplier', 'like', '%' . $search . '%');
+            });
+        }
+
+        $recordsTotal = $query->count();
+
+        $recordsFiltered = $query->count();
+
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
+        }
+        else{
+            $data = $query->get();
+        }
+
+        return [
+            'data' => $data,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' =>  $recordsFiltered
+        ];
+    }
     
     public function add(Request $request)
     {

@@ -45,6 +45,10 @@ Route::controller(PurchaseOrderRequestController::class)->group(function () {
     Route::get("/pr/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
     // add po
     Route::post("/pr/po", "add_po")->middleware(OnlyMemberMiddleware::class);
+
+    // pr detail
+    Route::get("/pr-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pr-detail/api/all", "api_detail_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(PurchaseOrderController::class)->group(function () {

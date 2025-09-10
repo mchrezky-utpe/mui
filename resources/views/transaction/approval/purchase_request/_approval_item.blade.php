@@ -51,7 +51,6 @@
             <th>Sku Name</th>
             <th>Price</th>
             <th>Qty</th>
-            <th>Sub Total</th>
             <th>Total</th>
             <th>Req Date</th>
             <th>Remark</th>
