@@ -19,7 +19,7 @@
 <!-- Main CSS-->
 <link href="{{asset('assets/css/theme.css')}}" rel="stylesheet" media="all">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
-
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css">
 <style>
 .custom-modal-dialog-large {
     max-width: 1700px; /* Lebar modal */

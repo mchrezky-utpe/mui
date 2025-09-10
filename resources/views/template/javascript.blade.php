@@ -20,8 +20,11 @@
     <script src="{{asset('assets/vendor/select2/select2.min.js')}}">
     </script>
     <script src="{{asset('assets/js/main.js')}}"></script>
-    <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script> --}}
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
 
     
     <!-- Additional Javascript -->

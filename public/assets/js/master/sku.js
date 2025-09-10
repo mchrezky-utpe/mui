@@ -1,3 +1,19 @@
+
+var table = new DataTable('.data-table-item',
+    {
+    // Konfigurasi dasar
+    scrollX: true,
+    scrollY: "400px",
+    scrollCollapse: true,
+    fixedColumns: {
+        left: 5, // Kolom 0-4 akan fixed (index 0,1,2,3,4)
+        heightMatch: 'auto'
+    },
+    paging: true,
+    pageLength: 10,
+    responsive: false,
+});
+
 $(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
     $.ajax({
