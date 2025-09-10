@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Master;
 use App\Exports\SkuExport;
 use App\Exports\SkuGeneralItemExport;
 use App\Exports\SkuProductionMaterialExport;
-use App\Helpers\HelperCustom;
 use App\Models\MasterSku;
 use App\Services\Master\MasterSkuService;
 use App\Services\Master\MasterSkuTypeService;
@@ -28,13 +27,8 @@ class MasterSkuController
 
     public function __construct(
         MasterSkuService $service,
-        MasterSkuDetailService $detailService,
-        MasterSkuUnitService $unitService,
-        MasterSkuModelService $modelService,
         MasterSkuTypeService $typeService,
-        MasterSkuProcessService $processService,
         MasterSkuBusinessService $businessService,
-        MasterSkuPackagingService $packagingService
     ) {
         $this->service = $service;
         // $this->detailService = $detailService;
