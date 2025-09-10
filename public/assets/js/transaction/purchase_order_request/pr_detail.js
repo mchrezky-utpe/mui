@@ -1,4 +1,6 @@
-  const table_pr = $("#table-pr-detail").DataTable({
+
+
+const table_pr = $("#table-pr-detail").DataTable({
         processing: true,
         serverSide: true,
         ajax: {
@@ -68,3 +70,8 @@
             },
         ],
     });
+
+        $('#btn-filter').click(function() {
+            table_pr.ajax.reload(); 
+        });
+    
