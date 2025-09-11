@@ -46,6 +46,7 @@
                     <th>Supplier</th>
                     <th>Date</th>
                     <th>Description</th>
+                    <th>Purpose</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -62,6 +63,7 @@
                     <td>{{ $value->supplier }}</td>
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->description }}</td>
+                    <td>{{ $value->transaction_purpose }}</td>
                     @if ($value->flag_status === 2)
                       <td class="btn-success">
                     @elseif ($value->flag_status === 3)

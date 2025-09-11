@@ -46,7 +46,8 @@ $(document).ready(function () {
             supplier: $row.find("td:nth-child(5)").text().trim(),
             date: $row.find("td:nth-child(6)").text().trim(),
             description: $row.find("td:nth-child(7)").text().trim(),
-            status: $row.find("td:nth-child(8)").text().trim(),
+            pr_purpose: $row.find("td:nth-child(8)").text().trim(),
+            status: $row.find("td:nth-child(9)").text().trim(),
         };
 
         console.log(rowData);
@@ -58,6 +59,7 @@ $(document).ready(function () {
         $("#detail_status").text(rowData.status);
         $("#detail_doc_num").text(rowData.doc_num);
         $("#detail_id").text(rowData.id);
+        $("#detail_pr_purpose").text(rowData.pr_purpose);
 
         console.log(data);
         debugger;

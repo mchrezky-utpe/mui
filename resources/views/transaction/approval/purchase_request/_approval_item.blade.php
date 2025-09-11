@@ -18,6 +18,10 @@
                             <div class="col-7" id="detail_doc_num">-</div>
                         </div>
                         <div class="mb-2 row">
+                            <div class="col-5"><strong>PR Purpose:</strong></div>
+                            <div class="col-7" id="detail_pr_purpose">-</div>
+                        </div>
+                        <div class="mb-2 row">
                             <div class="col-5"><strong>Supplier:</strong></div>
                             <div class="col-7" id="detail_supplier">-</div>
                         </div>
