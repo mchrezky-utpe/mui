@@ -187,10 +187,31 @@ class PurchaseOrderRequestService
         try {
             $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_order', 'MUI/PO');
           
-            DB::statement('CALL  sp_trans_pr_create_po(?,?,?,?,?,?,?,?,?)',
-             [$request->id, $request->prs_supplier_id, $request->gen_terms_detail_id, 
-             $request->trans_po_date, $request->valid_from_date, $request->valid_to_date,
-            $request->description, $doc_num_generated['doc_num'], $doc_num_generated['doc_counter']]);
+            DB::statement('CALL sp_trans_pr_create_po(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+             [
+                $request->id, $request->prs_supplier_id,
+                $request->gen_terms_detail_id, 
+                $request->trans_po_date, 
+                $request->valid_from_date, 
+                $request->valid_to_date,
+                $request->description, 
+                $doc_num_generated['doc_num'], 
+                $doc_num_generated['doc_counter'],
+                $request->attention, 
+                $request->sub_total, 
+                $request->sub_total, 
+                $request->discount, 
+                $request->discount_total, 
+                $request->discount_total, 
+                $request->ppn, 
+                $request->ppn_total, 
+                $request->ppn_total, 
+                $request->pph23, 
+                $request->pph23_total, 
+                $request->pph23_total, 
+                $request->total, 
+                $request->total, 
+        ]);
           
             DB::commit();
         } catch (\Exception $e) {

@@ -17,20 +17,8 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">Purchase Requisition</h2>
-          <div class="page-breadcrumb">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="#" class="breadcrumb-link">Transaction</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="#" class="breadcrumb-link">Purchase</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Request(PR)</li>
-              </ol>
-            </nav>
-          </div>
+          <h3 class="pageheader-title">Purchase Requisition</h3>
+
         </div>
       </div>
     </div>
@@ -73,13 +61,12 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Doc. #</th>
+                    <th>PR Number</th>
                     <th>Date</th>
                     <th>Type</th>
                     <th>Purpose</th>
                     <th>Supplier</th>
                     <th>Status</th>
-                    <!-- <th>Total</th> -->
                     <th>Action</th>
                   </tr>
                 </thead>
