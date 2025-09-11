@@ -12,30 +12,19 @@
     border-collapse: collapse;
   }
 </style>
+
 <div class="section__content section__content--p30">
   <div class="container-fluid">
+    
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">Purchase Requisition Detail</h2>
-          <div class="page-breadcrumb">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="#" class="breadcrumb-link">Transaction</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="#" class="breadcrumb-link">Purchase</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Purchase Request Detail List(PR Detail)</li>
-              </ol>
-            </nav>
-          </div>
+          <h3 class="pageheader-title">Purchase Requisition Detail</h3>
         </div>
       </div>
     </div>
+
     <div class="row">
-      
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-3">
@@ -65,7 +54,6 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
-            <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -81,7 +69,7 @@
                     <th>PI Type</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
-                    <th>Spesiciation Code</th>
+                    <th>Spec Code</th>
                     <th>Item Type</th>
                     <th>Item Unit</th>
                     <th>Price</th>

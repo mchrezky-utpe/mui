@@ -85,7 +85,7 @@
         </tr>
         <tr>
             <td class="info-label">EMAIL</td>
-            <td>: {{ $po->attention_to ?? '-' }}</td>
+            <td>: {{ $po->email ?? '-' }}</td>
             <td class="info-label">TERMS</td>
             <td>: {{ $po->terms }}</td>
         </tr>

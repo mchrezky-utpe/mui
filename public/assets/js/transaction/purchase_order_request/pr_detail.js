@@ -1,6 +1,8 @@
 
 
 const table_pr = $("#table-pr-detail").DataTable({
+        scrollX: true,
+        scrollY: "400px",
         processing: true,
         serverSide: true,
         ajax: {

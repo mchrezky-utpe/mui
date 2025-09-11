@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">SKU</h2>
+          <h2 class="pageheader-title">SKU Production Material</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -31,40 +31,54 @@
                 <i class="fas fa-file-excel"></i> Export Excel
               </a>
               </div>
-              </div>
            </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first">
+            <div class="">
+            <div class="container-fluid">
+              <table class="table data-table-item table-striped">
                 <thead>
                   <tr> 
                     <th>No</th>
-                    <th>Item Code</th>
-                    <th>Type</th>
-                    <th>Item Name</th>
-                    <th>Item Type</th>
-                    <th>Business Type</th>
+                    <th>Image</th>
+                    <th>Material Code</th>
+                    <th>Material Description</th>
+                    <th>Spec code</th>
+                    <th>Spec Description</th>
                     <th>Sales Category</th>
+                    <th>Set Code</th>
+                    <th>Item Sub Category</th>
+                    <th>Item Type</th>
+                    <th>Procurement Type</th>
+                    <th>Inventory Unit</th>
+                    <th>Procurement Unit</th>
+                    <th>Conversion value</th>
+                    <th>Inv. Reg</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->sku_id }}</td>
                     <td>
-                    @if($value->flag_sku_type  == 1)         
-                          Finished Goods
-                    @elseif($value->flag_sku_type  == 2)  
-                          Production material   
-                    @else
-                          General Item        
-                    @endif  
+                      @if($value->blob_image)
+                      <img src="{{ asset($value->blob_image) }}" width="80">
 
+                      @else
+                        <span class="text-muted">No image</span>
+                      @endif
                     </td>
+                    <td>{{ $value->sku_id }}</td>
                     <td>{{ $value->sku_name }}</td>
-                    <td>{{ $value->sku_material_type }}</td>
-                    <td>{{ $value->sku_business_type }}</td>
+                    <td>{{ $value->sku_specification_code }}</td>
+                    <td>{{ $value->sku_specification_detail }}</td>
                     <td>{{ $value->sku_sales_category }}</td>
+                    <td>{{ $value->set_code }}</td>
+                    <td>{{ $value->sku_sub_category}}</td>
+                    <td>{{ $value->sku_material_type }}</td>
+                    <td>{{ $value->sku_procurement_type }}</td>
+                    <td>{{ $value->sku_inventory_unit }}</td>
+                    <td>{{ $value->sku_procurement_unit }}</td>
+                    <td>{{ $value->val_conversion }}</td>
+                    <td>{{ $value->flag_inventory_register == "1" ? 'YES' : 'NO' }}</td>
                     <td>
                       <form action="/sku-production-material/{{ $value->id }}/delete" method="post"> @csrf 
                       <div class="d-flex">
@@ -80,6 +94,7 @@
                   </tr> @endforeach </tbody>
               </table>
             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -93,5 +108,5 @@
  @endsection 
  
  @section('extra_javascript') 
- <script src="{{ asset('assets/js/master/sku.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/master/sku_production_material.js') }}" type="text/javascript"></script> 
  @endsection

@@ -15,10 +15,6 @@ export function handleTableServerSide() {
                 d.customer = $("#customer").val();
             },
         },
-        /*order: [
-			[3, 'desc'],
-			[2, 'desc']
-		],*/
         columns: [
             {
                 data: null,
@@ -53,48 +49,7 @@ export function handleTableServerSide() {
                 render: function (data, type, row, meta) {
                     return meta.row + 1;
                 },
-            } /*,{
-				targets: 3,
-				render: function(data, type, row, meta) {
-					let flag_type = "";
-					if(data.flag_type == 1){
-						flag_type = "Production Project Material";
-					}else {
-						flag_type = "General Item";
-					}
-					return flag_type;
-				}
-			},{
-				targets: 4,
-				render: function(data, type, row, meta) {
-					let purpose = "";
-					if(data.flag_purpose == 1){
-						purpose = "Project Development";
-					}else if(data.flag_purpose == 2){
-						purpose = "Additional";
-					}else  if(data.flag_purpose == 3){
-						purpose = "Recovery";
-					}else {
-						purpose = "Early Development";
-					}
-					return purpose;
-				}
-			},{
-				targets: 6,
-				render: function(data, type, row, meta) {
-					let status = "";
-					if(data.flag_status == 1){
-						status = "Requested";
-					}else if(data.flag_status == 2){
-						status = "Approved";
-					}else  if(data.flag_status == 3){
-						status = "PO Active";
-					}else {
-						status = "Canceled";
-					}
-					return status;
-				}
-			}*/,
+            },
             {
                 targets: 7,
                 orderable: false,
@@ -139,12 +94,6 @@ export function handleTableServerSide() {
                     ); // Menampilkan nomor urut
                 },
             },
-            /*{
-				targets: 5,
-				render: function(data, type, row, meta) {
-					return data.supplier_name + `<input type="hidden" name="supplier_id" value="${data.prs_supplier_id}">`;
-				}
-			}*/
         ],
     });
     

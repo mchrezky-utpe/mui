@@ -38,19 +38,25 @@
           <textarea required name="description" class="form-control" type="text" placeholder="Description"></textarea>
         </div>
       </div>
-      <div class="col-md-4">
+      
+      <div class="col-md-4"> 
+        <div class="form-group">
+          <label>Sub Total</label>
+          <input id="sub_total" name="sub_total" class="form-control" type="text" placeholder="Sub Total" readonly/>
+        </div>
+
         <div class="form-group">
           <div class="row">
             <div class="col-md-6">
               <label>PPN</label>
               <div class="input-group">
-                <input name="ppn" class="form-control" type="text" placeholder="%"/>
+                <input id="ppn" name="ppn" class="form-control" type="text" placeholder="%"/>
               </div>
             </div>
             <div class="col-md-6">
               <label>&nbsp</label>
               <div class="input-group">
-                <input name="ppn" class="form-control" type="text"  readonly/>
+                <input id="ppn_total" name="ppn_total" class="form-control" type="text"  readonly/>
               </div>
             </div>
          </div>
@@ -61,13 +67,13 @@
             <div class="col-md-6">
               <label>PPH 23</label>
               <div class="input-group">
-                <input name="pph23" class="form-control" type="text" placeholder="%" />
+                <input id="pph23" name="pph23" class="form-control" type="text" placeholder="%" />
               </div>
             </div>
             <div class="col-md-6">
               <label>&nbsp</label>
               <div class="input-group">
-                <input name="pph23_total" class="form-control" type="text" readonly/>
+                <input id="pph23_total" name="pph23_total" class="form-control" type="text" readonly/>
               </div>
             </div>
          </div>
@@ -78,25 +84,20 @@
             <div class="col-md-6">
               <label>Discount</label>
               <div class="input-group">
-                <input name="discount" class="form-control" type="text" placeholder="%" />
+                <input id="discount" name="discount" class="form-control" type="text" placeholder="%" />
               </div>
             </div>
             <div class="col-md-6">
               <label>&nbsp</label>
               <div class="input-group">
-                  <input name="discount_total" class="form-control" type="text" readonly/>
+                  <input id="discount_total" name="discount_total" class="form-control" type="text" readonly/>
               </div>
             </div>
          </div>
         </div>
-
-        <div class="form-group">
-          <label>Sub Total</label>
-          <input name="sub_total" class="form-control" type="text" placeholder="Total" readonly/>
-        </div>
         <div class="form-group">
           <label>Total</label>
-          <input name="total" class="form-control" type="text" placeholder="Attention" readonly/>
+          <input id="total" name="total" class="form-control" type="text" placeholder="Total" readonly/>
         </div>
       </div>
     </div>

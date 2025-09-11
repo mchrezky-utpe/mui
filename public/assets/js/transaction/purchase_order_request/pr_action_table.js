@@ -27,38 +27,36 @@ export function handleActionTable() {
             url: base_url + "pr/" + id,
             success: function (data) {
             var data = data.data;
-
             const sub_total = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.subtotal_f) , 0);
             const total  = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.total_f) , 0);
-            $("[name=sub_total]").val(sub_total);
-            $("[name=total]").val(total);
+            $("[name=sub_total]").val(sub_total.toFixed(4));
+            $("[name=total]").val(total.toFixed(4));
             $("#item_table tbody").empty();
             let rowCount = 1;
             for (let index = 0; index < data.items.length; index++) {
                 const item = data.items[index];
                 const newRow =
                     `
-        <tr>
-            <td>${rowCount}</td>
-            <td> 
-            ${item.flag_type == 1 ? `New Order` : ``}
-            ${item.flag_type == 2 ? `Addition` : ``} 
-            ${item.flag_type == 3 ? `Replacement` : ``}
-            ${item.flag_type == 4 ? `Services` : ``} 
-            </td>
-            <td>
-               
-                ${item.sku_prefix} - ${item.sku_description}
-            </td>
-            <td>${item.price_f}</td>
-            <td style='display:none'></td>
-            <td style='display:none'></td>
-            <td>${item.qty}</td>
-            <td>${item.req_date}</td>
-            <td>${item.description}</td>
-            <td></td>
-            <td></td>
-        </tr>
+                        <tr>
+                            <td>${rowCount}</td>
+                            <td> 
+                            ${item.flag_type == 1 ? `New Order` : ``}
+                            ${item.flag_type == 2 ? `Addition` : ``} 
+                            ${item.flag_type == 3 ? `Replacement` : ``}
+                            ${item.flag_type == 4 ? `Services` : ``} 
+                            </td>
+                            <td>
+                                ${item.sku_prefix} - ${item.sku_description}
+                            </td>
+                            <td>${item.price_f}</td>
+                            <td style='display:none'></td>
+                            <td style='display:none'></td>
+                            <td>${item.qty}</td>
+                            <td>${item.req_date}</td>
+                            <td>${item.description}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
             `;
 
                 $("#item_table tbody").append(newRow);
@@ -72,6 +70,47 @@ export function handleActionTable() {
 
         $("#add_modal_po").modal("show");
     });
+
+
+    function calculateAll() {
+        const subTotal = parseFloat($('#sub_total').val()) || 0;
+        
+        const ppnPercent = parseFloat($('#ppn').val()) || 0;
+        const pph23Percent = parseFloat($('#pph23').val()) || 0;
+        const discountPercent = parseFloat($('#discount').val()) || 0;
+        
+        const validPpnPercent = Math.min(ppnPercent, 100);
+        const validPph23Percent = Math.min(pph23Percent, 100);
+        const validDiscountPercent = Math.min(discountPercent, 100);
+        
+        if (ppnPercent !== validPpnPercent) $('#ppn').val(validPpnPercent);
+        if (pph23Percent !== validPph23Percent) $('#pph23').val(validPph23Percent);
+        if (discountPercent !== validDiscountPercent) $('#discount').val(validDiscountPercent);
+        
+        const discountAmount = (subTotal * validDiscountPercent) / 100;
+        const totalAfterDiscount = subTotal - discountAmount;
+        
+        const ppnAmount = (totalAfterDiscount * validPpnPercent) / 100;
+        const pph23Amount = (totalAfterDiscount * validPph23Percent) / 100;
+        
+        const grandTotal = totalAfterDiscount + ppnAmount - pph23Amount;
+        
+        $('#discount_total').val(discountAmount.toFixed(4));
+        $('#ppn_total').val(ppnAmount.toFixed(4));
+        $('#pph23_total').val(pph23Amount.toFixed(4));
+        $('#total').val(grandTotal.toFixed(4));
+    }
+
+    // Event listeners untuk input persentase
+    $('#ppn, #pph23, #discount').on('input', calculateAll);
+
+    // Event listener untuk sub_total (jika bisa diubah)
+    $('#sub_total').on('input', calculateAll);
+
+    // Inisialisasi awal
+    calculateAll();
+
+
 
     let rowCount = 0;
     $(".add_row").on("click", function () {
@@ -122,9 +161,9 @@ export function handleActionTable() {
                 <td><input type="number" class="price form-control" name="price[]" placeholder="Price"  required>></td>
                 <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"  required>></td>
                 <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"  required>></td>
-                <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"  required>></td>
+                <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"  required></td>
                 <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" required></td>
-                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required>></td>
+                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required></td>
                 <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
             </tr>

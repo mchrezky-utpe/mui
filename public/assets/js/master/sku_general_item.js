@@ -1,3 +1,37 @@
+var table = new DataTable('.data-table-item',
+    {
+    scrollX: true,
+    scrollY: "400px",
+    scrollCollapse: true,
+    fixedColumns: {
+        left: 5, 
+        right: 1,
+        heightMatch: 'auto'
+    },
+    paging: true,
+    pageLength: 10,
+    responsive: false,
+    columnDefs: [
+        {
+            targets: [0, 1, 2, 3, 4],
+            className: 'dtfc-fixed-left',
+            orderable: false,
+            searchable: false
+        },
+        {
+            targets: -1,
+            className: 'dtfc-fixed-right bg-light',
+            orderable: false,
+            searchable: false,
+            width: "120px"
+        },
+        {
+            targets: '_all',
+            className: 'text-nowrap' 
+        }
+    ]
+});
+
 $(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
     $.ajax({

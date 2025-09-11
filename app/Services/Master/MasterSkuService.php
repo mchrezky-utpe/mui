@@ -5,7 +5,6 @@ namespace App\Services\Master;
 use App\Models\MasterSku;
 use App\Models\Master\Sku\MasterSkuType;
 use App\Models\Master\Sku\SkuListVw;
-use App\Models\Master\Sku\VwExportMasterSku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,13 +32,6 @@ class MasterSkuService
           return SkuListVw::orderBy('created_at', 'DESC')->take(1000)->get();
      }
      
-    // public function list2(){
-    //       return SkuListVw::where('flag_sku_type', 2)->take(50)->get();
-    // }
-    // // public function list3(){
-    // //       return SkuListVw::where('flag_sku_type', 3)->take(50)->get();
-    // // }
-
     public function get_set_code(){
      $type = 2;
       $result = DB::selectOne(" SELECT generate_sku_set_code(2) as set_code ");
@@ -81,7 +73,6 @@ class MasterSkuService
 
             $sku_type_id = $request->sku_type_id;
             $result_code =  $this->generateCode($sku_type_id,$request->flag_sku_type);
-
             $data = new MasterSku();
 
             $data->manual_id = $result_code['code'];
@@ -125,20 +116,22 @@ class MasterSkuService
     function handleAddItemProduction($data){
         // get type by id
         $type = MasterSkuType::where('id', $data->sku_type_id)->firstOrFail();
-        // $group_tags = $types->map(function ($type) {
-        //     return $type->group_tag;
-        // })->toArray();
 
         // get type by group tag
         $group_types = MasterSkuType::where('group_tag', $type->group_tag)->get();
-
+        
+        $result_code =  $this->generateCode($group_types->first()->id, $data->flag_sku_type);
 
         foreach ($group_types as $group_type) {
             $copyData = $data->replicate();
+            
+            $validCode = 
+            $this->generateCustomString(
+                $group_types->first()->prefix, 
+                $group_type->prefix, 
+                $result_code['code'] );
 
-            // FIXME BUG CODE
-            $result_code =  $this->generateCode($data->sku_type_id,$data->flag_sku_type);
-            $copyData->manual_id = $result_code['code'];
+            $copyData->manual_id = $validCode;
             $copyData->counter = $result_code['counter'];
 
             $copyData->sku_type_id = $group_type->id;
@@ -146,6 +139,11 @@ class MasterSkuService
             $copyData->save();
         }
 
+    }
+
+    function generateCustomString($prefix_old, $prefix_new, $baseString)
+    {
+        return str_replace($prefix_old, $prefix_new, $baseString);
     }
 
     public function delete($id){

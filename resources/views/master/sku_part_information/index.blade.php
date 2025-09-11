@@ -42,8 +42,8 @@
                     <th>Image</th>
                     <th>Part Code</th>
                     <th>Part Name</th>
-                    <th>Spesicication code</th>
-                    <th>Sales Description</th>
+                    <th>Spec code</th>
+                    <th>Spec Description</th>
                     <th>Sales Category</th>
                     <th>Set Code</th>
                     <th>Item Sub Category</th>
@@ -80,8 +80,8 @@
                     <td>{{ $value->sku_material_type }}</td>
                     <td>{{ $value->sku_business_type }}</td>
                     <td>{{ $value->sku_model }}</td>
-                    <td> Surface area </td>
-                    <td>Weight</td>
+                    <td>{{ $value->val_area }}</td>
+                    <td>{{ $value->val_weight }}</td>
                     <td>{{ $value->sku_inventory_unit }}</td>
                     <td>{{ $value->sku_procurement_type }}</td>
                     <td>{{ $value->sku_procurement_unit }}</td>

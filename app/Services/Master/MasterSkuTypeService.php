@@ -86,7 +86,7 @@ class MasterSkuTypeService
     }
 
     public function droplist(){
-        return SkuTypeListVw::all();
+        return SkuTypeListVw::where('is_primary', 'Yes')->get();
     }
     
 
