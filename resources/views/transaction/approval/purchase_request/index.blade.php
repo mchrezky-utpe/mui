@@ -66,9 +66,9 @@
                     <td>{{ $value->transaction_purpose }}</td>
                     @if ($value->flag_status === 2)
                       <td class="btn-success">
-                    @elseif ($value->flag_status === 3)
+                    @elseif ($value->flag_status == 3)
                       <td  class="btn-danger">
-                    @elseif ($value->flag_status === 4)
+                    @elseif ($value->flag_status == 4)
                       <td  class="btn-warning">
                     @else
                       <td>
