@@ -13,10 +13,24 @@
             border-collapse: collapse;
         }
         .header, .details, .footer {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+        }
+        .details {
+            width: 100%; 
+            table-layout: fixed; 
         }
         .details td {
-            padding: 4px 4px;
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+        .details td:nth-child(2) {
+            width: 40%;
+        }
+        .details td:nth-child(4) {
+            width: 20%; 
+        }
+        .info-label {
+            width: 20%; 
         }
         .items th, .items td {
             border: 1px solid #000;
@@ -24,7 +38,7 @@
             text-align: center;
         }
         .signature td {
-            padding-top: 40px;
+            padding-top: 10px;
             text-align: center;
         }
         .info-label {
@@ -39,12 +53,12 @@
 <div class="header">
     <table>
         <tr>
-            <td style="width: 70%;">
-                <img src="{{ public_path('assets/images/icon/mui.png') }}" height="100" alt="Logo MUI"><br>
-                <strong>PT. MULTI USAGE INDONESIA</strong>
-            </td>
+           <td style="width: 100%; display: flex; align-items: flex-start; justify-content: flex-end;">
+    <img src="{{ public_path('assets/images/icon/mui.png') }}" height="60" alt="Logo MUI">
+    <strong style="margin-left: auto; position: relative;top: -20px;">PT. MULTI USAGE INDONESIA</strong>
+</td>
             <td style="text-align: right;">
-                <strong>SHIP TO:</strong><br>
+                <strong>SHIP TO:</strong>
                 Jl. Jababeka XII B Blok W 38<br>
                 Kawasan Industri Jababeka Cikarang<br>
                 Bekasi, Jawa Barat 17530
@@ -67,37 +81,37 @@
         </tr>
         <tr>
             <td class="info-label">ADDRESS</td>
-            <td>: {{ $po->address ?? '-' }}</td>
+            <td>: <text style="font-size:9px"> {{ $po->address ?? '-' }} </text></td>
             <td class="info-label">REVISION</td>
             <td>: 0</td>
         </tr>
         <tr>
-            <td class="info-label">PHONE / FAX</td>
-            <td>: {{ $po->phone ?? '' }} / {{ $po->fax ?? '' }}</td>
+            <td class="info-label"></td>
+            <td></td>
             <td class="info-label">PO DATE</td>
             <td>: {{ \Carbon\Carbon::parse($po->po_date)->format('Y-m-d') }}</td>
         </tr>
         <tr>
-            <td class="info-label">ATTENTION</td>
-            <td>: {{ $po->attention_to ?? '-' }}</td>
+            <td class="info-label"></td>
+            <td></td>
             <td class="info-label">PR NUMBER</td>
             <td>: {{ $po->pr_number }}</td>
         </tr>
         <tr>
-            <td class="info-label">EMAIL</td>
-            <td>: {{ $po->email ?? '-' }}</td>
+            <td class="info-label">PHONE / FAX</td>
+            <td>: {{ $po->phone ?? '-' }} / {{ $po->fax ?? '-' }}</td>
             <td class="info-label">TERMS</td>
             <td>: {{ $po->terms }}</td>
         </tr>
         <tr>
-            <td class="info-label"></td>
-            <td></td>
+            <td class="info-label">ATTENTION</td>
+            <td>: {{ $po->attention_to ?? '-' }}</td>
             <td class="info-label">CURRENCY</td>
             <td>: {{ $po->currency }}</td>
         </tr>
         <tr>
-            <td class="info-label"></td>
-            <td></td>
+            <td class="info-label">VALID. DATE</td>
+            <td>: {{ $po->valid_from_date }} / {{ $po->valid_to_date }}</td>
             <td class="info-label">DEPARTMENT</td>
             <td>: {{ $po->department }}</td>
         </tr>
@@ -123,7 +137,7 @@
                 <td>{{ $item['item_code'] ?? '-' }}</td>
                 <td>{{ $item['item_name'] }}</td>
                 <td>{{ $item['spe_code'] ?? '' }}</td>
-                <td>{{ $item['qty'] }}</td>
+                <td>{{ number_format($item['qty'],0) }}</td>
                 <td>{{ $item['unit'] }}</td>
                 <td>{{ number_format($item['price'], 0, ',', '.') }}</td>
                 <td>{{ number_format($item['amount'], 0, ',', '.') }}</td>
@@ -132,20 +146,32 @@
             @endforeach
         </tbody>
     </table>
-
     <!-- Totals -->
-    <table class="details" style="margin-top: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <table class="detail_total" style="margin-top:5px">
+        <tr>
+            <td class="info-label">DESCRIPTION</td>
+        </tr>  
+        <tr>
+            <td class="info-label">{{ $po->description }}</td>
+        </tr>
+    </table>
+    <table class="detail_total" style="margin-left: 430px; margin-top:5px">
         <tr>
             <td class="info-label">SUB TOTAL</td>
             <td>: {{ number_format(collect($items)->sum('amount'), 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td class="info-label">DISCOUNT</td>
-            <td>: 0.0000</td>
+            <td>: {{ number_format($po->discount, 0, ',', '.') }}</td>
         </tr>
         <tr>
-            <td class="info-label">PPn</td>
-            <td>: 0.0000</td>
+            <td class="info-label">PPN ({{ number_format($po->ppn_percentage,0)}}%)</td>
+            <td>: {{ number_format($po->ppn, 0, ',', '.') }}</td>
+        </tr>
+        <tr>
+            <td class="info-label">PPH 23</td>
+            <td>: {{ number_format($po->pph23, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td class="info-label">TOTAL ORDER</td>
@@ -154,28 +180,28 @@
     </table>
 
     <!-- Signatures -->
-    <table class="signature" width="100%" style="margin-top: 40px;">
-        <tr>
-            <td>Prepared by</td>
-            <td>Approved by</td>
-            <td>Received by</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>{{ $po->supplier->contact_person_02 ?? '-' }}<br>{{ $po->supplier->description ?? '-' }}</td>
-        </tr>
-        <tr>
-            <td>__________________</td>
-            <td>__________________</td>
-            <td>__________________</td>
-        </tr>
-        <tr>
-            <td>Purchasing</td>
-            <td>Director</td>
-            <td>Supplier Sign</td>
-        </tr>
-    </table>
+   <table class="signature" style="width: 40%; margin-top: 40px;">
+    <tr>
+        <td>Prepared by</td>
+        <td>Approved by</td>
+        <td>Received by</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="padding-top: 45px;">YG. Tan</td>
+        <td>{{ $po->supplier->contact_person_02 ?? '-' }}<br>{{ $po->supplier->description ?? '-' }}</td>
+    </tr>
+    <tr>
+        <td>__________________</td>
+        <td>__________________</td>
+        <td>__________________</td>
+    </tr>
+    <tr>
+        <td>Purchasing</td>
+        <td>Director</td>
+        <td>Supplier Sign</td>
+    </tr>
+</table>
 
 </body>
 </html>

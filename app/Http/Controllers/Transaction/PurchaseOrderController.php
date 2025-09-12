@@ -105,7 +105,7 @@ class PurchaseOrderController
         $filename = 'PO-' . str_replace(['/', '\\'], '-', $po->po_number) . '.pdf';
     
         $pdf = Pdf::loadView('transaction.po.pdf', compact('po', 'items'));
-        return $pdf->download($filename);
+        return  $pdf->stream($filename);
     }
 
     public function getItems($id)
