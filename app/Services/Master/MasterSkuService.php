@@ -17,7 +17,7 @@ class MasterSkuService
     }
 
     public function list_part_information($limit = 1000){
-          return SkuListVw::query('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
+          return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
      }
 
     public function list_production_material_information(){
@@ -71,6 +71,7 @@ class MasterSkuService
 
     public function add(Request $request){
 
+        try{
             $sku_type_id = $request->sku_type_id;
             $result_code =  $this->generateCode($sku_type_id,$request->flag_sku_type);
             $data = new MasterSku();
@@ -105,12 +106,15 @@ class MasterSkuService
             $data->flag_active = 1;
             $data->flag_show = 1;
 
-            // handle item production material insert item base on type
-            if($request->flag_sku_type == 2){
-                $this->handleAddItemProduction($data);
-            }else{
-                $data->save();
-            }
+                // handle item production material insert item base on type
+                if($request->flag_sku_type == 2){
+                    $this->handleAddItemProduction($data);
+                }else{
+                    $data->save();
+                } 
+             }catch (\Exception $e) {
+            dd($e);
+        }
     }
 
     function handleAddItemProduction($data){

@@ -174,29 +174,31 @@ class MasterSkuController
 
     public function add(Request $request)
     {
-        $request->validate([
-            'blob_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'val_area' => 'required|numeric',
-            'val_weight' => 'required|numeric',
-            'val_conversion' => 'required|numeric',
-        ]);
+        
+        $this->service->add($request);
+        // $request->validate([
+        //     'blob_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        //     'val_area' => 'required|numeric',
+        //     'val_weight' => 'required|numeric',
+        //     'val_conversion' => 'required|numeric',
+        // ]);
 
-        $data = $request->all();
+        // $data = $request->all();
 
-        if ($request->hasFile('blob_image')) {
-            $image = $request->file('blob_image');
-            $folder = 'sku_images/' . now()->format('Y-m');
+        // if ($request->hasFile('blob_image')) {
+        //     $image = $request->file('blob_image');
+        //     $folder = 'sku_images/' . now()->format('Y-m');
             
-            // Simpan ke storage/app/public/sku_images/...
-            $path = $image->store($folder, 'public');
+        //     // Simpan ke storage/app/public/sku_images/...
+        //     $path = $image->store($folder, 'public');
             
-            // Simpan path relatif tanpa 'public/' prefix
-            $data['blob_image'] = $path;
-        }
+        //     // Simpan path relatif tanpa 'public/' prefix
+        //     $data['blob_image'] = $path;
+        // }
 
-        $data['flag_inventory_register'] = $request->has('flag_inventory_register') ? 1 : 0;
+        // $data['flag_inventory_register'] = $request->has('flag_inventory_register') ? 1 : 0;
 
-        MasterSku::create($data);
+        // MasterSku::create($data);
 
         return redirect("/sku-part-information")->with('success', 'SKU berhasil ditambahkan!');
     }

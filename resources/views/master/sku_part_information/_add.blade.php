@@ -49,24 +49,10 @@
 
         <div class="mt-3 d-flex align-items-end">
             <div class="mr-2 form-group flex-fill" style="width: 45%;">
-              <label>Item Type</label>
-              <select required name="sku_type_id" class="form-control"></select>
-            </div>
-            <div class="mr-2 form-group flex-fill" style="width: 45%;">
               <label>Business Type</label>
+              <input value="5" name="sku_type_id" class="form-control" type="hidden"/>
               <select required name="sku_business_type_id" class="form-control"></select>
             </div>
-            
-          <div class="mr-2 form-group flex-fill" style="width: 45%;">
-            <label>Procurement Type</label>
-            <select required name="flag_sku_procurement_type" class="form-control">
-              <option value="">-- select --</option>
-              <option value="1">in-house</option>
-              <option value="2">purchase</option>
-              <option value="3">supply</option>
-              <option value="4">purchase & in-house</option>
-            </select>
-          </div>
         </div>
 
         <div class="mt-3 d-flex align-items-end">
