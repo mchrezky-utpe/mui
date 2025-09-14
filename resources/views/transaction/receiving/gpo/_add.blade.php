@@ -29,7 +29,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="description_right">GPO Type</label>
-          <select required id="gpo_type" name="purchase_order_id" class="form-control">
+          <select required id="gpo_type" name="gpo_type" class="form-control">
             <option selected value="1">Project Development</option>
             <option value="2">General Item</option>
           </select>

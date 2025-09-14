@@ -67,7 +67,7 @@ export function handleActionTable() {
 		const id = this.dataset.id;
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'api/sdo/detail',
+			url: base_url + 'api/gpo/detail',
 			data:{id : id},
 			success: function(response) {
 				$("#detail_table tbody tr").remove();
@@ -78,10 +78,13 @@ export function handleActionTable() {
 						<td>${data.do_doc_num}</td>
 						<td>${data.do_date}</td>
 						<td>${data.po_doc_num}</td>
-						<td>${data.description}</td>
-						<td>${data.qty}</td>
 						<td>${data.sku_description}</td>
 						<td>${data.sku_prefix}</td>
+						<td>${data.sku_specification_code}</td>
+						<td>${data.sku_type}</td>
+						<td>${data.sku_model}</td>
+						<td>${data.sku_inventory_unit}</td>
+						<td>${data.qty}</td>
 					</tr>
 				`;
 				$("#detail_table tbody").append(newRow);

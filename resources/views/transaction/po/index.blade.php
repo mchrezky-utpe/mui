@@ -75,16 +75,23 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Doc. #</th>
+                    <th>PO Number</th>
                     <th>Date</th>
                     <th>Type</th>
                     <th>Supplier</th>
                     <th>Description</th>
-                    <th>PR Doc. #</th>
+                    <th>PR Number</th>
                     <th>PO</th>
                     <th>PDF</th>
                     <th>EDI</th>
                     <th>Revison</th>
+                    <th>Terms</th>
+                    <th>Currency</th>
+                    <th>Sub Total</th>
+                    <th>PPN</th>
+                    <th>PPH23</th>
+                    <th>Discount</th>
+                    <th>Total</th>
                     <th>Action</th>
                   </tr>
                 </thead>

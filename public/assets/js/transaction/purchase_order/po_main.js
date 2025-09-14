@@ -7,7 +7,7 @@ $(document).ready(function () {
     handleTableServerSide();
     handleActionTable();
 
-    // Handle detail button click
+
     $(document).on("click", ".btn_detail", function (e) {
         e.preventDefault();
 
@@ -26,8 +26,8 @@ $(document).ready(function () {
             alert("Error: PO ID tidak ditemukan");
             return;
         }
+    
 
-        // Mapping sesuai dengan struktur tabel HTML yang benar
         var rowData = {
             id: data.id,
             doc_num: data.doc_num,
@@ -44,7 +44,6 @@ $(document).ready(function () {
 
         console.log("PO Data:", rowData);
 
-        // Tampilkan data header di modal
         $("#detail_id").text(rowData.id || "-");
         $("#detail_doc_num").text(rowData.doc_num || "-");
         $("#detail_supplier").text(rowData.supplier || "-");
@@ -52,16 +51,21 @@ $(document).ready(function () {
         $("#detail_po_type").text(rowData.po_type || "-");
         $("#detail_description").text(rowData.description || "-");
         $("#detail_pr_doc_num").text(rowData.pr_doc_num || "-");
-        $("#detail_edi_status").text(rowData.status_sent_to_edi || "-");
-        $("#detail_po_status").text("Preparation");
-        $("#detail_file").text(rowData.file || "-");
-        $("#detail_created_at").text(rowData.created_at || "-");
-        $("#detail_updated_at").text(rowData.updated_at || "-");
+        $("#detail_edi_status").text(data.status_sent_to_edi || "-");
+        $("#detail_po_status").text(data.po_status);
+        $("#detail_file").text(data.file || "-");
+        $("#detail_revision").text(data.rev_counter || "-");
+        $("#detail_terms").text(data.terms || "-");
 
-        // Load detail items via AJAX
+        $("#detail_currency").text(data.currency || "-");
+        $("#detail_sub_total").text(data.val_sub_total || "-");
+        $("#detail_ppn").text(data.val_vat || "-");
+        $("#detail_pph23").text(data.val_pph23 || "-");
+        $("#detail_discount").text(data.val_discount || "-");
+        $("#detail_total").text(data.val_total || "-");
+
         loadPoDetailItems(po_id);
 
-        // Show modal
         $("#detail_modal").modal("show");
     });
 
@@ -134,11 +138,12 @@ $(document).ready(function () {
                                     item.qty
                                 )}</td>
                                 <td class="text-right">${formatCurrency(
-                                    item.sub_total_f
-                                )}</td>
-                                <td class="text-right">${formatCurrency(
                                     item.total_f
                                 )}</td>
+                                <td class="text-right">-</td>
+                                <td class="text-right">-</td>
+                                <td class="text-right">-</td>
+                                <td class="text-right">-</td>
                             </tr>
                         `;
                         $("#detail_table tbody").append(row);
@@ -163,12 +168,6 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.error("AJAX Error Details:");
-                console.error("Status:", status);
-                console.error("Error:", error);
-                console.error("Response Text:", xhr.responseText);
-                console.error("Status Code:", xhr.status);
-
                 var errorMessage = "Error loading items. Please try again.";
                 var debugInfo = "";
 

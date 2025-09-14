@@ -147,22 +147,90 @@ $(document).ready(function () {
     }
 
 
-    
-
 $(".btn_production_item").click(function () {
-        fetchSkuProductionMaster()
-            .then((data) => {
-                console.log("Succesfully get Sku:", data);
-                populateSelectSku("Sku", data, $("[name=sku_id]"));
-            })
-            .catch((err) => {
-                console.error("Error get Sku:", err);
-            });
-
+    initItemProductionMaterial();
 });
 
 
+function initItemProductionMaterial(){
+    
+    $('#table-item-production').DataTable().destroy();
+    $('#table-item-production').empty();
+    var table =    $('#table-item-production').DataTable({
+		scrollCollapse: true,
+		processing: true,
+		serverSide: true,
+        pageLength: 15,
+		ajax: {
+			url: base_url + 'api/sku-production-material',
+			type: "GET",
+			data: function(d) {
+				d.start_date = $('input[name="start_date"]').val();
+				d.end_date = $('input[name="end_date"]').val();
+				d.customer = $('#customer').val();
+			}
+		},
+		columns: [
+			{
+				data: "sku_id"
+			},
+			{
+				data: "sku_name"
+			},
+			{
+				data: "sku_specification_code"
+			}
+		]
+	});
+    
+    $('#table-item-production tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        $('[name=sku_name]').val(data.sku_name);
+        $('[name=sku_code]').val(data.sku_id);
+        $('[name=sku_id]').val(data.id);
+    });
+}
+
+
 $(".btn_general_item").click(function () {
+    
+    
+    $('#table-item-general').DataTable().destroy();
+    $('#table-item-general').empty();
+    var table =    $('#table-item-general').DataTable({
+		scrollCollapse: true,
+		processing: true,
+		serverSide: true,
+        pageLength: 15,
+		ajax: {
+			url: base_url + 'api/sku-general-item',
+			type: "GET",
+			data: function(d) {
+				d.start_date = $('input[name="start_date"]').val();
+				d.end_date = $('input[name="end_date"]').val();
+				d.customer = $('#customer').val();
+			}
+		},
+		columns: [
+			{
+				data: "sku_id"
+			},
+			{
+				data: "sku_name"
+			},
+			{
+				data: "sku_specification_code"
+			}
+		]
+	});
+    
+    $('#table-item-general tbody').on('click', 'tr', function() {
+        var data = table.row(this).data();
+        $('[name=sku_name]').val(data.sku_name);
+        $('[name=sku_code]').val(data.sku_id);
+        $('[name=sku_id]').val(data.id);
+    });
+
         fetchSkuGeneralMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
@@ -171,6 +239,7 @@ $(".btn_general_item").click(function () {
             .catch((err) => {
                 console.error("Error get Sku:", err);
             });
+
 });
 
     initParam();

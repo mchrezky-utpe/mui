@@ -60,6 +60,9 @@ const table_pr = $("#table-pr-detail").DataTable({
             {
                 data: "val_total",
             },
+            {
+                data: "description",
+            },
         ],
         columnDefs: [
             {

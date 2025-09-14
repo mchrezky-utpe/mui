@@ -13,9 +13,10 @@ export function initParam() {
 			console.error("Error get Supplier:", err);
 		});
 
-			$(document).on('change', '#supplier_select', function() {
+			$(document).on('change', '#supplier_select, #gpo_type', function() {
 			const supplier_id = $('#supplier_select').val();
-			fetchPoDroplist(supplier_id)
+			const gpo_type = $('#gpo_type').val();
+			fetchPoDroplist(supplier_id, gpo_type)
 				.then(data => {
 					// setGlobalVariable('poMaster', data);
 					populateSelectPo('Po', data, $('#po_select'));
@@ -56,12 +57,12 @@ function fetchSupplierMaster() {
 }
 
 		
-function fetchPoDroplist(supplier_id) {
+function fetchPoDroplist(supplier_id, gpo_type) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'GET',
 			url: base_url + 'api/gpo/droplist',
-			data:{supplier_id : supplier_id},
+			data:{supplier_id : supplier_id, gpo_type: gpo_type},
 			success: function(data) {
 				resolve(data.data);
 			},

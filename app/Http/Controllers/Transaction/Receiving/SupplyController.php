@@ -26,7 +26,7 @@ class SupplyController
 
     public function api_item(Request $request)
     {
-        $data = $this->service->get_item();
+        $data = $this->service->get_item($request);
         return response()->json([
             'data' => $data
         ]);

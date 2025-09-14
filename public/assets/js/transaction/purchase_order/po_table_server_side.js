@@ -48,7 +48,7 @@ export function handleTableServerSide() {
                 data: "pr_doc_num",
             },
             {
-                data: null,
+                data: "po_status",
             },
             {
                 data: "file",
@@ -57,7 +57,28 @@ export function handleTableServerSide() {
                 data: "status_sent_to_edi",
             },
             {
-                data: "pr_doc_num",
+                data: "rev_counter",
+            },
+            {
+                data: "terms",
+            },
+            {
+                data: "currency",
+            },
+            {
+                data: "val_sub_total",
+            },
+            {
+                data: "val_vat",
+            },
+            {
+                data: "val_pph23",
+            },
+            {
+                data: "val_discount",
+            },
+            {
+                data: "val_total",
             },
             {
                 data: null,
@@ -73,15 +94,7 @@ export function handleTableServerSide() {
                 },
             },
             {
-                targets: 7,
-                orderable: false,
-                searchable: false,
-                render: function (data, type, row, meta) {
-                    return "Preparation";
-                },
-            },
-            {
-                targets: 11,
+                targets: 18,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {

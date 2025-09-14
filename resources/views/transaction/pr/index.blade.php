@@ -67,6 +67,7 @@
                     <th>Purpose</th>
                     <th>Supplier</th>
                     <th>Status</th>
+                    <th>Description</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -78,4 +79,8 @@
     </div>
   </div>
 </div>
-<!-- MODAL --> @include('transaction.pr._add_po') @include('transaction.pr._add') @include('transaction.pr._edit') @endsection @section('extra_javascript') <script type="module" src="{{ asset('assets/js/transaction/purchase_order_request/pr_main.js') }}" type="text/javascript"></script> @endsection
+<!-- MODAL --> 
+@include('transaction.pr._detail') 
+@include('transaction.pr._add_po') 
+@include('transaction.pr._add')
+@include('transaction.pr._edit') @endsection @section('extra_javascript') <script type="module" src="{{ asset('assets/js/transaction/purchase_order_request/pr_main.js') }}" type="text/javascript"></script> @endsection

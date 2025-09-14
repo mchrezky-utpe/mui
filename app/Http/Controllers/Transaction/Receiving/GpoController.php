@@ -52,6 +52,15 @@ class GpoController
         ]);
     }
 
+    
+    public function detail(Request $request)
+    {
+        $data = $this->service->detail($request->id);
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function edit(Request $request)
     {
         $this->service->edit($request);

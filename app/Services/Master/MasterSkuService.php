@@ -5,6 +5,7 @@ namespace App\Services\Master;
 use App\Models\MasterSku;
 use App\Models\Master\Sku\MasterSkuType;
 use App\Models\Master\Sku\SkuListVw;
+use App\Models\Master\Sku\SkuListSetCodeVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,21 +28,92 @@ class MasterSkuService
     public function list_general_information(){
           return SkuListVw::where('flag_sku_type', 3)->orderBy('created_at', 'DESC')->take(1000)->get();
      }
+     
+    public function list_pagination_production_material_information(Request $request){
+            $start = $request->input('start');
+            $length = $request->input('length'); 
+            $search = $request->input('search.value');
+            $query = DB::table('vw_app_list_mst_sku');
+             
+            $query->where('flag_sku_type','=',2);
+            $query->where('sku_type_flag_checking','=',4); // unchecked type
+            
+        
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->Where('sku_id', 'like', '%' . $search . '%')
+                        ->orWhere('sku_name', 'like', '%' . $search . '%')
+                        ->orWhere('sku_specification_code', 'like', '%' . $search . '%');
+                });
+            }
+
+            $recordsTotal = $query->count();
+            $recordsFiltered = $query->count();
+            
+            if ($length > 0){        
+                $data = $query->limit($length)->offset($start)->get();
+            }
+            else{
+                $data = $query->get();
+            }
+
+            return [
+                'data' => $data,
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered
+            ];
+     
+        }
+     
+    public function list_pagination_general_information(Request $request){
+            $start = $request->input('start');
+            $length = $request->input('length'); 
+            $search = $request->input('search.value');
+            $query = DB::table('vw_app_list_mst_sku');
+             
+            $query->where('flag_sku_type','=',3);
+        
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->Where('sku_id', 'like', '%' . $search . '%')
+                        ->orWhere('sku_name', 'like', '%' . $search . '%')
+                        ->orWhere('sku_specification_code', 'like', '%' . $search . '%');
+                });
+            }
+
+            $recordsTotal = $query->count();
+            $recordsFiltered = $query->count();
+            
+            if ($length > 0){        
+                $data = $query->limit($length)->offset($start)->get();
+            }
+            else{
+                $data = $query->get();
+            }
+
+            return [
+                'data' => $data,
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered
+            ];
+     
+        }
 
     public function get_all_sku(){
           return SkuListVw::orderBy('created_at', 'DESC')->take(1000)->get();
      }
      
     public function get_set_code(){
-     $type = 2;
-      $result = DB::selectOne(" SELECT generate_sku_set_code(2) as set_code ");
-      $code = $result->set_code;
-      $parts = explode("-", $code);
-      $counter = (int)$parts[1];
-      return  array(
-        'code' => $code,
-        'counter' => $counter
-      );
+        return SkuListSetCodeVw::all();
+    
+    //     $result = DB::selectOne(" SELECT generate_sku_set_code(2) as set_code ");
+    //   $code = $result->set_code;
+    //   $parts = explode("-", $code);
+    //   $counter = (int)$parts[1];
+    //   return  array(
+    //     'code' => $code,
+    //     'counter' => $counter
+    //   );
     }
 
 
@@ -80,6 +152,7 @@ class MasterSkuService
             $data->counter = $result_code['counter'];
 
             $data->group_tag = $request->group_tag;
+            $data->set_code = $request->group_tag;
             $data->set_code_counter = $request->set_code_counter;
 
             $data->flag_sku_type = $request->flag_sku_type;

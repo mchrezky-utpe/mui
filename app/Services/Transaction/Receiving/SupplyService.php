@@ -19,8 +19,10 @@ class SupplyService
     }
 
     
-    public function get_item(){
-         return SkuListVw::where('sku_procurement_type', 'Supply')->get();
+    public function get_item(Request $request){
+         return SkuListVw::where('flag_sku_procurement_type', 3)
+          ->where('sku_type_flag_checking', $request->input('type'))
+          ->get();
     }
 
     public function add(Request $request)

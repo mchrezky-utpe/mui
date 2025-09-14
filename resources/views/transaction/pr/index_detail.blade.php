@@ -74,7 +74,8 @@
                     <th>Item Unit</th>
                     <th>Price</th>
                     <th>Qty</th>
-                    <th>Total</th>
+                    <th>Amount</th>
+                    <th>Remark</th>
                   </tr>
                 </thead>
               </table>

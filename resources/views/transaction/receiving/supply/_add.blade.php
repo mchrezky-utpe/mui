@@ -29,9 +29,8 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="description_right">Supply Item Type</label>
-          <select required id="type" name="purchase_order_id" class="form-control">
-            <option value="">-- Select --</option>
-            <option value="1">Goods Supplied</option>
+          <select required id="supply_type" name="supply_type" class="form-control">
+            <option selected value="1">Goods Supplied</option>
             <option value="2">Not Good</option>
           </select>
         </div>

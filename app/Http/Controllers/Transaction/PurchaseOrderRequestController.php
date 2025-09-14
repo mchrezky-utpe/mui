@@ -76,6 +76,15 @@ class PurchaseOrderRequestController
         ]);
     }
 
+
+    public function get_detail(int $id)
+    {
+        $data = $this->service->get_detail($id);
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+    
     public function edit(Request $request)
     {
         $this->service->edit($request);

@@ -10,6 +10,7 @@
         <th>Item Name</th>
         <th>Spec Code</th>
         <th>Item Type</th>
+        <th>Material Type</th>
         <th>Unit</th>
       </tr>
     </thead>
@@ -25,6 +26,7 @@
         <th>Item Name</th>
         <th>Spec Code</th>
         <th>Item Type</th>
+        <th>Material Type</th>
         <th>Unit</th>
         <th>Qty</th>
         <th></th>

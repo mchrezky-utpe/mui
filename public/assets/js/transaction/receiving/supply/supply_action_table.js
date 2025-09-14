@@ -23,18 +23,19 @@ export function handleActionTable() {
 		  $('#add_modal').show(); 
 
 		  // update value qty sds
-		  $('#'+id).find('td:eq(5)').text(qty);
+		  $('#'+id).find('td:eq(6)').text(qty);
 		  selectedRow = null; // Reset selectedRow
 		}
 	  });
 
 
-	$(document).on('change', '#supplier_select, #po_select', function() {
+	$(document).on('change', '#supplier_select, #po_select, #supply_type', function() {
 		const po_id = $('#po_select').val();
+		const type = $('#supply_type').val();
 		$.ajax({
 			type: 'GET',
 			url: base_url + 'api/supply/item',
-			data:{id : po_id},
+			data:{id : po_id,type:type},
 			success: function(response) {
 				$("#item_table tbody tr").remove();
 				$("#target_table tbody tr").remove();
@@ -46,6 +47,7 @@ export function handleActionTable() {
 						<td>${data.sku_name}</td>
 						<td>${data.sku_specification_code}</td>
 						<td>${data.sku_type}</td>
+						<td>${data.sku_material_type}</td>
 						<td>${data.sku_inventory_unit}</td>
 						<td></td>
 					</tr>

@@ -5,6 +5,7 @@ use App\Models\Transaction\Receiving\VwReceivingList;
 use App\Models\Transaction\Receiving\VwGpoDroplist;
 use App\Models\Transaction\Receiving\TransReceiving;
 use App\Models\Transaction\Receiving\TransReceivingDetail;
+use App\Models\Transaction\Receiving\VwGpoDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -20,7 +21,9 @@ class GpoService
 
     
     public function get_droplist($request){
-        return VwGpoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
+
+        return VwGpoDroplist::where('prs_supplier_id', $request->input('supplier_id'))
+        ->where('flag_type', $request->input('gpo_type'))->get();
     }
     
 
@@ -98,6 +101,12 @@ class GpoService
     public function get(int $id)
     {
         return TransReceiving::where('id', $id)->firstOrFail();
+    } 
+
+    
+    public function detail(int $id)
+    {
+        return VwGpoDetail::where('trans_rr_id', $id)->get();
     } 
     
     function edit(Request $request)

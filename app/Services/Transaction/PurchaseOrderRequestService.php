@@ -5,6 +5,7 @@ use App\Helpers\NumberGenerator;
 
 use App\Models\Transaction\PurchaseOrderRequest;
 use App\Models\Transaction\PurchaseOrderRequestDetail;
+use App\Models\Transaction\PurchaseOrderRequestVwHd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -254,13 +255,11 @@ class PurchaseOrderRequestService
         return PurchaseOrderRequest::with('items')->where('id', $id)->firstOrFail();
     } 
 
-    // function edit(Request $request)
-    // {
-    //     $data = PurchaseOrderRequest::where('id', $request->id)->firstOrFail();
-    //     $data->description = $request->description;
-    //     $data->manual_id= $request->manual_id;
-    //     $data->save();
-    // }
+    
+    public function get_detail(int $id)
+    {
+        return PurchaseOrderRequestVwHd::with('items')->where('id', $id)->firstOrFail();
+    } 
 
     public function edit(Request $request)
     {

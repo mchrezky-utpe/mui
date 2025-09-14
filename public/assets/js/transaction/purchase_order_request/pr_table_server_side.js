@@ -6,6 +6,8 @@ export function handleTableServerSide() {
     const table_pr = $("#table-pr").DataTable({
         processing: true,
         serverSide: true,
+        scrollX: false,
+        scrollY: false,
         ajax: {
             url: base_url + "pr/api/all",
             type: "GET",
@@ -38,6 +40,9 @@ export function handleTableServerSide() {
                 data: "transaction_status",
             },
             {
+                data: "description",
+            },
+            {
                 data: null,
             },
         ],
@@ -51,16 +56,21 @@ export function handleTableServerSide() {
                 },
             },
             {
-                targets: 7,
+                targets: 8,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {
                     const csrfToken = document
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute("content");
-                    let button_action = ``;
+
+                    let button_action = 
+                        `<button data-id="`+data.id+`" type="button" class="btn_detail btn btn-info">
+                          <span class="fas fa-eye"></span>
+                        </button>`
+
                     if (data.flag_status == 2) {
-                        button_action =
+                        button_action +=
                             `
 							<button data-id="` +
                             data.id +
@@ -69,7 +79,7 @@ export function handleTableServerSide() {
                             </button>
 							`;
                     } else if (data.flag_status == 1) {
-                        button_action =
+                        button_action +=
                             `
 								<button data-id="` +
                             data.id +

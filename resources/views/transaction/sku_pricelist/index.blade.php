@@ -1,5 +1,14 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @extends('template.main') @section('content') <div class="section__content section__content--p30">
+ <style>
+  
+    .table-hover tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.1);
+        cursor: pointer;
+    }
+  
+ </style>
+ 
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

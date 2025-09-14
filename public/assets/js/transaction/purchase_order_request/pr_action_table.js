@@ -330,4 +330,69 @@ export function handleActionTable() {
             });
         });
     }
+
+
+    
+    $(document).on("click", ".btn_detail", function (e) {
+        var table = $("#table-pr").DataTable();
+        var row = table.row($(this).closest("tr"));
+        var data = row.data();
+
+        var $row = $(this).closest("tr");
+        var rowData = {
+            id: $row.find("td:nth-child(2)").text().trim(),
+            doc_num: $row.find("td:nth-child(2)").text().trim(),
+            supplier: $row.find("td:nth-child(5)").text().trim(),
+            date: $row.find("td:nth-child(3)").text().trim(),
+            description: $row.find("td:nth-child(8)").text().trim(),
+            pr_purpose: $row.find("td:nth-child(4)").text().trim(),
+            status: $row.find("td:nth-child(7)").text().trim(),
+        };
+
+        console.log(rowData);
+
+        // Tampilkan data header di modal
+        $("#detail_supplier").text(rowData.supplier);
+        $("#detail_date").text(rowData.date);
+        $("#detail_description").text(rowData.description);
+        $("#detail_status").text(rowData.status);
+        $("#detail_doc_num").text(rowData.doc_num);
+        $("#detail_pr_purpose").text(rowData.pr_purpose);
+
+        console.log(data);
+        debugger;
+        var id = this.dataset.id;
+        $.ajax({
+            type: "GET",
+            url: base_url + "pr/" + id+"/detail",
+            success: function (data) {
+                var data = data.data;
+                $("#detail_table tbody").empty();
+                for (let index = 0; index < data.items.length; index++) {
+                    const newRow = `
+                        <tr>
+                            <td>${data.items[index].sku_id}</td>
+                            <td>${data.items[index].sku_name}</td>
+                            <td>${data.items[index].spec_code}</td>
+                            <td>${data.items[index].req_date}</td>
+                            <td>${data.items[index].item_type}</td>
+                            <td>${data.items[index].sku_unit}</td>
+                            <td>${data.items[index].val_price}</td>
+                            <td>${data.items[index].qty}</td>
+                            <td>${data.items[index].val_total}</td>
+                            <td>${data.items[index].item_status}</td>
+                            <td>${data.items[index].description}</td>
+                        </tr>
+                    `;
+
+                    $("#detail_table tbody").append(newRow);
+                }
+
+                $("#detail_modal").modal("show");
+            },
+            error: function (err) {
+                debugger;
+            },
+        });
+    });
 }

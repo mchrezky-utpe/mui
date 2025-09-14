@@ -94,8 +94,6 @@ class MasterSkuController
             );
     }
 
-
-
     public function api_sku_part_information()
     {
         $data = $this->service->list_part_information();
@@ -103,18 +101,24 @@ class MasterSkuController
             'data' => $data
         ]);
     }
-    public function api_production_material_all()
+    public function api_production_material_all(Request $request)
     {
-        $data = $this->service->list_production_material_information();
-         return response()->json([
-            'data' => $data
+        $data = $this->service->list_pagination_production_material_information($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
         ]);
     }
-    public function api_general_information_all()
+    public function api_general_information_all(Request $request)
     {
-        $data = $this->service->list_general_information();
-         return response()->json([
-            'data' => $data
+        $data = $this->service->list_pagination_general_information($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
         ]);
     }
 

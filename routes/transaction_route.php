@@ -43,6 +43,7 @@ Route::controller(PurchaseOrderRequestController::class)->group(function () {
     Route::get("/pr/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pr/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pr/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pr/{id}/detail", "get_detail")->middleware(OnlyMemberMiddleware::class);
     // add po
     Route::post("/pr/po", "add_po")->middleware(OnlyMemberMiddleware::class);
 
@@ -169,6 +170,7 @@ Route::controller(GpoController::class)->group(function () {
     Route::get("/gpo/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/gpo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/gpo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/gpo/detail", "detail")->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(SupplyController::class)->group(function () {
     Route::get("/supply", "index")->middleware(OnlyMemberMiddleware::class);

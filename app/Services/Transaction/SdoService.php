@@ -77,6 +77,7 @@ class SdoService
     {
         return VwSdoDetail::where('trans_rr_id', $id)->get();
     } 
+    
     public function print(int $id)
     {
         $header = PurchaseOrdePrintHdVw::where('id', $id)->first();

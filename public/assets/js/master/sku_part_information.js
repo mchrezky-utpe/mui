@@ -159,12 +159,12 @@ $(".btn_part_information").click(function () {
             list.empty(); // Kosongkan list sebelum menambahkan data baru
 
             // Tambahkan data ke dalam list
-            data.forEach(function (item) {
+            data.data.forEach(function (item) {
                 list.append(
                      `<option value="`+item.code +`">`
                 );
             });
-            $("[name=group_tag]").val(data[0].code);
+            $("[name=group_tag]").val(data.data[data.data.length-1].code);
         })
         .catch((err) => {
             console.error("Error fetchSkuType:", err);
