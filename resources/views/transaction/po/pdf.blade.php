@@ -7,6 +7,10 @@
         body {
             font-family: Arial, sans-serif;
             font-size: 11px;
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 40px; /* Space for footer */
         }
         table {
             width: 100%;
@@ -45,28 +49,41 @@
             width: 110px;
             font-weight: bold;
         }
+        .document-footer {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 10px;
+            color: #555;
+        }
+        .page-number {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
-<div class="header">
-    <table>
-        <tr>
-           <td style="width: 100%; display: flex; align-items: flex-start; justify-content: flex-end;">
-    <img src="{{ public_path('assets/images/icon/mui.png') }}" height="60" alt="Logo MUI">
-    <strong style="margin-left: auto; position: relative;top: -20px;">PT. MULTI USAGE INDONESIA</strong>
-</td>
-            <td style="text-align: right;">
-                <strong>SHIP TO:</strong>
-                Jl. Jababeka XII B Blok W 38<br>
-                Kawasan Industri Jababeka Cikarang<br>
-                Bekasi, Jawa Barat 17530
-            </td>
-        </tr>
-    </table>
-</div>
-
+    <div class="header">
+        <table>
+            <tr>
+               <td style="width: 100%; display: flex; align-items: flex-start; justify-content: flex-end;">
+        <img src="{{ public_path('assets/images/icon/mui.png') }}" height="60" alt="Logo MUI">
+        <strong style="margin-left: auto; position: relative;top: -20px;">PT. MULTI USAGE INDONESIA</strong>
+    </td>
+                <td style="text-align: right;">
+                    <strong>SHIP TO:</strong>
+                    Jl. Jababeka XII B Blok W 38<br>
+                    Kawasan Industri Jababeka Cikarang<br>
+                    Bekasi, Jawa Barat 17530
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <!-- Title -->
     <h2 style="text-align: center;">PURCHASE ORDER</h2>
@@ -146,62 +163,69 @@
             @endforeach
         </tbody>
     </table>
+    
     <!-- Totals -->
     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-    <table class="detail_total" style="margin-top:5px">
+        <table class="detail_total" style="margin-top:5px">
+            <tr>
+                <td class="info-label">DESCRIPTION</td>
+            </tr>  
+            <tr>
+                <td class="info-label">{{ $po->description }}</td>
+            </tr>
+        </table>
+        <table class="detail_total" style="margin-left: 430px; margin-top:5px">
+            <tr>
+                <td class="info-label">SUB TOTAL</td>
+                <td>: {{ number_format(collect($items)->sum('amount'), 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">DISCOUNT</td>
+                <td>: {{ number_format($po->discount, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">PPN ({{ number_format($po->ppn_percentage,0)}}%)</td>
+                <td>: {{ number_format($po->ppn, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">PPH 23</td>
+                <td>: {{ number_format($po->pph23, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td class="info-label">TOTAL ORDER</td>
+                <td>: {{ number_format(collect($items)->sum('amount'), 0, ',', '.') }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Signatures -->
+    <table class="signature" style="width: 40%; margin-top: 40px;">
         <tr>
-            <td class="info-label">DESCRIPTION</td>
-        </tr>  
-        <tr>
-            <td class="info-label">{{ $po->description }}</td>
+            <td>Prepared by</td>
+            <td>Approved by</td>
+            <td>Received by</td>
         </tr>
-    </table>
-    <table class="detail_total" style="margin-left: 430px; margin-top:5px">
         <tr>
-            <td class="info-label">SUB TOTAL</td>
-            <td>: {{ number_format(collect($items)->sum('amount'), 0, ',', '.') }}</td>
+            <td></td>
+            <td style="padding-top: 45px;">YG. Tan</td>
+            <td>{{ $po->supplier->contact_person_02 ?? '-' }}<br>{{ $po->supplier->description ?? '-' }}</td>
         </tr>
         <tr>
-            <td class="info-label">DISCOUNT</td>
-            <td>: {{ number_format($po->discount, 0, ',', '.') }}</td>
+            <td>__________________</td>
+            <td>__________________</td>
+            <td>__________________</td>
         </tr>
         <tr>
-            <td class="info-label">PPN ({{ number_format($po->ppn_percentage,0)}}%)</td>
-            <td>: {{ number_format($po->ppn, 0, ',', '.') }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">PPH 23</td>
-            <td>: {{ number_format($po->pph23, 0, ',', '.') }}</td>
-        </tr>
-        <tr>
-            <td class="info-label">TOTAL ORDER</td>
-            <td>: {{ number_format(collect($items)->sum('amount'), 0, ',', '.') }}</td>
+            <td>Purchasing</td>
+            <td>Director</td>
+            <td>Supplier Sign</td>
         </tr>
     </table>
 
-    <!-- Signatures -->
-   <table class="signature" style="width: 40%; margin-top: 40px;">
-    <tr>
-        <td>Prepared by</td>
-        <td>Approved by</td>
-        <td>Received by</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td style="padding-top: 45px;">YG. Tan</td>
-        <td>{{ $po->supplier->contact_person_02 ?? '-' }}<br>{{ $po->supplier->description ?? '-' }}</td>
-    </tr>
-    <tr>
-        <td>__________________</td>
-        <td>__________________</td>
-        <td>__________________</td>
-    </tr>
-    <tr>
-        <td>Purchasing</td>
-        <td>Director</td>
-        <td>Supplier Sign</td>
-    </tr>
-</table>
+    <!-- Document Number Footer -->
+    <div class="document-footer">
+        MUI-S-F-PU-02-001 Rev.5
+    </div>
 
 </body>
 </html>

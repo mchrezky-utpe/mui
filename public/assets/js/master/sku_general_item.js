@@ -176,7 +176,7 @@ function fetchSkuType() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: base_url + "api/sku-type/droplist",
+            url: base_url + "api/sku-type/droplist/general-item",
             success: function (data) {
                 resolve(data.data);
             },

@@ -42,6 +42,8 @@ Route::controller(MasterSkuTypeController::class)->group(function () {
 
     Route::get("/api/sku-type/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 
+    Route::get("/api/sku-type/droplist/general-item", "api_droplist_for_general_item")->middleware(OnlyMemberMiddleware::class);
+
     Route::get("/api/sku-type/group-tag", "api_group_tag")->middleware(OnlyMemberMiddleware::class);
 
     // API

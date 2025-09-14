@@ -60,6 +60,16 @@ class MasterSkuTypeController
     }
 
     
+
+    public function api_droplist_for_general_item()
+    {
+        $data = $this->service->droplistForGeneralItem();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
+    
     public function api_group_tag()
     {
         $data = $this->service->get_group_tag();

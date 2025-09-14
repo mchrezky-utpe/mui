@@ -88,6 +88,11 @@ class MasterSkuTypeService
     public function droplist(){
         return SkuTypeListVw::where('is_primary', 'Yes')->get();
     }
+
+    
+    public function droplistForGeneralItem(){
+        return SkuTypeListVw::where('is_primary', 'Yes')->where('sku_category_id', 1)->get();
+    }
     
 
     public function get_group_tag(){
