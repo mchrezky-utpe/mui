@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class ApprovalPurchaseRequestService
 {
     public function list(){
-          return ApprovalPurchaseRequestVw::all();
+          return ApprovalPurchaseRequestVw::orderBy('created_at', 'DESC')->get();
     }
 
     public function approve(Request $request)

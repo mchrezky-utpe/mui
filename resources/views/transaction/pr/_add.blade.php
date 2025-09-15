@@ -43,6 +43,12 @@
               <option value="">-- Select Currency --</option>
             </select>
           </div>
+        <div class="form-group">
+            <label for="manual_id_right">Department</label>
+            <select required id="department_select" name="gen_department_id" class="form-control">
+              <option value="">-- Select Department --</option>
+            </select>
+          </div>
       </div>
 
       <!-- REGION SIDE 3 -->

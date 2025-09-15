@@ -31,7 +31,7 @@ export function handleActionTable() {
             const total  = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.total_f) , 0);
             $("[name=sub_total]").val(sub_total.toFixed(4));
             $("[name=total]").val(total.toFixed(4));
-            $("#item_table tbody").empty();
+            $(".item_table tbody").empty();
             let rowCount = 1;
             for (let index = 0; index < data.items.length; index++) {
                 const item = data.items[index];
@@ -59,7 +59,7 @@ export function handleActionTable() {
                         </tr>
             `;
 
-                $("#item_table tbody").append(newRow);
+                $(".item_table tbody").append(newRow);
                 rowCount++;
             }
             },
@@ -169,11 +169,11 @@ export function handleActionTable() {
             </tr>
         `;
 
-        $("#item_table tbody").append(newRow);
+        $(".item_table tbody").append(newRow);
         rowCount++;
     });
 
-    $("#item_table").on("change", ".item_sku", function () {
+    $(".item_table").on("change", ".item_sku", function () {
         const price = $(this).find("option:selected").attr("price");
         const sku_description = $(this)
             .find("option:selected")
@@ -186,7 +186,7 @@ export function handleActionTable() {
         $(this).closest("tr").find(".sku_prefix").val(prefix);
     });
 
-    $("#item_table").on(
+    $(".item_table").on(
         "input",
         ".price, .qty, .discount, .vat_percentage",
         function () {
@@ -206,7 +206,7 @@ export function handleActionTable() {
     calculateTotal();
 
     $(document).on("click", "#add_button", function (e) {
-        $("#item_table tbody").empty();
+        $(".item_table tbody").empty();
     });
 
     $(document).on("click", ".edit", function (e) {
@@ -229,7 +229,7 @@ export function handleActionTable() {
 
             fetchSkuMaster(data.prs_supplier_id)
                 .then((skuMaster) => {
-                $("#item_table tbody").empty();
+                $(".item_table tbody").empty();
                 let rowCount = 1;
                 for (let index = 0; index < data.items.length; index++) {
                     const item = data.items[index];
@@ -292,7 +292,7 @@ export function handleActionTable() {
             </tr>
              `;
 
-                    $("#item_table tbody").append(newRow);
+                    $(".item_table tbody").append(newRow);
                     rowCount++;
                 }
 

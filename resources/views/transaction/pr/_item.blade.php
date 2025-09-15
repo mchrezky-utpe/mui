@@ -4,7 +4,7 @@
   <button id="add_row" type="button" class="btn btn-primary add_row">+</button>
 </div>
 <div class="table">
-  <table id="item_table" class="table" id="add_table">
+  <table id="item_table" class="table item_table" id="add_table">
     <thead>
       <tr>
         <th>No</th>

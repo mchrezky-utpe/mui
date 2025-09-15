@@ -34,7 +34,7 @@ export function initParam() {
     fetchDepartmentMaster()
         .then((data) => {
             console.log("Succesfully get Department:", data);
-            populateSelect("Department", data, $("#department_select"));
+            populateSelect("Department", data, $("[name=gen_department_id]"));
         })
         .catch((err) => {
             console.error("Error get Department:", err);
