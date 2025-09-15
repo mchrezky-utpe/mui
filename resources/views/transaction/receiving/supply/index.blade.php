@@ -79,7 +79,7 @@
   </div>
 </div>
 <!-- MODAL -->
- @include('transaction.sdo._detail') 
+ @include('transaction.receiving.supply._detail') 
  @include('transaction.receiving.supply._add') 
  @include('transaction.receiving.supply._edit') 
  @include('transaction.receiving.supply._qty_sds') 

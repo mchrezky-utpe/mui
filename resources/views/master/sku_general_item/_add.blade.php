@@ -7,15 +7,15 @@
       <!-- REGION SIDE 1 -->
       <div class="col-md-5">
         <div class="form-group">
-            <label>Material Type</label>
+            <label>Item Type</label>
             <select required name="sku_type_id" class="form-control"></select>
         </div>
         <div class="form-group"> 
-          <label>Material Code</label>
+          <label>Item Code</label>
           <input readonly name="manual_id" class="form-control" type="text" value="IC-XXXXX-XXX">
         </div>
         <div class="form-group">
-          <label>Material Name</label>
+          <label>Item Name</label>
           <input required name="description" class="form-control" type="text">
         </div>
         <div class="form-group">

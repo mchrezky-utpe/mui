@@ -44,9 +44,9 @@ function calc_per_row(row) {
 	const vat = result_vat.vat_f;
 	const total = result_vat.total_f;
 
-	$(row).find('.sub_total').val(sub_total.toFixed(2));
-	$(row).find('.after_discount').val(after_discount.toFixed(2));
-	$(row).find('.total').val(total.toFixed(2));
+	$(row).find('.sub_total').val(sub_total.toFixed(0));
+	$(row).find('.after_discount').val(after_discount.toFixed(0));
+	$(row).find('.total').val(total.toFixed(0));
 	return {
 		sub_total: sub_total,
 		discount: discount_value,

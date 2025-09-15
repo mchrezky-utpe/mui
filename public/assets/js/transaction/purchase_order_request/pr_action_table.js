@@ -29,8 +29,8 @@ export function handleActionTable() {
             var data = data.data;
             const sub_total = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.subtotal_f) , 0);
             const total  = data.items.reduce((accumulator, item) => accumulator + parseFloat(item.total_f) , 0);
-            $("[name=sub_total]").val(sub_total.toFixed(4));
-            $("[name=total]").val(total.toFixed(4));
+            $("[name=sub_total]").val(sub_total.toFixed(0));
+            $("[name=total]").val(total.toFixed(0));
             $(".item_table tbody").empty();
             let rowCount = 1;
             for (let index = 0; index < data.items.length; index++) {
@@ -95,10 +95,10 @@ export function handleActionTable() {
         
         const grandTotal = totalAfterDiscount + ppnAmount - pph23Amount;
         
-        $('#discount_total').val(discountAmount.toFixed(4));
-        $('#ppn_total').val(ppnAmount.toFixed(4));
-        $('#pph23_total').val(pph23Amount.toFixed(4));
-        $('#total').val(grandTotal.toFixed(4));
+        $('#discount_total').val(discountAmount.toFixed(0));
+        $('#ppn_total').val(ppnAmount.toFixed(0));
+        $('#pph23_total').val(pph23Amount.toFixed(0));
+        $('#total').val(grandTotal.toFixed(0));
     }
 
     // Event listeners untuk input persentase

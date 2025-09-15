@@ -55,6 +55,7 @@ class GpoService
                     'generated_id' => Str::uuid()->toString(),
                     'trans_rr_id' => $header->id, 
                     'sku_id' => $po_detail_id,
+                    'do_detail_id' => $po_detail_id,
                     'description' => 'REMARK GPO'
                 ];
             }

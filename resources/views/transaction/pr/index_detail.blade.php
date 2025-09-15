@@ -67,6 +67,9 @@
                     <th>Department</th>
                     <th>PR Type</th>
                     <th>PI Type</th>
+                    <th>Approval</th>
+                    <th>Process</th>
+                    <th>Po Number</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Spec Code</th>

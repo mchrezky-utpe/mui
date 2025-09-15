@@ -37,6 +37,15 @@ const table_pr = $("#table-pr-detail").DataTable({
                 data: "status_type_item",
             },
             {
+                data: "process_status",
+            },
+            {
+                data: "process_status",
+            },
+            {
+                data: "doc_num_po",
+            },
+            {
                 data: "sku_id",
             },
             {

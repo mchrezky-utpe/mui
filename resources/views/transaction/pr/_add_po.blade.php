@@ -34,7 +34,7 @@
           <input name="attention" class="form-control" type="text" placeholder="Attention" />
         </div>
         <div class="form-group">
-          <label>Description</label>
+          <label>Remark</label>
           <textarea required name="description" class="form-control" type="text" placeholder="Description"></textarea>
         </div>
       </div>

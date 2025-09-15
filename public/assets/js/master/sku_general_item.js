@@ -55,7 +55,12 @@ $(document).on("click", ".edit", function (e) {
             $("[name=flag_inventory_register]").val(
                 data.flag_inventory_register
             );
-            $("[name=type_id]").val(data.sku_type_id).prop("selected", true);
+            
+            if(data.flag_inventory_register == 1){
+               $("[name=flag_inventory_register]").prop('checked', true);
+            }
+
+            $("[name=sku_type_id]").val(data.sku_type_id).prop("selected", true);
             $("[name=model_id]").val(data.sku_model_id).prop("selected", true);
             $("[name=process_id]")
                 .val(data.sku_process_id)

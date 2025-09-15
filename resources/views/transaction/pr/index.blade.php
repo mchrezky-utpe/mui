@@ -67,7 +67,7 @@
                     <th>Purpose</th>
                     <th>Supplier</th>
                     <th>Status</th>
-                    <th>Description</th>
+                    <th>Remark</th>
                     <th>Action</th>
                   </tr>
                 </thead>

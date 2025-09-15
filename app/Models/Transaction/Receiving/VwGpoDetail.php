@@ -9,7 +9,7 @@ class VwGpoDetail extends Model
 {
     use HasFactory;
   
-    protected $table = 'vw_app_list_trans_rr_dt';
+    protected $table = 'vw_app_list_trans_rr_gpo_dt';
 
 
 }

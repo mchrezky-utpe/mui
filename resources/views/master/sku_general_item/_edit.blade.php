@@ -1,20 +1,20 @@
-<x-modals.modal id="edit_modal" title="Edit Part Information" modalClass="custom-modal-dialog-medium">
+<x-modals.modal id="edit_modal" title="Edit General Item" modalClass="custom-modal-dialog-medium">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-general-item/edit">
 <div class="row">  
 @csrf
     <input type="hidden" name="id" />
       <div class="col-md-5">
         <div class="form-group">
-          <label>Part Code</label>
+            <label>Item Type</label>
+            <select required name="sku_type_id" class="form-control"></select>
+        </div>
+        <div class="form-group">
+          <label>Item Code</label>
           <input readonly name="manual_id" class="form-control" type="text" value="PC-XXXXX-XXX">
         </div>
         <div class="form-group">
-          <label>Part Name</label>
+          <label>Item Name</label>
           <input required name="description" class="form-control" type="text">
-        </div>
-        <div class="form-group">
-          <label>Set Code</label>
-          <input readonly name="group_tag" class="form-control" type="text"/>
         </div>
         <div class="form-group">
           <label>Spesification Code</label>
@@ -30,51 +30,39 @@
             <input required name="specification_detail" class="form-control" type="text"/>
           </div>
           <div class="form-group flex-fill ml-2" style="width: 40%;">
-            <label>Sales Category</label>
-            <select required name="sku_sales_category_id" class="form-control"></select>
+                  <label>Procurement Type</label>
+                <select required name="flag_sku_procurement_type" class="form-control">
+                  <option value="">-- select --</option>
+                  <option value="1">in-house</option>
+                  <option value="2">purchase</option>
+                  <option value="3">supply</option>
+                  <option value="4">purchase & in-house</option>
+                </select>
           </div>
         </div>
 
         <div class="d-flex align-items-end mt-3">
           <div class="form-group flex-fill mr-2" style="width: 45%;">
-            <label>Business Type</label>
-            <select required name="sku_business_type_id" class="form-control"></select>
+            <label>Procurement Unit</label>
+            <select required name="sku_procurement_unit_id" class="form-control"></select>
           </div>
-          <!-- <div class="form-group flex-fill ml-2" style="width: 55%;">
-            <label>&nbsp;</label>
-            <select required name="type_id" class="form-control"></select>
-          </div> -->
+        <div class="form-group flex-fill ml-2"  style="width: 35%;">
+          <label>Inventory Unit</label>
+          <select required name="sku_inventory_unit_id" class="form-control"></select>
+        </div>
         </div>
 
         <div class="d-flex align-items-end mt-3">
-          <div class="form-group flex-fill mr-2" style="width: 30%;">
-            <label>Weight (gram)</label>
-            <input required name="val_weight" class="form-control" type="text">
+        <div class="form-group flex-fill ml-2" style="width: 40%;">
+          <label>Conversion value</label>
+          <input required name="val_conversion" class="form-control" type="text">
           </div>
-          <div class="form-group flex-fill mx-2" style="width: 30%;">
-            <label>Surface Area (dm2)</label>
-            <input required name="val_area" class="form-control" type="text">
-          </div>
-          <div class="form-group flex-fill ml-2" style="width: 35%;">
-            <label>Model</label>
-            <select  name="sku_model_id" class="form-control"></select>
-          </div>
-        </div>
-
-        <div class="d-flex align-items-end mt-3">
-          <div class="form-group flex-fill mr-2"  style="width: 30%;">
-            <label>Inventory Unit</label>
-            <select required name="sku_inventory_unit_id" class="form-control"></select>
-          </div>
-          <div class="form-group flex-fill mx-2"  style="width: 30%;">
-            <label>Conversion Value</label>
-            <input required name="val_conversion" class="form-control" type="text">
-          </div>
-          <div class="form-group flex-fill ml-2"  style="width: 35%;">
+          <div class="form-group flex-fill ml-2" style="width: 40%;">
             <label>Inventory Reg.</label>
             <input required name="flag_inventory_register" class="form-control" type="checkbox">
           </div>
         </div>
+
       </div>
       </div>
   </form>   

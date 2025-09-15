@@ -79,7 +79,7 @@
                     <th>Date</th>
                     <th>Type</th>
                     <th>Supplier</th>
-                    <th>Description</th>
+                    <th>Remark</th>
                     <th>PR Number</th>
                     <th>PO</th>
                     <th>PDF</th>

@@ -138,7 +138,7 @@ $(document).ready(function () {
         var id = this.dataset.id;
         $.ajax({
             type: "POST",
-            url: base_url + "approval-pr/item/hold",
+            url: base_url + "approval-pr/item/hofld",
             async: false,
             data: {
                 _token: csrfToken,

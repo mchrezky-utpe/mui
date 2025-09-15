@@ -8,12 +8,14 @@
         <thead>
           <tr>
             <th>Do Number</th>
-            <th>Do Date</th>
-            <th>Po Number</th>
+            <th>Receiving Date</th>
             <th>Description</th>
-            <th>Qty</th>
             <th>Item Name</th>
             <th>Item Code</th>
+            <th>Item Type</th>
+            <th>Item Model</th>
+            <th>Item Unit</th>
+            <th>Qty</th>
             <th></th>
           </tr>
         </thead>

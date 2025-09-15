@@ -8,7 +8,7 @@
         <thead>
           <tr>
             <th>Do Number</th>
-            <th>Do Date</th>
+            <th>Receiving Date</th>
             <th>Po Number</th>
             <th>Item Name</th>
             <th>Item Code</th>

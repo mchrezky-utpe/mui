@@ -64,7 +64,7 @@
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->description }}</td>
                     <td>{{ $value->transaction_purpose }}</td>
-                    @if ($value->flag_status === 2)
+                    @if ($value->flag_status == 2)
                       <td class="btn-success">
                     @elseif ($value->flag_status == 3)
                       <td  class="btn-danger">
