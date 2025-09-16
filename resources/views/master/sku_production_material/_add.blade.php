@@ -1,5 +1,5 @@
 <x-modals.modal id="add_modal"  title="Production Material" modalClass="custom-modal-dialog-medium">
-  <form id="form_modal2" autocomplete="off" class="form-horizontal" method="post" action="/sku-production-material">
+  <form id="form_modal2" autocomplete="off" class="form-horizontal" method="post" action="/sku-production-material" enctype="multipart/form-data">
     <div class="row">
       @csrf
 
