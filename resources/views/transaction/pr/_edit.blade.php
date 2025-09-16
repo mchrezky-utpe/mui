@@ -1,4 +1,4 @@
-<x-modals.modal id="edit_modal" title="Edit Purchase Order Request"  modalClass="custom-modal-dialog-medium">
+<x-modals.modal id="edit_modal" title="Edit Purchase Order Request"  modalClass="custom-modal-dialog-large">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pr/edit">
     {{-- <div class="form-group">
       <label>Manual ID</label>

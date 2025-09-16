@@ -115,6 +115,7 @@ export function handleActionTable() {
     let rowCount = 0;
     $(".add_row").on("click", function () {
         const row = rowCount + 1;
+        const supplier = $('#supplier_select').val();
         let sku_item;
         skuMaster.forEach((data) => {
             sku_item +=
@@ -139,7 +140,7 @@ export function handleActionTable() {
             <tr>
                 <td>${row}</td>
 				<td>
-					<select name="flag_type_detail[]" class="form-control item_sku">
+					<select required name="flag_type_detail[]" class="form-control item_sku">
                         <option value="">
                             -- Pick Purchase Item Type --
 							<option value="1"> New Order </option>
@@ -149,7 +150,7 @@ export function handleActionTable() {
                         </option>
 				</td>
                 <td>
-                    <select name="sku_id[]" class="form-control item_sku">
+                    <select required name="sku_id[]" class="form-control item_sku">
                         <option value="">
                             -- Select SKU --
                         </option>
@@ -165,6 +166,7 @@ export function handleActionTable() {
                 <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" required></td>
                 <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required></td>
                 <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
+                <td><input type="hidden" class="total form-control" name="supplier[]" value="${supplier}" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
             </tr>
         `;
@@ -260,7 +262,7 @@ export function handleActionTable() {
             <tr>
                 <td>${rowCount}</td>
 				<td>
-					<select name="flag_type_detail[]" class="form-control item_sku">
+					<select required name="flag_type_detail[]" class="form-control item_sku">
                         <option value="">
                             -- Pick Purchase Item Type --
 							<option ${item.flag_type == 1 ? `selected` : ``} value="1"> New Order </option>
@@ -272,7 +274,7 @@ export function handleActionTable() {
                         </option>
 				</td>
                 <td>
-                    <select name="sku_id[]" class="form-control item_sku">
+                    <select required name="sku_id[]" class="form-control item_sku">
                         <option value="">
                             -- Select SKU --
                         </option>
@@ -281,12 +283,12 @@ export function handleActionTable() {
                         `
                     </select>
                 </td>
-                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" value="${item.price_f}"></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
-                <td><input type="number" class="qty form-control" name="qty[]" value="${item.qty}" placeholder="Qty" step="1"></td>
-                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" value="${item.req_date}" step="0.01"></td>
-                <td><input type="text" class="form-control" name="description_item[]" value=${item.description} placeholder="Description"></td>
+                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" value="${item.price_f}" required></td>
+                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" required></td>
+                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]" required></td>
+                <td><input type="number" class="qty form-control" name="qty[]" value="${item.qty}" placeholder="Qty" step="1" required></td>
+                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" value="${item.req_date}" step="0.01" required></td>
+                <td><input type="text" class="form-control" name="description_item[]" value=${item.description} placeholder="Description" required></td>
                 <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
             </tr>
@@ -331,33 +333,58 @@ export function handleActionTable() {
         });
     }
 
+// $(document).on('click', '.btn_submit_modal', function (e) {
+//     e.preventDefault();
+//     debugger;
+//     let $modal = $(this).closest('.modal');
+//     let $form = $modal.find('form');
+//     let isValid = true;
 
+//     $form.find('.error-message').remove(); 
+//     $form.find('.is-invalid').removeClass('is-invalid');
+
+//     $form.find('[required]').each(function () {
+//         if (!$(this).val() || $(this).val().trim() === '') {
+//             isValid = false;
+//             $(this).addClass('is-invalid'); // Tambahkan kelas untuk styling error
+//             $(this).after('<span class="error-message" style="color: red; font-size: 12px;">This field is required.</span>');
+//         }
+//     });
+//     if (typeof is_using_item !== 'undefined' && is_using_item == true){
+//     let item_table_id = $('#item_table');
+//         if (item_table_id.length > 0) {
+//             let tableRowCount = item_table_id.find('tbody tr').length;
+//             if (tableRowCount === 0) {
+//                 isValid = false;
+//                 item_table_id.after('<span class="error-message" style="color: red; font-size: 12px;">The item table cannot be empty.</span>');
+//             }
+//         }
+//     }
+    
+//     if (!isValid) {
+//         return false;
+//     }
+    
+//     if($('[name="supplier[]"]').val() != $('#supplier_select').val()){
+//         alert('Maaf supplier tidak sama dengan item yang dipilih');
+//         return false;
+//     }
+
+//     $form.submit();
+//     });
     
     $(document).on("click", ".btn_detail", function (e) {
         var table = $("#table-pr").DataTable();
         var row = table.row($(this).closest("tr"));
         var data = row.data();
 
-        var $row = $(this).closest("tr");
-        var rowData = {
-            id: $row.find("td:nth-child(2)").text().trim(),
-            doc_num: $row.find("td:nth-child(2)").text().trim(),
-            supplier: $row.find("td:nth-child(5)").text().trim(),
-            date: $row.find("td:nth-child(3)").text().trim(),
-            description: $row.find("td:nth-child(8)").text().trim(),
-            pr_purpose: $row.find("td:nth-child(4)").text().trim(),
-            status: $row.find("td:nth-child(7)").text().trim(),
-        };
-
-        console.log(rowData);
-
         // Tampilkan data header di modal
-        $("#detail_supplier").text(rowData.supplier);
-        $("#detail_date").text(rowData.date);
-        $("#detail_description").text(rowData.description);
-        $("#detail_status").text(rowData.status);
-        $("#detail_doc_num").text(rowData.doc_num);
-        $("#detail_pr_purpose").text(rowData.pr_purpose);
+        $("#detail_supplier").text(data.supplier);
+        $("#detail_date").text(data.trans_date);
+        $("#detail_description").text(data.description);
+        $("#detail_status").text(data.transaction_status);
+        $("#detail_doc_num").text(data.doc_num);
+        $("#detail_pr_purpose").text(data.transaction_purpose);
 
         console.log(data);
         debugger;
