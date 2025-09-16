@@ -5,6 +5,10 @@
     <input type="hidden" name="id" />
       <div class="col-md-5">
         <div class="form-group">
+          <label>Upload Gambar</label>
+          <input type="file" class="form-control" name="blob_image" accept="image/*">
+        </div>
+        <div class="form-group">
             <label>Item Type</label>
             <select required name="sku_type_id" class="form-control"></select>
         </div>

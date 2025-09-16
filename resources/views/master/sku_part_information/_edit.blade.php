@@ -5,6 +5,10 @@
     <input type="hidden" name="id" />
       <div class="col-md-5">
         <div class="form-group">
+        <div class="form-group">
+          <label>Upload Gambar</label>
+          <input type="file" class="form-control" name="blob_image" accept="image/*">
+        </div>
           <label>Part Code (legacy)</label>
           <input readonly name="manual_id" class="form-control" type="text" value="PC-XXXXX-XXX">
         </div>

@@ -1,11 +1,15 @@
 <x-modals.modal id="add_modal"  title="General Item" modalClass="custom-modal-dialog-medium">
-  <form id="form_modal2" autocomplete="off" class="form-horizontal" method="post" action="/sku-general-item">
+  <form id="form_modal2" autocomplete="off" class="form-horizontal" method="post" action="/sku-general-item" enctype="multipart/form-data">
     <div class="row">
       @csrf
 
       <input required name="flag_sku_type" value="3" class="form-control" type="hidden">
       <!-- REGION SIDE 1 -->
       <div class="col-md-5">
+        <div class="form-group">
+          <label>Upload Gambar</label>
+          <input type="file" class="form-control" name="blob_image" accept="image/*">
+        </div>
         <div class="form-group">
             <label>Item Type</label>
             <select required name="sku_type_id" class="form-control"></select>

@@ -176,7 +176,7 @@ export function handleActionTable() {
     });
 
     $(".item_table").on("change", ".item_sku", function () {
-        const price = $(this).find("option:selected").attr("price");
+        const price = $(this).find("option:selected").attr("price").toFixed(0);
         const sku_description = $(this)
             .find("option:selected")
             .attr("sku_description");

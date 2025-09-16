@@ -174,6 +174,16 @@ class MasterSkuService
             $data->flag_sku_procurement_type = $request->flag_sku_procurement_type;
             $data->sku_procurement_unit_id = $request->sku_procurement_unit_id;
 
+        
+            $imageData = null;
+            if ($request->hasFile('blob_image')) {
+                $image = $request->file('blob_image');
+                $imageData = file_get_contents($image->getRealPath());
+                $mimeType = $image->getMimeType();
+                $fileSize = $image->getSize();
+            }
+            $data->blob_image = $imageData;
+
             // $data->sku_category = $request->sku_category;
             // $data->sku_sub_category = $request->sku_sub_category;
             $data->flag_active = 1;
