@@ -23,9 +23,9 @@
       </div>
     </div>
     <div class="row">
-      
+
       <div class="card-body">
-        <div class="row mb-3">
+        <div class="mb-3 row">
           <div class="col-md-3">
             <div class="form-group">
               <label for="start_date">Start Date</label>
@@ -53,7 +53,14 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
-            <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
+            <div class="d-flex">
+              <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#add_modal">Add +</button>
+              <a href="{{ route('pruchase_requisition.export') }}" class="mr-2 btn btn-success">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </a>
+            </div>
+
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -79,8 +86,10 @@
     </div>
   </div>
 </div>
-<!-- MODAL --> 
-@include('transaction.pr._detail') 
-@include('transaction.pr._add_po') 
+<!-- MODAL -->
+@include('transaction.pr._detail')
+@include('transaction.pr._add_po')
 @include('transaction.pr._add')
-@include('transaction.pr._edit') @endsection @section('extra_javascript') <script type="module" src="{{ asset('assets/js/transaction/purchase_order_request/pr_main.js') }}" type="text/javascript"></script> @endsection
+@include('transaction.pr._edit') @endsection @section('extra_javascript') <script type="module"
+  src="{{ asset('assets/js/transaction/purchase_order_request/pr_main.js') }}" type="text/javascript"></script>
+@endsection

@@ -11,6 +11,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Transaction\PurchaseOrdePrintDtVw;
 use App\Models\Transaction\PurchaseOrdePrintHdVw;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PurchaseOrderExport;
+
 
 class PurchaseOrderController
 {
@@ -175,6 +178,11 @@ class PurchaseOrderController
                 ]
             ], 500);
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new PurchaseOrderExport, 'purchase_order.xlsx');
     }
     
     
