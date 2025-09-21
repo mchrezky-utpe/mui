@@ -55,7 +55,7 @@
           <div class="col-md-3">
             <div class="form-group">
               <label for="end_date">Status</label>
-              <select type="date" class="form-control" id="status" name="status">
+              <select type="date" class="form-control" id="status" name="flag_status">
                   <option value>=== Status ===</option> 
                   <option value="1">Open</option> 
                   <option value="2">Closed</option> 
