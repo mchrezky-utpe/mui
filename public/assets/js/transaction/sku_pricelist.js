@@ -12,11 +12,12 @@ $(document).ready(function () {
                 $("[name=sku_production_material_id]").val(data.sku_id);
                 $("[name=prs_supplier_id]").val(data.prs_supplier_id);
                 $("[name=gen_currency_id]").val(data.gen_currency_id);
-                $("[name=lead_time]").val(data.lead_time);
+                $("[name=lead_time]").val(Number(data.lead_time).toFixed(0));
                 $("[name=valid_date_from]").val(data.valid_date_from);
                 $("[name=flag_status]").val(data.flag_status);
-                $("[name=price]").val(data.price);
-                $("[name=price_retail]").val(data.price_retail);
+                $("[name=price]").val(Number(data.price).toFixed(0));
+                $("[name=price_retail]").val(Number(data.price_retail).toFixed(0));
+                $("[name=moq]").val(Number(data.moq).toFixed(0));
                 $("[name=sku_id]").val(data.sku_id);
                 $("#edit_modal").modal("show");
             },

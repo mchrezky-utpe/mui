@@ -92,6 +92,7 @@ class SkuPricelistService
             $data->valid_date_to = $request->valid_date_to;
             $data->flag_status = $request->flag_status;
             $data->price = $request->price;
+            $data->moq = $request->moq;
             $data->price_retail = $request->price_retail;
             $data->generated_id = Str::uuid()->toString();
             $data->flag_active = 1;
@@ -130,8 +131,8 @@ class SkuPricelistService
         $data->valid_date_to = $request->valid_date_to;
         $data->flag_status = $request->flag_status;
         $data->price = $request->price;
+        $data->moq = $request->moq;
         $data->price_retail = $request->price_retail;
-        $data->generated_id = Str::uuid()->toString();
         $data->flag_active = 1;
         $data->flag_status= 1;
         $data->save();

@@ -23,6 +23,10 @@ class ApprovalPurchaseRequestService
             $query->whereBetween('trans_date', [$request->start_date, $request->end_date]);
         }
 
+        if ($request->flag_status != null) {
+            $query->where('flag_status','=', $request->flag_status );
+        }
+
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->Where('doc_num', 'like', '%' . $search . '%')

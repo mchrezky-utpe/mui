@@ -7,6 +7,7 @@ export function initParam() {
             .then((data) => {
                 setGlobalVariable("skuMaster", data);
                 console.log("Succesfully get Sku:", data.sku);
+                $(".item_table tbody").empty();
             })
             .catch((err) => {
                 console.error("Error get Supplier:", err);

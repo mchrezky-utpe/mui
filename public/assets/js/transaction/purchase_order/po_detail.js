@@ -22,6 +22,9 @@ const table_po = $("#table-po-detail").DataTable({
                 data: "doc_num",
             },
             {
+                data: "department",
+            },
+            {
                 data: "sku_prefix",
             },
             {
@@ -38,9 +41,6 @@ const table_po = $("#table-po-detail").DataTable({
             },
             {
                 data: "doc_pr_num",
-            },
-            {
-                data: "department",
             },
             {
                 data: "transaction_type",

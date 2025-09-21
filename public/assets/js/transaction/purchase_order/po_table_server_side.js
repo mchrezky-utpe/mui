@@ -36,6 +36,9 @@ export function handleTableServerSide() {
                 data: "trans_date",
             },
             {
+                data: "department",
+            },
+            {
                 data: "po_type",
             },
             {
@@ -94,7 +97,7 @@ export function handleTableServerSide() {
                 },
             },
             {
-                targets: 18,
+                targets: 19,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {

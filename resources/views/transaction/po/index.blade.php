@@ -93,6 +93,7 @@
                     <th>No</th>
                     <th>PO Number</th>
                     <th>Date</th>
+                    <th>Department</th>
                     <th>Type</th>
                     <th>Supplier</th>
                     <th>Remark</th>

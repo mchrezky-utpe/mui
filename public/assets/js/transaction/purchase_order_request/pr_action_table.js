@@ -200,7 +200,7 @@ export function handleActionTable() {
         calculateTotal();
     });
 
-    $("#item_table").on("click", ".delete_row", function () {
+    $(".item_table").on("click", ".delete_row", function () {
         $(this).closest("tr").remove();
         calculateTotal();
     });

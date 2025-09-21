@@ -79,13 +79,13 @@
                     <th>No</th>
                     <th>PO Date</th>
                     <th>PO Number</th>
+                    <th>Department</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
                     <th>Spec Code</th>
                     <th>Item Type</th>
                     <th>PR Date</th>
                     <th>PR Number</th>
-                    <th>Department</th>
                     <th>Po Type</th>
                     <th>Supplier</th>
                     <th>Price</th>

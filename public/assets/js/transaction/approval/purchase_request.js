@@ -11,6 +11,7 @@ $(document).ready(function () {
             data: function (d) {
                 d.start_date = $('input[name="start_date"]').val();
                 d.end_date = $('input[name="end_date"]').val();
+                d.flag_status = $("#flag_status").val();
             },
         },
         columns: [

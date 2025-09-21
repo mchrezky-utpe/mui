@@ -26,36 +26,20 @@ $(document).ready(function () {
             alert("Error: PO ID tidak ditemukan");
             return;
         }
-    
 
-        var rowData = {
-            id: data.id,
-            doc_num: data.doc_num,
-            trans_date: data.trans_date,
-            po_type: data.po_type,
-            supplier: data.supplier,
-            description: data.description,
-            pr_doc_num: data.pr_doc_num,
-            status_sent_to_edi: data.status_sent_to_edi,
-            file: data.file,
-            created_at: data.created_at,
-            updated_at: data.updated_at,
-        };
-
-        console.log("PO Data:", rowData);
-
-        $("#detail_id").text(rowData.id || "-");
-        $("#detail_doc_num").text(rowData.doc_num || "-");
-        $("#detail_supplier").text(rowData.supplier || "-");
-        $("#detail_date").text(rowData.trans_date || "-");
-        $("#detail_po_type").text(rowData.po_type || "-");
-        $("#detail_description").text(rowData.description || "-");
-        $("#detail_pr_doc_num").text(rowData.pr_doc_num || "-");
+        $("#detail_id").text(data.id || "-");
+        $("#detail_doc_num").text(data.doc_num || "-");
+        $("#detail_supplier").text(data.supplier || "-");
+        $("#detail_date").text(data.trans_date || "-");
+        $("#detail_po_type").text(data.po_type || "-");
+        $("#detail_description").text(data.description || "-");
+        $("#detail_pr_doc_num").text(data.pr_doc_num || "-");
         $("#detail_edi_status").text(data.status_sent_to_edi || "-");
         $("#detail_po_status").text(data.po_status);
         $("#detail_file").text(data.file || "-");
         $("#detail_revision").text(data.rev_counter || "-");
         $("#detail_terms").text(data.terms || "-");
+        $("#detail_department").text(data.department || "-");
 
         $("#detail_currency").text(data.currency || "-");
         $("#detail_sub_total").text(data.val_sub_total || "-");

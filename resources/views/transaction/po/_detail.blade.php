@@ -1,4 +1,4 @@
-<x-modals.modal notUsingSave="true" id="detail_modal" title="Detail Purchase Order" modalClass="custom-modal-dialog-medium2">
+<x-modals.modal notUsingSave="true" id="detail_modal" title="Detail Purchase Order" modalClass="custom-modal-dialog-large">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="get" action="/po">
     @csrf
 
@@ -31,6 +31,10 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <div class="mb-2 row">
+                        <div class="col-5"><strong>Department:</strong></div>
+                        <div class="col-7" id="detail_department">-</div>
+                    </div>
                     <div class="mb-2 row">
                         <div class="col-5"><strong>Terms:</strong></div>
                         <div class="col-7" id="detail_terms">-</div>

@@ -36,6 +36,18 @@
               <label for="end_date">End Date</label>
               <input type="date" class="form-control" id="end_date" name="end_date">
             </div>
+          </div> 
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="end_date">Status</label>
+              <select type="date" class="form-control" id="flag_status" name="flag_status">
+                  <option value>=== Status ===</option> 
+                  <option value="1">Unchecked</option> 
+                  <option value="2">Approved</option> 
+                  <option value="3">Canceled</option> 
+                  <option value="4">Suspended</option> 
+              </select>
+            </div>
           </div>
           <div class="col-md-3">
             <div class="form-group" style="margin-top: 32px;">
