@@ -26,7 +26,7 @@
 
     <div class="row">
       <div class="card-body">
-        <div class="row mb-3">
+        <div class="mb-3 row">
           <div class="col-md-3">
             <div class="form-group">
               <label for="start_date">Start Date</label>
@@ -65,6 +65,11 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
+            <div class="d-flex">
+              <a href="{{ route('purchase_order_detail.export') }}" class="mr-2 btn btn-success">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </a>
+            </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">

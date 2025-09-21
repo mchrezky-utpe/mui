@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Transaction\Receiving;
 use App\Services\Transaction\Receiving\GpoService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\GeneralPurchaseOrderExport;
+
 
 class GpoController
 {
@@ -73,5 +76,9 @@ class GpoController
             'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
             'data' => $data['data'], // Data untuk ditampilkan
         ]);
+    }
+        public function export()
+    {
+        return Excel::download(new GeneralPurchaseOrderExport, 'general_purchase_order.xlsx');
     }
 }

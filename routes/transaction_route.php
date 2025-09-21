@@ -56,6 +56,7 @@ Route::controller(PurchaseOrderRequestController::class)->group(function () {
     // pr detail
     Route::get("/pr-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pr-detail/api/all", "api_detail_all")->middleware(OnlyMemberMiddleware::class);
+    route::get('/purchase_order_detail/export', 'export')->name('purchase_order_detail.export');
 });
 
 Route::controller(PurchaseOrderController::class)->group(function () {
@@ -193,6 +194,8 @@ Route::controller(GpoController::class)->group(function () {
     
     // api
     Route::get("/api/gpo/all", "api_all")->middleware(OnlyMemberMiddleware::class);
+    route::get('/general_purchase_order/export', 'export')->name('general_purchase_order.export');
+
 });
 Route::controller(SupplyController::class)->group(function () {
     Route::get("/supply", "index")->middleware(OnlyMemberMiddleware::class);

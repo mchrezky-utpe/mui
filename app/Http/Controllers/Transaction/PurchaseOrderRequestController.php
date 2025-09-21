@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Transaction;
 use App\Services\Transaction\PurchaseOrderRequestService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+
+use App\Exports\PurchaseOrderDetailExport;
+
 
 class PurchaseOrderRequestController
 {
@@ -89,5 +93,9 @@ class PurchaseOrderRequestController
     {
         $this->service->edit($request);
         return redirect("/pr");
+    }
+     public function export()
+    {
+        return Excel::download(new PurchaseOrderDetailExport, 'purchase_order_detail.xlsx');
     }
 }
