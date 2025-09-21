@@ -6,6 +6,10 @@ use App\Helpers\HelperCustom;
 use App\Services\Transaction\Approval\ApprovalPurchaseRequestService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PurchaseRequisitionExport;
+use App\Exports\PurchaseRequisitionDetailExport;
+
 
 class ApprovalPurchaseRequestController
 
@@ -75,6 +79,14 @@ class ApprovalPurchaseRequestController
         return response()->json([
             'data' => "OK",
         ]);
+    }
+    public function export()
+    {
+        return Excel::download(new PurchaseRequisitionExport, 'purchase_requisition.xlsx');
+    }
+    public function export_pr_dt()
+    {
+        return Excel::download(new PurchaseRequisitionDetailExport, 'purchase_requisition_detail.xlsx');
     }
 
 }

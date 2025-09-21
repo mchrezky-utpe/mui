@@ -36,6 +36,9 @@ Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
 
     // api
     Route::get("/api/approval-pr", "api_all")->middleware(OnlyMemberMiddleware::class);
+    route::get('/pruchase_requisition/export', 'export')->name('pruchase_requisition.export');
+    route::get('/purchase_requisition_detail/export_pr_dt', 'export_pr_dt')->name('purchase_requisition_detail.export_pr_dt');
+
 });
 
 
@@ -69,6 +72,8 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     // pr detail
     Route::get("/po-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po-detail/api/all", "api_detail_all")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/po/upload", "upload")->middleware(OnlyMemberMiddleware::class);
+    route::get('/purchase_order/export', 'export')->name('purchase_order.export');
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {
@@ -87,6 +92,7 @@ Route::controller(SkuPricelistController::class)->group(function () {
     // general item
     Route::get("/sku-pricelist-general-item", "index_general_item")->middleware(OnlyMemberMiddleware::class);
 
+    route::get('/pricelist/export', 'export')->name('pricelist.export');
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {

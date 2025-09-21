@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Services\Transaction\SkuPricelistService;
+use App\Exports\PricelistExport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class SkuPricelistController
 {
@@ -81,5 +84,9 @@ class SkuPricelistController
     {
         $this->service->edit($request);
         return redirect("/sku-pricelist");
+    }
+    public function export()
+    {
+        return Excel::download(new PricelistExport, 'pricelist.xlsx');
     }
 }
