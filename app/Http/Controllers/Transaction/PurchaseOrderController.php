@@ -28,9 +28,26 @@ class PurchaseOrderController
          ['data' =>  $this->service->list()]);
     }
 
+
+    public function index_detail(): Response
+    {
+        return response()->view('transaction.po.index_detail');
+    }
+
     public function api_all(Request $request)
     {
         $data = $this->service->get_all($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
+        ]);
+    }
+
+    public function api_detail_all(Request $request)
+    {
+    $data = $this->service->get_detail_all($request);
         return response()->json([
             'draw' => intval($request->input('draw')), // Parameter dari DataTables
             'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter

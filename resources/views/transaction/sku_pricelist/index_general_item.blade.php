@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">Production Material Prices</h2>
+          <h2 class="pageheader-title">General Item Prices</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -23,7 +23,7 @@
                 <li class="breadcrumb-item">
                   <a href="#" class="breadcrumb-link">SKU</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Production Material Prices</li>
+                <li class="breadcrumb-item active" aria-current="page">General Item Prices</li>
               </ol>
             </nav>
           </div>
@@ -36,7 +36,7 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
             <div class="d-flex">
-            <button id="add_button"  type="button" class="btn btn-primary btn_production_item" data-toggle="modal" data-target="#add_modal">+ Production Material Prices</button>
+            <button id="add_general_item_button" type="button" class="btn btn-primary btn_general_item" data-toggle="modal" data-target="#add_general_item_modal">+ General Item Prices</button>
           </div>
           </div>
           <div class="card-body">
@@ -111,5 +111,5 @@
  
  @section('extra_javascript') 
  <script src="{{ asset('assets/js/transaction/sku_pricelist.js') }}" type="text/javascript"></script> 
- <script src="{{ asset('assets/js/transaction/sku_production_material_pricelist.js') }}" type="text/javascript"></script> 
+ <script src="{{ asset('assets/js/transaction/sku_general_item_pricelist.js') }}" type="text/javascript"></script> 
  @endsection

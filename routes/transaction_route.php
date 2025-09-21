@@ -33,6 +33,9 @@ Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
     Route::get("/approval-pr/item/{id}", "getItem")->middleware(OnlyMemberMiddleware::class);
     Route::post("/approval-pr/item/deny", "deny_item")->middleware(OnlyMemberMiddleware::class);
     Route::post("/approval-pr/item/hold", "hold_item")->middleware(OnlyMemberMiddleware::class);
+
+    // api
+    Route::get("/api/approval-pr", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 
@@ -62,18 +65,28 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::get("/po/{id}/print", "print")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/po/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/po/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/po/upload", "upload")->middleware(OnlyMemberMiddleware::class);
+
+    // pr detail
+    Route::get("/po-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/po-detail/api/all", "api_detail_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {
-    Route::get("/sku-pricelist", "index")->middleware(OnlyMemberMiddleware::class);
+    // general 
     Route::post("/sku-pricelist", "add")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-pricelist/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-pricelist/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    Route::get("/sku-pricelist/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/api/history", "getHistory")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-pricelist/api/by", "get_api_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sku-pricelist/api/all/pagination", "getAllPagination")->middleware(OnlyMemberMiddleware::class);
+
+    // production material
+    Route::get("/sku-pricelist", "index")->middleware(OnlyMemberMiddleware::class);
+
+    // general item
+    Route::get("/sku-pricelist-general-item", "index_general_item")->middleware(OnlyMemberMiddleware::class);
+
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {
@@ -171,6 +184,9 @@ Route::controller(GpoController::class)->group(function () {
     Route::post("/gpo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/gpo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/gpo/detail", "detail")->middleware(OnlyMemberMiddleware::class);
+    
+    // api
+    Route::get("/api/gpo/all", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(SupplyController::class)->group(function () {
     Route::get("/supply", "index")->middleware(OnlyMemberMiddleware::class);

@@ -64,7 +64,7 @@
                     <td>{{ $loop->index + 1 }}</td>
                     <td>
                       @if($value->blob_image)
-                      <img src="{{ asset($value->blob_image) }}" width="80">
+                      <img src="data:image/png;base64,{{ $value->blob_image }}" width="80">
 
                       @else
                         <span class="text-muted">No image</span>

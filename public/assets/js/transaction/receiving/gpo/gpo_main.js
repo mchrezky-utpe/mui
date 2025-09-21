@@ -4,6 +4,6 @@ import { handleActionTable } from './gpo_action_table.js';
 
 $(document).ready(function () {
     initParam();
-    // handleTableServerSide();
+    handleTableServerSide();
     handleActionTable();
 });

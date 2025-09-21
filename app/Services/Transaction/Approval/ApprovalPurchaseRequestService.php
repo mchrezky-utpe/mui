@@ -13,6 +13,41 @@ class ApprovalPurchaseRequestService
           return ApprovalPurchaseRequestVw::orderBy('created_at', 'DESC')->get();
     }
 
+    public function list_pagination(Request $request){
+        $start = $request->input('start'); 
+        $length = $request->input('length');
+        $search = $request->input('search.value'); 
+        $query = DB::table('vw_app_list_log_pr_approval_hd');
+
+        if ($request->start_date != null && $request->end_date != null) {
+            $query->whereBetween('trans_date', [$request->start_date, $request->end_date]);
+        }
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('supplier', 'like', '%' . $search . '%');
+            });
+        }
+
+        $recordsTotal = $query->count();
+
+        $recordsFiltered = $query->count();
+
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
+        }
+        else{
+            $data = $query->get();
+        }
+
+        return [
+            'data' => $data,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' =>  $recordsFiltered
+        ];
+    }
+
     public function approve(Request $request)
     {
         $user = $request->session()->get('user');

@@ -33,7 +33,7 @@
 
       <div class="form-group">
             <label>Spesification Description</label>
-            <input required name="specification_description" class="form-control" type="text"/>
+            <input required name="specification_detail" class="form-control" type="text"/>
           </div>
         <div class="d-flex align-items-end mt-3">
           <div class="form-group flex-fill mr-2" style="width: 45%;">

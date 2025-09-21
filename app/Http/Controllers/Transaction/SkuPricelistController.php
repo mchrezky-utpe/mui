@@ -22,6 +22,13 @@ class SkuPricelistController
     }
 
     
+
+    public function index_general_item(): Response
+    {
+        return response()->view('transaction.sku_pricelist.index_general_item');
+    }
+
+    
     public function getAllPagination(Request $request)
     {
         $data = $this->service->list_pagination($request);

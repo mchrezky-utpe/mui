@@ -68,6 +68,7 @@
                     <th>Supplier</th>
                     <th>Status</th>
                     <th>Remark</th>
+                    <th>Amount</th>
                     <th>Action</th>
                   </tr>
                 </thead>

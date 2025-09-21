@@ -1,8 +1,15 @@
 import {
-	skuMaster
+	skuMaster,
+	table_gpo
 } from './gpo_global_variable.js';
 
 export function handleActionTable() {
+
+	
+    $('#btn-filter').click(function() {
+        table_gpo.ajax.reload(); 
+    });
+
 
 	var selectedRow = null;
 

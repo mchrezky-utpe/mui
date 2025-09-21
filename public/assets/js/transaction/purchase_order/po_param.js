@@ -19,7 +19,7 @@ export function initParam() {
 	fetchTermsMaster()
 		.then(data => {
 			console.log("Succesfully get terms:", data);
-			populateSelect('Terms', data, $('#terms_select'));
+			populateSelect('Terms', data, $('.terms_select'));
 		})
 		.catch(err => {
 			console.error("Error get terms:", err);

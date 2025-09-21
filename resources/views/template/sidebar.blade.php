@@ -145,7 +145,10 @@
                                 <i class="fas fa-tags"></i>Item</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/sku-pricelist">Pricelist</a>
+                                    <a href="/sku-pricelist">Production Material Prices</a>
+                                </li>
+                                <li>
+                                    <a href="/sku-pricelist-general-item">General Item Prices</a>
                                 </li>
                                 <li>
                                     <a href="/sku-minofstock">Minimum Stock</a>
@@ -251,6 +254,9 @@
                                 </li>
                                 <li>
                                     <a href="/po">Purchase Order (PO)</a>
+                                </li>
+                                <li>
+                                    <a href="/po-detail">Purchase Order Detail (PO Detail)</a>
                                 </li>
                                 <!-- <li>
                                     <a href="purchase_invoice.html">Purchase Invoice</a>

@@ -18,7 +18,7 @@ export function handleTableServerSide() {
             data: function (d) {
                 d.start_date = $('input[name="start_date"]').val();
                 d.end_date = $('input[name="end_date"]').val();
-                d.customer = $("#customer").val();
+                d.flag_status = $("#status").val();
             },
         },
         order: [

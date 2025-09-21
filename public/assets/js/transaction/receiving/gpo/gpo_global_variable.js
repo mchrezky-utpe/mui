@@ -6,7 +6,7 @@ export let otherCostMaster = null;
 export let deductionMaster = null;
 export let is_using_item = true;
 export let skuMaster = null;
-export let table_pr = null;
+export let table_gpo = null;
 
 export function setGlobalVariable(key, value) {
     switch (key) {
@@ -34,8 +34,8 @@ export function setGlobalVariable(key, value) {
         case 'skuMaster':
             skuMaster = value;
             break;
-        case 'table_sds':
-            table_sds = value;
+        case 'table_gpo':
+            table_gpo = value;
             break;
         default:
             console.warn(`Global variable '${key}' does not exist.`);

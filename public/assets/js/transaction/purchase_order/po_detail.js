@@ -1,17 +1,14 @@
-
-
-const table_pr = $("#table-pr-detail").DataTable({
+const table_po = $("#table-po-detail").DataTable({
         scrollX: true,
         scrollY: "400px",
         processing: true,
         serverSide: true,
         ajax: {
-            url: base_url + "pr-detail/api/all",
+            url: base_url + "po-detail/api/all",
             type: "GET",
             data: function (d) {
                 d.start_date = $('input[name="start_date"]').val();
                 d.end_date = $('input[name="end_date"]').val();
-                d.flag_status = $("#status").val();
             },
         },
         columns: [
@@ -19,13 +16,28 @@ const table_pr = $("#table-pr-detail").DataTable({
                 data: null,
             },
             {
-                data: "doc_num",
-            },
-            {
                 data: "trans_date",
             },
             {
-                data: "req_date",
+                data: "doc_num",
+            },
+            {
+                data: "sku_prefix",
+            },
+            {
+                data: "sku_name",
+            },
+            {
+                data: "sku_specification_code",
+            },
+            {
+                data: "sku_material_type",
+            },
+            {
+                data: "trans_pr_date",
+            },
+            {
+                data: "doc_pr_num",
             },
             {
                 data: "department",
@@ -34,40 +46,16 @@ const table_pr = $("#table-pr-detail").DataTable({
                 data: "transaction_type",
             },
             {
-                data: "status_type_item",
+                data: "supplier",
             },
             {
-                data: "process_status",
-            },
-            {
-                data: "process_status",
-            },
-            {
-                data: "doc_num_po",
-            },
-            {
-                data: "sku_id",
-            },
-            {
-                data: "sku_name",
-            },
-            {
-                data: "spec_code",
-            },
-            {
-                data: "item_type",
-            },
-            {
-                data: "sku_unit",
-            },
-            {
-                data: "val_price",
+                data: "price_f",
             },
             {
                 data: "qty",
             },
             {
-                data: "val_total",
+                data: "total_f",
             },
             {
                 data: "description",
@@ -86,6 +74,6 @@ const table_pr = $("#table-pr-detail").DataTable({
     });
 
         $('#btn-filter').click(function() {
-            table_pr.ajax.reload(); 
+            table_po.ajax.reload(); 
         });
     

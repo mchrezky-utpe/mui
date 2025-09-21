@@ -41,7 +41,9 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Initial</th>
+                    <th>Supplier Initial</th>
+                    <th>Supplier Name</th>
+                    <th>Address</th>
                     <th>Con. Person Name</th>
                     <th>Con. Person Phone</th>
                     <th>WH/Del PIC Name</th>
@@ -53,7 +55,9 @@
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $value->prefix }}</td>
                     <td>{{ $value->description }}</td>
+                    <td>{{ $value->main_address }}</td>
                     <td>{{ $value->contact_person}}</td>
                     <td>{{ $value->contact_person_phone }}</td>
                     <td>{{ $value->wh_del_pic_name }}</td>

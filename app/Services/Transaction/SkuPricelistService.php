@@ -32,6 +32,11 @@ class SkuPricelistService
             $query->whereBetween('valid_date_from', [$request->start_date, $request->end_date]);
         }
 
+            
+        if ($request->flag_sku_type != null) {
+            $query->where('flag_sku_type','=', $request->flag_sku_type);
+        }
+
         $recordsTotal = $query->count();
 
         $recordsFiltered = $query->count();

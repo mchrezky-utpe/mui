@@ -5,17 +5,9 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label>Material Code</label>
-          <input readonly name="material_code" class="form-control" type="text">
-        </div>
-        <div class="form-group">
           <label>Material Name</label>
           <select required name="sku_id" class="form-control">
           </select >
-        </div>
-        <div class="form-group">
-          <label>Procurement Unit</label>
-          <input readonly name="procurement_unit" class="form-control" />
         </div>
         <div class="form-group">
           <label>Supplier</label>
@@ -27,12 +19,16 @@
           <select required name="gen_currency_id" class="form-control">
           </select >
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
           <label>Lead Time</label>
           <input required name="lead_time" class="form-control" type="number">
         </div>
+        <div class="form-group">
+          <label>MOQ</label>
+          <input  name="moq" class="form-control" />
+        </div>
+      </div>
+      <div class="col-md-6">
         <div class="form-group">
           <label>Valid From</label>
           <input required name="valid_date_from" class="form-control" type="date" value="{{ date('Y-m-d') }}">

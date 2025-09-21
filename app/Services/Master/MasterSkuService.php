@@ -178,9 +178,7 @@ class MasterSkuService
             if ($request->hasFile('blob_image')) {
                 $image = $request->file('blob_image');
                 $imageData = file_get_contents($image->getRealPath());
-                $mimeType = $image->getMimeType();
-                $fileSize = $image->getSize();
-                 $data->blob_image = $imageData;
+                 $data->blob_image = base64_encode($imageData);
             }
 
             // $data->sku_category = $request->sku_category;
@@ -271,9 +269,7 @@ class MasterSkuService
             if ($request->hasFile('blob_image')) {
                 $image = $request->file('blob_image');
                 $imageData = file_get_contents($image->getRealPath());
-                $mimeType = $image->getMimeType();
-                $fileSize = $image->getSize();
-                $data->blob_image = $imageData;
+                 $data->blob_image = base64_encode($imageData);
             }
 
         // $data->sku_category = $request->sku_category;

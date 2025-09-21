@@ -4,7 +4,7 @@ namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
 use App\Models\MasterPersonSupplier;
-use App\Models\VwExportMasterPerson;
+use App\Models\VwExportMasterPersonSupplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -14,14 +14,15 @@ class MasterPersonSupplierService
 {
 
     public function list(){
-        return VwExportMasterPerson::where('flag_active', 1)->orderBy('created_at', 'DESC')->take(1000)->get();
+        return VwExportMasterPersonSupplier::where('flag_active', 1)->orderBy('created_at', 'DESC')->take(1000)->get();
     }
     public function list2(){
-        return VwExportMasterPerson::where('flag_active', 0)->orderBy('created_at', 'DESC')->take(1000)->get();
+        return VwExportMasterPersonSupplier::where('flag_active', 0)->orderBy('created_at', 'DESC')->take(1000)->get();
     }
 
     public function add(Request $request){
         $data['description'] = $request->description;
+        $data['prefix'] = $request->prefix;
         $data['contact_person_01'] = $request->contact_person_01;
         $data['phone_02'] = $request->phone_02;
         $data['contact_person_02'] = $request->contact_person_02;
@@ -35,10 +36,9 @@ class MasterPersonSupplierService
         $data['contact_person_01'] = $request->contact_person;
         $data['flag_active'] = 1;
         $data['flag_show'] = 1;
-        $data['manual_id'] = $request->manual_id;
         $data['generated_id'] = Str::uuid()->toString();
         $data = MasterPersonSupplier::create($data);
-        $data['prefix'] = HelperCustom::generateTrxNo('SUP', $data->id);
+        $data['manual_id'] = HelperCustom::generateTrxNo('SUP', $data->id);
         $data->save();
     }
 
@@ -75,6 +75,8 @@ class MasterPersonSupplierService
     {
         $data = MasterPersonSupplier::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
+        $data->prefix = $request->prefix;
+        $data->address_01 = $request->address_01;
         $data->contact_person_01 = $request->contact_person_01;
         $data->phone_02 = $request->phone_02;
         $data->contact_person_02 = $request->contact_person_02;
@@ -86,7 +88,6 @@ class MasterPersonSupplierService
         $data->fax_01 = $request->fax;
         $data->email_01 = $request->email;
         $data->contact_person_01 = $request->contact_person;
-        $data->manual_id= $request->manual_id;
         $data->save();
     }
 }

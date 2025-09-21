@@ -43,6 +43,9 @@ export function handleTableServerSide() {
                 data: "description",
             },
             {
+                data: "total_f",
+            },
+            {
                 data: null,
             },
         ],
@@ -56,7 +59,7 @@ export function handleTableServerSide() {
                 },
             },
             {
-                targets: 8,
+                targets: 9,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {

@@ -1,4 +1,102 @@
 $(document).ready(function () {
+
+   const table_pr =  $("#table-pr").DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: false,
+        scrollY: false,
+        ajax: {
+            url: base_url + "api/approval-pr",
+            type: "GET",
+            data: function (d) {
+                d.start_date = $('input[name="start_date"]').val();
+                d.end_date = $('input[name="end_date"]').val();
+            },
+        },
+        columns: [
+            {
+                data: null,
+            },
+            {
+                data: null,
+            },
+            {
+                data: "doc_num",
+            },
+            {
+                data: "supplier",
+            },
+            {
+                data: "trans_date",
+            },
+            {
+                data: "description",
+            },
+            {
+                data: "transaction_purpose",
+            },
+            {
+                data: null,
+            },
+            {
+                data: null,
+            },
+        ],
+        columnDefs: [
+            {
+                targets: 0,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row, meta) {
+                    let checkbox = "";
+                    if(data.flag_status == 1){
+                        checkbox = `<input type="checkbox" name="id" value="`+data.trans_pr_id+`"/>`;
+                    }
+                    return checkbox;
+                },
+            },
+            {
+                targets: 1,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                },
+            },
+            {
+                targets: 7,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row, meta) {
+                    let classz = "";
+                    if (data.flag_status == 2){
+                      classz = "btn-success";
+                    }else if (data.flag_status == 3){
+                      classz = "btn-danger";
+                    }else if (data.flag_status == 4){
+                      classz = "btn-warning";
+                    }
+                    return `<text class="`+classz+`">`+data.transaction_status+`</text>`
+                },
+            },
+            {
+                targets: 8,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row, meta) {
+                    return `<button data-id="`+data.trans_pr_id+`" type="button" class="btn_detail btn btn-info">
+                          <span class="fas fa-eye"></span>
+                        </button>`
+                },
+            },
+        ],
+    });
+
+    $('#btn-filter').click(function() {
+        table_pr.ajax.reload(); 
+    });
+
+
     $("#select_all").click(function () {
         $('input[name="id"]').prop("checked", this.checked);
     });

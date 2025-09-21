@@ -20,6 +20,34 @@
       </div>
     </div>
     <div class="row">
+
+      
+      
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="start_date">Start Date</label>
+              <input type="date" class="form-control" id="start_date" name="start_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="end_date">End Date</label>
+              <input type="date" class="form-control" id="end_date" name="end_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group" style="margin-top: 32px;">
+              <button type="button" id="btn-filter" class="btn btn-primary">
+                <i class="fas fa-search"></i> Filter </button>
+              <button type="button" id="btn-reset" class="btn btn-secondary">
+                <i class="fas fa-sync"></i> Reset </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
 
@@ -36,13 +64,12 @@
 
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first" id="table-pr">
+              <table class="table table-striped table-bordered first" id="table-pr">
                 <thead>
                   <tr>
                     <th></th>
                     <th>No</th>
-                    <th>ID</th>
-                    <th>Doc Number</th>
+                    <th>PR Number</th>
                     <th>Supplier</th>
                     <th>Date</th>
                     <th>Description</th>
@@ -51,7 +78,8 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) <tr>
+                {{-- <tbody>
+                   @foreach($data as $key => $value) <tr>
                     <td>
                       @if ($value->flag_status == 1)
                       <input type="checkbox" name="id" value="{{ $value->trans_pr_id }}"/>
@@ -64,12 +92,12 @@
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->description }}</td>
                     <td>{{ $value->transaction_purpose }}</td>
-                    @if ($value->flag_status == 2)
-                      <td class="btn-success">
-                    @elseif ($value->flag_status == 3)
-                      <td  class="btn-danger">
-                    @elseif ($value->flag_status == 4)
-                      <td  class="btn-warning">
+                  @if ($value->flag_status == 2)
+                    <td class="btn-success">
+                  @elseif ($value->flag_status == 3)
+                    <td  class="btn-danger">
+                  @elseif ($value->flag_status == 4)
+                    <td  class="btn-warning">
                     @else
                       <td>
                     @endif
@@ -80,7 +108,8 @@
                           <span class="fas fa-eye"></span>
                         </button>
                     </td>
-                  </tr> @endforeach </tbody>
+                  </tr> @endforeach 
+                </tbody> --}}
               </table>
             </div>
           </div>

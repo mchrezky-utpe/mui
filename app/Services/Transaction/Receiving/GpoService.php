@@ -117,4 +117,42 @@ class GpoService
         $data->manual_id= $request->manual_id;
         $data->save();
     }
+
+    public function api_all(Request $request){
+        $start = $request->input('start'); 
+        $length = $request->input('length');
+        $search = $request->input('search.value'); 
+        $query = DB::table('vw_app_list_trans_rr_gpo_dt');
+
+        if ($request->start_date != null && $request->end_date != null) {
+            $query->whereBetween('do_date', [$request->start_date, $request->end_date]);
+        }
+        
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->Where('do_doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('po_doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('sku_name', 'like', '%' . $search . '%')
+                    ->orWhere('sku_specification_code', 'like', '%' . $search . '%')
+                    ->orWhere('supplier', 'like', '%' . $search . '%');
+            });
+        }
+
+        $recordsTotal = $query->count();
+
+        $recordsFiltered = $query->count();
+
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
+        }
+        else{
+            $data = $query->get();
+        }
+
+        return [
+            'data' => $data,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' =>  $recordsFiltered
+        ];
+    }
 }

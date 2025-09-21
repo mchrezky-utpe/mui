@@ -25,6 +25,17 @@ class ApprovalPurchaseRequestController
         );
     }
 
+       public function api_all(Request $request)
+    {
+        $data = $this->service->list_pagination($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
+        ]);
+    }
+
     public function apporve(Request $request)
     {
         $this->service->approve($request);

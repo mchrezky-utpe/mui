@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\MasterPersonSupplier;
+use App\Models\VwExportMasterPersonSupplier;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -11,7 +11,7 @@ class PersonSupplierExport implements FromCollection,WithHeadings, ShouldAutoSiz
 {
     public function collection()
     {
-        return MasterPersonSupplier::select(
+        return VwExportMasterPersonSupplier::select(
             'manual_id',               // Supplier Code
             'description',             // Supplier Name
             'prefix',                  // Initials
