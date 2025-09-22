@@ -9,7 +9,7 @@ $(document).on('click', '.edit', function (e) {
             $('[name=id]').val(data.id);
             $('[name=date]').val(data.valid_from_date);
             $('[name=gen_currency_id]').val(data.gen_currency_id);
-            $('[name=val_exchangerates]').val(data.val_exchangerates);
+            $('[name=val_exchangerates]').val(Number(data.val_exchangerates).toFixed(0));
 
             $('#edit_modal').modal('show');
 
