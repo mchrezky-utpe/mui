@@ -2,12 +2,16 @@
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/general-exchange-rates">
     @csrf
     <div class="form-group">
-      <label>Manual ID</label>
-      <input required name="manual_id" class="form-control" type="text" placeholder="Manual ID">
+      <label>Date</label>
+      <input required name="date" class="form-control" type="date" placeholder="Date">
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <label>Currency</label>
+      <select required name="gen_currency_id" class="form-control currency_select"></select>
+    </div>
+    <div class="form-group">
+      <label>Value</label>
+      <input required name="val_exchangerates" class="form-control" type="text" placeholder="Value">
     </div>
   </form>   
 </x-modals.modal>

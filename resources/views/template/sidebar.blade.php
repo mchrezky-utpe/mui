@@ -105,6 +105,9 @@
                                 <li>
                                     <a href="/general-department">Department</a>
                                 </li>
+                                 <li>
+                                    <a href="/general-exchange-rates">Exchange Rates</a>
+                                </li>
                                 <!-- <li>
                                     <a href="/general-currency">Currency</a>
                                 </li>
@@ -116,9 +119,6 @@
                                 </li>
                                 <li>
                                     <a href="/general-other-cost">Other Cost</a>
-                                </li> -->
-                                <!-- <li>
-                                    <a href="/general-exchange-rates">Exchange Rates</a>
                                 </li> -->
                             </ul>
                         </li>

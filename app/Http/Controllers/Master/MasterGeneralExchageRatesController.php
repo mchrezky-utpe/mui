@@ -43,7 +43,7 @@ class MasterGeneralExchageRatesController
     public function hapus(Request $request, int $id)
     {
         $this->service->hapus($id);
-        return redirect("/general-exchange-rates/index2");
+        return redirect("/general-exchange-rates/");
     }
     public function restore(Request $request, int $id)
     {

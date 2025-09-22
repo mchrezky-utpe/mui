@@ -4,6 +4,7 @@ namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
 use App\Models\MasterGeneralExchangeRates;
+use App\Models\VwMasterGeneralExchangeRates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ class MasterGeneralExchangeRatesService
 {
     public function list(){
         //   return MasterGeneralExchangeRates::all();
-          return MasterGeneralExchangeRates::where('flag_active', 1)->get();
+          return VwMasterGeneralExchangeRates::all();
     }
     public function list2(){
         //   return MasterGeneralExchangeRates::all();
@@ -22,12 +23,12 @@ class MasterGeneralExchangeRatesService
     }
 
     public function add(Request $request){
-            $data['description'] = $request->description;
-            $data['manual_id'] = $request->manual_id;
+            $data['valid_from_date'] = $request->date;
+            $data['gen_currency_id'] = $request->gen_currency_id;
+            $data['val_exchangerates'] = $request->val_exchangerates;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterGeneralExchangeRates::create($data);
-            $data['prefix'] = HelperCustom::generateTrxNo('GEN-ER-', $data->id);
             $data->save();
     }
 
@@ -59,8 +60,8 @@ class MasterGeneralExchangeRatesService
     function edit(Request $request)
     {
         $data = MasterGeneralExchangeRates::where('id', $request->id)->firstOrFail();
-        $data->description = $request->description;
-        $data->manual_id= $request->manual_id;
+        $data->valid_from_date = $request->date;
+        $data->val_exchangerates= $request->val_exchangerates;
         $data->save();
     }
 }

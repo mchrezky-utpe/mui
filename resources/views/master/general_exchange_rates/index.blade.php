@@ -38,17 +38,19 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>ID</th>
-                    <th>Manual ID</th>
-                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Currency</th>
+                    <th>Value</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->prefix }}</td>
-                    <td>{{ $value->manual_id }}</td>
-                    <td>{{ $value->description }}</td>
+                    <td>{{ $value->valid_from_date }}</td>
+                    <td>{{ $value->currency_prefix }}</td>
+                    <td>{{ $value->val_exchangerates }}</td>
+                    <td>Aktif</td>
                     <td>
                       <form action="/general-exchange-rates/{{ $value->id }}/delete" method="post" onsubmit="return confirm('Yakin ingin menghapus item ini?')"> @csrf 
                         <button data-id="{{ $value->id }}" type="button" class="edit btn btn-success">
