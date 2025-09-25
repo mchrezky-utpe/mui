@@ -15,8 +15,8 @@ export function handleActionTable() {
 					<tr id="${data.id}">
 						<td>${data.sku_prefix}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
 						<td>${data.sku_description}</td>
-						<td>${data.spec_code}</td>
-						<td>${data.item_type}</td>
+						<td>${data.sku_specification_code}</td>
+						<td>${data.sku_type}</td>
 						<td>${data.qty}</td>
 						<td>${data.qty_outstanding}</td>
 					</tr>

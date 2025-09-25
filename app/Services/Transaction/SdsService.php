@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Log;
 class SdsService
 {
     public function list(){
-          return VwSdsList::get();
+          return VwSdsList::orderBy('created_at', 'DESC')->get();
     }
 
     public function send_to_edi(Request $request){
