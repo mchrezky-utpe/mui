@@ -25,7 +25,7 @@ class PurchaseOrderService
 
     public function get_droplist($request){
         
-        $supplierId =  $request->input('id');
+        $supplierId =  $request->input('supplier_id');
         $flag_purpose =  $request->input('flag_purpose');
       
          $query = VwPoDroplist::query();
