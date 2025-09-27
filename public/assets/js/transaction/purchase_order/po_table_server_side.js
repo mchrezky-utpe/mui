@@ -2,10 +2,7 @@ import { setGlobalVariable } from "./po_global_variable.js";
 
 export function handleTableServerSide() {
     const table_po = $("#table-po").DataTable({
-        fixedColumns: {
-            start: 0,
-            end: 5,
-        },
+     
         scrollCollapse: true,
         scrollX: true,
         scrollY: 300,
@@ -54,7 +51,7 @@ export function handleTableServerSide() {
                 data: "po_status",
             },
             {
-                data: "file",
+                data: null,
             },
             {
                 data: "status_sent_to_edi",
@@ -93,7 +90,39 @@ export function handleTableServerSide() {
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {
-                    return meta.row + 1;
+                    const csrfToken = document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content");
+                    let button = `
+                        <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <button data-id="${data.id}" type="button"class="upload dropdown-item">
+							   Upload PDF
+                            </button>
+
+                            <form action="/po/send-to-edi?id=${data.id}" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button class="dropdown-item">Send To EDI</button>
+                            </form>
+
+                        </div>
+                      </div> `
+                    return button;
+                },
+            },
+            {
+                targets: 9,
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row, meta) {
+                    let button =  "-";
+                    if(data.file != null ){
+                        button = '<a target="_blank" href="po/pdf/'+data.id+'" class="btn btn-info me-1"><span class="fas fa-download"></span></a>';
+                    }
+                    return button;  
                 },
             },
             {
@@ -114,9 +143,6 @@ export function handleTableServerSide() {
 							<button data-id="${data.id}" type="button" class="btn_detail btn btn-info me-1">
 								<span class="fas fa-eye"></span>
 							</button>
-							<button data-id="${data.id}" type="button" target="_blank" class="upload btn btn-primary me-1">
-							 <span class="fas fa-upload"></span>
-                            </button>
 							<a  target="_blank"   href="po/` +
                         data.id +
                         `/pdf" class="print btn btn-secondary me-1">

@@ -160,8 +160,8 @@ export function handleActionTable() {
                     </select>
                 </td>
                 <td><input type="number" class="price form-control" name="price[]" placeholder="Price"  required>></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"  required>></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"  required>></td>
+                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" >></td>
+                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]">></td>
                 <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"  required></td>
                 <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" required></td>
                 <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required></td>
@@ -176,7 +176,7 @@ export function handleActionTable() {
     });
 
     $(".item_table").on("change", ".item_sku", function () {
-        const price = $(this).find("option:selected").attr("price").toFixed(0);
+        const price = Number($(this).find("option:selected").attr("price")).toFixed(0);
         const sku_description = $(this)
             .find("option:selected")
             .attr("sku_description");

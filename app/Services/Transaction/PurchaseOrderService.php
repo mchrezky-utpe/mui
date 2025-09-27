@@ -147,15 +147,12 @@ class PurchaseOrderService
 
         try {
 
-        // Ambil file dari request
         $file = $request->file('file');
-        // $fileName = $file->getClientOriginalName();
-        // $mimeType = $file->getMimeType();
         $fileData = file_get_contents($file->getRealPath()); // Baca file sebagai binary data
 
-            
         $purchaseOrder = PurchaseOrder::where('id', $request->id)->firstOrFail();
-        $purchaseOrder->file = $fileData;
+
+        $purchaseOrder->file = base64_encode($fileData);
         $purchaseOrder->save();
 
         DB::commit();
@@ -177,7 +174,7 @@ class PurchaseOrderService
 
         try {
             // Generate nomor dokumen
-            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_order', 'MUI/P0');
+            $doc_num_generated = NumberGenerator::generateNumberV2('trans_purchase_order', 'MUI/P0');
 
             // PO Header Data
             $data = [
@@ -307,4 +304,23 @@ class PurchaseOrderService
         $data->description = $request->description;
         $data->save();
     }
+
+    
+    public function send_to_edi(Request $request){
+            DB::beginTransaction();
+            try {
+                $userId =  "mrp";
+                DB::statement('CALL sp_trans_po_sent_edi(?,?)',
+                 [$request->id, $userId]);
+              
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                dd($e);
+                return response()->json([
+                    'message' => 'Terjadi kesalahan saat kirim ke EDI.',
+                    'error' => $e->getMessage(),
+                ], 500);
+            }
+        }
 }

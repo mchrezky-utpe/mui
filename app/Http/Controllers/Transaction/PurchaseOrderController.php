@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaction\PurchaseOrder;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Schema;
 use App\Models\Transaction\PurchaseOrdePrintDtVw;
 use App\Models\Transaction\PurchaseOrdePrintHdVw;
 use Maatwebsite\Excel\Facades\Excel;
@@ -202,6 +201,23 @@ class PurchaseOrderController
         return Excel::download(new PurchaseOrderExport, 'purchase_order.xlsx');
     }
     
+    
+      public function view_pdf($id)
+    {
+        $po = PurchaseOrder::findOrFail($id);
+        // Get PDF content - adjust based on your storage method
+        $pdfContent = base64_decode($po->file);
+        
+        return response($pdfContent)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="' . "PO.pdf" . '"');
+    }
+
+   public function send_to_edi(Request $request)
+    {
+        $this->service->send_to_edi($request);
+        return redirect("/po");
+    }
     
 
 }

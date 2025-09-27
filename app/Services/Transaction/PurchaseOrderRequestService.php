@@ -186,7 +186,7 @@ class PurchaseOrderRequestService
     {
         DB::beginTransaction();
         try {
-            $doc_num_generated = NumberGenerator::generateNumber('trans_purchase_order', 'MUI/PO');
+            $doc_num_generated = NumberGenerator::generateNumberv2('trans_purchase_order', 'MUI/PO');
           
             DB::statement('CALL sp_trans_pr_create_po(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
              [

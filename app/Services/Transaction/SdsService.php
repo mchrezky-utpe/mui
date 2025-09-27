@@ -19,7 +19,6 @@ use App\Helpers\CalcHelper;
 use App\Models\Transaction\PurchaseOrdePrintDtVw;
 use App\Models\Transaction\PurchaseOrdePrintHdVw;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class SdsService
 {

@@ -76,13 +76,13 @@
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                        
                         @if ( $value->is_sent_to_edi  == 0 && $value->flag_status == 1)
-                        <form action="/sds/send-to-edi?id={{$value->id}}" method="post"> 
-                        @csrf 
+                            <form action="/sds/send-to-edi?id={{$value->id}}" method="post"> 
+                              @csrf 
                               <button class="dropdown-item .send_to_edit" href="#">Send To EDI</button>
-                          </form>
-                          @else 
-                          <button disabled class="dropdown-item send_to_edi" href="#">Send To EDI</button>
-                          @endif
+                            </form>
+                        @else 
+                        <button disabled class="dropdown-item send_to_edi" href="#">Send To EDI</button>
+                        @endif
                             
                         @if ($value->flag_status === 1 && $value->is_sent_to_edi  == 0)
                           <form action="/sds/pull-back?id={{$value->id}}" method="post"> 

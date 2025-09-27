@@ -65,6 +65,9 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::post("/po/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::post("/po/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/po/pdf/{id}", "view_pdf")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/po/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
+
     Route::get("/po/api/all", "api_all")->middleware(OnlyMemberMiddleware::class);
     Route::get("/po/{id}/print", "print")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/po/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
