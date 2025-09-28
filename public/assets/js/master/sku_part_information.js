@@ -46,10 +46,10 @@ $(document).on("click", ".edit", function (e) {
             $("[name=group_tag]").val(data.group_tag);
             $("[name=specification_code]").val(data.specification_code);
             $("[name=specification_detail]").val(data.specification_detail);
-            $("[name=val_weight]").val(data.val_weight);
-            $("[name=val_area]").val(data.val_area);
+            $("[name=val_weight]").val(Number(data.val_weight).toFixed());
+            $("[name=val_area]").val(Number(data.val_area).toFixed());
             $("[name=sku_model_id]").val(data.sku_model_id);
-            $("[name=val_conversion]").val(data.val_conversion);
+            $("[name=val_conversion]").val(Number(data.val_conversion).toFixed());
             $("[name=flag_inventory_register]").val(
                 data.flag_inventory_register
             );
@@ -157,16 +157,23 @@ function populateSelect(master_data, element) {
 
 // ================================
 
-$(".btn_part_information").click(function () {
+$(".btn_part_information, .edit").click(function () {
     fetchSetCode()
         .then((data) => {
             console.log("Succesfully fetchSetCode:", data);
             var list = $("#setCodes");
             list.empty(); // Kosongkan list sebelum menambahkan data baru
 
+            
+            var listEdit = $("#setCodeEdit");
+            listEdit.empty(); // Kosongkan list sebelum menambahkan data baru
+
             // Tambahkan data ke dalam list
             data.data.forEach(function (item) {
                 list.append(
+                     `<option value="`+item.code +`">`
+                );
+                listEdit.append(
                      `<option value="`+item.code +`">`
                 );
             });

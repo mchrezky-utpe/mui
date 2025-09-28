@@ -17,8 +17,14 @@
           <input required name="description" class="form-control" type="text">
         </div>
         <div class="form-group">
-          <label>Set Code</label>
-          <input readonly name="group_tag" class="form-control" type="text"/>
+          <label for="browser">Set Code</label>
+          <input class="form-control" list="setCodes" name="group_tag">
+
+          <datalist id="setCodesEdit">
+            <option value="empty">
+          </datalist>
+          {{-- <label>Set Code</label>
+          <input readonly name="group_tag" class="form-control" type="text"/> --}}
         </div>
         <div class="form-group">
           <label>Spesification Code</label>
