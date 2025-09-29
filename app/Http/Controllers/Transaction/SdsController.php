@@ -76,6 +76,14 @@ class SdsController
             'data' => $data
         ]);
     }
+    
+    public function detail(Request $request, int $id)
+    {
+        $data = $this->service->detail($id);
+        return response()->json([
+            'data' => $data
+        ]);
+    }
 
     public function edit(Request $request)
     {

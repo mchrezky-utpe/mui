@@ -47,7 +47,7 @@
           <div class="card-body">
             <div class="table-responsive">
               
-<div class="table-container">
+          <div class="table-container">
               <table id="table_sds" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
@@ -117,7 +117,7 @@
                     <td>{{ $value->rev_date }}</td>
                     <td>{{ $value->date_reschedule }}</td>
                     <td>
-                       <button data-id="{{ $value->trans_pr_id }}" type="button" class="btn_detail btn btn-info">
+                       <button data-id="{{ $value->id }}" type="button" class="btn_detail btn btn-info">
                           <span class="fas fa-eye"></span>
                         </button>
                     </td>

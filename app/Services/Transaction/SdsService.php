@@ -3,21 +3,14 @@
 namespace App\Services\Transaction;
 use App\Helpers\NumberGenerator;
 
-use App\Helpers\HelperCustom;
 use App\Models\Transaction\VwSdsList;
+use App\Models\Transaction\VwSdsDetail;
 use App\Models\Transaction\Sds;
 use App\Models\Transaction\SdsDetail;
-use App\Models\Transaction\PurchaseOrder;
-use App\Models\Transaction\PurchaseOrderDetail;
-use App\Models\Transaction\PurchaseOrderDeduction;
-use App\Models\Transaction\PurchaseOrderOtherCost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Helpers\CalcHelper;
-use App\Models\Transaction\PurchaseOrdePrintDtVw;
-use App\Models\Transaction\PurchaseOrdePrintHdVw;
 use Illuminate\Support\Facades\DB;
 
 class SdsService
@@ -169,14 +162,14 @@ class SdsService
     {
         return Sds::where('id', $id)->firstOrFail();
     } 
-    public function print(int $id)
+    
+    public function detail(int $id)
     {
-        $header = PurchaseOrdePrintHdVw::where('id', $id)->first();
-        $detail = PurchaseOrdePrintDtVw::where('trans_po_id', $id)->get();
-        
+       $header =  VwSdsList::where('id', $id)->firstOrFail();
+       $details = VwSdsDetail::where('trans_sds_id', $id)->get();
         return [
             'header' => $header,
-            'detail' => $detail,
+            'details' => $details,
         ];
     } 
 

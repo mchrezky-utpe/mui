@@ -10,6 +10,8 @@ export function handleActionTable() {
 
 
     $(document).on("click", ".create_po", function () {
+        
+        $("#add_modal_po").modal("show");
         var id = this.dataset.id;
         var supplier = $(this).closest("tr").find("td").eq(5).text();
         var pr_doc_numb = $(this).closest("tr").find("td").eq(1).text();
@@ -112,9 +114,9 @@ export function handleActionTable() {
 
 
 
-    let rowCount = 0;
+    var rowCount = 1;
     $(".add_row").on("click", function () {
-        const row = rowCount + 1;
+        const row = rowCount;
         const supplier = $('#supplier_select').val();
         let sku_item;
         skuMaster.forEach((data) => {
@@ -150,7 +152,7 @@ export function handleActionTable() {
                         </option>
 				</td>
                 <td>
-                    <select required name="sku_id[]" class="form-control item_sku">
+                    <select required name="sku_id[]" class="form-control item_sku product-select" data-row="${row}">
                         <option value="">
                             -- Select SKU --
                         </option>
@@ -159,14 +161,13 @@ export function handleActionTable() {
             `
                     </select>
                 </td>
-                <td><input type="number" class="price form-control" name="price[]" placeholder="Price"  required>></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" >></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]">></td>
+                <td><input type="number" class="price form-control" name="price[]" placeholder="Price"  required></td>
+                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" ></td>
+                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
                 <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"  required></td>
                 <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" required></td>
                 <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required></td>
                 <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
-                <td><input type="hidden" class="total form-control" name="supplier[]" value="${supplier}" readonly></td>
                 <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
             </tr>
         `;
@@ -176,6 +177,8 @@ export function handleActionTable() {
     });
 
     $(".item_table").on("change", ".item_sku", function () {
+        validateItemSelect($(this));
+
         const price = Number($(this).find("option:selected").attr("price")).toFixed(0);
         const sku_description = $(this)
             .find("option:selected")
@@ -187,6 +190,48 @@ export function handleActionTable() {
         $(this).closest("tr").find(".specification_code").val(spec_code);
         $(this).closest("tr").find(".sku_prefix").val(prefix);
     });
+
+    function validateItemSelect($select) {
+        const selectedValue = $select.val();
+        const currentRowId = $select.data('row');
+        const $errorDiv = $select.next('.error-message');
+        
+        // Reset error state
+        $select.removeClass('is-invalid');
+        $errorDiv.hide().text('');
+        
+        if (selectedValue === '') {
+            return true;
+        }
+        
+        // Check for duplicates
+        const isDuplicate = checkDuplicate(selectedValue, currentRowId);
+        
+        if (isDuplicate) {
+            $select.addClass('is-invalid');
+            alert("Item sudah dipilih!");
+            $select.val("")
+            return false;
+        }
+        
+        return true;
+    }
+
+    function checkDuplicate(value, currentRowId) {
+        let duplicateFound = false;
+        
+        $('.product-select').each(function() {
+            const $select = $(this);
+            const rowId = $select.data('row');
+            
+            if (rowId !== currentRowId && $select.val() === value) {
+                duplicateFound = true;
+                return false; // break loop
+            }
+        });
+        
+        return duplicateFound;
+        }
 
     $(".item_table").on(
         "input",
@@ -226,79 +271,79 @@ export function handleActionTable() {
                 $("[name=prs_supplier_id]").val(data.prs_supplier_id);
                 $("[name=gen_currency_id]").val(data.gen_currency_id);
                 $("[name=flag_status]").val(data.flag_status);
-
+   
+                $("[name=prs_supplier_id]").change();
                
 
             fetchSkuMaster(data.prs_supplier_id)
-                .then((skuMaster) => {
+                .then((skuMaster) => {                 
                 $(".item_table tbody").empty();
-                let rowCount = 1;
+                rowCount = 1;
                 for (let index = 0; index < data.items.length; index++) {
-                    const item = data.items[index];
-                    let sku_item = "";
-                    skuMaster.forEach((datas) => {   
-                        const isSelected = item.sku_id ==  datas.sku_pk_id ? "selected" : ""
-                        sku_item +=
-                            `<option 
-                            ${isSelected}
-                            sku_description="` +
-                            datas.sku_name +
-                            `" sku_prefix="` +
-                            datas.sku_id +
-                            `"  price="` +
-                            datas.price +
-                            `" value="` +
-                            datas.sku_pk_id +
-                            `" spec_code="` +
-                            datas.sku_specification_code +
-                            `" >` +
-                            datas.sku_id +
-                            " - " +
-                            datas.sku_name +
-                            `</option>`;
-                    });
-                    const newRow =
-                        `
-            <tr>
-                <td>${rowCount}</td>
-				<td>
-					<select required name="flag_type_detail[]" class="form-control item_sku">
-                        <option value="">
-                            -- Pick Purchase Item Type --
-							<option ${item.flag_type == 1 ? `selected` : ``} value="1"> New Order </option>
-							<option ${item.flag_type == 2 ? `selected` : ``} value="2"> Addition </option>
-							<option ${
-                                item.flag_type == 3 ? `selected` : ``
-                            } value="3"> Replacement </option>
-							<option ${item.flag_type == 4 ? `selected` : ``} value="4"> Services </option>
-                        </option>
-				</td>
-                <td>
-                    <select required name="sku_id[]" class="form-control item_sku">
-                        <option value="">
-                            -- Select SKU --
-                        </option>
-                        ` +
-                        sku_item +
-                        `
-                    </select>
-                </td>
-                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" value="${item.price_f}" required></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" required></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]" required></td>
-                <td><input type="number" class="qty form-control" name="qty[]" value="${item.qty}" placeholder="Qty" step="1" required></td>
-                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" value="${item.req_date}" step="0.01" required></td>
-                <td><input type="text" class="form-control" name="description_item[]" value=${item.description} placeholder="Description" required></td>
-                <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
-                <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
-            </tr>
-             `;
+                            const item = data.items[index];
+                            let sku_item = "";
+                            skuMaster.forEach((datas) => {   
+                                const isSelected = item.sku_id ==  datas.sku_pk_id ? "selected" : ""
+                                sku_item +=
+                                    `<option 
+                                    ${isSelected}
+                                    sku_description="` +
+                                    datas.sku_name +
+                                    `" sku_prefix="` +
+                                    datas.sku_id +
+                                    `"  price="` +
+                                    datas.price +
+                                    `" value="` +
+                                    datas.sku_pk_id +
+                                    `" spec_code="` +
+                                    datas.sku_specification_code +
+                                    `" >` +
+                                    datas.sku_id +
+                                    " - " +
+                                    datas.sku_name +
+                                    `</option>`;
+                            });
+                            const newRow =
+                                `
+                    <tr>
+                        <td>${rowCount}</td>
+                        <td>
+                            <select required name="flag_type_detail[]" class="form-control item_sku">
+                                <option value="">
+                                    -- Pick Purchase Item Type --
+                                    <option ${item.flag_type == 1 ? `selected` : ``} value="1"> New Order </option>
+                                    <option ${item.flag_type == 2 ? `selected` : ``} value="2"> Addition </option>
+                                    <option ${
+                                        item.flag_type == 3 ? `selected` : ``
+                                    } value="3"> Replacement </option>
+                                    <option ${item.flag_type == 4 ? `selected` : ``} value="4"> Services </option>
+                                </option>
+                        </td>
+                        <td>
+                            <select required name="sku_id[]" class="form-control item_sku product-select" data-row="${rowCount}">
+                                <option value="">
+                                    -- Select SKU --
+                                </option>
+                                ` +
+                                sku_item +
+                                `
+                            </select>
+                        </td>
+                        <td><input type="number" class="price form-control" name="price[]" placeholder="Price" value="${Number(item.price_f).toFixed()}" required></td>
+                        <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" required></td>
+                        <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]" required></td>
+                        <td><input type="number" class="qty form-control" name="qty[]" value="${Number(item.qty).toFixed()}" placeholder="Qty" step="1" required></td>
+                        <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" value="${item.req_date}" step="0.01" required></td>
+                        <td><input type="text" class="form-control" name="description_item[]" value=${item.description} placeholder="Description" required></td>
+                        <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
+                        <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
+                    </tr>
+                    `;
 
-                    $(".item_table tbody").append(newRow);
-                    rowCount++;
+                        $(".item_table tbody").append(newRow);
+                        rowCount++;
                 }
 
-                $("[name=prs_supplier_id]").change();
                 $("#edit_modal").modal("show");
 
                 })

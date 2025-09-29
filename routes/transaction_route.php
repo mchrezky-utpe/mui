@@ -168,7 +168,8 @@ Route::controller(SdsController::class)->group(function () {
     Route::get("/sds", "index")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds", "add")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    Route::get("/sd/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sds/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sds/{id}/detail", "detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/reschedule", "reschedule")->middleware(OnlyMemberMiddleware::class);

@@ -6,12 +6,13 @@
         <div class="card-header bg-light">
             <h6 class="mb-0"><i class="fas fa-truck"></i> Supplier Delivery Schedule Information</h6>
         </div>
+        
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-2 row">
-                        <div class="col-5"><strong>ID:</strong></div>
-                        <div class="col-7" id="detail_id">-</div>
+                        <div class="col-5"><strong>PO Number:</strong></div>
+                        <div class="col-7" id="detail_po_number">-</div>
                     </div>
                     <div class="mb-2 row">
                         <div class="col-5"><strong>SDS Number:</strong></div>
@@ -26,9 +27,23 @@
                         <div class="col-7" id="detail_department">-</div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-5"><strong>SDS Date:</strong></div>
-                        <div class="col-7" id="detail_date">-</div>
+                        <div class="col-5"><strong>Date SDS:</strong></div>
+                        <div class="col-7" id="detail_sds_date">-</div>
                     </div>
+                    <div class="mb-2 row">
+                        <div class="col-5"><strong>Date Received:</strong></div>
+                        <div class="col-7" id="detail_received_date">-</div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-5"><strong>Date Pulled Back:</strong></div>
+                        <div class="col-7" id="detail_pulled_date">-</div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-5"><strong>Date Reschedule:</strong></div>
+                        <div class="col-7" id="detail_reschedule_date">-</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="mb-2 row">
                         <div class="col-5"><strong>SDS Status:</strong></div>
                         <div class="col-7" id="detail_status">-</div>
@@ -37,8 +52,6 @@
                         <div class="col-5"><strong>Revision:</strong></div>
                         <div class="col-7" id="detail_rev_counter">-</div>
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="mb-2 row">
                         <div class="col-5"><strong>EDI Status:</strong></div>
                         <div class="col-7" id="detail_edi_status">-</div>
@@ -66,6 +79,27 @@
                 </div>
             </div>
         </div>
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Details</h5>
+    </div>
+    <div class="table-container">
+      <table class="table table-scroll" id="item_table">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Item Code</th>
+            <th>Specification Code</th>
+            <th>Item Type</th>
+            <th>Unit</th>
+            <th>Qty Sds</th>
+            <th>Outstanding SDO</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
     </div>
 
     {{-- <div class="card-header d-flex justify-content-between align-items-center">

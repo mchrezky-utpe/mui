@@ -67,88 +67,6 @@ export function handleActionTable() {
 
 	});
 
-
-
-	$(document).on('click','.create_po',function(){
-		var id = this.dataset.id;
-		var supplier = $(this).closest('tr').find('td').eq(6).text();
-		var pr_doc_numb = $(this).closest('tr').find('td').eq(2).text();
-		var supplier_id = $(this).closest('tr').find('[name=supplier_id]').val();
-		$('[name=id]').val(id);
-		$('[name=pr_doc_numb]').val(pr_doc_numb);
-		$('[name=supplier_name]').val(supplier);
-		$('[name=prs_supplier_id]').val(supplier_id);
-		$('#add_modal_po').modal('show');
-	});
-
-	let rowCount = 0;
-	$("#add_row").on("click", function() {
-		const row = rowCount + 1;
-		let sku_item
-		skuMaster.forEach(data => {
-			sku_item +=`"  req_date="` + data.req_date +  `<option sku_description="` + data.sku.description + `" sku_prefix="` + data.sku.prefix + `"  price="` + data.price + `" value="` + data.sku.id + `" spec_code="` + data.sku.specification_code + `" >` + data.sku.manual_id + " - " + data.sku.description + `</option>`
-		});
-		const newRow = `
-            <tr>
-                <td>${row}</td>
-                <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" step="0.01"></td>
-                <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"></td>
-                <td>
-                    <select name="sku_id[]" class="form-control item_sku">
-                        <option value="">
-                            -- Select SKU --
-                        </option>
-                        ` +
-			sku_item +
-			`
-                    </select>
-                </td>
-                <td><input type="text" class="specification_code form-control" name="specification_code" readonly></td>
-                <td><input type="text" class="form-control" name="item_type" readonly></td>
-                <td><input type="text" class="form-control" name="purchase_item_type" readonly></td>
-                <td><input type="number" class="price form-control" name="price[]" placeholder="Price" step="0.01"></td>
-                <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" placeholder="Price" step="0.01"></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]" placeholder="Price" step="0.01"></td>
-                <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"></td>
-                <td><input type="number" class="sub_total form-control" name="sub_total[]" placeholder="Sub Total" step="0.01" readonly></td>
-                <td><input type="number" class="discount form-control" name="discount_percentage[]" placeholder="Discount %" step="0.01"></td>
-                <td><input type="number" class="after_discount form-control" name="after_discount[]" placeholder="After Discount" step="0.01" readonly></td>
-                <td><input type="number" class="vat_percentage form-control" name="vat_percentage[]" placeholder="VAT" step="0.01"></td>
-                <td><input type="number" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
-                <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
-            </tr>
-        `;
-
-		$("#item_table tbody").append(newRow);
-		rowCount++;
-	});
-
-	$('#item_table').on('change', '.item_sku', function() {
-		const price = $(this).find('option:selected').attr('price');
-		const sku_description = $(this).find('option:selected').attr('sku_description');
-		const prefix = $(this).find('option:selected').attr('sku_prefix');
-		const spec_code = $(this).find('option:selected').attr('spec_code');
-		$(this).closest('tr').find('.price').val(price);
-		$(this).closest('tr').find('.sku_description').val(sku_description);
-		$(this).closest('tr').find('.specification_code').val(spec_code);
-		$(this).closest('tr').find('.sku_prefix').val(prefix);
-	});
-
-	$('#item_table').on('input', '.price, .qty, .discount, .vat_percentage', function() {
-		calculateTotal();
-	});
-
-	$('#tax_rate').on('input', function() {
-		calculateTotal();
-	});
-
-	$("#item_table").on("click", ".delete_row", function() {
-		$(this).closest("tr").remove();
-		calculateTotal();
-	});
-
-	calculateTotal();
-
 	// SDS MAIN TABLE
 
 	$(document).on('click', '.btn_reschedule', function (e) {
@@ -161,4 +79,85 @@ export function handleActionTable() {
 
 		$('#reschedule_modal').modal('show');
 	});
+
+
+	  $(document).on("click", ".btn_detail", function (e) {
+        var table = $("#table_sds").DataTable();
+        var row = table.row($(this).closest("tr"));
+        var data = row.data();
+		
+        var sds_id = $(this).data("id"); // ID dari button data-id
+ 		$.ajax({
+            type: "GET",
+            url: base_url + "sds/" + sds_id +"/detail",
+            success: function (response) {
+            var data = response.data.header;
+            var details = response.data.details;
+        
+			$("#detail_po_number").text(response.data.details[0].po_doc_num);
+			$("#detail_doc_num").text(data.doc_num);
+			$("#detail_supplier").text(data.supplier);
+			$("#detail_department").text(response.data.details[0].department);
+			$("#detail_date").text(data.trans_date);
+			$("#detail_status").text(data.sds_status);
+			$("#detail_rev_counter").text(data.rev_counter);
+			$("#detail_edi_status").text(data.status_sent_to_edi);
+			$("#detail_delivery").text(data.sds_delivery);
+			$("#detail_shipment").text(data.sds_shipment);
+			$("#detail_reschedule").text(data.status_reschedule);
+			$("#detail_date_reschedule").text(data.date_reschedule);
+			$("#detail_rev_date").text(data.rev_date);
+           
+			$("#item_table tbody").empty();
+            for (let index = 0; index < details.length; index++) {
+                const item = details[index];
+                const newRow =
+                    `
+                        <tr>
+                            <td>
+                              ${item.sku_description}
+                            </td>
+                            <td>${item.sku_prefix}</td>
+                            <td>${item.sku_specification_code}</td>
+                            <td>${item.sku_type}</td>
+                            <td>${item.sku_inventory_unit}</td>
+                            <td>${item.qty}</td>
+                            <td>-</td>
+                        </tr>
+            `;
+
+                $("#item_table tbody").append(newRow);
+            }
+			
+       			 $("#detail_modal").modal("show");
+            },
+            error: function (err) {
+                debugger;
+            },
+        });
+        // Load detail items via AJAX
+        // loadSdsDetailItems(sds_id);
+
+        // Show modal
+    });
+
+    // Function to load SDS detail items
+    function loadSdsDetailItems(sds_id) {
+        // Clear existing table data
+        $("#detail_table tbody").empty();
+
+        // Show loading state
+        $("#detail_table tbody").html(`
+            <tr>
+                <td colspan="9" class="text-center">
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    Loading items...
+                </td>
+            </tr>
+        `);
+    }
+
+
 }
