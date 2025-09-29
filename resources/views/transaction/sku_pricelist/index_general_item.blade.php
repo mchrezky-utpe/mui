@@ -37,6 +37,9 @@
             <h5 class="mb-0">List</h5>
             <div class="d-flex">
             <button id="add_general_item_button" type="button" class="btn btn-primary btn_general_item" data-toggle="modal" data-target="#add_general_item_modal">+ General Item Prices</button>
+            <a href="{{ route('pricelist.export_general_item') }}" class="mr-2 btn btn-success">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </a>
           </div>
           </div>
           <div class="card-body">

@@ -33,6 +33,7 @@ class PurchaseOrderRequestService
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('department', 'like', '%' . $search . '%')
                     ->orWhere('supplier', 'like', '%' . $search . '%');
             });
         }
@@ -70,6 +71,7 @@ class PurchaseOrderRequestService
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('department', 'like', '%' . $search . '%')
                     ->orWhere('sku_name', 'like', '%' . $search . '%')
                     ->orWhere('spec_code', 'like', '%' . $search . '%');
             });

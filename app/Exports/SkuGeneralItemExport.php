@@ -25,7 +25,7 @@ class SkuGeneralItemExport implements FromCollection, WithHeadings, ShouldAutoSi
             'val_conversion',   //conversion'
             'is_inventory_register',  //inventory register
             'created_at',
-        )->get();
+        )->where('flag_sku_type', 3)->get();
     }
 
     public function headings(): array

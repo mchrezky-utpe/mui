@@ -96,7 +96,8 @@ Route::controller(SkuPricelistController::class)->group(function () {
     // general item
     Route::get("/sku-pricelist-general-item", "index_general_item")->middleware(OnlyMemberMiddleware::class);
 
-    route::get('/pricelist/export', 'export')->name('pricelist.export');
+    route::get('/pricelist/export-general-item', 'export_general_item')->name('pricelist.export_general_item');
+    route::get('/pricelist/export-prod-material', 'export_prod_material')->name('pricelist.export_prod_material');
 });
 
 Route::controller(SkuMinOfStockController::class)->group(function () {

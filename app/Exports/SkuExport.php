@@ -30,7 +30,7 @@ class SkuExport implements FromCollection, WithHeadings, ShouldAutoSize
             'val_conversion',  //inventory register
             'is_inventory_register',  //inventory register
             'created_at',
-        )->get();
+        )->where('flag_sku_type', 1)->get();
     }
 
     public function headings(): array

@@ -28,6 +28,9 @@ export function handleTableServerSide() {
                 data: "trans_date",
             },
             {
+                data: "department",
+            },
+            {
                 data: "transaction_type",
             },
             {
@@ -59,7 +62,7 @@ export function handleTableServerSide() {
                 },
             },
             {
-                targets: 9,
+                targets: 10,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {

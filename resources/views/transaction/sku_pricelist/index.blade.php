@@ -37,7 +37,7 @@
             <h5 class="mb-0">List</h5>
             <div class="d-flex">
             <button id="add_button"  type="button" class="btn btn-primary btn_production_item" data-toggle="modal" data-target="#add_modal">+ Production Material Prices</button>
-            <a href="{{ route('pricelist.export') }}" class="mr-2 btn btn-success">
+            <a href="{{ route('pricelist.export_prod_material') }}" class="mr-2 btn btn-success">
                 <i class="fas fa-file-excel"></i> Export Excel
               </a>
           </div>

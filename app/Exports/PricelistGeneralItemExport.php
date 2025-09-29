@@ -6,7 +6,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PricelistExport implements FromCollection, WithHeadings, ShouldAutoSize
+class PricelistGeneralItemExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
    public function collection()
     {
@@ -23,7 +23,7 @@ class PricelistExport implements FromCollection, WithHeadings, ShouldAutoSize
             'valid_date_from',
             'valid_date_to',
             'valid_date_status',
-        )->get();
+        )->where('flag_sku_type', 3)->get();
     }
 
     public function headings(): array

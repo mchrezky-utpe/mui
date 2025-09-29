@@ -26,7 +26,7 @@ class SkuProductionMaterialExport implements FromCollection, WithHeadings, Shoul
             'val_conversion',   //conversion'
             'is_inventory_register',  //inventory register
             'created_at',
-        )->get();
+        )->where('flag_sku_type', 2)->get();
     }
 
     public function headings(): array

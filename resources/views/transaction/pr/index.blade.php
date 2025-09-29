@@ -70,6 +70,7 @@
                     <th>No</th>
                     <th>PR Number</th>
                     <th>Date</th>
+                    <th>Department</th>
                     <th>Type</th>
                     <th>Purpose</th>
                     <th>Supplier</th>

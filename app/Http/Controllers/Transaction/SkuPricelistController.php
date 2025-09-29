@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Services\Transaction\SkuPricelistService;
-use App\Exports\PricelistExport;
+use App\Exports\PricelistGeneralItemExport;
+use App\Exports\PricelistProdMaterialExport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Facades\Excel;
@@ -85,8 +86,12 @@ class SkuPricelistController
         $this->service->edit($request);
         return redirect("/sku-pricelist");
     }
-    public function export()
+    public function export_general_item()
     {
-        return Excel::download(new PricelistExport, 'pricelist.xlsx');
+        return Excel::download(new PricelistGeneralItemExport, 'pricelist.xlsx');
+    }
+    public function export_prod_material()
+    {
+        return Excel::download(new PricelistProdMaterialExport, 'pricelist.xlsx');
     }
 }
