@@ -12,11 +12,11 @@ export function handleActionTable() {
 
 				response.data.forEach(data => {
 					const newRow = `
-					<tr id="${data.id}">
-						<td>${data.sku_prefix}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
-						<td>${data.po_doc_num}</td>
+					   <tr id="${data.id}">
+						<td>${data.po_doc_num}<input type="hidden" name="detail_id[]" value="${data.id}" /><input name="qty[]" type="hidden" value="${data.qty}" /></td>
 						<td>${data.sds_doc_num}</td>
 						<td>${data.do_doc_num}</td>
+						<td>${data.sku_prefix}</td>
 						<td>${data.sku_description}</td>
 						<td>${data.sku_specification_code}</td>
 						<td>${data.sku_type}</td>
