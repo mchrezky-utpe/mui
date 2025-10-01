@@ -13,7 +13,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="description_right">Supplier</label>
-          <select required id="supplier_select" name="prs_supplier_id" class="form-control">
+          <select required id="supplier_select" name="prs_supplier_id" class="form-control supplier_select">
             <option value="">-- Select Supplier --</option>
           </select>
         </div>
@@ -22,7 +22,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="description_right">Po Number</label>
-          <select id="po_select" name="purchase_order_id" class="form-control">
+          <select id="po_select" name="trans_po_id" class="form-control po_select">
             <option value="">-- Select PO --</option>
           </select>
         </div>

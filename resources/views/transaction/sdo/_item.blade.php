@@ -7,6 +7,9 @@
   <table id="item_table" class="table table-scroll" id="add_table">
     <thead>
       <tr>
+        <th>Po Number</th>
+        <th>SDS Number</th>
+        <th>Do Number</th>
         <th>Item Code</th>
         <th>Item Name</th>
         <th>Spec Code</th>

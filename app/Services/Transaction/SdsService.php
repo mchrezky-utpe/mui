@@ -119,12 +119,9 @@ class SdsService
             // Simpan data PO Detail
             SdsDetail::insert($items);
     
-            // Commit transaksi jika semua berhasil
             DB::commit();
         } catch (\Exception $e) {
-            // Rollback jika terjadi error
             DB::rollBack();
-            // Log::alert("message");
             dd($e);
             return response()->json([
                 'message' => 'Terjadi kesalahan saat membuat sds.',
@@ -160,7 +157,9 @@ class SdsService
     
     public function get(int $id)
     {
-        return Sds::where('id', $id)->firstOrFail();
+        $data =   Sds::where('id', $id)->firstOrFail();
+       $data->items =  SdsDetail::where('trans_sds_id', $id)->get();
+       return $data;
     } 
     
     public function detail(int $id)
@@ -173,11 +172,53 @@ class SdsService
         ];
     } 
 
-    function edit(Request $request)
+   public function edit(Request $request)
     {
-        $data = Sds::where('id', $request->id)->firstOrFail();
-        $data->description = $request->description;
-        $data->manual_id= $request->manual_id;
-        $data->save();
+        DB::beginTransaction();
+
+        try {
+            $sdsHeader = Sds::where('id', $request->id)->firstOrFail();
+
+            if ($sdsHeader->flag_status != 2) {
+                return response()->json([
+                    'message' => 'SDS tidak dapat diedit karena status sudah diproses lebih lanjut.',
+                ], 400);
+            }
+
+            $sdsHeader->update([
+                'trans_po_id' => $request->trans_po_id,
+                'prs_supplier_id' => $request->prs_supplier_id,
+                'trans_date' => $request->trans_date
+            ]);
+
+            SdsDetail::where('trans_sds_id', $sdsHeader->id)->delete();
+
+            $items = [];
+
+            foreach ($request->po_detail_id as $index => $po_detail_id) {
+                $items[] = [
+                    'qty' => $request->qty[$index],
+                    'generated_id' => Str::uuid()->toString(),
+                    'trans_sds_id' => $sdsHeader->id, 
+                    'po_detail_id' => $po_detail_id
+                ];
+            }
+
+            SdsDetail::insert($items);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'SDS berhasil diupdate.',
+                'data' => $sdsHeader
+            ], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengupdate sds.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

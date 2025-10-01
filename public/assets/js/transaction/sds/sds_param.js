@@ -7,18 +7,18 @@ export function initParam() {
 	fetchSupplierMaster()
 		.then(data => {
 			console.log("Succesfully get Supplier:", data);
-			populateSelect('Supplier', data, $('#supplier_select'));
+			populateSelect('Supplier', data, $('.supplier_select'));
 		})
 		.catch(err => {
 			console.error("Error get Supplier:", err);
 		});
 
-			$(document).on('change', '#supplier_select', function() {
-			const supplier_id = $('#supplier_select').val();
+			$(document).on('change', '.supplier_select', function() {
+			const supplier_id = $('.supplier_select').val();
 			fetchPoDroplist(supplier_id)
 				.then(data => {
 					// setGlobalVariable('poMaster', data);
-					populateSelectPo('Po', data, $('#po_select'));
+					populateSelectPo('Po', data, $('.po_select'));
 				})
 				.catch(err => {
 					console.error("Error get po:", err);

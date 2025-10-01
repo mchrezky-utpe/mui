@@ -27,8 +27,8 @@ var table = new DataTable('.data-table-item',
         },
         {
             targets: '_all',
-            className: 'text-nowrap' 
-        }
+            className: 'text-nowrap bordered-cell' 
+        },
     ]
 });
 

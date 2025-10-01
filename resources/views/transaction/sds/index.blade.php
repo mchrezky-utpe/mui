@@ -48,7 +48,7 @@
             <div class="table-responsive">
               
           <div class="table-container">
-              <table id="table_sds" class="table table-striped table-bordered first">
+              <table id="table_sds" class="table  table-striped table-bordered first">
                 <thead>
                   <tr>
                     <th></th>
@@ -64,7 +64,6 @@
                     <th>Reschedule</th>
                     <th>Date Reschdule</th>
                     <th>Date Revision</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr data-id="{{ $value->id }}">
@@ -75,7 +74,10 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                        
+                        <button data-id="{{ $value->id }}" class="dropdown-item btn_detail" type="button">Detail</button>
+                       
                         @if ( $value->is_sent_to_edi  == 0 && $value->flag_status == 1)
+                        <button data-id="{{ $value->id }}" class="dropdown-item edit" type="button">Edit</button>
                             <form action="/sds/send-to-edi?id={{$value->id}}" method="post"> 
                               @csrf 
                               <button class="dropdown-item .send_to_edit" href="#">Send To EDI</button>
@@ -116,11 +118,6 @@
                     <td>{{ $value->status_reschedule }}</td>
                     <td>{{ $value->rev_date }}</td>
                     <td>{{ $value->date_reschedule }}</td>
-                    <td>
-                       <button data-id="{{ $value->id }}" type="button" class="btn_detail btn btn-info">
-                          <span class="fas fa-eye"></span>
-                        </button>
-                    </td>
                   </tr> @endforeach </tbody>
                 </table>
                 </div>

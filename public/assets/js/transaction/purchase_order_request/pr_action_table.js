@@ -13,7 +13,7 @@ export function handleActionTable() {
         
         $("#add_modal_po").modal("show");
         var id = this.dataset.id;
-        var supplier = $(this).closest("tr").find("td").eq(5).text();
+        var supplier = $(this).closest("tr").find("td").eq(6).text();
         var pr_doc_numb = $(this).closest("tr").find("td").eq(1).text();
         var supplier_id = $(this)
             .closest("tr")
@@ -50,10 +50,10 @@ export function handleActionTable() {
                             <td>
                                 ${item.sku_prefix} - ${item.sku_description}
                             </td>
-                            <td>${item.price_f}</td>
+                            <td>${Number(item.price_f).toFixed()}</td>
                             <td style='display:none'></td>
                             <td style='display:none'></td>
-                            <td>${item.qty}</td>
+                            <td>${Number(item.qty).toFixed()}</td>
                             <td>${item.req_date}</td>
                             <td>${item.description}</td>
                             <td></td>

@@ -4,7 +4,7 @@
   <!-- <button id="add_row" type="button" class="btn btn-primary">+</button> -->
 </div>
 <div class="table-container">
-  <table id="item_table" class="table table-scroll" id="add_table">
+  <table id="item_table" class="table table-scroll item_table">
     <thead>
       <tr>
         <th>Item Code</th>
@@ -22,7 +22,7 @@
 
 
 <div class="table-container">
-  <table id="target_table" class="table table-scroll" id="add_table">
+  <table id="target_table" class="table table-scroll target_table">
     <thead>
       <tr>
         <th>Item Code</th>

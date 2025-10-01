@@ -39,7 +39,16 @@
     height: auto; /* Sesuaikan tinggi konten jika diperlukan */
     overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
 }
-
+.bordered-cell {
+    border-left: 2px solid #ccc !important;
+    border-right: 2px solid #ccc !important;
+    padding: 8px 12px;
+}
+.unwrap-column {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 table.dataTable tbody {
     font-size: 11px;

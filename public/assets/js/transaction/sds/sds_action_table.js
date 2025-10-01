@@ -2,14 +2,14 @@ import {
 	skuMaster
 } from './sds_global_variable.js';
 import {
-	calculateTotal
-} from './sds_calculate.js';
+	initParam
+} from './sds_param.js';
 
 export function handleActionTable() {
 
 	var selectedRow = null;
 
-	$(document).on('click','#item_table tbody tr', function() {
+	$(document).on('click','.item_table tbody tr', function() {
 	  $('#qty_input').val("")
 	  selectedRow = $(this);
 	  $('#qty_sds_modal').modal('show'); 
@@ -22,7 +22,7 @@ export function handleActionTable() {
 		  const qty = $('#qty_input').val()
 		  const additional = `<input type="hidden" name="po_detail_id[]" value="${id}" /><input name="qty[]"  value="${qty}" type="hidden" />`;
 		
-		  $('#target_table tbody').append(selectedRow.append(additional));
+		  $('.target_table tbody').append(selectedRow.append(additional));
 		  $('#qty_sds_modal').modal('hide'); 
 		  $('#add_modal').show(); 
 
@@ -34,15 +34,15 @@ export function handleActionTable() {
 	  });
 
 
-	$(document).on('change', '#supplier_select, #po_select', function() {
-		const po_id = $('#po_select').val();
+	$(document).on('change', '.supplier_select, .po_select', function() {
+		const po_id = this.value;
 		$.ajax({
 			type: 'GET',
 			url: base_url + 'api/po/item',
 			data:{id : po_id},
 			success: function(response) {
-				$("#item_table tbody tr").remove();
-				$("#target_table tbody tr").remove();
+				$(".item_table tbody tr").remove();
+				$(".target_table tbody tr").remove();
 
 				response.data.forEach(data => {
 					const newRow = `
@@ -52,11 +52,11 @@ export function handleActionTable() {
 						<td>${data.specification_code}</td>
 						<td>${data.item_type}</td>
 						<td>${data.qty_po}</td>
-						<td>${data.qty_outstanding_sds}</td>
+						<td>${data.qty_outstanding}</td>
 						<td>${data.req_date}</td>
 					</tr>
 				`;
-				$("#item_table tbody").append(newRow);
+				$(".item_table tbody").append(newRow);
 				});	
 
 			},
@@ -108,7 +108,7 @@ export function handleActionTable() {
 			$("#detail_date_reschedule").text(data.date_reschedule);
 			$("#detail_rev_date").text(data.rev_date);
            
-			$("#item_table tbody").empty();
+			$(".item_table tbody").empty();
             for (let index = 0; index < details.length; index++) {
                 const item = details[index];
                 const newRow =
@@ -122,11 +122,11 @@ export function handleActionTable() {
                             <td>${item.sku_type}</td>
                             <td>${item.sku_inventory_unit}</td>
                             <td>${item.qty}</td>
-                            <td>-</td>
+                            <td>${item.qty_outstanding}</td>
                         </tr>
             `;
 
-                $("#item_table tbody").append(newRow);
+                $(".item_table tbody").append(newRow);
             }
 			
        			 $("#detail_modal").modal("show");
@@ -159,5 +159,70 @@ export function handleActionTable() {
         `);
     }
 
+	
+    $(document).on("click", ".edit", function (e) {
+        var id = this.dataset.id;
+        $.ajax({
+            type: "GET",
+            url: base_url + "sds/" + id,
+            success: function (data) {
+                var data = data.data;
 
+				$(".item_table tbody tr").remove();
+				$(".target_table tbody tr").remove();
+				
+                $("#edit_modal").modal("show");
+                $("[name=prs_supplier_id]").val(data.prs_supplier_id);
+
+			fetchPoDroplist(data.prs_supplier_id)
+				.then(data1 => {
+					// setGlobalVariable('poMaster', data);
+					populateSelectPo('Po', data1, $('.po_select'));
+               		 $("[name=trans_po_id]").val(data.trans_po_id);
+					  $("[name=trans_po_id]").change();
+				})
+				.catch(err => {
+					console.error("Error get po:", err);
+				});
+
+                $("[name=id]").val(data.id);
+                $("[name=trans_date]").val(data.trans_date);
+                // $("[name=flag_purpose]").val(data.flag_purpose);
+                // $("[name=gen_currency_id]").val(data.gen_currency_id);
+                // $("[name=flag_status]").val(data.flag_status);
+   
+            },
+            error: function (err) {
+                debugger;
+            },
+        });
+
+    });
+
+	function fetchPoDroplist(supplier_id) {
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: 'GET',
+				url: base_url + 'api/po/droplist',
+				data:{supplier_id : supplier_id},
+				success: function(data) {
+					resolve(data.data);
+				},
+				error: function(err) {
+					console.error("Error fetching po droplist:", err);
+					reject(err);
+				}
+			});
+		});
+	}
+
+	  function populateSelectPo(title, master_data, element) {
+        element.empty();
+        element.append('<option value="">-- Select ' + title + " --</option>");
+        master_data.forEach((data) => {
+            element.append(
+                `<option value="${data.id}">${data.doc_num}</option>`
+            );
+        });
+    }
 }

@@ -1,4 +1,4 @@
-<x-modals.modal buttonName="Received" id="add_modal" title="Receiving" modalClass="custom-modal-dialog-medium">
+<x-modals.modal buttonName="Received" id="add_modal" title="Receiving" modalClass="custom-modal-dialog-large">
   <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sdo/receive">
      @csrf
     <!-- TAB TRANSACTION -->

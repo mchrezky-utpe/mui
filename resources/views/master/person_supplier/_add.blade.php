@@ -20,8 +20,12 @@
         <input required name="contact_person_01" class="form-control" type="text" placeholder="Con. Person Name">
       </div>
       <div class="form-group">
+        <label>Office Phone</label>
+        <input required name="phone_01" class="form-control" type="text" placeholder="Office Phone">
+      </div>
+      <div class="form-group">
         <label>Con. Person Phone</label>
-        <input required name="phone_01" class="form-control" type="text" placeholder="Con. Person Phone">
+        <input required name="phone_02" class="form-control" type="text" placeholder="Con. Person Phone">
       </div>
     </div>
     

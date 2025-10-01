@@ -60,6 +60,23 @@ $(function() {
     //         rightColumns: 3
     //     }
     // });
+
+    
+let table_nowarps = new DataTable('.data-table-nowarps',{
+        scrollCollapse: true,
+        scrollX: true,
+        scrollY: 300,
+        fixedColumns: {
+            right: 1,
+            heightMatch: 'auto'
+        },
+        "columnDefs": [
+            {
+                "targets": "_all", 
+                "className": "unwrap-column bordered-cell"
+            }
+        ]
+});
 });
 
 function formatMoney(value) {

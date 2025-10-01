@@ -58,8 +58,9 @@
               <select type="date" class="form-control" id="status" name="flag_status">
                   <option value>=== Status ===</option> 
                   <option value="1">Open</option> 
-                  <option value="2">Closed</option> 
+                  <option value="2">Preparation</option> 
                   <option value="3">Pulled Back</option> 
+                  <option value="4">Closed</option> 
               </select>
             </div>
           </div>

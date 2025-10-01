@@ -4,10 +4,15 @@ export function handleTableServerSide() {
 
 
     const table_pr = $("#table-pr").DataTable({
+        scrollCollapse: true,
+        scrollX: true,
+        scrollY: 300,
         processing: true,
         serverSide: true,
-        scrollX: false,
-        scrollY: false,
+        fixedColumns: {
+            right: 1,
+            heightMatch: 'auto'
+        },
         ajax: {
             url: base_url + "pr/api/all",
             type: "GET",

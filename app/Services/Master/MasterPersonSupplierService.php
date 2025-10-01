@@ -30,7 +30,7 @@ class MasterPersonSupplierService
         $data['contact_person_03'] = $request->contact_person_03;
         $data['email_03'] = $request->email_03;
         $data['address_01'] = $request->address_01;
-        $data['phone_01'] = $request->phone;
+        $data['phone_01'] = $request->phone_01;
         $data['fax_01'] = $request->fax;
         $data['email_01'] = $request->email;
         $data['contact_person_01'] = $request->contact_person;
@@ -84,7 +84,7 @@ class MasterPersonSupplierService
         $data->contact_person_03 = $request->contact_person_03;
         $data->email_03 = $request->email_03;
         $data->address_01 = $request->address_01;
-        $data->phone_01 = $request->phone;
+        $data->phone_01 = $request->phone_01;
         $data->fax_01 = $request->fax;
         $data->email_01 = $request->email;
         $data->contact_person_01 = $request->contact_person;

@@ -37,13 +37,14 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first">
+              <table class="table data-table-nowarps table-striped table-bordered first">
                 <thead>
                   <tr>
                     <th>No</th>
                     <th>Supplier Initial</th>
                     <th>Supplier Name</th>
                     <th>Address</th>
+                    <th>Office Phone</th>
                     <th>Con. Person Name</th>
                     <th>Con. Person Phone</th>
                     <th>WH/Del PIC Name</th>
@@ -58,6 +59,7 @@
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->description }}</td>
                     <td>{{ $value->main_address }}</td>
+                    <td>{{ $value->main_phone }}</td>
                     <td>{{ $value->contact_person}}</td>
                     <td>{{ $value->contact_person_phone }}</td>
                     <td>{{ $value->wh_del_pic_name }}</td>

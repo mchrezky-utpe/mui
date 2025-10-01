@@ -4,9 +4,12 @@ export function handleTableServerSide() {
     const table_po = $("#table-po").DataTable({
      
         scrollCollapse: true,
-        scrollX: true,
+        // scrollX: true,
         scrollY: 300,
-
+        // fixedColumns: {
+        //     right: 1,
+        //     heightMatch: 'auto'
+        // },
         processing: true,
         serverSide: true,
         ajax: {
@@ -93,11 +96,20 @@ export function handleTableServerSide() {
                     const csrfToken = document
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute("content");
+
+
+                    let stateButtonEdi = "";
+                    if(data.status_sent_to_edi == "Sent" || data.file == null){
+                        stateButtonEdi = "disabled";
+                     }
+                        
+
                     let button = `
                         <div class="btn-group" role="group">
                         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Action
                         </button>
+
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <button data-id="${data.id}" type="button"class="upload dropdown-item">
 							   Upload PDF
@@ -105,7 +117,7 @@ export function handleTableServerSide() {
 
                             <form action="/po/send-to-edi?id=${data.id}" method="post"> 
 							    <input type="hidden" name="_token" value="${csrfToken}">
-                              <button class="dropdown-item">Send To EDI</button>
+                              <button ${stateButtonEdi} class="dropdown-item">Send To EDI</button>
                             </form>
 
                         </div>
@@ -120,7 +132,8 @@ export function handleTableServerSide() {
                 render: function (data, type, row, meta) {
                     let button =  "-";
                     if(data.file != null ){
-                        button = '<a target="_blank" href="po/pdf/'+data.id+'" class="btn btn-info me-1"><span class="fas fa-download"></span></a>';
+                        // button = '<a target="_blank" href="po/pdf/'+data.id+'" class="btn btn-info me-1"><span class="fas fa-download"></span></a>';
+                        button = "READY";
                     }
                     return button;  
                 },

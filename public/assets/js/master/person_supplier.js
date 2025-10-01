@@ -1,3 +1,4 @@
+
 $(document).on('click', '.edit', function (e) {
     var id = this.dataset.id;
     $.ajax({
