@@ -84,7 +84,7 @@
       <h5 class="mb-0">Details</h5>
     </div>
     <div class="table-container">
-      <table class="table table-scroll" id="item_table">
+      <table class="table table-scroll item_table" id="item_table">
         <thead>
           <tr>
             <th>Item Name</th>
