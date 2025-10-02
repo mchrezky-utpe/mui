@@ -24,6 +24,9 @@ export function handleTableServerSide() {
 				data: "do_doc_num"
 			},
 			{
+				data: "gpo_type"
+			},
+			{
 				data: "po_doc_num"
 			},
 			{

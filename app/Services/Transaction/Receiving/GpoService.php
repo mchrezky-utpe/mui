@@ -38,6 +38,7 @@ class GpoService
                 'prs_supplier_id' => $request->prs_supplier_id,
                 'trans_date' => $request->trans_date,
                 'doc_num' => $doc_num,
+                'gpo_type' =>$request->gpo_type,
                 'flag_transaction' => 2,
                 // 'doc_counter' => $doc_num_generated['doc_counter'],
                 'flag_status' => 1,
@@ -132,8 +133,9 @@ class GpoService
             $query->where(function ($q) use ($search) {
                 $q->Where('do_doc_num', 'like', '%' . $search . '%')
                     ->orWhere('po_doc_num', 'like', '%' . $search . '%')
-                    ->orWhere('sku_name', 'like', '%' . $search . '%')
+                    ->orWhere('sku_description', 'like', '%' . $search . '%')
                     ->orWhere('sku_specification_code', 'like', '%' . $search . '%')
+                    ->orWhere('gpo_type', 'like', '%' . $search . '%')
                     ->orWhere('supplier', 'like', '%' . $search . '%');
             });
         }

@@ -87,6 +87,7 @@
                     <th>No</th>
                     <th>Receiving Date</th>
                     <th>DO Number</th>
+                    <th>GPO Type</th>
                     <th>PO Number</th>
                     <th>Item Code</th>
                     <th>Item Name</th>
