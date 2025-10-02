@@ -48,7 +48,7 @@ export function handleTableServerSide() {
 				data: "qty"
 			},
 			{
-				data: "qty"
+				data: "outstanding_qty"
 			},
 			{
 				data: null
@@ -63,7 +63,7 @@ export function handleTableServerSide() {
 				}
 			},
 			{
-				targets: 11,
+				targets: 12,
 				render: function(data, type, row, meta) {
 					return `<button data-id="`+data.trans_rr_id+`" type="button" class="btn_detail btn btn-info">
                         <span class="fas fa-eye"></span>
