@@ -91,6 +91,11 @@
                     <th>Price</th>
                     <th>Qty</th>
                     <th>Amount</th>
+                    <th>OS Receiving</th>
+                    <th>OS SDS</th>
+                    <th>Currency</th>
+                    <th>Status PO</th>
+                    <th>Status SDS</th>
                     <th>Remark</th>
                   </tr>
                 </thead>

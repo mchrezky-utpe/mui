@@ -58,6 +58,21 @@ const table_po = $("#table-po-detail").DataTable({
                 data: "total_f",
             },
             {
+                data: "outstanding_rr",
+            },
+            {
+                data: "outstanding_sds",
+            },
+            {
+                data: "currency",
+            },
+            {
+                data: "po_status",
+            },
+            {
+                data: "sds_status",
+            },
+            {
                 data: "description",
             },
         ],

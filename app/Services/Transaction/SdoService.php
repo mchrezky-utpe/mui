@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class SdoService
 {
     public function list(){
-        return VwSdoList::where('flag_transaction', 1)->get();
+        return VwSdoItemList::where('flag_transaction', 1)->get();
     }
     
     public function get_droplist($request){
