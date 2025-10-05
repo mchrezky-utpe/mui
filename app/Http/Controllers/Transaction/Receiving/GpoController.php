@@ -77,7 +77,8 @@ class GpoController
             'data' => $data['data'], // Data untuk ditampilkan
         ]);
     }
-        public function export()
+    
+    public function export()
     {
         return Excel::download(new GeneralPurchaseOrderExport, 'general_purchase_order.xlsx');
     }

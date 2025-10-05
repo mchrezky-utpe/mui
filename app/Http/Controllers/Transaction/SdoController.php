@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Services\Transaction\SdoService;
+use App\Exports\SdoExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -65,5 +67,10 @@ class SdoController
     {
         $this->service->edit($request);
         return redirect("/sdo");
+    }
+    
+    public function export()
+    {
+        return Excel::download(new SdoExport, 'sdo_export.xlsx');
     }
 }

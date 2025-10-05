@@ -187,6 +187,7 @@ Route::controller(SdoController::class)->group(function () {
     Route::get("/api/sdo/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sdo/receive", "receive")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/sdo/detail", "detail")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sdos/export", "export")->name('sdo.export')->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(GpoController::class)->group(function () {
     Route::get("/gpo", "index")->middleware(OnlyMemberMiddleware::class);

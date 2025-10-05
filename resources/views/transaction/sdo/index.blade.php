@@ -42,7 +42,12 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Receiving +</button>
+              <div class="d-flex">
+              <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Receiving +</button>
+              <a href="{{ route('sdo.export') }}" class="mr-2 btn btn-success">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </a>
+            </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
