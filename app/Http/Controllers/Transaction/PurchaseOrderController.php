@@ -26,8 +26,7 @@ class PurchaseOrderController
 
     public function index(): Response
     {
-        return response()->view('transaction.po.index',
-         ['data' =>  $this->service->list()]);
+        return response()->view('transaction.po.index');
     }
 
 

@@ -1,11 +1,15 @@
 import {
-	skuMaster
+	skuMaster, table_sds
 } from './sds_global_variable.js';
 import {
 	initParam
 } from './sds_param.js';
 
 export function handleActionTable() {
+
+	$('#btn-filter').click(function() {
+		table_sds.ajax.reload(); 
+	});
 
 	var selectedRow = null;
 
@@ -34,7 +38,7 @@ export function handleActionTable() {
 	  });
 
 
-	$(document).on('change', '.supplier_select, .po_select', function() {
+	$(document).on('change', '.po_select', function() {
 		const po_id = this.value;
 		$.ajax({
 			type: 'GET',

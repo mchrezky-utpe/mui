@@ -18,6 +18,8 @@ export function initParam() {
 			fetchPoDroplist(supplier_id)
 				.then(data => {
 					// setGlobalVariable('poMaster', data);
+					$(".item_table tbody tr").remove();
+					$(".target_table tbody tr").remove();
 					populateSelectPo('Po', data, $('.po_select'));
 				})
 				.catch(err => {
@@ -58,7 +60,7 @@ function fetchPoDroplist(supplier_id) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'GET',
-			url: base_url + 'api/po/droplist',
+			url: base_url + 'api/sds/po/droplist',
 			data:{supplier_id : supplier_id},
 			success: function(data) {
 				resolve(data.data);

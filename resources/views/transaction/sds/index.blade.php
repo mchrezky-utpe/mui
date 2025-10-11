@@ -38,6 +38,44 @@
       </div>
     </div>
     <div class="row"> 
+
+      <div class="card-body">
+        <div class="mb-3 row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="start_date">Start Date</label>
+              <input type="date" class="form-control" id="start_date" name="start_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="end_date">End Date</label>
+              <input type="date" class="form-control" id="end_date" name="end_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="end_date">Status</label>
+              <select type="date" class="form-control" id="status" name="flag_status">
+                  <option value>=== Status ===</option> 
+                  <option value="1">Open</option> 
+                  <option value="2">Close</option> 
+                  <option value="3">Pulled Back</option> 
+                  <option value="4">Rescheduled</option> 
+              </select>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group" style="margin-top: 32px;">
+              <button type="button" id="btn-filter" class="btn btn-primary">
+                <i class="fas fa-search"></i> Filter </button>
+              <button type="button" id="btn-reset" class="btn btn-secondary">
+                <i class="fas fa-sync"></i> Reset </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
@@ -52,8 +90,8 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th>SDS Date</th>
                     <th>SDS Number</th>
+                    <th>SDS Date</th>
                     <th>Department</th>
                     <th>Supplier</th>
                     <th>SDS</th>
@@ -66,59 +104,6 @@
                     <th>Date Revision</th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) <tr data-id="{{ $value->id }}">
-                    <td>
-                       <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Action
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                       
-                        <button data-id="{{ $value->id }}" class="dropdown-item btn_detail" type="button">Detail</button>
-                       
-                        @if ( $value->is_sent_to_edi  == 0 && $value->flag_status == 1)
-                        <button data-id="{{ $value->id }}" class="dropdown-item edit" type="button">Edit</button>
-                            <form action="/sds/send-to-edi?id={{$value->id}}" method="post"> 
-                              @csrf 
-                              <button class="dropdown-item .send_to_edit" href="#">Send To EDI</button>
-                            </form>
-                        @else 
-                        <button disabled class="dropdown-item send_to_edi" href="#">Send To EDI</button>
-                        @endif
-                            
-                        @if ($value->flag_status === 1 && $value->is_sent_to_edi  == 0)
-                          <form action="/sds/pull-back?id={{$value->id}}" method="post"> 
-                            @csrf 
-                              <button class="dropdown-item btn_pullback" href="#">Pull Back</button>
-                          </form>
-                          @else 
-                          <button disabled class="dropdown-item" href="#">Pull Back</button>
-                        @endif
-                    
-                          @if ($value->flag_status == 3)
-                          <form action="/sds/reschedule?id={{$value->id}}" method="post"> 
-                            @csrf 
-                              <button type="button" data-id="{{$value->id}}" class="dropdown-item btn_reschedule" href="#">Reschedule</button>
-                          </form>
-                          @else 
-                          <button disabled class="dropdown-item" href="#">Reschedule</button>
-                        @endif
-                        </div>
-                      </div>
-                    </td>
-                    <td>{{ $value->trans_date }}</td>
-                    <td>{{ $value->doc_num }}</td>
-                    <td>{{ $value->department }}</td>
-                    <td>{{ $value->supplier }}</td>
-                    <td>{{ $value->sds_status }}</td>
-                    <td>{{ $value->rev_counter }}</td>
-                    <td>{{ $value->status_sent_to_edi }}</td>
-                    <td>{{ $value->sds_delivery }}</td>
-                    <td>{{ $value->sds_shipment }}</td>
-                    <td>{{ $value->status_reschedule }}</td>
-                    <td>{{ $value->rev_date }}</td>
-                    <td>{{ $value->date_reschedule }}</td>
-                  </tr> @endforeach </tbody>
                 </table>
                 </div>
             </div>

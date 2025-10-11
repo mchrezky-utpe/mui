@@ -174,6 +174,8 @@ Route::controller(SdsController::class)->group(function () {
     Route::post("/sds/send-to-edi", "send_to_edi")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/reschedule", "reschedule")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sds/pull-back", "pull_back")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sds/po/droplist", "getPoDroplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sds/all", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 // RECEIVING
@@ -188,6 +190,7 @@ Route::controller(SdoController::class)->group(function () {
     Route::post("/sdo/receive", "receive")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/sdo/detail", "detail")->middleware(OnlyMemberMiddleware::class);
     Route::get("/sdos/export", "export")->name('sdo.export')->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sdo/all", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 Route::controller(GpoController::class)->group(function () {
     Route::get("/gpo", "index")->middleware(OnlyMemberMiddleware::class);

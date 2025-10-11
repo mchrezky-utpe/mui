@@ -38,6 +38,32 @@
       </div>
     </div>
     <div class="row"> 
+       
+      <div class="card-body">
+        <div class="mb-3 row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="start_date">Start Date</label>
+              <input type="date" class="form-control" id="start_date" name="start_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="end_date">End Date</label>
+              <input type="date" class="form-control" id="end_date" name="end_date">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group" style="margin-top: 32px;">
+              <button type="button" id="btn-filter" class="btn btn-primary">
+                <i class="fas fa-search"></i> Filter </button>
+              <button type="button" id="btn-reset" class="btn btn-secondary">
+                <i class="fas fa-sync"></i> Reset </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
@@ -53,7 +79,7 @@
             <div class="table-responsive">
               
 <div class="table-container">
-              <table class="table data-table-nowarps table-striped table-bordered first">
+              <table id="table_sdo" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
                     <th>Do Number</th>
@@ -71,24 +97,6 @@
                     <th>OS Qty</th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) 
-                  <tr>
-                    <td>{{ $value->do_doc_num }}</td>
-                    <td>{{ $value->trans_date }}</td>
-                    <td>{{ $value->department }}</td>
-                    <td>{{ $value->supplier }}</td>
-                    <td>{{ $value->po_doc_num }}</td>
-                    <td>{{ $value->sds_doc_num }}</td>
-                    <td>{{ $value->description }}</td>
-                    <td>{{ $value->sku_description }}</td>
-                    <td>{{ $value->sku_prefix }}</td>
-                    <td>{{ $value->sku_specification_code }}</td>
-                    <td>{{ $value->sku_type }}</td>
-                    <td>{{ $value->qty }}</td>
-                    <td>{{ $value->qty_outstanding }}</td>
-                  </tr> 
-                  @endforeach 
-                </tbody>
                 </table>
                 </div>
             </div>

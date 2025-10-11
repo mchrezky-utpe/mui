@@ -20,10 +20,18 @@ class SdoController
 
     public function index(): Response
     {
-        return response()->view(
-            'transaction.sdo.index',
-            ['data' =>     $this->service->list()]
-        );
+        return response()->view('transaction.sdo.index');
+    }
+
+    public function api_all(Request $request)
+    {
+        $data = $this->service->get_all($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
+        ]);
     }
 
     public function api_droplist(Request $request)

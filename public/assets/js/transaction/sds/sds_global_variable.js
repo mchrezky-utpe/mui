@@ -6,7 +6,7 @@ export let otherCostMaster = null;
 export let deductionMaster = null;
 export let is_using_item = true;
 export let skuMaster = null;
-export let table_pr = null;
+export let table_sds = null;
 
 export function setGlobalVariable(key, value) {
     switch (key) {

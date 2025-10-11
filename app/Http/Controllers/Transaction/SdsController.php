@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Transaction;
 
-use App\Helpers\HelperCustom;
 use App\Services\Transaction\SdsService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 class SdsController
 {
 
@@ -19,10 +17,7 @@ class SdsController
 
     public function index(): Response
     {
-        return response()->view('transaction.sds.index',
-         ['data' => 
-         $this->service->list()
-        ]);
+        return response()->view('transaction.sds.index');
     }
 
     public function api_all(Request $request)
@@ -35,7 +30,6 @@ class SdsController
             'data' => $data['data'], // Data untuk ditampilkan
         ]);
     }
-    
     
     public function send_to_edi(Request $request)
     {
@@ -89,5 +83,13 @@ class SdsController
     {
         $this->service->edit($request);
         return redirect("/sds");
+    }
+    
+    public function getPoDroplist(Request $request)
+    {
+        $data = $this->service->getPoDroplist($request);
+        return response()->json([
+            'data' => $data
+        ]);
     }
 }

@@ -1,4 +1,12 @@
+import {
+	table_sdo
+} from './sdo_global_variable.js';
+
 export function handleActionTable() {
+
+	$('#btn-filter').click(function() {
+		table_sdo.ajax.reload(); 
+	});
 
 	$(document).on('change', '#supplier_select, #po_select', function() {
 		const po_id = $('#po_select').val();

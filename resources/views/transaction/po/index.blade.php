@@ -60,7 +60,7 @@
                   <option value="1">Open</option> 
                   <option value="2">Preparation</option> 
                   <option value="3">Pulled Back</option> 
-                  <option value="4">Closed</option> 
+                  <option value="4">Active</option> 
               </select>
             </div>
           </div>
