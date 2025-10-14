@@ -2,17 +2,17 @@
 @extends('template.main') @section('content') 
 <style>
   .table-container {
-        max-height: 400px; 
-        overflow-y: auto;
-        border: 1px solid #ccc;
-        overflow-x: auto;
-    }
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    overflow-x: auto;
+  }
 
-    .table-container table {
-      max-width: 150%;
-        width: 150%;
-        border-collapse: collapse;
-    }
+  .table-container table {
+    max-width: 150%;
+    width: 150%;
+    border-collapse: collapse;
+  }
 </style>
 
 <div class="section__content section__content--p30">

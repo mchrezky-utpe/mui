@@ -6,9 +6,10 @@ export function handleTableServerSide() {
 	
     const table_sds = $("#table_sds").DataTable({
      
-        scrollCollapse: true,
-        // scrollX: true,
-        scrollY: 300,
+        scrollX: true,
+        scrollY: "400px",
+        processing: true,
+        serverSide: true,
         // fixedColumns: {
         //     right: 1,
         //     heightMatch: 'auto'

@@ -4,9 +4,9 @@ export function handleTableServerSide() {
 
 
     const table_pr = $("#table-pr").DataTable({
-        scrollCollapse: true,
+      
         scrollX: true,
-        scrollY: 300,
+        scrollY: "400px",
         processing: true,
         serverSide: true,
         fixedColumns: {

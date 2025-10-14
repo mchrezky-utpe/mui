@@ -131,6 +131,8 @@ export function handleActionTable() {
                 data.sku_pk_id +
                 `" spec_code="` +
                 data.sku_specification_code +
+                `"  moq="` +
+                data.moq +
                 `" >` +
                 data.sku_id +
                 " - " +
@@ -163,7 +165,10 @@ export function handleActionTable() {
                 </td>
                 <td><input type="number" class="price form-control" name="price[]" placeholder="Price"  required></td>
                 <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" ></td>
-                <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
+                <td style='display:none'>
+                    <input type="hidden" class="sku_description form-control" name="sku_description[]">
+                    <input type="hidden" class="moq form-control" name="moq[]">
+                </td>
                 <td><input type="number" class="qty form-control" name="qty[]" placeholder="Qty" step="1"  required></td>
                 <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" required></td>
                 <td><input type="text" class="form-control" name="description_item[]" placeholder="Description"  required></td>
@@ -185,10 +190,12 @@ export function handleActionTable() {
             .attr("sku_description");
         const prefix = $(this).find("option:selected").attr("sku_prefix");
         const spec_code = $(this).find("option:selected").attr("spec_code");
+        const moq = $(this).find("option:selected").attr("moq");
         $(this).closest("tr").find(".price").val(price);
         $(this).closest("tr").find(".sku_description").val(sku_description);
         $(this).closest("tr").find(".specification_code").val(spec_code);
         $(this).closest("tr").find(".sku_prefix").val(prefix);
+        $(this).closest("tr").find(".moq").val(moq);
     });
 
     function validateItemSelect($select) {

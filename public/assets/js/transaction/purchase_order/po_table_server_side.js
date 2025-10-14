@@ -3,9 +3,10 @@ import { setGlobalVariable } from "./po_global_variable.js";
 export function handleTableServerSide() {
     const table_po = $("#table-po").DataTable({
      
-        scrollCollapse: true,
-        // scrollX: true,
-        scrollY: 300,
+        scrollX: true,
+        scrollY: "400px",
+        processing: true,
+        serverSide: true,
         // fixedColumns: {
         //     right: 1,
         //     heightMatch: 'auto'

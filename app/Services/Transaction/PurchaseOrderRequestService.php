@@ -132,6 +132,7 @@ class PurchaseOrderRequestService
             $now = Carbon::now();
 
             foreach ($request->sku_id as $index => $sku_id) {
+                $moq = $request->moq[$index];
                 $price = $request->price[$index];
                 // $price = 0;
                 $qty = $request->qty[$index];
@@ -172,6 +173,7 @@ class PurchaseOrderRequestService
                     'flag_type' => $request->flag_type_detail[$index],
                     'created_by' => $userId,
                     'created_at' => $now,
+                    'moq' => $moq
                 ];
             }
     
