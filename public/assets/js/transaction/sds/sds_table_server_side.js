@@ -103,7 +103,12 @@ export function handleTableServerSide() {
                             <button data-id="${data.id}" class="dropdown-item btn_detail" type="button">Detail</button>
 
 							<button ${stateButtonEdi} data-id="${data.id}" class="dropdown-item edit" type="button">Edit</button>
-                            
+                                
+							<form action="/sds/${data.id}/delete" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button ${stateButtonEdi} class="dropdown-item" href="#">Delete</button>
+                            </form>
+
 							<form action="/sds/send-to-edi?id=${data.id}" method="post"> 
 							    <input type="hidden" name="_token" value="${csrfToken}">
                               <button ${stateButtonEdi} class="dropdown-item .send_to_edit" href="#">Send To EDI</button>

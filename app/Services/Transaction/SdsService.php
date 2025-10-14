@@ -199,12 +199,12 @@ class SdsService
         DB::beginTransaction();
 
         try {
-            $purchaseOrder = Sds::where('id', $id)->firstOrFail();
+            $sds = Sds::where('id', $id)->firstOrFail();
     
-            $purchaseOrder->flag_active = 0;
-            $purchaseOrder->deleted_at = Carbon::now();
-            $purchaseOrder->deleted_by = Auth::id();
-            $purchaseOrder->save();
+            $sds->flag_active = 0;
+            $sds->deleted_at = Carbon::now();
+            $sds->deleted_by = Auth::id();
+            $sds->save();
 
             DB::commit();
     
@@ -213,7 +213,7 @@ class SdsService
             DB::rollBack();
             dd($e);
             return response()->json([
-                'message' => 'Terjadi kesalahan saat menghapus Purchase Order.',
+                'message' => 'Terjadi kesalahan saat menghapus SDS.',
                 'error' => $e->getMessage(),
             ], 500);
         }
