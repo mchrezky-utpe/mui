@@ -55,6 +55,11 @@ class MasterGeneralTaxService
     {
         return MasterGeneralTax::where('id', $id)->firstOrFail();
     } 
+    
+    public function getAll()
+    {
+        return MasterGeneralTax::all();
+    } 
 
     function edit(Request $request)
     {

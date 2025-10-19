@@ -258,6 +258,12 @@
                                 <li>
                                     <a href="/po-detail">Purchase Order Detail (PO Detail)</a>
                                 </li>
+                                <li>
+                                    <a href="/pi">Purchase Invoice</a>
+                                </li>
+                                <li>
+                                    <a href="/pi-detail">Purchase Invoice Detail</a>
+                                </li>
                                 <!-- <li>
                                     <a href="purchase_invoice.html">Purchase Invoice</a>
                                 </li>

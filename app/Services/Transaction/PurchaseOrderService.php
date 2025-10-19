@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Services\Transaction;
-use App\Helpers\NumberGenerator;
 
+use App\Helpers\NumberGenerator;
 use App\Models\Transaction\PurchaseOrder;
 use App\Models\Transaction\VwPoDroplist;
 use App\Models\Transaction\VwPoItemList;

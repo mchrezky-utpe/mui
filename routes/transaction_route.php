@@ -23,6 +23,7 @@ use App\Http\Controllers\Transaction\Receiving\InternalController;
 use App\Http\Controllers\Transaction\Receiving\ReturnablePackagingController;
 use App\Http\Controllers\Transaction\Bom\BomController;
 use App\Http\Controllers\Transaction\StockViewController;
+use App\Http\Controllers\Transaction\PurchaseInvoiceController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -78,6 +79,23 @@ Route::controller(PurchaseOrderController::class)->group(function () {
     Route::get("/po-detail/api/all", "api_detail_all")->middleware(OnlyMemberMiddleware::class);
     Route::post("/po/upload", "upload")->middleware(OnlyMemberMiddleware::class);
     route::get('/purchase_order/export', 'export')->name('purchase_order.export');
+});
+
+Route::controller(PurchaseInvoiceController::class)->group(function () {
+    Route::get("/pi", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pi/all", "get_all")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pi/po", "get_po_by")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pi", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pi/{id}/receipt", "receipt")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pi/{id}/rollback", "rollback")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pi/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/pi/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pi/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    route::get('/pi/export', 'export')->name('purchase_invoice.export');
+    
+    // detail view
+    Route::get("/pi/detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pi/detail/all", "get_detail_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {

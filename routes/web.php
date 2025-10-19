@@ -250,6 +250,7 @@ Route::controller(MasterGeneralTaxController::class)->group(function () {
     Route::post("/general-tax/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/general-tax/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/general-tax/api/all", "getAll")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/general-tax/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });

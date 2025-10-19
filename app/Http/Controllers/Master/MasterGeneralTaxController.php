@@ -22,6 +22,7 @@ class MasterGeneralTaxController
         return response()->view('master.general_tax.index',
          ['data' =>  $this->service->list()]);
     }
+
     public function index2(): Response
     {
         return response()->view('master.general_tax.index2',
@@ -53,6 +54,14 @@ class MasterGeneralTaxController
     public function get(Request $request, int $id)
     {
         $data = $this->service->get($id);
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+    
+    public function getAll(Request $request)
+    {
+        $data = $this->service->getAll();
         return response()->json([
             'data' => $data
         ]);
