@@ -74,7 +74,7 @@ class SdoService
     }
     
     public function get_droplist($request){
-        return VwSdoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->get();
+        return VwSdoDroplist::where('prs_supplier_id', $request->input('supplier_id'))->where('flag_status', 1)->get();
     }
     
     public function get_item(Request $request){
