@@ -48,7 +48,10 @@ $('#add_button , .add_modal').click(function() {
 });
 
 $(function() {
-    let table = new DataTable('.data-table');
+    let table = new DataTable('.data-table',{
+        paging: false,
+        ordering: false
+    });
 
     // $('#example-table-fixed-column-scrollx').DataTable({
     //     scrollY: "800px",

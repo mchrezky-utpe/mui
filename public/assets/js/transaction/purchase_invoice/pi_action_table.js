@@ -55,12 +55,12 @@ export function handleActionTable() {
 	});
 
 
-	$(document).on("click", ".edit", function (e) {
+	$(document).on("click", ".adjustment", function (e) {
 
         var id = this.dataset.id;
         $.ajax({
             type: "GET",
-            url: base_url + "po/" + id,
+            url: base_url + "pi/" + id,
             success: function (data) {
                 var data = data.data;
                 $("[name=id]").val(data.id);
@@ -76,6 +76,56 @@ export function handleActionTable() {
         });
 
     });
+	
+    $(document).on("click", ".checkAndVerify", function (e) {
+        var id = this.dataset.id;
+        $.ajax({
+            type: "GET",
+            url: base_url + "pi/" + id +"/item/check",
+            success: function (data) {
+				var data = data.data;
+			
+				$(".item_check_table tbody").empty();
+				for (let index = 0; index < data.length; index++) {
+					const item = data[index];
+					const newRow =
+						`<tr>
+							<td>
+								${item.trans_date}
+							</td>
+							<td>
+								<input value="${item.trans_po_detail_id}" type="hidden" name="trans_po_detail_id[]" />
+								${item.doc_num}
+							</td>
+							<td>
+								${item.do_doc_num}
+							</td>
+							<td>
+								${item.sku_prefix}
+							</td>
+							<td>
+								${item.sku_description}
+							</td>
+							<td>
+								${item.sku_type}
+							</td>
+							<td>
+								${item.qty}
+							</td>
+							<td><input type="checkbox" name="is_check[]" /></td>
+						</tr>`;
+
+					$(".item_check_table tbody").append(newRow);
+				}
+
+                $("#item_check_modal").modal("show");
+            },
+            error: function (err) {
+                debugger;
+            },
+        });
+
+	});
 
 	$('.val_subtotal, .val_pph23, .val_discount, .val_total').on('input',function() {
 		calc();

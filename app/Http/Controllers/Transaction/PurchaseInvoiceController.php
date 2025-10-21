@@ -221,6 +221,18 @@ class PurchaseInvoiceController
         return redirect("/pi");
     }
 
+    public function get_item_check(Request $request, int $id){
+        
+        $query = DB::table('vw_app_list_trans_pi_check_dt');
+        
+        $query->where('id', $id);
+
+        $data = $query->get();
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function receipt(Request $request)
     {
         DB::beginTransaction();

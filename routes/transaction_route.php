@@ -86,6 +86,7 @@ Route::controller(PurchaseInvoiceController::class)->group(function () {
     Route::get("/pi/all", "get_all")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi/po", "get_po_by")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pi", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pi/{id}/item/check", "get_item_check")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pi/{id}/receipt", "receipt")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pi/{id}/rollback", "rollback")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pi/edit", "edit")->middleware(OnlyMemberMiddleware::class);

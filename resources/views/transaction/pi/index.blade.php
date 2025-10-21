@@ -106,6 +106,7 @@
  @include('transaction.pi._add')
  @include('transaction.pi._edit')
  @include('transaction.pi._detail')
+ @include('transaction.pi._item_check')
  @endsection
 
  @section('extra_javascript')

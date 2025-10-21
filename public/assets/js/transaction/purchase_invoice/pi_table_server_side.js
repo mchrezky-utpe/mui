@@ -66,7 +66,45 @@ export function handleTableServerSide() {
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {
-                    return "ok";
+                    const csrfToken = document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content");
+
+                    let button = `
+                        <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <button data-id="${data.id}" type="button"class="checkAndVerify dropdown-item">
+							   Item Check and Verification
+                            </button>
+
+                            <button data-id="${data.id}" type="button" class="adjustment dropdown-item">
+							   Adjustment
+                            </button>
+
+                            <button data-id="${data.id}" type="button" class="receipt dropdown-item">
+							   Receipt
+                            </button>
+
+                            <button data-id="${data.id}" type="button" class="rollback dropdown-item">
+							   Rollback
+                            </button>
+
+                            <form action="/pi/${data.id}/delete" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button class="dropdown-item">Delete</button>
+                            </form>
+
+                            <a href="/pi/${data.id}/export" class=dropdown-item">
+							   Export to Spreedsheet
+                            </a>
+
+                        </div>
+                      </div> `
+                    return button;
                 },
             },
         ],

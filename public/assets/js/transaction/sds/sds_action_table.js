@@ -32,7 +32,7 @@ export function handleActionTable() {
 
 		  // update value qty sds
 		  $('#'+id).find('td:eq(4)').text(qty);
-		  $('#'+id).find('td:eq(5)').text(0);
+		  $('#'+id).find('td:eq(5)').text(qty);
 		  selectedRow = null; // Reset selectedRow
 		}
 	  });
