@@ -337,11 +337,11 @@ export function handleActionTable() {
                             </select>
                         </td>
                         <td><input type="number" class="price form-control" name="price[]" placeholder="Price" value="${Number(item.price_f).toFixed()}" required></td>
-                        <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]" required></td>
-                        <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]" required></td>
+                        <td style='display:none'><input type="hidden" class="sku_prefix form-control" name="sku_prefix[]"></td>
+                        <td style='display:none'><input type="hidden" class="sku_description form-control" name="sku_description[]"></td>
                         <td><input type="number" class="qty form-control" name="qty[]" value="${Number(item.qty).toFixed()}" placeholder="Qty" step="1" required></td>
                         <td><input type="date" class="form-control" name="req_date[]" placeholder="Req Date" value="${item.req_date}" step="0.01" required></td>
-                        <td><input type="text" class="form-control" name="description_item[]" value=${item.description} placeholder="Description" required></td>
+                        <td><input type="text" class="form-control" name="description_item[]" value=${item.description} placeholder="Description"></td>
                         <td><input type="hidden" class="total form-control" name="total[]" placeholder="Total" step="0.01" readonly></td>
                         <td><button type="button" class="btn btn-danger btn-sm delete_row">x</button></td>
                     </tr>

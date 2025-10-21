@@ -193,7 +193,7 @@
             </tr>
             <tr>
                 <td class="info-label">TOTAL ORDER</td>
-                <td>: {{ number_format(collect($items)->sum('amount'), 0, ',', '.') }}</td>
+                <td>: {{ number_format($po->total_order, 0, ',', '.') }}</td>
             </tr>
         </table>
     </div>
