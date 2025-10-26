@@ -7,10 +7,10 @@ export function handleTableServerSide() {
         scrollY: '50vh',
         processing: true,
         serverSide: true,
-        // fixedColumns: {
-        //     left: 4,
-        //     heightMatch: 'auto'
-        // },
+        fixedColumns: {
+            left: 4,
+            heightMatch: 'auto'
+        },
         ajax: {
             url: base_url + "pi/all",
             type: "GET",
