@@ -12,6 +12,7 @@ use App\Helpers\NumberGenerator;
 use Carbon\Carbon;
 use App\Models\Transaction\PurchaseInvoice;
 use App\Models\Transaction\PurchaseInvoiceDetail;
+use App\Models\Transaction\PurchaseInvoiceOrderDetail;
 use Illuminate\Support\Str;
 
 class PurchaseInvoiceController
@@ -20,6 +21,11 @@ class PurchaseInvoiceController
     public function index(): Response
     {
         return response()->view('transaction.pi.index');
+    }
+
+    public function index_detail(): Response
+    {
+        return response()->view('transaction.pi.index_detail');
     }
 
     public function get_all(Request $request)
@@ -154,6 +160,18 @@ class PurchaseInvoiceController
             'data' => $data
         ]);
     }
+    
+    public function get_detail_pi(Request $request, $id)
+    {
+        $query = DB::table('vw_app_list_trans_pi_dt');
+        
+        $query->where('trans_pi_id', $id);
+    
+        $data = $query->get();
+        return response()->json([
+            'data' => $data
+        ]);
+    }
 
     public function add(Request $request)
     {
@@ -233,13 +251,94 @@ class PurchaseInvoiceController
         ]);
     }
 
-    public function receipt(Request $request)
+    public function verify(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $userId = Auth::id();
+            $now = Carbon::now();
+
+            // Ambil semua data existing berdasarkan trans_pi_id
+            $existingItems = PurchaseInvoiceOrderDetail::where('trans_pi_id', $request->trans_pi_id)
+                ->get()
+                ->keyBy(function($item) {
+                    return $item->trans_po_id . '_' . $item->trans_po_detail_id;
+                });
+
+            $itemsToInsert = [];
+            $itemsToUpdate = [];
+            $processedKeys = [];
+
+            // Proses data dari request
+            foreach ($request->trans_po_detail_id as $index => $po_detail_id) {
+                $key = $request->trans_po_id[$index] . '_' . $po_detail_id;
+                $processedKeys[] = $key;
+
+                // Cek apakah item sudah ada
+                if (isset($existingItems[$key])) {
+                    // Update existing item
+                    $itemsToUpdate[] = [
+                        'id' => $existingItems[$key]->id,
+                        'updated_by' => $userId,
+                        'updated_at' => $now
+                        // Tambahkan field lain yang perlu diupdate
+                    ];
+                } else {
+                    // Insert new item
+                    $itemsToInsert[] = [
+                        'trans_pi_id' => $request->trans_pi_id,
+                        'trans_po_id' => $request->trans_po_id[$index],
+                        'trans_po_detail_id' => $po_detail_id,
+                        'generated_id' => Str::uuid()->toString(),
+                        'created_by' => $userId,
+                        'created_at' => $now
+                    ];
+                }
+            }
+
+            $itemsToDelete = $existingItems->filter(function($item) use ($processedKeys) {
+                $key = $item->trans_po_id . '_' . $item->trans_po_detail_id;
+                return !in_array($key, $processedKeys);
+            });
+
+            if (!empty($itemsToInsert)) {
+                PurchaseInvoiceOrderDetail::insert($itemsToInsert);
+            }
+
+            if (!empty($itemsToUpdate)) {
+                foreach ($itemsToUpdate as $item) {
+                    PurchaseInvoiceOrderDetail::where('id', $item['id'])
+                        ->update([
+                            'updated_by' => $item['updated_by'],
+                            'updated_at' => $item['updated_at']
+                        ]);
+                }
+            }
+
+            if ($itemsToDelete->isNotEmpty()) {
+                PurchaseInvoiceOrderDetail::whereIn('id', $itemsToDelete->pluck('id'))
+                    ->delete();
+            }
+
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Lebih baik menggunakan log daripada dd di production
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses data.');
+        }
+        
+        return redirect("/pi")->with('success', 'Data berhasil diproses.');
+    }
+
+    public function receipt(Request $request,$id,$phase)
     {
         DB::beginTransaction();
         try {
             $userId =  Auth::id();
 
-            DB::statement('CALL sp_trans_pi_receipt(?,?)', [$request->trans_pi_id,$userId]);
+            DB::statement('CALL sp_trans_pi_receipt(?,?,?)', [$id, $phase, $userId]);
         
             DB::commit();
         } catch (\Exception $e) {
@@ -253,14 +352,14 @@ class PurchaseInvoiceController
         return redirect("/pi");
     }
 
-    public function rollback(Request $request)
+    public function rollback(Request $request,$id,$phase)
     {
         DB::beginTransaction();
         try {
             $userId =  Auth::id();
 
               
-            DB::statement('CALL sp_trans_pi_rollback(?,?)', [$request->trans_pi_id,$request->flag_phase_number,$userId]);
+            DB::statement('CALL sp_trans_pi_rollback(?,?,?)', [$id, $phase, $userId]);
         
             DB::commit();
         } catch (\Exception $e) {
@@ -280,11 +379,10 @@ class PurchaseInvoiceController
         $data = PurchaseInvoice::where('id', $request->id)->firstOrFail();
         $data->manual_id = $request->manual_id;
         $data->gen_terms_detail_id = $request->gen_terms_detail_id;
-        $data->flag_phase = $request->flag_phase;
         $data->flag_phase_payment = $request->flag_phase_payment;
         $data->gen_currency_id = $request->gen_currency_id;
-        $data->sub_total_d = $request->val_subtotal * $exchangerates;
-        $data->sub_total_f = $request->val_subtotal;
+        $data->subtotal_d = $request->val_subtotal * $exchangerates;
+        $data->subtotal_f = $request->val_subtotal;
         $data->vat_d = $request->val_vat * $exchangerates;
         $data->vat_f = $request->val_vat;
         $data->discount_d = $request->val_discount * $exchangerates;
@@ -325,12 +423,10 @@ class PurchaseInvoiceController
     
     public function get(Request $request, int $id)
     {
-        $query = DB::table('vw_app_pick_trans_po_for_pi');
-        if ($request->input('supplier_id') != null) {
-        $query->where('prs_supplier_id', [$request->input('supplier_id')]);
-        }
+        $query = DB::table('trans_purchase_invoice');
+        $query->where('id', [$id]);
 
-        $data = $query->get();
+        $data = $query->first();
         return response()->json([
             'data' => $data
         ]);

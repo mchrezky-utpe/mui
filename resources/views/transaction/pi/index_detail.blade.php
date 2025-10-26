@@ -82,7 +82,7 @@
                     <th>Qty</th>
                     <th>Amount</th>
                     <th>Checked</th>
-                    <th>Approve</th>
+                    <th>Approval</th>
                   </tr>
                 </thead>
               </table>

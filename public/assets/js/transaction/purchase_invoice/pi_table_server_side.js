@@ -2,17 +2,15 @@ import { setGlobalVariable } from "./pi_global_variable.js";
 
 export function handleTableServerSide() {
     const table_pi = $("#table-pi").DataTable({
-     
+        scrollCollapse: true,
         scrollX: true,
-        scrollY: "400px",
+        scrollY: '50vh',
         processing: true,
         serverSide: true,
         // fixedColumns: {
-        //     right: 1,
+        //     left: 4,
         //     heightMatch: 'auto'
         // },
-        processing: true,
-        serverSide: true,
         ajax: {
             url: base_url + "pi/all",
             type: "GET",
@@ -23,6 +21,9 @@ export function handleTableServerSide() {
             },
         },
         columns: [
+            {
+                data: null,
+            },
             {
                 data: null,
             },
@@ -59,10 +60,45 @@ export function handleTableServerSide() {
             {
                 data: "val_total",
             },
+            {
+                data: "receipt_date1",
+            },
+            {
+                data: "recipent1",
+            },
+            {
+                data: "receipt_status1",
+            },
+            {
+                data: "receipt_date2",
+            },
+            {
+                data: "recipent2",
+            },
+            {
+                data: "receipt_status2",
+            },
+            {
+                data: "receipt_date3",
+            },
+            {
+                data: "recipent3",
+            },
+            {
+                data: "receipt_status3",
+            },
         ],
         columnDefs: [
             {
                 targets: 0,
+                orderable: false,
+                searchable: false,
+                render:  function (data, type, row, meta) {
+                    return `<button class="btn btn-sm btn-info view-details" data-id="${data.id}" >Detail</button>'`;
+                }
+            },
+            {
+                targets: 1,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {
@@ -81,24 +117,53 @@ export function handleTableServerSide() {
 							   Item Check and Verification
                             </button>
 
-                            <button data-id="${data.id}" type="button" class="adjustment dropdown-item">
+                            <button data-id="${data.id}" type="button" class="edit dropdown-item">
 							   Adjustment
                             </button>
 
-                            <button data-id="${data.id}" type="button" class="receipt dropdown-item">
-							   Receipt
-                            </button>
+                            <div class="dropdown-submenu">
+                                <button data-id="${data.id}" type="button" class="dropdown-item">
+                                    Receipt
+                                </button>
+                                <div class="dropdown-menu custom-submenu">
+                                    <a href="/pi/${data.id}/receipt/1" data-phase="1" class="btn dropdown-item submenu-item">
+                                        Phase 1
+                                    </a>
+                                    <a href="/pi/${data.id}/receipt/2" data-phase="2" class="btn dropdown-item submenu-item">
+                                        Phase 2
+                                    </a>
+                                    <a href="/pi/${data.id}/receipt/3" data-phase="3" class="btn dropdown-item submenu-item">
+                                        Phase 3
+                                    </a>
+                                </div>
+                            </div>
 
-                            <button data-id="${data.id}" type="button" class="rollback dropdown-item">
-							   Rollback
-                            </button>
+                            <div class="dropdown-submenu">
+                                <button data-id="${data.id}" type="button" class="dropdown-item">
+                                    Rollback
+                                </button>
+                                <div class="dropdown-menu custom-submenu">
+                                    <a href="/pi/${data.id}/rollback/0" data-phase="0" class="btn dropdown-item submenu-item">
+                                        Phase 0
+                                    </a>
+                                    <a href="/pi/${data.id}/rollback/1" data-phase="1" class="btn dropdown-item submenu-item">
+                                        Phase 1
+                                    </a>
+                                    <a href="/pi/${data.id}/rollback/2" data-phase="2" class="btn dropdown-item submenu-item">
+                                        Phase 2
+                                    </a>
+                                    <a href="/pi/${data.id}/rollback/3" data-phase="3" class="btn dropdown-item submenu-item">
+                                        Phase 3
+                                    </a>
+                                </div>
+                            </div>
 
                             <form action="/pi/${data.id}/delete" method="post"> 
 							    <input type="hidden" name="_token" value="${csrfToken}">
                               <button class="dropdown-item">Delete</button>
                             </form>
 
-                            <a href="/pi/${data.id}/export" class=dropdown-item">
+                            <a href="/pi/${data.id}/export" class="btn dropdown-item">
 							   Export to Spreedsheet
                             </a>
 
@@ -106,7 +171,7 @@ export function handleTableServerSide() {
                       </div> `
                     return button;
                 },
-            },
+            }
         ],
     });
     setGlobalVariable("table_pi", table_pi);

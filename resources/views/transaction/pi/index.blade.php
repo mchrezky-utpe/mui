@@ -12,6 +12,9 @@
         width: 100%;
         border-collapse: collapse;
     }
+    tr.shown {
+        background-color: #f8f9fa;
+    }
 </style>
 
 <div class="section__content section__content--p30">
@@ -68,7 +71,7 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
             <div class="d-flex">
-              <button id="add_button" type="button" class="btn btn-primary" data-toggle="modal"
+              <button id="add_button" type="button" class="btn btn-primary add_modal" data-toggle="modal"
                 data-target="#add_modal">Add +</button>
               <a href="{{ route('purchase_invoice.export') }}" class="mr-2 btn btn-success">
                 <i class="fas fa-file-excel"></i> Export Excel
@@ -80,6 +83,7 @@
               <table id="table-pi" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>Action</th>
                     <th>Invoice Code</th>
                     <th>Invoice Number</th>
@@ -92,6 +96,15 @@
                     <th>PPN</th>
                     <th>PPH</th>
                     <th>Total</th>
+                    <th>P1 Receipt Date</th>
+                    <th>P1 Recipient</th>
+                    <th>P1 Recipient Status</th>
+                    <th>P2 Receipt Date</th>
+                    <th>P2 Recipient</th>
+                    <th>P3 Recipient Status</th>
+                    <th>P3 Receipt Date</th>
+                    <th>P3 Recipient</th>
+                    <th>P3 Recipient Status</th>
                   </tr>
                 </thead>
                 </table>

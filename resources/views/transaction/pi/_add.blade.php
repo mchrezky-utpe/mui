@@ -2,7 +2,7 @@
   <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pi">
      @csrf
     <!-- TAB TRANSACTION -->
-    <div class="row">
+    <div class="row  row-calc">
       <div class="col-md-3">
         <div class="form-group">
           <label for="description_left">Invoice Date</label>
@@ -40,13 +40,13 @@
             <!-- Row untuk layout grid -->
           <div class="form-group">
             <label for="description_right">Department</label>
-            <select required id="department_select" name="gen_department_id" class="form-control">
+            <select required  name="gen_department_id" class="department_select form-control">
               <option value="">-- Select --</option>
             </select>
           </div>
           <div class="form-group">
             <label for="description_right">Supplier</label>
-            <select required id="supplier_select" name="prs_supplier_id" class="form-control">
+            <select required name="prs_supplier_id" class="supplier_select form-control">
               <option value="">-- Select --</option>
             </select>
           </div>
@@ -81,7 +81,7 @@
           </div>
         <div class="form-group">
           <label for="description_right">Currency</label>
-          <select required id="currency_select" name="gen_currency_id" class="form-control">
+          <select required  name="gen_currency_id" class="currency_select form-control">
             <option value="">-- Select --</option>
           </select>
         </div>
@@ -89,24 +89,24 @@
           <label for="description_right">PPN</label>
           <input name="tax_master" class="form-control" type="hidden" placeholder="0" step="0.01" readonly>
           <input name="val_vat" class="val_vat form-control" type="hidden" placeholder="0" step="0.01" readonly>
-          <input name="is_ppn" class="is_ppn form-control" type="checkbox" placeholder="0" step="0.01" readonly>
+          <input name="is_ppn" class="is_ppn form-control" onclick="calc(this)" type="checkbox" placeholder="0" step="0.01" readonly>
         </div>
       </div>
       <!-- REGION SIDE 4 -->
       <!-- HIDE FIELD -->
-      <input id="tax_rate" name="val_exchangerates" class="form-control" type="hidden" readonly>
+      <input name="val_exchangerates" class="tax_rate form-control" type="hidden" readonly>
       <div class="col-md-3">
         <div class="form-group">
           <label for="sub_total">Sub Total</label>
-          <input id="sub_total" name="val_subtotal" class="val_subtotal form-control" type="number" placeholder="0" step="0.01">
+          <input id="sub_total" onchange="calc(this)" name="val_subtotal" class="val_subtotal form-control" type="number" placeholder="0" step="0.01">
         </div>
         <div class="form-group">
           <label for="sub_total">PPH</label>
-          <input id="other_cost_total" name="val_pph23" class="val_pph23 form-control" type="number" placeholder="0" step="0.01" >
+          <input id="other_cost_total" onchange="calc(this)" name="val_pph23" class="val_pph23 form-control" type="number" placeholder="0" step="0.01" >
         </div>
         <div class="form-group">
           <label for="discount_total">Discount</label>
-          <input id="discount_total" name="val_discount" class="val_discount form-control" type="number" placeholder="0" step="0.01" >
+          <input id="discount_total" onchange="calc(this)" name="val_discount" class="val_discount form-control" type="number" placeholder="0" step="0.01" >
         </div>
         <div class="form-group">
           <label for="total">Total</label>
@@ -115,6 +115,7 @@
       </div>
       
     </div>
+    
     <div class="tab-content mt-2" id="myTabContent">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5 class="mb-0">Detail</h5>

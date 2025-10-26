@@ -1,5 +1,5 @@
  <x-modals.modal notUsingSave="true" id="item_check_modal" title="Purchae Invoice Item Check" modalClass="custom-modal-dialog-medium">
-<form id="form_modal" autocomplete="off" class="form-horizontal" method="get" action="/po">
+<form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/pi/item/verify">
     @csrf 
 <div class="card-header d-flex justify-content-between align-items-center">
 </div>
@@ -19,7 +19,7 @@
     </thead>
     <tbody></tbody>
   </table>
-  <button type="button" class="btn btn-primary verify">Verify</button>
+  <button  class="btn btn-primary verify">Verify</button>
 </div>
 
   </form>

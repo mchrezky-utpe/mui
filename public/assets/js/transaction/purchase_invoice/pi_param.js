@@ -3,8 +3,8 @@ import {
 } from './pi_global_variable.js';
 
 export function initParam() {
-	$(document).on('change', '#supplier_select', function() {
-		const supplier_id = $('#supplier_select').val();
+	$(document).on('change', '.supplier_select', function() {
+        const supplier_id = this.val();
 		fetchSkuMaster(supplier_id)
 			.then(data => {
 				setGlobalVariable('skuMaster', data);
@@ -73,7 +73,7 @@ export function initParam() {
 	fetchSupplierMaster()
 		.then(data => {
 			console.log("Succesfully get Supplier:", data);
-			populateSelect('Supplier', data, $('#supplier_select'));
+			populateSelect('Supplier', data, $('.supplier_select'));
 		})
 		.catch(err => {
 			console.error("Error get Supplier:", err);
@@ -82,7 +82,7 @@ export function initParam() {
 	fetchDepartmentMaster()
 		.then(data => {
 			console.log("Succesfully get Department:", data);
-			populateSelect('Department', data, $('#department_select'));
+			populateSelect('Department', data, $('.department_select'));
 		})
 		.catch(err => {
 			console.error("Error get Department:", err);
@@ -91,8 +91,8 @@ export function initParam() {
 	fetchCurrencyMaster()
 		.then(data => {
 			console.log("Succesfully get Department:", data);
-			populateSelect('Currency', data, $('#currency_select'));
-			$('#currency_select').val(65).change();
+			populateSelect('Currency', data, $('.currency_select'));
+			$('.currency_select').val(65).change();
 		})
 		.catch(err => {
 			console.error("Error get Currency:", err);

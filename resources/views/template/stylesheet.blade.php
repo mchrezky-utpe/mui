@@ -77,3 +77,61 @@ body {
     margin: 2px;
 }
 </style>
+
+<style>
+    .btn-group {
+        margin: 20px;
+    }
+    
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        border-radius: 0 6px 6px 6px;
+        display: none;
+    }
+    
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+    
+    .dropdown-submenu > .dropdown-item:after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f054";
+        float: right;
+        margin-left: 10px;
+    }
+    
+    .dropdown-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px;
+    }
+    
+    .dropdown-menu {
+        padding: 0;
+    }
+    
+    .dropdown-divider {
+        margin: 4px 0;
+    }
+    
+    .submenu-item {
+        padding-left: 24px;
+        font-size: 0.9em;
+    }
+    
+    .custom-submenu {
+        min-width: 150px;
+    }
+    .btn-group .show {
+            position: unset !important;
+}
+</style>
