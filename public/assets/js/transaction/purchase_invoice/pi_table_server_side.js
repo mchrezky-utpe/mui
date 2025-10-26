@@ -8,7 +8,7 @@ export function handleTableServerSide() {
         processing: true,
         serverSide: true,
         fixedColumns: {
-            left: 4,
+            left: 6,
             heightMatch: 'auto'
         },
         ajax: {
