@@ -92,6 +92,7 @@ Route::controller(PurchaseInvoiceController::class)->group(function () {
     Route::get("/pi/{id}/rollback/{phase}", "rollback")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pi/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::post("/pi/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pi/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi/{id}/items", "get_detail_pi")->middleware(OnlyMemberMiddleware::class);
     route::get('/pi/export', 'export')->name('purchase_invoice.export');
     

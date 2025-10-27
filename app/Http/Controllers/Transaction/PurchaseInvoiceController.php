@@ -145,7 +145,7 @@ class PurchaseInvoiceController
     
     public function get_po_by(Request $request)
     {
-        $query = DB::table('vw_app_list_trans_do_dt');
+        $query = DB::table('vw_app_pick_trans_po_for_pi_hd');
         
         $query->where('prs_supplier_id', $request->input('prs_supplier_id'));
         
@@ -156,8 +156,16 @@ class PurchaseInvoiceController
         $query->whereYear('trans_date', $year);
 
         $data = $query->get();
+
+        $uniqueData = $data->unique('po_doc_num')->map(function ($item) {
+            return [
+                'trans_po_id' => $item->trans_po_id,
+                'po_doc_num' => $item->po_doc_num
+            ];
+        })->values();
+
         return response()->json([
-            'data' => $data
+            'data' => $uniqueData
         ]);
     }
     
