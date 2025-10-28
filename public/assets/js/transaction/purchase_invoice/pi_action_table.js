@@ -11,14 +11,19 @@ export function handleActionTable() {
 
 	$(".add_row").on("click", function() {
 		const trans_date = $('[name=trans_date]').val();
-		const prs_supplier_id = $('[name=prs_supplier_id]').val();;
+		const prs_supplier_id = $('[name=prs_supplier_id]').val();
+		const gen_department_id = $('[name=gen_department_id]').val();
 		
 		if(trans_date == null){
 			alert("Pilih invoice date!");
 			return;
 		}
 		if(prs_supplier_id == ""){
-			alert("Pilih Supplier");
+			alert("Pilih Supplier!");
+			return;
+		}
+		if(gen_department_id == ""){
+			alert("Pilih Department!");
 			return;
 		}
 
@@ -28,10 +33,11 @@ export function handleActionTable() {
 			data: {
 				trans_date: trans_date,
 				prs_supplier_id: prs_supplier_id,
+				gen_department_id: gen_department_id,
 			},
             success: function (response) {
 				var data = response.data;
-			
+				if(data.length == 0) alert("Data Not Found");
 				$(".item_table tbody").empty();
 				for (let index = 0; index < data.length; index++) {
 					const item = data[index];

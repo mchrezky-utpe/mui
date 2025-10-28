@@ -148,6 +148,7 @@ class PurchaseInvoiceController
         $query = DB::table('vw_app_pick_trans_po_for_pi_hd');
         
         $query->where('prs_supplier_id', $request->input('prs_supplier_id'));
+        $query->where('gen_department_id', $request->input('gen_department_id'));
         
         $carbonDate = Carbon::parse($request->input('trans_date'));
         $month = $carbonDate->month;
