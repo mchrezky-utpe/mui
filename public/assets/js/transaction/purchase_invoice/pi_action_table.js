@@ -37,7 +37,7 @@ export function handleActionTable() {
 			},
             success: function (response) {
 				var data = response.data;
-				if(data.length == 0) alert("Data Not Found");
+				if(data.length == 0) alert("Data Not Found");	
 				$(".item_table tbody").empty();
 				for (let index = 0; index < data.length; index++) {
 					const item = data[index];
@@ -93,6 +93,7 @@ export function handleActionTable() {
 	
     $(document).on("click", ".checkAndVerify", function (e) {
         var id = this.dataset.id;
+		$('[name=trans_pi_id]').val(id);
         $.ajax({
             type: "GET",
             url: base_url + "pi/" + id +"/item/check",
@@ -108,6 +109,7 @@ export function handleActionTable() {
 								${item.trans_date}
 							</td>
 							<td>
+								<input value="${item.trans_do_detail_id}" type="hidden" name="trans_do_detail_id[]" />
 								<input value="${item.trans_po_detail_id}" type="hidden" name="trans_po_detail_id[]" />
 								<input value="${item.trans_po_id}" type="hidden" name="trans_po_id[]" />
 								${item.doc_num}
@@ -127,7 +129,7 @@ export function handleActionTable() {
 							<td>
 								${item.qty}
 							</td>
-							<td><input type="checkbox" name="is_check[]" /></td>
+							<td><input type="checkbox" name="is_check[${index}]" /></td>
 						</tr>`;
 
 					$(".item_check_table tbody").append(newRow);

@@ -172,7 +172,7 @@ class PurchaseInvoiceController
     
     public function get_detail_pi(Request $request, $id)
     {
-        $query = DB::table('vw_app_list_trans_pi_dt');
+    $query = DB::table('vw_app_list_trans_pi_dt');
         
         $query->where('trans_pi_id', $id);
     
@@ -262,8 +262,8 @@ class PurchaseInvoiceController
 
     public function verify(Request $request)
     {
-        DB::beginTransaction();
 
+        DB::beginTransaction();
         try {
             $userId = Auth::id();
             $now = Carbon::now();
@@ -272,20 +272,20 @@ class PurchaseInvoiceController
             $existingItems = PurchaseInvoiceOrderDetail::where('trans_pi_id', $request->trans_pi_id)
                 ->get()
                 ->keyBy(function($item) {
-                    return $item->trans_po_id . '_' . $item->trans_po_detail_id;
+                    return $item->trans_po_id . '_' . $item->trans_do_detail_id;
                 });
 
             $itemsToInsert = [];
             $itemsToUpdate = [];
             $processedKeys = [];
-
             // Proses data dari request
-            foreach ($request->trans_po_detail_id as $index => $po_detail_id) {
-                $key = $request->trans_po_id[$index] . '_' . $po_detail_id;
-                $processedKeys[] = $key;
+            foreach ($request->trans_do_detail_id as $index => $do_detail_id) {
+                $is_checked = $request->is_check[$index] ?? "off";
+                $key = $request->trans_po_id[$index] . '_' . $do_detail_id;
 
                 // Cek apakah item sudah ada
-                if (isset($existingItems[$key])) {
+                if (isset($existingItems[$key]) && $is_checked == "on") {
+                    $processedKeys[] = $key;
                     // Update existing item
                     $itemsToUpdate[] = [
                         'id' => $existingItems[$key]->id,
@@ -293,12 +293,14 @@ class PurchaseInvoiceController
                         'updated_at' => $now
                         // Tambahkan field lain yang perlu diupdate
                     ];
-                } else {
+                } else if($is_checked == "on") {
+                    $processedKeys[] = $key;
                     // Insert new item
                     $itemsToInsert[] = [
                         'trans_pi_id' => $request->trans_pi_id,
                         'trans_po_id' => $request->trans_po_id[$index],
-                        'trans_po_detail_id' => $po_detail_id,
+                        'trans_po_detail_id' => $request->trans_po_detail_id[$index],
+                        'trans_do_detail_id' => $do_detail_id,
                         'generated_id' => Str::uuid()->toString(),
                         'created_by' => $userId,
                         'created_at' => $now
@@ -306,8 +308,9 @@ class PurchaseInvoiceController
                 }
             }
 
+
             $itemsToDelete = $existingItems->filter(function($item) use ($processedKeys) {
-                $key = $item->trans_po_id . '_' . $item->trans_po_detail_id;
+                $key = $item->trans_po_id . '_' . $item->trans_do_detail_id;
                 return !in_array($key, $processedKeys);
             });
 
@@ -333,6 +336,7 @@ class PurchaseInvoiceController
             DB::commit();
             
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
             // Lebih baik menggunakan log daripada dd di production
             return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses data.');

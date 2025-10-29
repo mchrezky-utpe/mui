@@ -3,6 +3,7 @@
     @csrf 
 <div class="card-header d-flex justify-content-between align-items-center">
 </div>
+<input readonly name="trans_pi_id" class="form-control" type="hidden">
 <div class="table">
   <table id="item_check_table" class="table data-table item_check_table" id="add_table">
     <thead>
