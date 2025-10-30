@@ -99,7 +99,11 @@ class PurchaseInvoiceExport implements FromArray, WithHeadings, WithStyles, With
             }
 
             // Empty row setelah items
-            $data[] = array_fill(0, 31, '');
+            $data[] = [
+                'MERGE_ROW', '', '', '', '', '', '', '', '', '', 
+                '', '', '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '', '', '', ''
+            ];
         }
 
         return $data;
@@ -165,9 +169,56 @@ class PurchaseInvoiceExport implements FromArray, WithHeadings, WithStyles, With
                     $event->sheet->mergeCells($merge);
                     $sheet->getStyle($merge)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 }
-            // AUTO WIDTH UNTUK SEMUA KOLOM
-            foreach (range('A', $highestColumn) as $column) {
-                $sheet->getColumnDimension($column)->setAutoSize(true);
+                // AUTO WIDTH UNTUK SEMUA KOLOM
+                foreach (range('A', $highestColumn) as $column) {
+                    $sheet->getColumnDimension($column)->setAutoSize(true);
+                }
+
+                 // Handle empty rows (MERGE_ROW)
+            for ($row = 1; $row <= $highestRow; $row++) {
+                $cellValue = $sheet->getCell('A' . $row)->getValue();
+                if ($cellValue === 'MERGE_ROW') {
+                    // Clear nilai MERGE_ROW
+                    $sheet->setCellValue('A' . $row, '');
+                    
+                    // Merge seluruh row dari A sampai AD
+                    $event->sheet->mergeCells('A' . $row . ':Z' . $row);
+                    
+                    // Kasih warna background
+                    $sheet->getStyle('A' . $row . ':Z' . $row)
+                          ->getFill()
+                          ->setFillType(Fill::FILL_SOLID)
+                          ->getStartColor()
+                          ->setRGB('F0F0F0'); // Abu-abu muda
+                    
+                    // Atau kasih height yang lebih kecil
+                    $sheet->getRowDimension($row)->setRowHeight(15);
+                }
+            }
+
+             // Cari dan style semua header items
+            for ($row = 1; $row <= $highestRow; $row++) {
+                $cellValue = $sheet->getCell('A' . $row)->getValue();
+                
+                // Jika cell A berisi 'Date' (header items)
+                if ($cellValue === 'Date') {
+                    // Style untuk header items (kolom A sampai L)
+                    $sheet->getStyle('A' . $row . ':L' . $row)
+                          ->applyFromArray([
+                              'font' => ['bold' => true],
+                              'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]
+                          ]);
+                }
+                
+                // Deteksi empty rows untuk styling
+                $isRowEmpty = true;
+                foreach (['A', 'B', 'C', 'D'] as $col) {
+                    if (!empty($sheet->getCell($col . $row)->getValue())) {
+                        $isRowEmpty = false;
+                        break;
+                    }
+                }
+              
             }
 
                 // Set column widths
