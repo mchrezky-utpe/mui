@@ -1,68 +1,149 @@
 <?php
 namespace App\Exports;
 
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\FromArray; // Ganti dari FromCollection ke FromArray
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class PurchaseInvoiceExport implements FromCollection, WithHeadings, ShouldAutoSize,WithStyles,WithEvents
+class PurchaseInvoiceExport implements FromArray, WithHeadings, WithStyles, WithEvents, WithTitle
 {
-    protected $data;
+    protected $invoices;
 
-    public function __construct($data)
+    public function __construct($invoices)
     {
-        $this->data = $data;
+        $this->invoices = $invoices;
     }
 
-    public function collection()
+    public function array(): array
     {
-        return collect($this->data);
+        $data = [];
+        
+        foreach ($this->invoices as $invoice) {
+            // Header invoice - hanya data yang diperlukan
+            $data[] = [
+                $invoice['invoice_date'] ?? '',
+                $invoice['invoice_code'] ?? '',
+                $invoice['invoice_number'] ?? '',
+                $invoice['department'] ?? '',
+                $invoice['supplier'] ?? '',
+                $invoice['invoice_type'] ?? '',
+                $invoice['invoice_phase'] ?? '',
+                $invoice['top'] ?? '',
+                $invoice['approval_required'] ?? '',
+                $invoice['currency'] ?? '',
+                $invoice['sub_total'] ?? 0,
+                $invoice['discount'] ?? 0,
+                $invoice['ppn'] ?? 0,
+                $invoice['pph'] ?? 0,
+                $invoice['total'] ?? 0,
+                $invoice['phase1_receipt_date'] ?? '',
+                $invoice['phase1_recipient'] ?? '',
+                $invoice['phase1_receipt_status'] ?? '',
+                $invoice['phase2_receipt_date'] ?? '',
+                $invoice['phase2_recipient'] ?? '',
+                $invoice['phase2_receipt_status'] ?? '',
+                $invoice['phase3_receipt_date'] ?? '',
+                $invoice['phase3_recipient'] ?? '',
+                $invoice['phase3_receipt_status'] ?? '',
+                $invoice['approval_date'] ?? '',
+                $invoice['approval_status'] ?? ''
+            ];
+
+            // Header items
+            $data[] = [
+                'Date',
+                'PO Number',
+                'DO Number',
+                'Item Code',
+                'Item Name',
+                'Item Type',
+                'Unit',
+                'Quantity',
+                'Curr',
+                'Price',
+                'Amount',
+                'Check',
+                '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
+            ];
+
+            // Items data - gunakan chunk jika banyak data
+            $items = $invoice['items'] ?? [];
+            foreach ($items as $item) {
+                $data[] = [
+                    $item['date'] ?? '',
+                    $item['po_number'] ?? '',
+                    $item['do_number'] ?? '',
+                    $item['item_code'] ?? '',
+                    $item['item_name'] ?? '',
+                    $item['item_type'] ?? '',
+                    $item['unit'] ?? '',
+                    $item['quantity'] ?? 0,
+                    $item['currency'] ?? '',
+                    $item['price'] ?? 0,
+                    $item['amount'] ?? 0,
+                    ($item['checked'] ?? false) ? 'True' : 'False',
+                    '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
+                ];
+                
+                // Bebaskan memory setiap 100 rows
+                if (count($data) % 100 === 0) {
+                    gc_collect_cycles();
+                }
+            }
+
+            // Empty row setelah items
+            $data[] = array_fill(0, 31, '');
+        }
+
+        return $data;
     }
 
     public function headings(): array
     {
         return [
-            // Baris 1 - Header utama dengan colspan
+            // Baris 1 - Header utama
             [
-                'No', 
-                'Project Name', 
-                'Fase 1', '', '', 
-                'Fase 2', '', '', 
-                'Fase 3', '', '',
-                'Overall Status'
+                'Invoice Information (Phase 0)', '', '', '', '',
+                'Invoice Additional Information', '', '', '',
+                'Amount', '', '', '', '', '',
+                'Phase 1', '', '',
+                'Phase 2', '', '',
+                'Phase 3', '', '',
+                'Purchase Invoice Approval', ''
             ],
             // Baris 2 - Sub header
             [
-                'No',
-                'Project Name',
-                'Receipt Date', 'Recipient Status', 'Completion %',
-                'Receipt Date', 'Recipient Status', 'Completion %', 
-                'Receipt Date', 'Recipient Status', 'Completion %',
-                'Overall Status'
+                'Invoice Date', 'Invoice Code', 'Invoice Number', 'Department', 'Supplier',
+                'Invoice Type', 'Invoice Phase', 'TOP', 'Appr. Req.', 'Curr.',
+                'Sub Total', 'Discount', 'PPN', 'PPH', 'Total',
+                'Receipt Date', 'Recipient', 'Receipt Status',
+                'Receipt Date', 'Recipient', 'Receipt Status',
+                'Receipt Date', 'Recipient', 'Receipt Status',
+                'Approval Date', 'Approval Status'
             ]
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
+        // Hanya define styles dasar, sisanya di AfterSheet
         return [
-            // Style untuk header baris 1
             1 => [
-                'font' => ['bold' => true, 'size' => 14],
-                'alignment' => ['horizontal' => 'center']
+                'font' => ['bold' => true, 'size' => 11],
+                'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'E6E6FA']]
             ],
-            // Style untuk sub header baris 2
             2 => [
-                'font' => ['bold' => true],
-                'alignment' => ['horizontal' => 'center']
-            ],
-            // Style untuk data
-            'A3:L100' => [
-                'alignment' => ['vertical' => 'top']
+                'font' => ['bold' => true, 'size' => 9],
+                'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
+                'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'F0F0F0']]
             ],
         ];
     }
@@ -72,34 +153,57 @@ class PurchaseInvoiceExport implements FromCollection, WithHeadings, ShouldAutoS
         return [
             AfterSheet::class => function(AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
+                $highestRow = $sheet->getHighestRow();
+                $highestColumn = $sheet->getHighestColumn();
 
-                // Merge cells untuk header Fase
-                $event->sheet->mergeCells('C1:E1'); // Fase 1
-                $event->sheet->mergeCells('F1:H1'); // Fase 2
-                $event->sheet->mergeCells('I1:K1'); // Fase 3
+                // Merge cells untuk header utama Baris 1
+                $merges = [
+                    'A1:E1', 'F1:I1', 'J1:O1', 'P1:R1', 'S1:U1', 'V1:X1', 'Y1:Z1'
+                ];
+                
+                foreach ($merges as $merge) {
+                    $event->sheet->mergeCells($merge);
+                    $sheet->getStyle($merge)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                }
+            // AUTO WIDTH UNTUK SEMUA KOLOM
+            foreach (range('A', $highestColumn) as $column) {
+                $sheet->getColumnDimension($column)->setAutoSize(true);
+            }
 
-                // Set alignment untuk header yang di-merge
-                $sheet->getStyle('C1:E1')->getAlignment()->setHorizontal('center');
-                $sheet->getStyle('F1:H1')->getAlignment()->setHorizontal('center');
-                $sheet->getStyle('I1:K1')->getAlignment()->setHorizontal('center');
+                // Set column widths
+                $widths = [
+                    'A' => 12, 'B' => 15, 'C' => 18, 'D' => 10, 'E' => 25,
+                    'F' => 12, 'G' => 12, 'H' => 25, 'I' => 8, 'J' => 6,
+                    'K' => 10, 'L' => 12, 'M' => 25, 'N' => 8, 'O' => 10,
+                    'P' => 8, 'Q' => 6, 'R' => 6, 'S' => 10, 'T' => 12,
+                    'U' => 12, 'V' => 12, 'W' => 12, 'X' => 12, 'Y' => 12,
+                    'Z' => 12, 'AA' => 12, 'AB' => 12, 'AC' => 12, 'AD' => 12
+                ];
 
-                // Auto size columns
-                foreach(range('A', 'L') as $column) {
-                    $sheet->getColumnDimension($column)->setAutoSize(true);
+                foreach ($widths as $col => $width) {
+                    $sheet->getColumnDimension($col)->setWidth($width);
                 }
 
-                // Add borders
-                $lastRow = count($this->data) + 2;
-                $styleArray = [
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000'],
+                // Add borders hanya untuk area yang digunakan
+                if ($highestRow > 0) {
+                    $styleArray = [
+                        'borders' => [
+                            'allBorders' => [
+                                'borderStyle' => Border::BORDER_THIN,
+                            ],
                         ],
-                    ],
-                ];
-                $sheet->getStyle('A1:L' . $lastRow)->applyFromArray($styleArray);
+                    ];
+                    $sheet->getStyle('A1:' . $highestColumn . $highestRow)->applyFromArray($styleArray);
+                }
+
+                // Bebaskan memory
+                gc_collect_cycles();
             },
         ];
+    }
+
+    public function title(): string
+    {
+        return 'purchase_invoice_list';
     }
 }

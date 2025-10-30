@@ -94,7 +94,7 @@ Route::controller(PurchaseInvoiceController::class)->group(function () {
     Route::post("/pi/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi/{id}/items", "get_detail_pi")->middleware(OnlyMemberMiddleware::class);
-    route::get('/pi/export', 'export')->name('purchase_invoice.export');
+    route::get('/pi/export/excel', 'export')->middleware(OnlyMemberMiddleware::class);
     
     // detail view
     Route::get("/pi-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);

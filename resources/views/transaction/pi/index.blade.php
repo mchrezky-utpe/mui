@@ -73,7 +73,7 @@
             <div class="d-flex">
               <button id="add_button" type="button" class="btn btn-primary add_modal" data-toggle="modal"
                 data-target="#add_modal">Add +</button>
-              <a href="{{ route('purchase_invoice.export') }}" class="mr-2 btn btn-success">
+              <a href="/pi/export/excel" class="mr-2 btn btn-success">
                 <i class="fas fa-file-excel"></i> Export Excel
               </a>
             </div>

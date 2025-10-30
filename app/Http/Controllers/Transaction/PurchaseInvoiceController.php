@@ -447,9 +447,79 @@ class PurchaseInvoiceController
 
     public function export()
     {
-        $query = DB::table('vw_app_list_trans_pi_hd');
-        $data = $query->get();
-        return Excel::download(new PurchaseInvoiceExport($data), 'purchase_invoice.xlsx');
+        
+       
+        // Ambil data dari database
+        $query_headers = DB::table('vw_app_list_trans_pi_hd');
+        $data_headers = $query_headers->get();
+        
+        $query_details = DB::table('vw_app_list_trans_pi_dt');
+        $data_details = $query_details->get();
+
+        // Mapping data ke format yang diperlukan
+        $invoices = $this->mapInvoiceData($data_headers, $data_details);
+
+        return Excel::download(new PurchaseInvoiceExport($invoices), 'purchase_invoice.xlsx');
+    }
+
+     private function mapInvoiceData($headers, $details)
+    {
+        $invoices = [];
+
+        foreach ($headers as $header) {
+            // Cari detail items berdasarkan invoice_id atau kolom penghubung
+            $invoiceDetails = $details->where('trans_pi_id', $header->id); // Sesuaikan dengan kolom penghubung
+            
+            $items = [];
+            foreach ($invoiceDetails as $detail) {
+                $items[] = [
+                    'date' => $detail->date ?? $header->trans_date, // Gunakan header date jika detail tidak ada
+                    'po_number' => $detail->po_doc_num ?? '',
+                    'do_number' => $detail->do_doc_num ?? '',
+                    'item_code' => $detail->sku_prefix ?? '',
+                    'item_name' => $detail->sku_name ?? '',
+                    'item_type' => $detail->sku_material_type ?? '',
+                    'unit' => $detail->sku_material_type ?? '',
+                    'quantity' => $detail->qty ?? 0,
+                    'currency' => $detail->currency ?? $header->currency,
+                    'price' => $detail->price_f ?? 0,
+                    'amount' => $detail->price_f ?? 0,
+                    'checked' => TRUE
+                ];
+            }
+
+            $invoices[] = [
+                'invoice_date' => $header->trans_date ?? '',
+                'invoice_code' => $header->doc_num ?? '',
+                'invoice_number' => $header->manual_id ?? '',
+                'department' => $header->department ?? '',
+                'supplier' => $header->supplier ?? '',
+                'invoice_type' => $header->invoice_type ?? '',
+                'invoice_phase' => $header->invoice_phase ?? '',
+                'top' => $header->terms ?? '',
+                'approval_required' => $header->approval_required ?? 'NO',
+                'currency' => $header->currency ?? 'IDR',
+                'sub_total' => $header->val_sub_total ?? 0,
+                'discount' => $header->val_discount ?? 0,
+                'ppn' => $header->val_vat ?? 0,
+                'pph' => $header->val_pph23 ?? 0,
+                'total' => $header->val_total ?? 0,
+                'phase1_receipt_date' => $header->receipt_date1 ?? '',
+                'phase1_recipient' => $header->recipent1 ?? '',
+                'phase1_receipt_status' => $header->receipt_status1 ?? '',
+                'phase2_receipt_date' => $header->receipt_date2 ?? '',
+                'phase2_recipient' => $header->recipent2 ?? '',
+                'phase2_receipt_status' => $header->receipt_status2 ?? '',
+                'phase3_receipt_date' => $header->receipt_date3 ?? '',
+                'phase3_recipient' => $header->recipent3 ?? '',
+                'phase3_receipt_status' => $header->receipt_status3 ?? '',
+                'approval_date' => $header->approval_date ?? '',
+                'approval_status' => $header->approval_status ?? '',
+                'items' => $items
+            ];
+        }
+
+        return $invoices;
     }
 
 }
