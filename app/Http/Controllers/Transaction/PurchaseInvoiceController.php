@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\PurchaseOrderExport;
+use App\Exports\PurchaseInvoiceExport;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\NumberGenerator;
 use Carbon\Carbon;
@@ -254,7 +254,7 @@ class PurchaseInvoiceController
         
         $query->where('id', $id);
 
-        $data = $query->get();
+        $data = $query->orderBy('doc_num')->orderBy('sku_prefix')->get();
         return response()->json([
             'data' => $data
         ]);
@@ -447,7 +447,9 @@ class PurchaseInvoiceController
 
     public function export()
     {
-        return Excel::download(new PurchaseOrderExport, 'purchase_invoice.xlsx');
+        $query = DB::table('vw_app_list_trans_pi_hd');
+        $data = $query->get();
+        return Excel::download(new PurchaseInvoiceExport($data), 'purchase_invoice.xlsx');
     }
 
 }

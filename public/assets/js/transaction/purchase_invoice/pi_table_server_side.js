@@ -105,6 +105,23 @@ export function handleTableServerSide() {
                     const csrfToken = document
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute("content");
+                    
+                   const style_disable = 'style="pointer-events: none;cursor: default;background-color:red"'
+
+                   let stateButtonReceipt1 = style_disable;
+                   let stateButtonReceipt2 = style_disable;
+                   let stateButtonReceipt3 = style_disable;
+
+                   if(data.receipt_date1 == null){
+                        stateButtonReceipt1 = "";
+                   }    
+                   if(data.receipt_date1 != null && data.receipt_date2 == null){
+                        stateButtonReceipt2 = "";
+                   }    
+                   if(data.receipt_date2 != null && data.stateButtonReceipt3 == null){
+                        stateButtonReceipt3 = "";
+                   }    
+
 
                     let button = `
                         <div class="btn-group" role="group">
@@ -126,13 +143,13 @@ export function handleTableServerSide() {
                                     Receipt
                                 </button>
                                 <div class="dropdown-menu custom-submenu">
-                                    <a href="/pi/${data.id}/receipt/1" data-phase="1" class="btn dropdown-item submenu-item">
+                                    <a  ${stateButtonReceipt1}  href="/pi/${data.id}/receipt/1" data-phase="1" class="btn dropdown-item submenu-item">
                                         Phase 1
                                     </a>
-                                    <a href="/pi/${data.id}/receipt/2" data-phase="2" class="btn dropdown-item submenu-item">
+                                    <a  ${stateButtonReceipt2}  href="/pi/${data.id}/receipt/2" data-phase="2" class="btn dropdown-item submenu-item">
                                         Phase 2
                                     </a>
-                                    <a href="/pi/${data.id}/receipt/3" data-phase="3" class="btn dropdown-item submenu-item">
+                                    <a ${stateButtonReceipt3}  href="/pi/${data.id}/receipt/3" data-phase="3" class="btn dropdown-item submenu-item">
                                         Phase 3
                                     </a>
                                 </div>

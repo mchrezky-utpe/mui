@@ -103,6 +103,10 @@ export function handleActionTable() {
 				$(".item_check_table tbody").empty();
 				for (let index = 0; index < data.length; index++) {
 					const item = data[index];
+					let is_selected = "";
+					if(item.is_selected == 1) {
+						is_selected = "checked";
+					}
 					const newRow =
 						`<tr>
 							<td>
@@ -129,7 +133,7 @@ export function handleActionTable() {
 							<td>
 								${item.qty}
 							</td>
-							<td><input type="checkbox" name="is_check[${index}]" /></td>
+							<td><input type="checkbox" ${is_selected} name="is_check[${index}]" /></td>
 						</tr>`;
 
 					$(".item_check_table tbody").append(newRow);
