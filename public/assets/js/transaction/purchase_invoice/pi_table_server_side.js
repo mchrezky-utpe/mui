@@ -121,7 +121,7 @@ export function handleTableServerSide() {
                    if(data.receipt_date1 != null && data.receipt_date2 == null){
                         stateButtonReceipt2 = "";
                    }    
-                   if(data.receipt_date2 != null && data.stateButtonReceipt3 == null){
+                   if(data.receipt_date2 != null && data.receipt_date3 == null){
                         stateButtonReceipt3 = "";
                    }    
 
