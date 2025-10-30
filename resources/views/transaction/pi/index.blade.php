@@ -93,6 +93,7 @@
                     <th>Terms</th>
                     <th>Currecny</th>
                     <th>Discount</th>
+                    <th>Sub Total</th>
                     <th>PPN</th>
                     <th>PPH</th>
                     <th>Total</th>
@@ -101,7 +102,7 @@
                     <th>P1 Recipient Status</th>
                     <th>P2 Receipt Date</th>
                     <th>P2 Recipient</th>
-                    <th>P3 Recipient Status</th>
+                    <th>P2 Recipient Status</th>
                     <th>P3 Receipt Date</th>
                     <th>P3 Recipient</th>
                     <th>P3 Recipient Status</th>

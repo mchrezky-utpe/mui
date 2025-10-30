@@ -52,6 +52,9 @@ export function handleTableServerSide() {
                 data: "val_discount",
             },
             {
+                data: "val_sub_total",
+            },
+            {
                 data: "val_vat",
             },
             {

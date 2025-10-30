@@ -230,6 +230,25 @@ function reinitCalcForNewElements() {
 								<td><span class="fa fa-check"></span></td>
 							</tr>`
 						});
+						const total = data.data.reduce((accumulator, value) => {
+									return accumulator + Number(value.total_f);
+									}, 0);
+						body += 
+							`<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th>Total</th>
+								<th>${total}</th>
+								<th><span class="fa fa-check"></span></th>
+							</tr>`
+
                         var detailHtml = `
                             <div class="p-3 bg-light">
                                 <table class="table table-sm">
