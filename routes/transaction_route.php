@@ -24,6 +24,7 @@ use App\Http\Controllers\Transaction\Receiving\ReturnablePackagingController;
 use App\Http\Controllers\Transaction\Bom\BomController;
 use App\Http\Controllers\Transaction\StockViewController;
 use App\Http\Controllers\Transaction\PurchaseInvoiceController;
+use App\Http\Controllers\Transaction\PurchaseAnalysisFrequencyController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -99,6 +100,12 @@ Route::controller(PurchaseInvoiceController::class)->group(function () {
     // detail view
     Route::get("/pi-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi-detail/all", "get_detail_all")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(PurchaseAnalysisFrequencyController::class)->group(function () {
+    Route::get("/pa/frequency", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pa/frequency/summary", "get_frequency_summary_by")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pa/frequency/list", "get_frequency_list_by")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SkuPricelistController::class)->group(function () {

@@ -264,6 +264,9 @@
                                 <li>
                                     <a href="/pi-detail">Purchase Invoice Detail</a>
                                 </li>
+                                <li>
+                                    <a href="/pa/frequency">Purchase Analysis Frequency</a>
+                                </li>
                                 <!-- <li>
                                     <a href="purchase_invoice.html">Purchase Invoice</a>
                                 </li>
