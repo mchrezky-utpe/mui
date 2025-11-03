@@ -79,7 +79,7 @@ function loadPurchaseList(startDate, endDate, gen_department_id) {
                             ${item.trans_date}
                         </td>
                         <td>
-                            ${item.po_doc_num}
+                            ${item.doc_num}
                         </td>
                         <td>
                             ${item.department}
@@ -88,7 +88,7 @@ function loadPurchaseList(startDate, endDate, gen_department_id) {
                             ${item.sku_name}
                         </td>
                         <td>
-                            ${item.sku_unit}
+                            ${item.sku_inventory_unit}
                         </td>
                         <td>
                             ${item.qty}

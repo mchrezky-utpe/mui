@@ -41,7 +41,7 @@ class PurchaseAnalysisFrequencyController
     
     public function get_frequency_list_by(Request $request)
     {
-        $query = DB::table('vw_app_list_trans_pi_dt');
+        $query = DB::table('vw_app_list_trans_po_dt');
         
          
         $query->whereBetween('trans_date', [$request->input('startDate'), $request->input('endDate')]);
