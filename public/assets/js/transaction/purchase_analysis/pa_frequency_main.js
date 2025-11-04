@@ -11,6 +11,9 @@ $(document).ready(function() {
 		const startdate = $("#startDate").val();
 		const endDate = $("#endDate").val();
 		const departmentId = $("#gen_department_id").val();
+		
+		loadPurchaseList(startdate, endDate, departmentId);
+		
 		fetchDataSummary(startdate, endDate, departmentId)
 			.then(data => {
 				console.log("Succesfully get summary:", data);
@@ -117,17 +120,33 @@ function loadPurchaseList(startDate, endDate, gen_department_id) {
 }
 
 function loadLineChart(dataPo) {
-	const chartData = {
-		tab: {
-			labels:  dataPo.map(m => m.trans_date),
-			datasets: [{
-				label: 'Purchase Frequency',
-				data: dataPo.map(m => m.total_f),
-				borderColor: 'rgb(75, 192, 192)',
-				tension: 0.1
-			}]
-		}
-	};
+	  // Group data by trans_date
+    const groupedData = dataPo.reduce((acc, current) => {
+        const date = current.trans_date;
+        acc[date] = (acc[date] || 0) + Number(current.total_f);
+        return acc;
+    }, {});
+
+    // Konversi ke array dan sort by date
+    const sortedEntries = Object.entries(groupedData)
+        .sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB));
+
+    const labels = sortedEntries.map(([date]) => date);
+    const data = sortedEntries.map(([, total]) => total);
+
+    const chartData = {
+        tab: {
+            labels: labels,
+            datasets: [{
+                label: 'Purchase Frequency',
+                data: data,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                tension: 0.1,
+                fill: true
+            }]
+        }
+    };
 	// load line chart
 	initializeChart(`barChartTab`, chartData[`tab`]);
 }
