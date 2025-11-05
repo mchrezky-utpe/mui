@@ -3,12 +3,15 @@ $(document).ready(function () {
 
     $(document).on("click", ".edit", function (e) {
         var id = this.dataset.id;
+        var name = this.dataset.name;
+        debugger;
         $.ajax({
             type: "GET",
             url: base_url + "sku-pricelist/" + id,
             success: function (data) {
                 var data = data.data;
                 $("[name=id]").val(data.id);
+                $("[name=sku_name]").val(name);
                 $("[name=sku_production_material_id]").val(data.sku_id);
                 $("[name=prs_supplier_id]").val(data.prs_supplier_id);
                 $("[name=gen_currency_id]").val(data.gen_currency_id);

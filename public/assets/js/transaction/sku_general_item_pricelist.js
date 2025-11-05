@@ -89,7 +89,7 @@ $(document).ready(function () {
                         <button data-prs_supplier_id="${data.prs_supplier_id}"  data-item_id="{{ $value->item_id }}"  type="button" class="history btn btn-secondary">
                           <span class="fas fa-list"></span>
                       </button>
-                        <button data-id="${data.id}" type="button" class="edit btn btn-success">
+                        <button data-name="${data.sku_name}" data-id="${data.id}" type="button" class="edit btn btn-success">
                           <span class="fas fa-pencil-alt"></span>
                         </button>
                         <button class="btn btn-danger">

@@ -6,8 +6,10 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Material Name</label>
-          <select required name="sku_id" class="form-control">
-          </select >
+          {{-- <select required name="sku_id" class="form-control">
+          </select > --}}
+          <input name="sku_name" type="text" readonly />
+          <input name="sku_id" type="hidden" />
         </div>
         <div class="form-group">
           <label>Supplier</label>
