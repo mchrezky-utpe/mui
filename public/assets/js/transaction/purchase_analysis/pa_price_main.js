@@ -11,8 +11,9 @@ $(document).ready(function() {
 		const startdate = $("#startDate").val();
 		const endDate = $("#endDate").val();
 		const gen_supplier_id = $("#gen_supplier_id").val();
+		const keywords = $("#keywords").val();
 		
-		fetchDataSummaryPrice(startdate, endDate, gen_supplier_id)
+		fetchDataSummaryPrice(startdate, endDate, gen_supplier_id,keywords)
 			.then(data => {
 				console.log("Succesfully get data:", data);
 				$("#purchase_price_table tbody").empty();
@@ -121,11 +122,11 @@ function loadBarChart(dataSummary) {
 
 
 
-function fetchDataSummaryPrice(startdate, endDate, gen_supplier_id) {
+function fetchDataSummaryPrice(startdate, endDate, gen_supplier_id,keywords) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: "GET",
-			url: base_url + `pa/price/summary?startDate=${startdate}&endDate=${endDate}&gen_supplier_id=${gen_supplier_id}`,
+			url: base_url + `pa/price/summary?startDate=${startdate}&endDate=${endDate}&gen_supplier_id=${gen_supplier_id}&keywords=${keywords}`,
 			success: function(data) {
 				resolve(data.data);
 			},

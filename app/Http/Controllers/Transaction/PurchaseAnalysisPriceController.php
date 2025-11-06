@@ -19,13 +19,20 @@ class PurchaseAnalysisPriceController
     {
         $query = DB::table('vw_app_list_trans_sku_pricelist');
         
-         
+          
         $query->whereBetween('valid_date_from', [$request->input('startDate'), $request->input('endDate')]);
 
         if ($request->input('gen_supplier_id') != null) {
             $query->where('prs_supplier_id', $request->input('gen_supplier_id'));
         }
-
+ 
+        $search =  $request->input('keywords');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->Where('sku_name', 'like', '%' . $search . '%')
+                    ->orWhere('sku_id', 'like', '%' . $search . '%');
+            });
+        }
 
         $data = $query->orderBy('sku_id')->get();
 
