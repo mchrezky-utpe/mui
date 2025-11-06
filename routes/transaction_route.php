@@ -26,7 +26,7 @@ use App\Http\Controllers\Transaction\StockViewController;
 use App\Http\Controllers\Transaction\PurchaseInvoiceController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisFrequencyController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisPriceController;
-
+use App\Http\Controllers\Transaction\PurchaseAnalysisOrderController;
 
 
 Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
@@ -115,6 +115,13 @@ Route::controller(PurchaseAnalysisPriceController::class)->group(function () {
     Route::get("/pa/price/summary", "get_summary_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pa/price/list", "get_price_list_by")->middleware(OnlyMemberMiddleware::class);
 });
+
+Route::controller(PurchaseAnalysisOrderController::class)->group(function () {
+    Route::get("/pa/order", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pa/order/summary", "get_summary_by")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/pa/order/list", "get_po_list_by")->middleware(OnlyMemberMiddleware::class);
+});
+
 
 Route::controller(SkuPricelistController::class)->group(function () {
     // general 
