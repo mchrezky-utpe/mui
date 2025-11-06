@@ -49,6 +49,7 @@ class PurchaseAnalysisPriceController
          
         $query->whereBetween('valid_date_from', [$request->input('startDate'), $request->input('endDate')]);
 
+        $query->where('item_id', $request->input('sku_id'));
         if ($request->input('gen_supplier_id') != null) {
             $query->where('supplier_id', $request->input('gen_supplier_id'));
         }

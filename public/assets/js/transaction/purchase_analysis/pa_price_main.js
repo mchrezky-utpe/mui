@@ -82,7 +82,7 @@ function loadPurchasePriceList(startdate, endDate, sku_id, gen_supplier_id) {
 
 function loadLineChart(data) {
 	
-    const labels = data.map( d => d.valid_date_to);
+    const labels = data.map( d => d.valid_date_from);
     const items =  data.map( d => d.price);
 
     const chartData = {
