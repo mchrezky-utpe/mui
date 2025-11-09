@@ -101,6 +101,17 @@
             </div>
         </div>
 
+
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">Supplier</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Department</button>
+            </li>
+            
+        </ul>
+
         <!-- Tab Content -->
         <div class="tab-content p-4" id="dashboardTabsContent">
             <!-- Tab 1 Content -->

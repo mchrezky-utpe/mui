@@ -32,14 +32,25 @@ class PurchaseAnalysisOrderController
 
         $data = $query->orderBy('supplier')->get();
 
-        // Group by manual untuk menghilangkan duplikat
-        $data = $query->get()->groupBy('prs_supplier_id')->map(function ($group) {
-            return [
-                'prs_supplier_id' => $group->first()->prs_supplier_id,
-                'supplier' => $group->first()->supplier
-            ];
-        })->values();
+        $data ;
 
+        if($request->input('tabType') == "supplier"){
+            // Group by manual untuk menghilangkan duplikat
+            $data = $query->get()->groupBy('prs_supplier_id')->map(function ($group) {
+                return [
+                    'prs_supplier_id' => $group->first()->prs_supplier_id,
+                    'supplier' => $group->first()->supplier
+                ];
+            })->values();
+        }else{
+            // Group by manual untuk menghilangkan duplikat
+            $data = $query->get()->groupBy('gen_department_id')->map(function ($group) {
+                return [
+                    'gen_department_id' => $group->first()->gen_department_id,
+                    'department' => $group->first()->department
+                ];
+            })->values();
+        }
 
         return response()->json([
             'data' => $data
@@ -54,8 +65,10 @@ class PurchaseAnalysisOrderController
          
         $query->whereBetween('trans_date', [$request->input('startDate'), $request->input('endDate')]);
 
-        if ($request->input('supplier_id') != null) {
-            $query->where('prs_supplier_id', $request->input('supplier_id'));
+        if($request->input('tabType') == "supplier"){
+            $query->where('prs_supplier_id', $request->input('id'));
+        }else{
+            $query->where('gen_department_id', $request->input('id'));
         }
 
 

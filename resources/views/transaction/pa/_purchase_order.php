@@ -17,8 +17,12 @@
                         
                         <!-- Filter Supplier -->
                         <div class="col-md-4">
-                            <label class="form-label">Supplier</label>
+                            <label class="form-label supplier_label">Supplier</label>
                             <select class="form-control supplier_select" id="supplier_id">
+                                <option>-</option>                               
+                            </select>
+                            <label style="display:none" class="form-label department_label">Department</label>
+                            <select style="display:none" class="form-control department_select" id="gen_department_id">
                                 <option>-</option>                               
                             </select>
                             <div class="mt-2">
@@ -41,7 +45,8 @@
                             <table id="purchase_order_table" class="table table-scroll table-clickable">
                                 <thead>
                                 <tr>
-                                    <th>Supplier</th>
+                                    <th class="supplier_label">Supplier</th>
+                                    <th style="display:none" class="department_label">Department</th>
                                 </tr>
                                 </thead>
                                 <tbody></tbody>

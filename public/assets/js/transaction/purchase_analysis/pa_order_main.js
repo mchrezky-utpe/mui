@@ -7,25 +7,64 @@ import {
 $(document).ready(function() {
 	initParam();
 
+
+	    $('#tab1-tab').on('click', function() {
+         	$('.supplier_select').show();
+         	$('.supplier_label').show();
+         	$('.department_select').hide();
+         	$('.department_label').hide();
+			$("#purchase_order_table tbody").empty();
+		});
+            
+		$('#tab2-tab').on('click', function() {
+         	$('.department_select').show();
+         	$('.department_label').show();
+         	$('.supplier_select').hide();
+         	$('.supplier_label').hide();
+			$("#purchase_order_table tbody").empty();
+		});
+            
+
+
 	$('#btn-filter').on('click', function() {
+		let tabType = "";
+		if($('.supplier_select').is(":visible")){
+			tabType = "supplier";
+		}else{
+			tabType = "department";
+		}
 		const startdate = $("#startDate").val();
 		const endDate = $("#endDate").val();
 		const supplier_id = $("#supplier_id").val();
-		
-		fetchDataSummaryOrder(startdate, endDate, supplier_id)
+		const gen_department_id = $("#gen_department_id").val();
+		fetchDataSummaryOrder(startdate, endDate, supplier_id,gen_department_id,tabType)
 			.then(data => {
 				console.log("Succesfully get data:", data);
 				$("#purchase_order_table tbody").empty();
-				for (let index = 0; index < data.length; index++) {
-					const item = data[index];
-					const newRow =
-						`<tr data-id="${item.prs_supplier_id}">
-                            <td>
-                                ${item.supplier}
-                            </td>
-                        </tr>`;
+				if(tabType == "supplier"){
+					for (let index = 0; index < data.length; index++) {
+						const item = data[index];
+						const newRow = 
+							`<tr data-id="${item.prs_supplier_id}">
+								<td>
+									${item.supplier}
+								</td>
+							</tr>`;
 
-					$("#purchase_order_table tbody").append(newRow);
+						$("#purchase_order_table tbody").append(newRow);
+					}
+				}else{
+					for (let index = 0; index < data.length; index++) {
+						const item = data[index];
+						const newRow = 
+							`<tr data-id="${item.gen_department_id}">
+								<td>
+									${item.department}
+								</td>
+							</tr>`;
+
+						$("#purchase_order_table tbody").append(newRow);
+					}
 				}
 				// Muat konten tab pertama saat halaman dimuat
 				// loadBarChart(data);
@@ -42,8 +81,14 @@ $(document).ready(function() {
 
 
 	$(document).on('click', '#purchase_order_table tbody tr', function() {
-		const gen_supplier_id = $("#gen_supplier_id").val();
-		const supplier_id = parseInt($(this).data('id'));
+		let tabType = "";
+		if($('.supplier_select').is(":visible")){
+			tabType = "supplier";
+		}else{
+			tabType = "department";
+		}
+		
+		const id = parseInt($(this).data('id'));
 		const startdate = $("#startDate").val();
 		const endDate = $("#endDate").val();
 
@@ -55,15 +100,15 @@ $(document).ready(function() {
 
 		// Load detail produk
 		console.log("click")
-		loadPurchaseOrderList(startdate, endDate, supplier_id);
+		loadPurchaseOrderList(startdate, endDate, id,tabType);
 	});
 
 });
 
-function loadPurchaseOrderList(startdate, endDate, supplier_id) {
+function loadPurchaseOrderList(startdate, endDate, id,tabType) {
 	$.ajax({
 		type: "GET",
-		url: base_url + `pa/order/list?startDate=${startdate}&endDate=${endDate}&supplier_id=${supplier_id}`,
+		url: base_url + `pa/order/list?startDate=${startdate}&endDate=${endDate}&id=${id}&tabType=${tabType}`,
 		success: function(data) {
 			data = data.data;
             loadLineChart(data);
@@ -111,11 +156,11 @@ function loadLineChart(dataPo) {
 }
 
 
-function fetchDataSummaryOrder(startdate, endDate, supplier_id) {
+function fetchDataSummaryOrder(startdate, endDate, supplier_id, gen_department_id,tabType) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: "GET",
-			url: base_url + `pa/order/summary?startDate=${startdate}&endDate=${endDate}&supplier_id=${supplier_id}`,
+			url: base_url + `pa/order/summary?startDate=${startdate}&endDate=${endDate}&supplier_id=${supplier_id}&gen_department_id=${gen_department_id}&tabType=${tabType}`,
 			success: function(data) {
 				resolve(data.data);
 			},
