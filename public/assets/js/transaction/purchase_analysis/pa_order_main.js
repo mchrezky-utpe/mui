@@ -152,7 +152,7 @@ function loadLineChart(dataPo) {
         }
     };
 	// load line chart
-	initializeChart(`barChartTab`, chartData[`tab`]);
+	initializeChart(`chart`, chartData[`tab`]);
 }
 
 
@@ -173,57 +173,6 @@ function fetchDataSummaryOrder(startdate, endDate, supplier_id, gen_department_i
 	});
 }
 
-function initializeBarChart(canvasId, data) {
-
-	const canvas = document.getElementById(canvasId);
-	const chart = Chart.getChart(canvas);
-	if (canvas) {
-		const chart = Chart.getChart(canvas);
-		if (chart) {
-			chart.destroy();
-		}
-	}
-
-	const ctx = document.getElementById(canvasId).getContext('2d');
-	return new Chart(ctx, {
-		type: 'bar',
-		data: data,
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: 'Purchase Frequency'
-				},
-				tooltip: {
-					mode: 'index',
-					intersect: false
-				}
-			},
-			scales: {
-				y: {
-					beginAtZero: true,
-					grid: {
-						drawBorder: false
-					}
-				},
-				x: {
-					grid: {
-						display: false
-					}
-				}
-			},
-			animation: {
-				duration: 1000,
-				easing: 'easeInOutQuart'
-			}
-		}
-	});
-}
 
 // Fungsi untuk inisialisasi grafik
 function initializeChart(canvasId, data) {

@@ -273,6 +273,9 @@
                                 <li>
                                     <a href="/pa/order">Purchase Analysis Order Trends</a>
                                 </li>
+                                <li>
+                                    <a href="/pa/supplier-trend">Purchase Analysis Supplier Trends</a>
+                                </li>
                                 <!-- <li>
                                     <a href="purchase_invoice.html">Purchase Invoice</a>
                                 </li>

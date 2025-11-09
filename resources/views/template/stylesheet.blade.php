@@ -134,4 +134,9 @@ body {
     .btn-group .show {
             position: unset !important;
 }
+
+.table-nowrap {
+    width: 100%;
+    border-collapse: collapse;
+}
 </style>

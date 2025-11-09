@@ -29,7 +29,7 @@ $(document).ready(function() {
                                 ${item.currency}
                             </td>
                             <td>
-                                ${item.total}
+                                ${Number(item.total).toLocaleString()}
                             </td>
                         </tr>`;
 
@@ -100,10 +100,10 @@ function loadPurchaseList(startDate, endDate, gen_department_id) {
                             ${item.currency}
                         </td>
                         <td>
-                            ${item.price_f}
+                            ${Number(item.price_f).toLocaleString()}
                         </td>
                         <td>
-                            ${item.total_f}
+                            ${Number(item.total_f).toLocaleString()}
                         </td>
                     </tr>`;
 
