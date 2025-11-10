@@ -24,9 +24,10 @@ class PurchaseAnalysisSupplierTrendController
             )
             ->join('mst_person_supplier as mps', 'tpo.prs_supplier_id', '=', 'mps.id')
             ->leftJoin('mst_general_currency as mgc', 'mgc.id', '=', 'tpo.gen_currency_id')
+            ->where('tpo.flag_active',true)
             ->whereBetween('tpo.trans_date', [$request->input('startDate'), $request->input('endDate')])
             ->groupBy('tpo.prs_supplier_id', 'mps.description')
-            ->orderBy('supplier', 'asc'); // Optional: urutkan dari total terbesar
+            ->orderBy('total', 'desc'); // Optional: urutkan dari total terbesar
 
         // Tambahkan limit jika ada parameter count
         if ($request->has('count') && $request->input('count') > 0) {
