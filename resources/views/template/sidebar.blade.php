@@ -161,31 +161,30 @@
                                 </li> -->
                             </ul>
                         </li>
-                        <!-- <li class="has-sub">
+                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-box"></i>Inventory</a>
+                                <i class="fas fa-box"></i> Inventory
+                            </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="/inventory-receiving">Receiving</a>
-                                </li>
-                                <li>
-                                    <a href="/inventory-do">Delivery Order</a>
-                                </li>
-                                <li>
-                                    <a href="/inventory-material-req">Material Request</a>
-                                </li>
-                                <li>
-                                    <a href="/inventory-sales-return">Sales Return</a>
-                                </li>
-                                <li>
-                                    <a href="/inventory-purchase-return">Purchase Return</a>
-                                </li>
-                                <li>
-                                    <a href="/inventory-adjustment">Adjustment</a>
-                                </li>
+                                <li><a href="/transaction/inventory/stock_opening">Stock Opening</a></li>
+                                <li><a href="/transaction/inventory/stock_adjusment">Stock Adjusment</a></li>
+                                <li><a href="/transaction/inventory/minimum_stock">Minimum Stock</a></li>
+                                <li><a href="/transaction/inventory/receiving">Receiving</a></li>
+                                <li><a href="/transaction/inventory/production_material">Production Material</a></li>
+                                <li><a href="/transaction/inventory/customer_delivery_schedule">Customer Delivery Schedule</a></li>
+                                <li><a href="/transaction/inventory/customer_return">Customer Return</a></li>
+                                <li><a href="/transaction/inventory/delivery_order">Delivery Order</a></li>
+                                <li><a href="/transaction/inventory/stock_view">Stock View</a></li>
+                                <li><a href="/transaction/inventory/transaction_history">Transaction History</a></li>
+                                <li><a href="/transaction/inventory/balance_stock">Balance Stock</a></li>
+                                <li><a href="/transaction/inventory/aging_stock">Aging Stock</a></li>
+                                <li><a href="/transaction/inventory/material_allowance">Material Allowance</a></li>
+                                <li><a href="/transaction/inventory/material_requirement_planing">Material Requirement Planing</a></li>
                             </ul>
-                        </li> -->
-<!--                         
+                        </li>
+
+                        
+                        <!--
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-industry"></i>Production</a>

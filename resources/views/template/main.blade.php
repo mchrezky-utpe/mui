@@ -50,6 +50,10 @@
     @include('template.javascript')
     @yield('extra_javascript')
 
+    @isset($script)
+        @includeIf($script)
+    @endisset
+
 </body>
 
 </html>
