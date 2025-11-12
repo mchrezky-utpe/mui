@@ -28,6 +28,8 @@ use App\Http\Controllers\Transaction\PurchaseAnalysisFrequencyController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisPriceController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisOrderController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisSupplierTrendController;
+use App\Http\Controllers\Transaction\Receiving\GoodsReceivedController;
+
 
 
 
@@ -265,6 +267,7 @@ Route::controller(SupplyController::class)->group(function () {
     Route::post("/supply/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/supply/item", "api_item")->middleware(OnlyMemberMiddleware::class);
 });
+
 Route::controller(ReplacementController::class)->group(function () {
     Route::get("/replacement", "index")->middleware(OnlyMemberMiddleware::class);
     Route::post("/replacement", "add")->middleware(OnlyMemberMiddleware::class);
@@ -275,6 +278,7 @@ Route::controller(ReplacementController::class)->group(function () {
     Route::get("/api/replacement/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
     Route::post("/replacement/receive", "receive")->middleware(OnlyMemberMiddleware::class);
 });
+
 Route::controller(InternalController::class)->group(function () {
     Route::get("/internal", "index")->middleware(OnlyMemberMiddleware::class);
     Route::post("/internal", "add")->middleware(OnlyMemberMiddleware::class);
@@ -294,6 +298,11 @@ Route::controller(ReturnablePackagingController::class)->group(function () {
     Route::get("/api/returnable-packaging/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/returnable-packaging/item", "api_item_by")->middleware(OnlyMemberMiddleware::class);
     Route::post("/returnable-packaging/receive", "receive")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(GoodsReceivedController::class)->group(function () {
+    Route::get("/goods-received", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/goods-received/all", "get_all")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(StockViewController::class)->group(function () {

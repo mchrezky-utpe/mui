@@ -313,6 +313,9 @@
                                 <li>
                                     <a href="/replacement">Replacement</a>
                                 </li>
+                                <li>
+                                    <a href="/goods-received">Goods Received</a>
+                                </li>
                                 {{-- <li>
                                     <a href="/internal">Internal</a>
                                 </li>
