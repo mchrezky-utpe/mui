@@ -55,14 +55,14 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
             <div class="d-flex">
-              <a href="{{ route('purchase_order_detail.export') }}" class="mr-2 btn btn-success">
+              {{-- <a href="{{ route('purchase_order_detail.export') }}" class="mr-2 btn btn-success">
                 <i class="fas fa-file-excel"></i> Export Excel
-              </a>
+              </a> --}}
             </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table id="table-pi-detail" class="table table-striped table-bordered first">
+              <table id="table-rr-detail" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
                     <th>Rcv Date</th>

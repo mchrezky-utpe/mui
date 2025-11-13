@@ -26,13 +26,17 @@ class GoodsReceivedController
         $query = DB::table('vw_app_list_log_goods_receipt');
 
         if ($request->start_date != null && $request->end_date != null) {
-            $query->whereBetween('trans_date', [$request->start_date, $request->end_date]);
+            $query->whereBetween('rr_trans_date', [$request->start_date, $request->end_date]);
         }
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->Where('doc_num', 'like', '%' . $search . '%')
+                    ->orWhere('doc_sds_num', 'like', '%' . $search . '%')
+                    ->orWhere('doc_do_num', 'like', '%' . $search . '%')
                     ->orWhere('department', 'like', '%' . $search . '%')
+                    ->orWhere('sku_description', 'like', '%' . $search . '%')
+                    ->orWhere('sku_prefix', 'like', '%' . $search . '%')
                     ->orWhere('supplier', 'like', '%' . $search . '%');
             });
         }
