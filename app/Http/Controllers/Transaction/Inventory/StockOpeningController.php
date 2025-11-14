@@ -23,36 +23,52 @@ class StockOpeningController extends Controller
     
     public function data(Request $request)
     {
-        $q = $request->get('q', '');
-        $type = $request->get('type', 1);
-        $date = $request->get('date', '');
+       
+        $q = $request->input('q', '');
+        $type = $request->input('type', 1);
+        $date = $request->input('date', '');
 
-        $data = StockOpening::when($q, function ($query, $q) {
+        // Pilihan view berdasarkan type
+        $views = [
+            1 => 'transaction.inventory.stock_opening.part',
+            2 => 'transaction.inventory.stock_opening.production',
+            3 => 'transaction.inventory.stock_opening.general',
+            4 => 'transaction.inventory.stock_opening.returnable',
+        ];
+
+        // Default query (untuk type 1-3)
+        $query = StockOpening::query();
+
+        // Kondisi untuk type Returnable Packaging
+        if ($type == 4) {
+            $data = StockOpening::returnablePackagingView()->get();
+
+        } else {
+            // Untuk Part, Production, General
+            $data = $query
+                ->when($q, function ($query, $q) {
                     $query->where(function ($sub) use ($q) {
-                        $sub->where('description', 'like', "%{$q}%")
-                            ->orWhere('specification_code', 'like', "%{$q}%");
+                        $sub->where('description', 'like', "%$q%")
+                            ->orWhere('manual_id', 'like', "%$q%");
                     });
-                })
-                ->when($type, function ($query, $type) {
-                    $query->where('flag_sku_type', $type);
                 })
                 ->when($date, function ($query, $date) {
                     $query->whereDate('created_at', $date);
                 })
-                ->paginate(100)
-                ->appends([
-                    'q' => $q,
-                    'type' => $type,
-                    'date' => $date,
-                ]);
+                ->where('flag_sku_type', $type)
+                ->paginate(10);
+        }
 
-        return view('transaction.inventory.stock_opening.data', [
+        // Tentukan view sesuai type
+        $view = $views[$type] ?? $views[1];
+
+        return view($view, [
             'data' => $data,
             'q' => $q,
             'type' => $type,
             'date' => $date,
-            'pagination' => $data->links('vendor.pagination.custome'),
         ]);
+
     }
 
     

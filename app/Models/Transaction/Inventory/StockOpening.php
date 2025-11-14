@@ -3,6 +3,7 @@
 namespace App\Models\Transaction\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class StockOpening extends Model
 {
@@ -34,6 +35,36 @@ class StockOpening extends Model
 
         return $query;
     }
+
+    public function scopeReturnablePackagingView($query)
+    { 
+        return DB::table('mst_sku as s')
+        ->join('mst_sku_type as t', 's.sku_type_id', '=', 't.id')
+        ->join('mst_sku_sub_category as sc', 't.sku_sub_category_id', '=', 'sc.id')
+        ->join('mst_sku_model as m', 's.sku_model_id', '=', 'm.id')
+        ->join('mst_sku_unit as u', 's.sku_unit_id', '=', 'u.id')
+        ->select([
+            's.manual_id as pcc_code',
+            'sc.description as sub_category',
+            't.description as category_type',
+            'sc.description as category_name',
+            'm.description as model',
+            'u.description as unit',
+        ])
+        ->where(function($q) {
+            $q->where('sc.description', 'like', '%RETURNABLE%')
+              ->orWhere('sc.description', 'like', '%NON RETURNABLE%');
+        })
+        ->groupBy(
+            's.manual_id',
+            'sc.description',
+            't.description',
+            'm.description',
+            'u.description'
+        );
+    }
+
+
 
 
 }
