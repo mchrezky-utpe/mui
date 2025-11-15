@@ -29,6 +29,8 @@ use App\Http\Controllers\Transaction\PurchaseAnalysisPriceController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisOrderController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisSupplierTrendController;
 use App\Http\Controllers\Transaction\Receiving\GoodsReceivedController;
+use App\Http\Controllers\Transaction\SupplierPerformanceController;
+
 
 
 
@@ -130,6 +132,12 @@ Route::controller(PurchaseAnalysisSupplierTrendController::class)->group(functio
     Route::get("/pa/supplier-trend", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pa/supplier-trend/summary", "get_summary_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pa/supplier-trend/list", "get_po_list_by")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(SupplierPerformanceController::class)->group(function () {
+    Route::get("/supplier-performance", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/supplier-performance/summary", "get_summary_by")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/supplier-performance/summary/detail", "get_detail")->middleware(OnlyMemberMiddleware::class);
 });
 
 

@@ -289,6 +289,15 @@
 
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
+                                <i class="fas fa-clock"></i>Supplier Performance</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/supplier-performance">Main</a>
+                            </ul>
+                        </li>
+
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
                                 <i class="fas fa-clock"></i>SDS</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
