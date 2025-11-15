@@ -22,7 +22,7 @@ class MasterSkuService
      }
 
     public function list_production_material_information(){
-          return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(1000)->get();
+          return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(100000)->get();
      }
 
     public function list_general_information(){

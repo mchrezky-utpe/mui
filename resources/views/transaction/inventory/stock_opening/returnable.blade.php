@@ -19,9 +19,9 @@
             <td>{{ $row->category_type }}</td>
             <td>{{ $row->category_name }}</td>
             <td>{{ $row->model }}</td>
-            <td>{{ $row->size }}</td>
+            <td>{{ @$row->size }}</td>
             <td>{{ $row->unit }}</td>
-            <td class="text-end">{{ number_format($row->total_stock, 0) }}</td>
+            <td class="text-end">{{ number_format(@$row->total_stock, 0) }}</td>
         </tr>
         @empty
         <tr>

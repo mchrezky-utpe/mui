@@ -41,8 +41,8 @@ class StockOpening extends Model
         return DB::table('mst_sku as s')
         ->join('mst_sku_type as t', 's.sku_type_id', '=', 't.id')
         ->join('mst_sku_sub_category as sc', 't.sku_sub_category_id', '=', 'sc.id')
-        ->join('mst_sku_model as m', 's.sku_model_id', '=', 'm.id')
-        ->join('mst_sku_unit as u', 's.sku_unit_id', '=', 'u.id')
+        ->leftJoin('mst_sku_model as m', 's.sku_model_id', '=', 'm.id')
+        ->leftJoin('mst_sku_unit as u', 's.sku_unit_id', '=', 'u.id')
         ->select([
             's.manual_id as pcc_code',
             'sc.description as sub_category',
