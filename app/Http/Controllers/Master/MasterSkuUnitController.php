@@ -61,7 +61,7 @@ class MasterSkuUnitController
 
     public function index(): Response
     {
-        return response()->view('master.sku_unit.index', ['data' =>  $this->service->list()]);
+        return response()->view('master.sku_unit.index', ['data' =>  $this->service->list()->sortBy('manual_id')]);
     }
 
     

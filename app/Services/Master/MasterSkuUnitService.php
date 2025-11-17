@@ -15,7 +15,7 @@ class MasterSkuUnitService
 {
 
     public function list(){
-          return SkuUnitListVw::orderBy('created_at','DESC')->get();
+          return SkuUnitListVw::orderBy('manual_id')->get();
     }
 
     public function add(Request $request){
@@ -24,7 +24,7 @@ class MasterSkuUnitService
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterSkuUnit::create($data);
-            $data['manual_id'] = HelperCustom::generateTrxNo('UC-', $data->id);
+            $data['manual_id'] = HelperCustom::generateTrxNo('IUC', $data->id);
             $data['prefix'] = $request->prefix;
             $data->save();
     }

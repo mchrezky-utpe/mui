@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 class MasterSkuModelService
 {
     public function list(){
-          return MasterSkuModel::where('flag_active', 1)->orderBy('created_at','DESC')->get();
+          return MasterSkuModel::where('flag_active', 1)->orderBy('manual_id')->get();
     }
 
     public function add(Request $request){
@@ -35,7 +35,7 @@ class MasterSkuModelService
 
     public function generateCode(){
 
-      $result = DB::selectOne(" SELECT generate_item_model_code(?) AS code ",["MC"]);
+      $result = DB::selectOne(" SELECT generate_item_model_code(?) AS code ",["IMC"]);
 
       $code = $result->code;
       $parts = explode("-", $code);
