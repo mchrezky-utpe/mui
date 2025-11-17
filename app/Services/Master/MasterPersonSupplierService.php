@@ -38,7 +38,7 @@ class MasterPersonSupplierService
         $data['flag_show'] = 1;
         $data['generated_id'] = Str::uuid()->toString();
         $data = MasterPersonSupplier::create($data);
-        $data['manual_id'] = HelperCustom::generateTrxNo('SUP', $data->id);
+        $data['manual_id'] = HelperCustom::generateTrxNo('SPC-', $data->id);
         $data->save();
     }
 
