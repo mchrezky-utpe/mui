@@ -14,7 +14,7 @@ use Carbon\Carbon;
 class MasterSkuTypeService
 {
     public function list(){
-          return SkuTypeListVw::orderBy('created_at','DESC')->get();
+          return SkuTypeListVw::orderBy('manual_id')->get();
     }
 
     function convertCheckboxToBoolean($value)
