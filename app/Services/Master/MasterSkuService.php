@@ -104,16 +104,41 @@ class MasterSkuService
      }
      
     public function get_set_code(){
-        return SkuListSetCodeVw::all();
+
+      $existingData = SkuListSetCodeVw::all();
     
-    //     $result = DB::selectOne(" SELECT generate_sku_set_code(2) as set_code ");
-    //   $code = $result->set_code;
-    //   $parts = explode("-", $code);
-    //   $counter = (int)$parts[1];
-    //   return  array(
-    //     'code' => $code,
-    //     'counter' => $counter
-    //   );
+        try {
+            $lastCode = SkuListSetCodeVw::orderBy('code', 'desc')->value('code');
+            
+            if (!$this->isValidCodeFormat($lastCode)) {
+                return $existingData;
+            }
+            
+            $lastNumber = intval(substr($lastCode, -5));
+            $prefix = substr($lastCode, 0, -5);
+            
+            $newCode = $prefix . str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
+            
+            if ($this->isValidCodeFormat($newCode)) {
+                $existingData->push(['code' => $newCode]);
+            }
+            
+        } catch (\Exception $e) {
+            dd('Error generating SKU code: ' . $e->getMessage());
+        }
+        
+        return $existingData;
+
+    }
+
+    private function isValidCodeFormat($code)
+    {
+        if (empty($code) || !is_string($code)) {
+            return false;
+        }
+        
+        // Validasi format: SCO-XXXXX (3 huruf, dash, 5 angka)
+        return preg_match('/^[A-Z]{3}-\d{5}$/', $code) === 1;
     }
 
 
