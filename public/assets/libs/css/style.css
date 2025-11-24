@@ -1889,6 +1889,148 @@ Sidebar Page Navigations
     background: #e0e0fd;
 }
 
+/* Active menu indicators for sidebar */
+.navbar-sidebar .navbar__list > li.active > a,
+.navbar-sidebar .navbar__list > li > a.active-link {
+    color: #5969ff;
+    background-color: #e0e0fd;
+    font-weight: 600;
+}
+
+.navbar-sidebar .navbar__list > li.active > a:before,
+.navbar-sidebar .navbar__list > li > a.active-link:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #5969ff;
+}
+
+.navbar-sidebar .navbar__list > li.active > a i,
+.navbar-sidebar .navbar__list > li > a.active-link i {
+    color: #5969ff;
+}
+
+/* Active parent menu indicators */
+.navbar-sidebar .navbar__list > li > a.active-parent {
+    color: #5969ff;
+    background-color: #f0f4ff;
+    font-weight: 600;
+}
+
+.navbar-sidebar .navbar__list > li > a.active-parent:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #5969ff;
+}
+
+.navbar-sidebar .navbar__list > li > a.active-parent i {
+    color: #5969ff;
+}
+
+/* Active submenu items */
+.navbar__sub-list li.active a {
+    color: #5969ff;
+    background-color: #f0f4ff;
+    font-weight: 600;
+    position: relative;
+}
+
+.navbar__sub-list li.active a:before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #5969ff;
+}
+
+/* Arrow indicators for expanded menus */
+.js-arrow.js-arrow-open {
+    color: #5969ff !important;
+}
+
+.js-arrow.js-arrow-open:after {
+    transform: rotate(90deg);
+}
+
+/* Ensure proper positioning for active indicators */
+.navbar-sidebar .navbar__list > li {
+    position: relative;
+}
+
+.navbar-sidebar .navbar__list > li > a {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.navbar__sub-list li {
+    position: relative;
+}
+
+.navbar__sub-list li a {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Visual indicator for collapsed menus with active sub-items */
+.navbar-sidebar .navbar__list > li > a.has-active-collapsed {
+    background-color: #fff3cd;
+    border-left: 3px solid #ffc107;
+    color: #856404;
+    position: relative;
+}
+
+.navbar-sidebar .navbar__list > li > a.has-active-collapsed::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: #ffc107;
+}
+
+.navbar-sidebar .navbar__list > li > a.has-active-collapsed:hover {
+    background-color: #ffeaa7;
+}
+
+/* Styling for fa-caret-right icons in submenus */
+.navbar-sidebar .navbar__sub-list .js-arrow .fa-caret-right {
+    font-size: 12px;
+    margin-right: 8px;
+    color: #71748d;
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: inline-block;
+}
+
+.navbar-sidebar .navbar__sub-list .js-arrow:hover .fa-caret-right {
+    color: #5969ff;
+}
+
+.navbar-sidebar .navbar__sub-list .js-arrow.js-arrow-open .fa-caret-right {
+    transform: rotate(90deg);
+    color: #5969ff;
+}
+
+/* Active state for fa-caret-right */
+.navbar-sidebar .navbar__sub-list .js-arrow.active-parent .fa-caret-right {
+    color: #5969ff;
+}
+
+/* Additional selector to ensure rotation works */
+.navbar-sidebar .navbar__sub-list li.has-sub > a.js-arrow.js-arrow-open .fa-caret-right {
+    transform: rotate(90deg);
+    color: #5969ff;
+}
+
 
 /*--- Bootstrap Dropdown ----*/
 

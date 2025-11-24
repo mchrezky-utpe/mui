@@ -1587,9 +1587,23 @@
       var that = $(this);
       that.on('click', function (e) {
         e.preventDefault();
+        
+        // Always allow toggle, but check if this menu has active sub-items for visual feedback
+        var $subList = that.siblings('.js-sub-list');
+        var hasActiveSubItem = $subList.find('li.active').length > 0;
+        
+        // Allow manual toggle regardless of active sub-items
         that.find(".arrow").toggleClass("up");
         that.toggleClass("open");
-        that.parent().find('.js-sub-list').slideToggle("250");
+        that.toggleClass("js-arrow-open"); // Add this class for icon rotation
+        $subList.slideToggle("250");
+        
+        // If this menu has active sub-items and is being collapsed, add a visual indicator
+        if (hasActiveSubItem && !that.hasClass("open")) {
+          that.addClass("has-active-collapsed");
+        } else {
+          that.removeClass("has-active-collapsed");
+        }
       });
     });
 
@@ -1677,6 +1691,25 @@
   // Mendapatkan path URL saat ini
   var currentPath = window.location.pathname;
 
+  // Fungsi untuk expand menu parent
+  function expandParentMenus($element) {
+      // Traverse up through all parent has-sub elements
+      $element.parents('.has-sub').each(function() {
+          var $parent = $(this);
+          var $jsArrow = $parent.children('.js-arrow');
+          
+          if ($jsArrow.length) {
+              $jsArrow.addClass('js-arrow-open');
+              $jsArrow.addClass('open');
+              $jsArrow.siblings('.list-unstyled.navbar__sub-list.js-sub-list').css('display', 'block');
+              
+              // Add active class to parent menu item
+              $jsArrow.addClass('active-parent');
+          }
+      });
+  }
+
+
   // Selector untuk elemen js-arrow dan parent li
   $('.list-unstyled li').each(function () {
       var $this = $(this);
@@ -1686,20 +1719,20 @@
       if ($link.attr('href') === currentPath) {
           // Tambahkan class active pada li
           $this.addClass('active');
-          // Tambahkan class js-arrow-open pada parent js-arrow
-          const $jsArrow =  $this.closest('.has-sub').find('.js-arrow');
-          $jsArrow.addClass('js-arrow-open');
-          $jsArrow.addClass('open');
-          $jsArrow.siblings('.list-unstyled.navbar__sub-list.js-sub-list').css('display', 'block');
-      
-         
-            // Auto-scroll ke elemen aktif
-            var sidebarContainer = $('.menu-sidebar__content.js-scrollbar1'); // Sidebar container
-            var offset = $this.offset().top - sidebarContainer.offset().top + sidebarContainer.scrollTop() - 50;
-            sidebarContainer.animate({ scrollTop: offset }, 150); // Scroll dengan durasi 500ms
-    
-        }
+          $link.addClass('active-link');
+          
+          // Expand all parent menus
+          expandParentMenus($this);
+          
+          // Auto-scroll ke elemen aktif
+          var sidebarContainer = $('.menu-sidebar__content.js-scrollbar1');
+          if (sidebarContainer.length) {
+              var offset = $this.offset().top - sidebarContainer.offset().top + sidebarContainer.scrollTop() - 50;
+              sidebarContainer.animate({ scrollTop: offset }, 150);
+          }
+      }
   });
+
 
   
 function populateSelect(title, master_data, element) {
