@@ -170,6 +170,17 @@
                             </ul>
                         </li>
 
+                        <!-- QC Menu -->
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-check-circle"></i>QC</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/qc">Quality Control Check</a>
+                                </li>
+                            </ul>
+                        </li> 
+                        
                         <!-- Factory Menu -->
                         <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">

@@ -23,6 +23,10 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css">
 <style>
+    
+  table {
+        font-size: 11px;
+    }
 .custom-modal-dialog-large {
     max-width: 1700px; /* Lebar modal */
     margin: 0 auto; /* Memastikan modal tetap berada di tengah horizontal */
@@ -70,7 +74,7 @@ table.dataTable thead th {
 }
 body {
     font-weight: 500;
-    font-size: 13px;
+    font-size: 11px;
 }
 .form-group {
     margin: 0.2rem;
@@ -161,5 +165,13 @@ body {
 }
 .pagination .page-link:hover {
     text-decoration: underline;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
 }
 </style>

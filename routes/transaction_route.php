@@ -30,6 +30,7 @@ use App\Http\Controllers\Transaction\PurchaseAnalysisOrderController;
 use App\Http\Controllers\Transaction\PurchaseAnalysisSupplierTrendController;
 use App\Http\Controllers\Transaction\Receiving\GoodsReceivedController;
 use App\Http\Controllers\Transaction\SupplierPerformanceController;
+use App\Http\Controllers\Transaction\QcController;
 
 
 
@@ -326,6 +327,16 @@ Route::controller(BomController::class)->group(function () {
     Route::get("/bom/{id}/edit-detail", "edit_detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/bom/edit-detail", "do_edit_detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/bom/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(QcController::class)->group(function () {
+    Route::get("/qc", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/qc/check", "index_check")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/qc/check/get", "get_check_data")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/qc/check", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/qc/check/all", "get_all")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/qc/good-transfer", "index_good_transfer")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/qc/good-transfer/all", "get_all_good_transfer")->middleware(OnlyMemberMiddleware::class);
 });
 
 

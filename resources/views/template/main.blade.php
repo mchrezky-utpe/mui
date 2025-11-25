@@ -37,7 +37,7 @@
  
             <!-- END HEADER DESKTOP-->
             <!-- MAIN CONTENT-->
-            <div class="main-content">    
+            <div class="main-content" style="padding-top: 55px;">    
                 @yield('content')
             </div>
         </div>
