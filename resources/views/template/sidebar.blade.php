@@ -25,34 +25,46 @@
                                 <i class="fas fa-tags"></i>Material Details</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/sku-type">Type</a>
+                                    <a href="/sku-type">Item Type</a>
                                 </li>
                                 <li>
-                                    <a href="/sku-unit">Unit</a>
+                                    <a href="/sku-unit">Item Unit</a>
                                 </li>
                                 <li>
-                                    <a href="/sku-model">Model</a>
+                                    <a href="/sku-model">Item Model</a>
                                 </li>
                                 <li>
                                     <a href="/person-supplier">Supplier</a>
                                 </li>
-                                <li>
-                                    <a href="/sku-part-information">Item Information</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-production-material">Production Material Information</a>
-                                </li>
-                                <li>
-                                    <a href="/sku-general-item">General Item Information</a>
+                                <li class="has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-caret-right"></i>Item Information</a>
+                                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                            <li>
+                                                <a href="/sku-part-information">Part Information</a>
+                                            </li>
+                                            <li>
+                                                <a href="/sku-production-material">Production Material Information</a>
+                                            </li>
+                                            <li>
+                                                <a href="/sku-general-item">General Item Information</a>
+                                            </li>
+                                    </ul>
                                 </li>
                                 <li>
                                     <a href="/bom">Bill Of Material</a>
-                                </li>   
-                                <li>
-                                    <a href="/sku-pricelist">Production Material Prices</a>
                                 </li>
-                                <li>
-                                    <a href="/sku-pricelist-general-item">General Item Prices</a>
+                                <li class="has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-caret-right"></i>Product Prices</a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                        <li>
+                                            <a href="/sku-pricelist">Production Material Prices</a>
+                                        </li>
+                                        <li>
+                                            <a href="/sku-pricelist-general-item">General Item Prices</a>
+                                        </li>
+                                    </ul>
                                 </li>
                                  <li>
                                     <a href="/general-exchange-rates">Exchange Rates</a>
@@ -68,15 +80,28 @@
                                 <li><a href="/transaction/inventory/stock_opening">Stock Opening</a></li>
                                 <li><a href="/transaction/inventory/stock_adjusment">Stock Adjusment</a></li>
                                 <li><a href="/transaction/inventory/minimum_stock">Minimum Stock</a></li>
-                                <li><a href="/transaction/inventory/receiving">Receiving</a></li>
-                                <li>
-                                    <a href="/gpo">Receiving - General Purchase Order</a>
-                                </li>
-                                <li>
-                                    <a href="/supply">Receiving - Supply</a>
-                                </li>
-                                <li>
-                                    <a href="/replacement">Receiving - Replacement</a>
+                                <li class="has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-caret-right"></i>Receiving</a>
+                                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+
+                                        <li><a href="/transaction/inventory/receiving">Supplier Delivery Order</a></li>
+                                        <li>
+                                            <a href="/gpo">General Purchase Order</a>
+                                        </li>
+                                        <li>
+                                            <a href="/supply">Supply</a>
+                                        </li>
+                                        <li>
+                                            <a href="/replacement">Replacement</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Internal</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Returnable Packaging</a>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li><a href="/transaction/inventory/production_material">Production Material</a></li>
                                 <li><a href="/transaction/inventory/customer_delivery_schedule">Customer Delivery Schedule</a></li>
