@@ -17,9 +17,10 @@ class MasterSkuService
         return $value === 'on';
     }
 
-    public function list_part_information($limit = 1000){
-          return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
-     }
+    public function  ($limit = 1000){
+        //   return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
+        return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC');
+    }
 
     public function list_production_material_information(){
           return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(100000)->get();

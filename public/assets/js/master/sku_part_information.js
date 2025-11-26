@@ -1,36 +1,35 @@
-var table = new DataTable('.data-table-item',
-    {
-    scrollX: true,
-    scrollY: "400px",
-    scrollCollapse: true,
-    fixedColumns: {
-        left: 5, 
-        right: 1,
-        heightMatch: 'auto'
-    },
-    paging: true,
-    pageLength: 10,
-    responsive: false,
-    columnDefs: [
-        {
-            targets: [0, 1, 2, 3, 4],
-            className: 'dtfc-fixed-left',
-            orderable: false,
-            searchable: false
-        },
-        {
-            targets: -1,
-            className: 'dtfc-fixed-right bg-light',
-            orderable: false,
-            searchable: false,
-            width: "120px"
-        },
-        {
-            targets: '_all',
-            className: 'text-nowrap bordered-cell' 
-        }
-    ]
-});
+// var table = new DataTable(".data-table-item", {
+//     scrollX: true,
+//     scrollY: "400px",
+//     scrollCollapse: true,
+//     fixedColumns: {
+//         left: 5,
+//         right: 1,
+//         heightMatch: "auto",
+//     },
+//     paging: true,
+//     pageLength: 10,
+//     responsive: false,
+//     columnDefs: [
+//         {
+//             targets: [0, 1, 2, 3, 4],
+//             className: "dtfc-fixed-left",
+//             orderable: false,
+//             searchable: false,
+//         },
+//         {
+//             targets: -1,
+//             className: "dtfc-fixed-right bg-light",
+//             orderable: false,
+//             searchable: false,
+//             width: "120px",
+//         },
+//         {
+//             targets: "_all",
+//             className: "text-nowrap bordered-cell",
+//         },
+//     ],
+// });
 
 $(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
@@ -49,14 +48,15 @@ $(document).on("click", ".edit", function (e) {
             $("[name=val_weight]").val(Number(data.val_weight).toFixed());
             $("[name=val_area]").val(Number(data.val_area).toFixed());
             $("[name=sku_model_id]").val(data.sku_model_id);
-            $("[name=val_conversion]").val(Number(data.val_conversion).toFixed());
+            $("[name=val_conversion]").val(
+                Number(data.val_conversion).toFixed()
+            );
             $("[name=flag_inventory_register]").val(
                 data.flag_inventory_register
             );
 
-            
-            if(data.flag_inventory_register == 1){
-               $("[name=flag_inventory_register]").prop('checked', true);
+            if (data.flag_inventory_register == 1) {
+                $("[name=flag_inventory_register]").prop("checked", true);
             }
 
             $("[name=type_id]").val(data.sku_type_id).prop("selected", true);
@@ -76,11 +76,11 @@ $(document).on("click", ".edit", function (e) {
             $("[name=sku_inventory_unit_id]")
                 .val(data.sku_inventory_unit_id)
                 .prop("selected", true);
-                
+
             $("[name=sku_type_id]")
                 .val(data.sku_type_id)
                 .prop("selected", true);
-                
+
             $("[name=flag_sku_procurement_type]")
                 .val(data.flag_sku_procurement_type)
                 .prop("selected", true);
@@ -164,20 +164,15 @@ $(".btn_part_information, .edit").click(function () {
             var list = $("#setCodes");
             list.empty(); // Kosongkan list sebelum menambahkan data baru
 
-            
             var listEdit = $("#setCodeEdit");
             listEdit.empty(); // Kosongkan list sebelum menambahkan data baru
 
             // Tambahkan data ke dalam list
             data.data.forEach(function (item) {
-                list.append(
-                     `<option value="`+item.code +`">`
-                );
-                listEdit.append(
-                     `<option value="`+item.code +`">`
-                );
+                list.append(`<option value="` + item.code + `">`);
+                listEdit.append(`<option value="` + item.code + `">`);
             });
-            $("[name=group_tag]").val(data.data[data.data.length-1].code);
+            $("[name=group_tag]").val(data.data[data.data.length - 1].code);
         })
         .catch((err) => {
             console.error("Error fetchSkuType:", err);
@@ -312,7 +307,6 @@ fetchSkuBusinessType()
         console.error("Error fetchSkuModel:", err);
     });
 
-
 function fetchSkuModel() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -331,18 +325,17 @@ function fetchSkuModel() {
 
 function fetchSetCode() {
     return new Promise((resolve, reject) => {
-          $.ajax({
-        url: "/api/sku-part-information/get-set-code", // Endpoint backend
-        method: "GET",
-        success: function (response) {
-      
+        $.ajax({
+            url: "/api/sku-part-information/get-set-code", // Endpoint backend
+            method: "GET",
+            success: function (response) {
                 resolve(response);
 
-            // $("#set_code_modal").modal("show");
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching data:", error);
-        },
+                // $("#set_code_modal").modal("show");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data:", error);
+            },
         });
     });
 }
@@ -380,7 +373,7 @@ function fetchSetCode() {
 //         method: "GET",
 //         success: function (response) {
 //             var list = $("#setCodes");
-//             list.empty(); // Kosongkan list sebelum menambahkan data baru
+//             list.empty(); // Kosongkan list sebelum menamba   hkan data baru
 
 //             // Tambahkan data ke dalam list
 //             response.forEach(function (item) {

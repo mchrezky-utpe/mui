@@ -36,18 +36,25 @@ class MasterSkuController
 
     public function index(): Response
     {
+
+        $data = $this->service->list_part_information()->paginate(10);
+
+        $startNumber = ($data->currentPage() - 1) * $data->perPage();
+        
+        
         return response()
             ->view(
                 'master.sku_part_information.index',
                 [
-                    'data' =>  $this->service->list_part_information(),
-                    'type' => $this->typeService->list(),
+                    'data' => $data,
+                    'startNumber' => $startNumber,
+                    // 'type' => $this->typeService->list(),
                     // 'detail' => $this->detailService->list(),
                     // 'unit' => $this->unitService->list(),
                     // 'model' => $this->modelService->list(),
                     // 'packaging' => $this->packagingService->list(),
                     // 'process' => $this->processService->list(),
-                    'business' => $this->businessService->list()
+                    // 'business' => $this->businessService->list()
                 ]
             );
     }
