@@ -17,7 +17,7 @@ class MasterSkuService
         return $value === 'on';
     }
 
-    public function  ($limit = 1000){
+    public function list_part_information($limit = 1000){
         //   return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
         return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC');
     }
