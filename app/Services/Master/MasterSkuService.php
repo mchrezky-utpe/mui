@@ -17,18 +17,30 @@ class MasterSkuService
         return $value === 'on';
     }
 
-    public function list_part_information($limit = 1000){
-        //   return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC')->take($limit)->get();
+    public function list_part_information__raw() {
         return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC');
     }
 
+    public function list_part_information($limit = 1000){
+        return $this->list_part_information__raw()->take($limit)->get();
+        // return SkuListVw::where('flag_sku_type', 1)->orderBy('created_at', 'DESC');
+    }
+
+    public function list_production_material_information__raw(){
+        return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC');
+    }
+
     public function list_production_material_information(){
-          return SkuListVw::where('flag_sku_type', 2)->orderBy('created_at', 'DESC')->take(100000)->get();
-     }
+        return $this->list_production_material_information__raw()->take(100000)->get();
+    }
+
+    public function list_general_information__raw(){
+        return SkuListVw::where('flag_sku_type', 3)->orderBy('created_at', 'DESC');
+    }
 
     public function list_general_information(){
-          return SkuListVw::where('flag_sku_type', 3)->orderBy('created_at', 'DESC')->take(1000)->get();
-     }
+        return $this->list_general_information__raw()->take(1000)->get();
+    }
      
     public function list_pagination_production_material_information(Request $request){
             $start = $request->input('start');

@@ -1,36 +1,36 @@
-var table = new DataTable('.data-table-item',
-    {
-    scrollX: true,
-    scrollY: "400px",
-    scrollCollapse: true,
-    fixedColumns: {
-        left: 5, 
-        right: 1,
-        heightMatch: 'auto'
-    },
-    paging: true,
-    pageLength: 10,
-    responsive: false,
-    columnDefs: [
-        {
-            targets: [0, 1, 2, 3, 4],
-            className: 'dtfc-fixed-left',
-            orderable: false,
-            searchable: false
-        },
-        {
-            targets: -1,
-            className: 'dtfc-fixed-right bg-light',
-            orderable: false,
-            searchable: false,
-            width: "120px"
-        },
-        {
-            targets: '_all',
-            className: 'text-nowrap bordered-cell' 
-        },
-    ]
-});
+// var table = new DataTable('.data-table-item',
+//     {
+//     scrollX: true,
+//     scrollY: "400px",
+//     scrollCollapse: true,
+//     fixedColumns: {
+//         left: 5,
+//         right: 1,
+//         heightMatch: 'auto'
+//     },
+//     paging: true,
+//     pageLength: 10,
+//     responsive: false,
+//     columnDefs: [
+//         {
+//             targets: [0, 1, 2, 3, 4],
+//             className: 'dtfc-fixed-left',
+//             orderable: false,
+//             searchable: false
+//         },
+//         {
+//             targets: -1,
+//             className: 'dtfc-fixed-right bg-light',
+//             orderable: false,
+//             searchable: false,
+//             width: "120px"
+//         },
+//         {
+//             targets: '_all',
+//             className: 'text-nowrap bordered-cell'
+//         },
+//     ]
+// });
 
 $(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
@@ -40,14 +40,15 @@ $(document).on("click", ".edit", function (e) {
         success: function (data) {
             var data = data.data;
 
-
             $("[name=id]").val(data.id);
             $("[name=manual_id]").val(data.manual_id);
             $("[name=description]").val(data.description);
             $("[name=group_tag]").val(data.group_tag);
             $("[name=specification_code]").val(data.specification_code);
             $("[name=specification_detail]").val(data.specification_detail);
-            $("[name=specification_description]").val(data.specification_description);
+            $("[name=specification_description]").val(
+                data.specification_description
+            );
             $("[name=val_weight]").val(data.val_weight);
             $("[name=val_area]").val(data.val_area);
             $("[name=sku_model_id]").val(data.sku_model_id);
@@ -55,12 +56,14 @@ $(document).on("click", ".edit", function (e) {
             $("[name=flag_inventory_register]").val(
                 data.flag_inventory_register
             );
-            
-            if(data.flag_inventory_register == 1){
-               $("[name=flag_inventory_register]").prop('checked', true);
+
+            if (data.flag_inventory_register == 1) {
+                $("[name=flag_inventory_register]").prop("checked", true);
             }
 
-            $("[name=sku_type_id]").val(data.sku_type_id).prop("selected", true);
+            $("[name=sku_type_id]")
+                .val(data.sku_type_id)
+                .prop("selected", true);
             $("[name=model_id]").val(data.sku_model_id).prop("selected", true);
             $("[name=process_id]")
                 .val(data.sku_process_id)
@@ -77,17 +80,16 @@ $(document).on("click", ".edit", function (e) {
             $("[name=sku_inventory_unit_id]")
                 .val(data.sku_inventory_unit_id)
                 .prop("selected", true);
-                
+
             $("[name=flag_sku_procurement_type]")
                 .val(data.flag_sku_procurement_type)
                 .prop("selected", true);
-                
+
             $("[name=sku_procurement_unit_id]")
                 .val(data.sku_procurement_unit_id)
                 .prop("selected", true);
-            
-                $("#edit_modal").modal("show");
 
+            $("#edit_modal").modal("show");
         },
         error: function (err) {
             debugger;
@@ -295,7 +297,6 @@ fetchSkuBusinessType()
     .catch((err) => {
         console.error("Error fetchSkuModel:", err);
     });
-
 
 function fetchSkuModel() {
     return new Promise((resolve, reject) => {

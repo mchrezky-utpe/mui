@@ -37,10 +37,8 @@ class MasterSkuController
     public function index(): Response
     {
 
-        $data = $this->service->list_part_information()->paginate(10);
-
+        $data = $this->service->list_part_information__raw()->paginate(10);
         $startNumber = ($data->currentPage() - 1) * $data->perPage();
-        
         
         return response()
             ->view(
@@ -61,36 +59,46 @@ class MasterSkuController
 
     public function index_production_material(): Response
     {
+
+        $data = $this->service->list_production_material_information__raw()->paginate(10);
+        $startNumber = ($data->currentPage() - 1) * $data->perPage();
+        
         return response()
             ->view(
                 'master.sku_production_material.index',
                 [
-                    'data' =>  $this->service->list_production_material_information(),
-                    'type' => $this->typeService->list(),
+                    'data' => $data,
+                    'startNumber' => $startNumber,
+                    // 'type' => $this->typeService->list(),
                     // 'detail' => $this->detailService->list(),
                     // 'unit' => $this->unitService->list(),
                     // 'model' => $this->modelService->list(),
                     // 'packaging' => $this->packagingService->list(),
                     // 'process' => $this->processService->list(),
-                    'business' => $this->businessService->list()
+                    // 'business' => $this->businessService->list()
                 ]
             );
     }
 
     public function index_general_item(): Response
     {
+
+        $data = $this->service->list_general_information__raw()->paginate(10);
+        $startNumber = ($data->currentPage() - 1) * $data->perPage();
+
         return response()
             ->view(
                 'master.sku_general_item.index',
                 [
-                    'data' =>  $this->service->list_general_information(),
-                    'type' => $this->typeService->list(),
+                    'data' => $data,
+                    'startNumber' => $startNumber,
+                    // 'type' => $this->typeService->list(),
                     // 'detail' => $this->detailService->list(),
                     // 'unit' => $this->unitService->list(),
                     // 'model' => $this->modelService->list(),
                     // 'packaging' => $this->packagingService->list(),
                     // 'process' => $this->processService->list(),
-                    'business' => $this->businessService->list()
+                    // 'business' => $this->businessService->list()
                 ]
             );
     }
