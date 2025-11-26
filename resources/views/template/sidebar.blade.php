@@ -51,6 +51,18 @@
                                             </li>
                                     </ul>
                                 </li>
+                                <li class="has-sub">
+                                    <a class="js-arrow" href="#">
+                                        <i class="fas fa-caret-right"></i>Packaging Information</a>
+                                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                            <li>
+                                                <a href="/packaging-information-category">Category</a>
+                                            </li>
+                                            <li>
+                                                <a href="/packaging-information-partition">Partition</a>
+                                            </li>
+                                    </ul>
+                                </li>
                                 <li>
                                     <a href="/bom">Bill Of Material</a>
                                 </li>

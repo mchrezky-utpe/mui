@@ -10,6 +10,9 @@ use App\Http\Controllers\Master\MasterSkuTypeController;
 use App\Http\Controllers\Master\MasterSkuUnitController;
 use App\Http\Controllers\Master\MasterSkuModelController;
 use App\Http\Controllers\Master\MasterSkuBusinessController;
+use App\Http\Controllers\Master\MasterPackagingInformationCategoryController;
+use App\Http\Controllers\Master\MasterPackagingInformationPartitionController;
+
 
 Route::controller(MasterSkuCategoryController::class)->group(function () {
     Route::get("/api/sku-category/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
@@ -105,4 +108,39 @@ Route::controller(MasterSkuBusinessController::class)->group(function () {
     Route::post("/sku-business/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/sku-business/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+});
+
+
+
+Route::controller(MasterPackagingInformationCategoryController::class)->group(function () {
+    // INFORMATION
+    Route::get("/packaging-information-category", "index")->middleware(OnlyMemberMiddleware::class);
+
+    Route::get("/packaging-information-category/all", "get_all")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/packaging-information-category", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/packaging-information-category/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/packaging-information-category/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT
+    Route::post("/packaging-information-category/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+
+});
+
+
+Route::controller(MasterPackagingInformationPartitionController::class)->group(function () {
+    // PARTITION
+    Route::get("/packaging-information-partition", "index")->middleware(OnlyMemberMiddleware::class);
+
+    Route::get("/packaging-information-partition/all", "get_all")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/packaging-information-partition", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/packaging-information-partition/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/packaging-information-partition/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT
+    Route::post("/packaging-information-partition/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+
 });
