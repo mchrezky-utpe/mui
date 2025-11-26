@@ -1,4 +1,4 @@
-<x-modals.modal id="add_modal" title="Add Category">
+<x-modals.modal id="edit_modal" title="Edit Category">
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/packaging-information-category/edit">
   @csrf
   
@@ -18,7 +18,7 @@
     
     <div class="form-group">
       <label>Category Size</label>
-         <input name="size" class="form-control" type="number">
+         <input name="category_size" class="form-control" type="text">
     </div>
     <div class="form-group">
       <label>Category Unit</label>

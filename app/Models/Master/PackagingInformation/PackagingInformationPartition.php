@@ -12,7 +12,7 @@ class PackagingInformationPartition extends Model
   
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
-    protected $table = 'vw_app_list_mst_packaging_infromation_partition';
+    protected $table = 'mst_packaging_information_partition';
 
     use HasUserTracking;
 }

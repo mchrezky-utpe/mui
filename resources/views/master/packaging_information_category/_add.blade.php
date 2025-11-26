@@ -16,7 +16,7 @@
     
     <div class="form-group">
       <label>Category Size</label>
-         <input name="size" class="form-control" type="number">
+         <input name="category_size" class="form-control" type="text">
     </div>
     <div class="form-group">
       <label>Category Unit</label>

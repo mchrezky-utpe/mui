@@ -12,7 +12,7 @@ class PackagingInformationCategory extends Model
   
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
-    protected $table = 'vw_app_list_mst_packaging_infromation_category';
+    protected $table = 'mst_packaging_information_category';
 
     use HasUserTracking;
 }

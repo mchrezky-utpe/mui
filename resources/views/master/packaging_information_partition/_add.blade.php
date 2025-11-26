@@ -12,7 +12,7 @@
 
     <div class="form-group">
       <label>Partition Size</label>
-         <input name="size" class="form-control" type="number">
+         <input name="size" class="form-control" type="text">
     </div>
     <div class="form-group">
       <label>Partition Capacity</label>

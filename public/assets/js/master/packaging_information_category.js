@@ -69,3 +69,110 @@ $("#table-data").DataTable({
             }
         ],
     });
+
+
+
+    
+$(document).on("click", ".edit", function (e) {
+    var id = this.dataset.id;
+    $.ajax({
+        type: "GET",
+        url: base_url + "packaging-information-category/" + id,
+        success: function (data) {
+            var data = data.data;
+
+            $("[name=id]").val(data.id);
+            $("[name=description]").val(data.description);
+            $("[name=type_id]").val(data.type_id);
+            $("[name=model_id]").val(data.model_id);
+            $("[name=unit_id]").val(data.unit_id);
+            $("[name=category_size]").val(data.category_size);
+            $("[name=total_stock]").val(data.total_stock);
+          
+             $("#edit_modal").modal("show");
+        
+        },
+        error: function (err) {
+            debugger;
+        },
+    });
+});
+
+    // LOAD MASTER 
+    fetchSkuType()
+    .then((data) => {
+        console.log("Succesfully fetchSkuType:", data);
+        populateSelect('Category Type',data, $("[name=type_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuType:", err);
+    });
+
+fetchSkuModel()
+    .then((data) => {
+        console.log("Succesfully fetchSkuModel:", data);
+        populateSelect('Category Moddel',data, $("[name=model_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuModel:", err);
+    });
+
+
+
+fetchSkuUnit()
+    .then((data) => {
+        console.log("Succesfully fetchSkuUnit:", data);
+        populateSelect('Category Unit',data, $("[name=unit_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuUnit:", err);
+    });
+
+function fetchSkuModel() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-model/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuModel:", err);
+                reject(err);
+            },
+        });
+    });
+}
+    
+function fetchSkuType() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-type/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuType:", err);
+                reject(err);
+            },
+        });
+    });
+}
+
+
+function fetchSkuUnit() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-unit/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuUnit:", err);
+                reject(err);
+            },
+        });
+    });
+}

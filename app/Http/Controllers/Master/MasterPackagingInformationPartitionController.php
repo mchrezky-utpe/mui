@@ -32,9 +32,9 @@ class MasterPackagingInformationPartitionController
         $recordsFiltered = $query->count();
         
         if($length > 0){        
-            $data = $query->limit($length)->offset($start)->get();
+            $data = $query->limit($length)->offset($start)->orderBy('prefix','DESC')->get();
         }else{
-            $data = $query->get();
+            $data = $query->sortBy('prefix')->get();
         }
 
         $data = [
@@ -56,7 +56,7 @@ class MasterPackagingInformationPartitionController
         DB::beginTransaction();
     
         try {
-            $doc_num_generated = NumberGenerator::generateNumber('mst_packaging_information_partition', 'PCP');
+            $doc_num_generated = NumberGenerator::generateNumberV3('mst_packaging_information_partition', 'PCP');
      
             $data = [
                 'type_id' =>  $request->type_id,
@@ -64,7 +64,7 @@ class MasterPackagingInformationPartitionController
                 'size' =>  $request->size,
                 'capacity' =>  $request->capacity,
                 'prefix' => $doc_num_generated['doc_num'],
-                'counter' => $doc_num_generated['doc_counter'],
+                'doc_counter' => $doc_num_generated['doc_counter'],
                 'generated_id' => Str::uuid()->toString(),
                 'flag_active' => 1
             ];

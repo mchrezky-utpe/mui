@@ -32,9 +32,9 @@ class MasterPackagingInformationCategoryController
         $recordsFiltered = $query->count();
         
         if($length > 0){        
-            $data = $query->limit($length)->offset($start)->get();
+            $data = $query->limit($length)->offset($start)->orderBy('prefix','DESC')->get();
         }else{
-            $data = $query->get();
+            $data = $query->sortBy('prefix')->get();
         }
 
         $data = [
@@ -56,17 +56,17 @@ class MasterPackagingInformationCategoryController
         DB::beginTransaction();
     
         try {
-            $doc_num_generated = NumberGenerator::generateNumber('mst_packaging_information_category', 'PCC');
+            $doc_num_generated = NumberGenerator::generateNumberV3('mst_packaging_information_category', 'PCC');
            
             $data = [
                 'type_id' =>  $request->type_id,
                 'description' => $request->description,
                 'model_id' =>  $request->model_id,
-                'category_size' =>  $request->category_size,
+                'category_size' => $request->category_size,
                 'unit_id' =>  $request->unit_id,
                 'total_stock' =>  $request->total_stock,
                 'prefix' => $doc_num_generated['doc_num'],
-                'counter' => $doc_num_generated['doc_counter'],
+                'doc_counter' => $doc_num_generated['doc_counter'],
                 'generated_id' => Str::uuid()->toString(),
                 'flag_active' => 1
             ];

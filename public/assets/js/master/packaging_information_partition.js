@@ -25,7 +25,7 @@ $("#table-data").DataTable({
                 data: "size",
             },
             {
-                data: "ccapacity",
+                data: "capacity",
             },
             {
                 data: null,
@@ -33,7 +33,7 @@ $("#table-data").DataTable({
         ],
         columnDefs: [
             {
-                targets: 8,
+                targets: 6,
                 orderable: false,
                 searchable: false,
                 render:  function (data, type, row, meta) {
@@ -63,3 +63,54 @@ $("#table-data").DataTable({
             }
         ],
     });
+
+
+$(document).on("click", ".edit", function (e) {
+    var id = this.dataset.id;
+    $.ajax({
+        type: "GET",
+        url: base_url + "packaging-information-partition/" + id,
+        success: function (data) {
+            var data = data.data;
+
+            $("[name=id]").val(data.id);
+            $("[name=description]").val(data.description);
+            $("[name=type_id]").val(data.type_id);
+            $("[name=size]").val(data.size);
+            $("[name=capacity]").val(data.capacity);
+          
+             $("#edit_modal").modal("show");
+        
+        },
+        error: function (err) {
+            debugger;
+        },
+    });
+});
+
+    // LOAD MASTER 
+    fetchSkuType()
+    .then((data) => {
+        console.log("Succesfully fetchSkuType:", data);
+        populateSelect('Category Type',data, $("[name=type_id]"));
+    })
+    .catch((err) => {
+        console.error("Error fetchSkuType:", err);
+    });
+
+    
+function fetchSkuType() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: "GET",
+            url: base_url + "api/sku-type/droplist",
+            success: function (data) {
+                resolve(data.data);
+            },
+            error: function (err) {
+                console.error("Error fetchSkuType:", err);
+                reject(err);
+            },
+        });
+    });
+}

@@ -78,4 +78,27 @@ class NumberGenerator
             'doc_counter' => $newCounter,
         ];
     }
+
+    
+    public static function generateNumberV3($tableName, $prefix, $counterColumn = 'doc_counter')
+    {
+        // Cari entry terakhir di tabel untuk bulan dan tahun ini
+        $lastEntry = DB::table($tableName)
+            ->orderBy($counterColumn, 'desc')
+            ->first();
+
+        // Jika ada data, increment counter, jika tidak, reset counter ke 1
+        $newCounter = $lastEntry ? $lastEntry->$counterColumn + 1 : 1;
+        
+
+        // Format counter menjadi 4 digit (0001, 0002, dst.)
+        $formattedCounter = str_pad($newCounter, 3, '0', STR_PAD_LEFT);
+        // Format nomor dokumen
+        $docNumber = "{$prefix}-{$formattedCounter}";
+
+        return [
+            'doc_num' => $docNumber,
+            'doc_counter' => $newCounter,
+        ];
+    }
 }
