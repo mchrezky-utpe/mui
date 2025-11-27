@@ -1,93 +1,204 @@
-// var table = new DataTable('.data-table-item',
-//     {
-//     scrollX: true,
-//     scrollY: "400px",
-//     scrollCollapse: true,
-//     fixedColumns: {
-//         left: 5,
-//         right: 1,
-//         heightMatch: 'auto'
-//     },
-//     paging: true,
-//     pageLength: 10,
-//     responsive: false,
-//     columnDefs: [
-//         {
-//             targets: [0, 1, 2, 3, 4],
-//             className: 'dtfc-fixed-left',
-//             orderable: false,
-//             searchable: false
-//         },
-//         {
-//             targets: -1,
-//             className: 'dtfc-fixed-right bg-light',
-//             orderable: false,
-//             searchable: false,
-//             width: "120px"
-//         },
-//         {
-//             targets: '_all',
-//             className: 'text-nowrap bordered-cell'
-//         }
-//     ]
-// });
+let isUselessModalAreRemovedAlready = false;
+
+const removeUselessModal = () => {
+    const m = document.querySelector(".modal-backdrop");
+    if (m) {
+        m.setAttribute("hidden", "");
+        isUselessModalAreRemovedAlready = true;
+    }
+};
+
+var table = new DataTable(".data-table-item", {
+    scrollX: true,
+    scrollY: "400px",
+    scrollCollapse: true,
+    fixedColumns: {
+        left: 1,
+        // left: 5
+        // right: 1,
+        heightMatch: "auto",
+    },
+    paging: true,
+    pageLength: 10,
+    responsive: false,
+    columnDefs: [
+        {
+            targets: [0, 1, 2, 3, 4],
+            className: "dtfc-fixed-left",
+            orderable: false,
+            searchable: false,
+        },
+        {
+            targets: -1,
+            className: "dtfc-fixed-right bg-light",
+            orderable: false,
+            searchable: false,
+            width: "120px",
+        },
+        {
+            targets: "_all",
+            className: "text-nowrap bordered-cell",
+        },
+    ],
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: "/api/sku-production-material",
+        type: "GET",
+    },
+
+    columns: [
+        // 1. No
+        {
+            data: null,
+            render: (data, type, row, meta) => {
+                return meta.row + meta.settings._iDisplayStart + 1;
+            },
+        },
+
+        // 2. Image
+        {
+            data: "blob_image",
+            render: (data) => {
+                if (!data) {
+                    return `<span class="text-muted">No image</span>`;
+                }
+                return `<img src="data:image/png;base64,${data}" width="80"/>`;
+            },
+        },
+
+        // 3. Material Code
+        { data: "sku_id" },
+
+        // 4. Material Description
+        { data: "sku_name" },
+
+        // 5. Spec Code
+        { data: "sku_specification_code" },
+
+        // 6. Spec Description
+        { data: "sku_specification_detail" },
+
+        // 7. Sales Category
+        { data: "sku_sales_category" },
+
+        // 8. Set Code
+        { data: "set_code" },
+
+        // 9. Item Sub Category
+        { data: "sku_sub_category" },
+
+        // 10. Item Type
+        { data: "sku_material_type" },
+
+        // 11. Procurement Type
+        { data: "sku_procurement_type" },
+
+        // 12. Inventory Unit
+        { data: "sku_inventory_unit" },
+
+        // 13. Procurement Unit
+        { data: "sku_procurement_unit" },
+
+        // 14. Conversion Value
+        { data: "val_conversion" },
+
+        // 15. Inv. Reg (YES/NO)
+        {
+            data: "flag_inventory_register",
+            render: (data) => (data == 1 ? "YES" : "NO"),
+        },
+
+        // 16. Action Button
+        {
+            data: null,
+            orderable: false,
+            searchable: false,
+            render: (row) => `
+                <form action="/sku-production-material/${row.id}/delete" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <div class="d-flex">
+
+                        <button type="button"
+                            data-id="${row.id}"
+                            class="edit btn btn-success">
+                            <span class="fas fa-pencil-alt"></span>
+                        </button>
+
+                        <button type="submit"
+                            class="btn btn-danger">
+                            <span class="fas fa-trash"></span>
+                        </button>
+
+                    </div>
+                </form>
+            `,
+        },
+    ],
+});
+
+// cache, biar kalau buka modal dengan data yang sama, gaperlu fetch lagi :D
+// kalau reload bakal tetep fetch lagi sih D:
+const cacheDetails = {};
+
+const fillForm = (data) => {
+    $("[name=id]").val(data.id);
+    $("[name=manual_id]").val(data.manual_id);
+    $("[name=description]").val(data.description);
+    $("[name=group_tag]").val(data.group_tag);
+    $("[name=specification_code]").val(data.specification_code);
+    $("[name=specification_detail]").val(data.specification_detail);
+    $("[name=specification_description]").val(data.specification_description);
+    $("[name=val_weight]").val(data.val_weight);
+    $("[name=val_area]").val(data.val_area);
+    $("[name=sku_model_id]").val(data.sku_model_id);
+    $("[name=val_conversion]").val(data.val_conversion);
+    $("[name=flag_inventory_register]").val(data.flag_inventory_register);
+
+    if (data.flag_inventory_register == 1) {
+        $("[name=flag_inventory_register]").prop("checked", true);
+    }
+
+    $("[name=type_id]").val(data.sku_type_id).prop("selected", true);
+    $("[name=model_id]").val(data.sku_model_id).prop("selected", true);
+    $("[name=process_id]").val(data.sku_process_id).prop("selected", true);
+    $("[name=sku_business_type_id]")
+        .val(data.sku_business_type_id)
+        .prop("selected", true);
+    $("[name=sku_sales_category_id]")
+        .val(data.sku_sales_category_id)
+        .prop("selected", true);
+    $("[name=sku_model_id]").val(data.sku_model_id).prop("selected", true);
+    $("[name=sku_inventory_unit_id]")
+        .val(data.sku_inventory_unit_id)
+        .prop("selected", true);
+
+    $("[name=flag_sku_procurement_type]")
+        .val(data.flag_sku_procurement_type)
+        .prop("selected", true);
+
+    $("[name=sku_procurement_unit_id]")
+        .val(data.sku_procurement_unit_id)
+        .prop("selected", true);
+
+    $("#edit_modal").modal("show");
+    if (!isUselessModalAreRemovedAlready) removeUselessModal();
+};
 
 $(document).on("click", ".edit", function (e) {
     var id = this.dataset.id;
+
+    const data = cacheDetails[id];
+    if (data) return fillForm(data);
+
     $.ajax({
         type: "GET",
         url: base_url + "sku-production-material/" + id,
-        success: function (data) {
-            var data = data.data;
+        success: function (_data) {
+            const data = _data.data;
 
-            $("[name=id]").val(data.id);
-            $("[name=manual_id]").val(data.manual_id);
-            $("[name=description]").val(data.description);
-            $("[name=group_tag]").val(data.group_tag);
-            $("[name=specification_code]").val(data.specification_code);
-            $("[name=specification_detail]").val(data.specification_detail);
-            $("[name=specification_description]").val(
-                data.specification_description
-            );
-            $("[name=val_weight]").val(data.val_weight);
-            $("[name=val_area]").val(data.val_area);
-            $("[name=sku_model_id]").val(data.sku_model_id);
-            $("[name=val_conversion]").val(data.val_conversion);
-            $("[name=flag_inventory_register]").val(
-                data.flag_inventory_register
-            );
-
-            if (data.flag_inventory_register == 1) {
-                $("[name=flag_inventory_register]").prop("checked", true);
-            }
-
-            $("[name=type_id]").val(data.sku_type_id).prop("selected", true);
-            $("[name=model_id]").val(data.sku_model_id).prop("selected", true);
-            $("[name=process_id]")
-                .val(data.sku_process_id)
-                .prop("selected", true);
-            $("[name=sku_business_type_id]")
-                .val(data.sku_business_type_id)
-                .prop("selected", true);
-            $("[name=sku_sales_category_id]")
-                .val(data.sku_sales_category_id)
-                .prop("selected", true);
-            $("[name=sku_model_id]")
-                .val(data.sku_model_id)
-                .prop("selected", true);
-            $("[name=sku_inventory_unit_id]")
-                .val(data.sku_inventory_unit_id)
-                .prop("selected", true);
-
-            $("[name=flag_sku_procurement_type]")
-                .val(data.flag_sku_procurement_type)
-                .prop("selected", true);
-
-            $("[name=sku_procurement_unit_id]")
-                .val(data.sku_procurement_unit_id)
-                .prop("selected", true);
-
-            $("#edit_modal").modal("show");
+            fillForm(data);
+            cacheDetails[id] = data;
         },
         error: function (err) {
             debugger;
@@ -100,8 +211,8 @@ $(document).on("click", ".history", function (e) {
     $.ajax({
         type: "GET",
         url: base_url + "sku-part-information/" + id + "/history",
-        success: function (data) {
-            var data = data.data;
+        success: function (_data) {
+            var data = _data.data;
 
             $("#history_modal").modal("show");
         },

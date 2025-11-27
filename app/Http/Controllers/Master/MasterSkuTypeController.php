@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Helpers\HelperCustom;
+// use App\Helpers\HelperCustom;
 use App\Services\Master\MasterSkuTypeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,9 +19,9 @@ class MasterSkuTypeController
 
     public function index(): Response
     {
-        return response()
-            ->view('master.sku_type.index', ['data' =>  $this->service->list()
-            ]);
+        return response()->view('master.sku_type.index', 
+            ['data' =>  $this->service->list()]
+        );
     }
 
     public function add(Request $request)
@@ -59,8 +59,6 @@ class MasterSkuTypeController
         ]);
     }
 
-    
-
     public function api_droplist_for_general_item()
     {
         $data = $this->service->droplistForGeneralItem();
@@ -68,7 +66,6 @@ class MasterSkuTypeController
             'data' => $data
         ]);
     }
-
     
     public function api_group_tag()
     {

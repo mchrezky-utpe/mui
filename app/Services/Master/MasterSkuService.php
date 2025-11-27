@@ -43,14 +43,13 @@ class MasterSkuService
     }
      
     public function list_pagination_production_material_information(Request $request){
-            $start = $request->input('start');
-            $length = $request->input('length'); 
+            $start = $request->input('start') ?: 1;
+            $length = $request->input('length') ?: 10; 
             $search = $request->input('search.value');
             $query = DB::table('vw_app_list_mst_sku');
-             
+            
             $query->where('flag_sku_type','=',2);
             $query->where('sku_type_flag_checking','=',4); // unchecked type
-            
         
             if (!empty($search)) {
                 $query->where(function ($q) use ($search) {

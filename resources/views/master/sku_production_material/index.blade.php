@@ -81,95 +81,122 @@
                                             <th>Procurement Unit</th>
                                             <th>Conversion value</th>
                                             <th>Inv. Reg</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach($data as $key => $value)
-                                        <tr>
-                                            <td>
-                                                {{ $startNumber + $loop->iteration }}
-                                            </td>
-                                            <td>
-                                                @if($value->blob_image)
-                                                <img
-                                                    src="data:image/png;base64,{{ $value->blob_image }}"
-                                                    width="80"
-                                                />
+                                    <tbody></tbody>
+                                </table>
+                                @if (false)
+                                <table
+                                    class="table data-table-item table-striped"
+                                >
+                                    <!-- <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Image</th>
+                                        <th>Material Code</th>
+                                        <th>Material Description</th>
+                                        <th>Spec code</th>
+                                        <th>Spec Description</th>
+                                        <th>Sales Category</th>
+                                        <th>Set Code</th>
+                                        <th>Item Sub Category</th>
+                                        <th>Item Type</th>
+                                        <th>Procurement Type</th>
+                                        <th>Inventory Unit</th>
+                                        <th>Procurement Unit</th>
+                                        <th>Conversion value</th>
+                                        <th>Inv. Reg</th>
+                                        <th></th>
+                                    </tr>
+                                </thead> -->
+                                    <!-- <tbody>
+                                    @foreach($data as $key => $value)
+                                    <tr>
+                                        <td>
+                                            {{ $startNumber + $loop->iteration }}
+                                        </td>
+                                        <td>
+                                            @if($value->blob_image)
+                                            <img
+                                                src="data:image/png;base64,{{ $value->blob_image }}"
+                                                width="80"
+                                            />
 
-                                                @else
-                                                <span class="text-muted"
-                                                    >No image</span
-                                                >
-                                                @endif
-                                            </td>
-                                            <td>{{ $value->sku_id }}</td>
-                                            <td>{{ $value->sku_name }}</td>
-                                            <td>
-                                                {{ $value->sku_specification_code }}
-                                            </td>
-                                            <td>
-                                                {{ $value->sku_specification_detail }}
-                                            </td>
-                                            <td>
-                                                {{ $value->sku_sales_category }}
-                                            </td>
-                                            <td>{{ $value->set_code }}</td>
-                                            <td>
-                                                {{ $value->sku_sub_category}}
-                                            </td>
-                                            <td>
-                                                {{ $value->sku_material_type }}
-                                            </td>
-                                            <td>
-                                                {{ $value->sku_procurement_type }}
-                                            </td>
-                                            <td>
-                                                {{ $value->sku_inventory_unit }}
-                                            </td>
-                                            <td>
-                                                {{ $value->sku_procurement_unit }}
-                                            </td>
-                                            <td>
-                                                {{ $value->val_conversion }}
-                                            </td>
-                                            <td>
-                                                {{ $value->flag_inventory_register == "1" ? 'YES' : 'NO' }}
-                                            </td>
-                                            <td>
-                                                <form
-                                                    action="/sku-production-material/{{ $value->id }}/delete"
-                                                    method="post"
-                                                >
-                                                    @csrf
-                                                    <div class="d-flex">
-                                                        <button
-                                                            data-id="{{ $value->id }}"
-                                                            type="button"
-                                                            class="edit btn btn-success"
-                                                        >
-                                                            <span
-                                                                class="fas fa-pencil-alt"
-                                                            ></span>
-                                                        </button>
-                                                        <button
-                                                            class="btn btn-danger"
-                                                        >
-                                                            <span
-                                                                class="fas fa-trash"
-                                                            ></span>
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                            @else
+                                            <span class="text-muted"
+                                                >No image</span
+                                            >
+                                            @endif
+                                        </td>
+                                        <td>{{ $value->sku_id }}</td>
+                                        <td>{{ $value->sku_name }}</td>
+                                        <td>
+                                            {{ $value->sku_specification_code }}
+                                        </td>
+                                        <td>
+                                            {{ $value->sku_specification_detail }}
+                                        </td>
+                                        <td>
+                                            {{ $value->sku_sales_category }}
+                                        </td>
+                                        <td>{{ $value->set_code }}</td>
+                                        <td>
+                                            {{ $value->sku_sub_category}}
+                                        </td>
+                                        <td>
+                                            {{ $value->sku_material_type }}
+                                        </td>
+                                        <td>
+                                            {{ $value->sku_procurement_type }}
+                                        </td>
+                                        <td>
+                                            {{ $value->sku_inventory_unit }}
+                                        </td>
+                                        <td>
+                                            {{ $value->sku_procurement_unit }}
+                                        </td>
+                                        <td>
+                                            {{ $value->val_conversion }}
+                                        </td>
+                                        <td>
+                                            {{ $value->flag_inventory_register == "1" ? 'YES' : 'NO' }}
+                                        </td>
+                                        <td>
+                                            <form
+                                                action="/sku-production-material/{{ $value->id }}/delete"
+                                                method="post"
+                                            >
+                                                @csrf
+                                                <div class="d-flex">
+                                                    <button
+                                                        data-id="{{ $value->id }}"
+                                                        type="button"
+                                                        class="edit btn btn-success"
+                                                    >
+                                                        <span
+                                                            class="fas fa-pencil-alt"
+                                                        ></span>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-danger"
+                                                    >
+                                                        <span
+                                                            class="fas fa-trash"
+                                                        ></span>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody> -->
                                 </table>
                             </div>
-                            <div style="margin-block-start: 1rem">
-                                {{ $data->links() }}
-                            </div>
+                            <!-- <div style="margin-block-start: 1rem">
+                            {{ $data->links() }}
+                        </div> -->
+                            @endif
                         </div>
                     </div>
                 </div>
