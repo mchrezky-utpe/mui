@@ -104,13 +104,17 @@
     
     /* Table Styles */
     .table-responsive {
-        overflow-x: auto;
+        overflow-x: auto;    
+        max-height: 200px;
+        overflow-y: auto;
+        max-width: 620px;
     }
     
     .table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 11px;
+        font-size: 9px;
+    
     }
     
     .table th,
@@ -240,6 +244,10 @@
             background-color: #bbdefb !important;
             border-left: 4px solid #2196f3;
         }
+
+        #table-qc-check td {
+            white-space: nowrap;
+        }
 </style>
 
 <div class="section__content section__content--p30">
@@ -333,8 +341,10 @@
                                     <tbody>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="table-responsive">
                                 <br>
-                                <table id="table-pi" class="table table-striped table-bordered first">
+                                <table id="table-qc-check-process" class="table table-striped table-bordered first">
                                     <thead>
                                         <tr>
                                             <th>Item Code</th>

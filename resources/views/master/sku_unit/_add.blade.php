@@ -2,12 +2,8 @@
 <form id="form_modal" autocomplete="off" class="form-horizontal" method="post" action="/sku-unit">
   @csrf
     <div class="form-group">
-      <label>Unit Code (legacy)</label>
-         <input readonly name="manual_id" class="form-control" type="text" value="UC-XXXX">
-    </div>
-    <div class="form-group">
-      <label>Unit Name</label>
-      <input required name="prefix" class="form-control" type="text" placeholder="Unit Name">
+      <label>Unit Code</label>
+         <input name="prefix" class="form-control" type="text" value="UC-XXXX">
     </div>
     <div class="form-group">
       <label>Description</label>

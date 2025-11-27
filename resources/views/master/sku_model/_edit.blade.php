@@ -3,7 +3,8 @@
     @csrf
     <div class="form-group">
       <label>Model Code</label>
-      <input readonly name="manual_id" class="form-control" type="text" placeholder="Manual ID">
+      <input name="id" class="form-control" type="hidden">
+      <input name="prefix" class="form-control" type="text" placeholder="Manual ID">
     </div>
     <div class="form-group">
       <label>Description</label>

@@ -33,7 +33,6 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>ID</th>
                     <th>Model Code</th>
                     <th>Description</th>
                     <th>Action</th>
@@ -42,7 +41,6 @@
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->prefix }}</td>
-                    <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->description }}</td>
                     <td>
                       <form action="/sku-model/{{ $value->id }}/delete" method="post"> @csrf 

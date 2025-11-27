@@ -34,14 +34,12 @@
                   <tr>
                     <th>No</th>
                     <th>Unit Code</th>
-                    <th>Unit Name</th>
                     <th>Description</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody> @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $value->manual_id }}</td>
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->description }}</td>
                     <td>

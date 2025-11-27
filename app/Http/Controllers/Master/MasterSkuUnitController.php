@@ -116,9 +116,9 @@ class MasterSkuUnitController
         ]);
     }
 
-    public function edit(Request $request,int $id)
+    public function edit(Request $request)
     {
-        $this->service->edit($request,$id);
+        $this->service->edit($request);
         return redirect("/sku-unit");
     }
 

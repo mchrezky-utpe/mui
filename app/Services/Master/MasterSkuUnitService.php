@@ -15,17 +15,16 @@ class MasterSkuUnitService
 {
 
     public function list(){
-          return SkuUnitListVw::orderBy('manual_id')->get();
+          return SkuUnitListVw::orderBy('manual_id')->orderBy('created_at','desc')->get();
     }
 
     public function add(Request $request){
         
             $data['description'] = $request->description;
+            $data['prefix'] = $request->prefix;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterSkuUnit::create($data);
-            $data['manual_id'] = HelperCustom::generateTrxNo('IUC', $data->id);
-            $data['prefix'] = $request->prefix;
             $data->save();
     }
 
@@ -42,11 +41,11 @@ class MasterSkuUnitService
         return MasterSkuUnit::where('id', $id)->firstOrFail();
     } 
 
-    function edit(Request $request,int $id)
+    function edit(Request $request)
     {
-        $data = MasterSkuUnit::where('id', $id)->firstOrFail();
+        $data = MasterSkuUnit::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
-        // $data->manual_id= $request->manual_id;
+        $data->prefix= $request->prefix;
         $data->save();
     }
 

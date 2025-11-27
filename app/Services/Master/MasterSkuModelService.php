@@ -14,11 +14,12 @@ use Illuminate\Support\Facades\DB;
 class MasterSkuModelService
 {
     public function list(){
-          return MasterSkuModel::where('flag_active', 1)->orderBy('manual_id')->get();
+          return MasterSkuModel::where('flag_active', 1)->orderBy('created_at','desc')->get();
     }
 
     public function add(Request $request){
         
+            $data['prefix'] = $request->prefix;
             $result_code =  $this->generateCode();
             $data['manual_id'] = $result_code['code'];
             $data['counter'] = $result_code['counter'];
@@ -28,7 +29,7 @@ class MasterSkuModelService
             $data['image_path'] = 'tes'; // TODO IMPLEMENT UPLOAD
             $data['flag_active'] = 1;
             $data = MasterSkuModel::create($data);
-            $data['prefix'] = HelperCustom::generateTrxNo('SKUM', $data->id);
+            // $data['prefix'] = HelperCustom::generateTrxNo('SKUM', $data->id);
             $data->save();
     }
     

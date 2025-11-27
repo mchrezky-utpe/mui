@@ -7,9 +7,8 @@ $(document).on('click', '.edit', function (e) {
             var data = data.data;
 
             $('[name=id]').val(data.id);
-            $('[name=manual_id]').val(data.manual_id);
-            $('[name=description]').val(data.description);
             $('[name=prefix]').val(data.prefix);
+            $('[name=description]').val(data.description);
 
             $('#edit_modal').modal('show');
 
