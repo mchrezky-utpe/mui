@@ -1,122 +1,115 @@
-let isUselessModalAreRemovedAlready = false;
+document.addEventListener("DOMContentLoaded", () => {
+    const csfr = document.querySelector("input[name=_token]").value;
 
-const removeUselessModal = () => {
-    const m = document.querySelector(".modal-backdrop");
-    if (m) {
-        m.setAttribute("hidden", "");
-        isUselessModalAreRemovedAlready = true;
-    }
-};
-
-var table = new DataTable(".data-table-item", {
-    scrollX: true,
-    scrollY: "400px",
-    scrollCollapse: true,
-    fixedColumns: {
-        left: 1,
-        // left: 5
-        // right: 1,
-        heightMatch: "auto",
-    },
-    paging: true,
-    pageLength: 10,
-    responsive: false,
-    columnDefs: [
-        {
-            targets: [0, 1, 2, 3, 4],
-            className: "dtfc-fixed-left",
-            orderable: false,
-            searchable: false,
+    const table = new DataTable(".data-table-item", {
+        scrollX: true,
+        scrollY: "400px",
+        scrollCollapse: true,
+        fixedColumns: {
+            left: 1,
+            // left: 5
+            // right: 1,
+            heightMatch: "auto",
         },
-        {
-            targets: -1,
-            className: "dtfc-fixed-right bg-light",
-            orderable: false,
-            searchable: false,
-            width: "120px",
-        },
-        {
-            targets: "_all",
-            className: "text-nowrap bordered-cell",
-        },
-    ],
-    processing: true,
-    serverSide: true,
-    ajax: {
-        url: "/api/sku-production-material",
-        type: "GET",
-    },
-
-    columns: [
-        // 1. No
-        {
-            data: null,
-            render: (data, type, row, meta) => {
-                return meta.row + meta.settings._iDisplayStart + 1;
+        paging: true,
+        pageLength: 10,
+        responsive: false,
+        columnDefs: [
+            {
+                targets: [0, 1, 2, 3, 4],
+                className: "dtfc-fixed-left",
+                orderable: false,
+                searchable: false,
             },
-        },
-
-        // 2. Image
-        {
-            data: "blob_image",
-            render: (data) => {
-                if (!data) {
-                    return `<span class="text-muted">No image</span>`;
-                }
-                return `<img src="data:image/png;base64,${data}" width="80"/>`;
+            {
+                targets: -1,
+                className: "dtfc-fixed-right bg-light",
+                orderable: false,
+                searchable: false,
+                width: "120px",
             },
+            {
+                targets: "_all",
+                className: "text-nowrap bordered-cell",
+            },
+        ],
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/api/sku-production-material",
+            type: "GET",
         },
 
-        // 3. Material Code
-        { data: "sku_id" },
+        columns: [
+            // 1. No
+            {
+                data: null,
+                render: (data, type, row, meta) => {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
+            },
 
-        // 4. Material Description
-        { data: "sku_name" },
+            // 2. Image
+            {
+                data: "blob_image",
+                render: (data) => {
+                    if (!data) {
+                        return `<span class="text-muted">No image</span>`;
+                    }
+                    return `<img src="data:image/png;base64,${data}" width="80"/>`;
+                },
+            },
 
-        // 5. Spec Code
-        { data: "sku_specification_code" },
+            // 3. Material Code
+            { data: "sku_id" },
 
-        // 6. Spec Description
-        { data: "sku_specification_detail" },
+            // 4. Material Description
+            { data: "sku_name" },
 
-        // 7. Sales Category
-        { data: "sku_sales_category" },
+            // 5. Spec Code
+            { data: "sku_specification_code" },
 
-        // 8. Set Code
-        { data: "set_code" },
+            // 6. Spec Description
+            { data: "sku_specification_detail" },
 
-        // 9. Item Sub Category
-        { data: "sku_sub_category" },
+            // 7. Sales Category
+            { data: "sku_sales_category" },
 
-        // 10. Item Type
-        { data: "sku_material_type" },
+            // 8. Set Code
+            { data: "set_code" },
 
-        // 11. Procurement Type
-        { data: "sku_procurement_type" },
+            // 9. Item Sub Category
+            { data: "sku_sub_category" },
 
-        // 12. Inventory Unit
-        { data: "sku_inventory_unit" },
+            // 10. Item Type
+            { data: "sku_material_type" },
 
-        // 13. Procurement Unit
-        { data: "sku_procurement_unit" },
+            // 11. Procurement Type
+            { data: "sku_procurement_type" },
 
-        // 14. Conversion Value
-        { data: "val_conversion" },
+            // 12. Inventory Unit
+            { data: "sku_inventory_unit" },
 
-        // 15. Inv. Reg (YES/NO)
-        {
-            data: "flag_inventory_register",
-            render: (data) => (data == 1 ? "YES" : "NO"),
-        },
+            // 13. Procurement Unit
+            { data: "sku_procurement_unit" },
 
-        // 16. Action Button
-        {
-            data: null,
-            orderable: false,
-            searchable: false,
-            render: (row) => `
+            // 14. Conversion Value
+            { data: "val_conversion" },
+
+            // 15. Inv. Reg (YES/NO)
+            {
+                data: "flag_inventory_register",
+                render: (data) => (data == 1 ? "YES" : "NO"),
+            },
+
+            // 16. Action Button
+            {
+                data: null,
+                orderable: false,
+                searchable: false,
+                render: (row) => `
                 <form action="/sku-production-material/${row.id}/delete" method="post">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="_token" value="${csfr}">
                     <div class="d-flex">
 
                         <button type="button"
@@ -133,9 +126,22 @@ var table = new DataTable(".data-table-item", {
                     </div>
                 </form>
             `,
-        },
-    ],
+            },
+        ],
+    });
 });
+
+let isUselessModalAreRemovedAlready = false;
+
+const removeUselessModal = () => {
+    const m = document.querySelector(".modal-backdrop");
+    if (m) {
+        m.setAttribute("hidden", "");
+        isUselessModalAreRemovedAlready = true;
+    }
+
+    console.warn("m", m);
+};
 
 // cache, biar kalau buka modal dengan data yang sama, gaperlu fetch lagi :D
 // kalau reload bakal tetep fetch lagi sih D:

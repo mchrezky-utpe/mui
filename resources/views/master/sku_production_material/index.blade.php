@@ -165,7 +165,7 @@
                                         <td>
                                             <form
                                                 action="/sku-production-material/{{ $value->id }}/delete"
-                                                method="post"
+                                                a
                                             >
                                                 @csrf
                                                 <div class="d-flex">
