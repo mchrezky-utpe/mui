@@ -86,6 +86,8 @@
                                             <th></th>
                                         </tr>
                                     </thead>
+                                    <tbody></tbody>
+                                    @if(false)
                                     <tbody>
                                         @foreach($data as $key => $value)
                                         <tr>
@@ -174,11 +176,14 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
+                                    @endif
                                 </table>
                             </div>
+                            @if(false)
                             <div style="margin-block-start: 1rem">
                                 {{ $data->links() }}
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
