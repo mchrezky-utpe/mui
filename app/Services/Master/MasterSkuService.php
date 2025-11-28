@@ -8,6 +8,7 @@ use App\Models\Master\Sku\SkuListVw;
 use App\Models\Master\Sku\SkuListSetCodeVw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Svg\Tag\Rect;
 
 class MasterSkuService 
 {
@@ -40,6 +41,40 @@ class MasterSkuService
 
     public function list_general_information(){
         return $this->list_general_information__raw()->take(1000)->get();
+    }
+
+    public function list_pagination_part_information(Request $request) {
+            $start = $request->input('start') ?: 1;
+            $length = $request->input('length') ?: 10; 
+            $search = $request->input('search.value');
+            $query = DB::table('vw_app_list_mst_sku');
+            
+            $query->where('flag_sku_type','=',1);
+            // $query->where('sku_type_flag_checking','=',4); // unchecked type
+        
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->Where('sku_id', 'like', '%' . $search . '%')
+                        ->orWhere('sku_name', 'like', '%' . $search . '%')
+                        ->orWhere('sku_specification_code', 'like', '%' . $search . '%');
+                });
+            }
+
+            $recordsTotal = $query->count();
+            $recordsFiltered = $query->count();
+            
+            if ($length > 0){        
+                $data = $query->limit($length)->offset($start)->get();
+            }
+            else{
+                $data = $query->get();
+            }
+
+            return [
+                'data' => $data,
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered
+            ];
     }
      
     public function list_pagination_production_material_information(Request $request){
