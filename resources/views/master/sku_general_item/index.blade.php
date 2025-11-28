@@ -71,6 +71,28 @@
                                         <th>Procurement Unit</th>
                                         <th>Conversion value</th>
                                         <th>Inv. Reg</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            @if(false)
+                            <table class="table data-table-item table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Image</th>
+                                        <th>Item Code</th>
+                                        <th>Item Name</th>
+                                        <th>Spec code</th>
+                                        <th>Spec Description</th>
+                                        <th>Item Sub Category</th>
+                                        <th>Item Type</th>
+                                        <th>Procurement Type</th>
+                                        <th>Inventory Unit</th>
+                                        <th>Procurement Unit</th>
+                                        <th>Conversion value</th>
+                                        <th>Inv. Reg</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -146,10 +168,13 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
+                        @if(false)
                         <div style="margin-block-start: 1rem">
                             {{ $data->links() }}
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
