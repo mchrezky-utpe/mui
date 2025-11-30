@@ -1,4 +1,12 @@
 @extends('template.main') @section('content')
+<style>
+.modal-backdrop {
+    z-index: 0;
+}
+.modal {
+    z-index: 1050;
+}
+</style>
 <div class="section__content section__content--p30">
     <div class="container-fluid">
         <div class="row">
