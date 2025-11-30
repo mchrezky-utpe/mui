@@ -24,7 +24,6 @@ class MasterSkuTypeService
 
     public function add(Request $request){
         $data = new MasterSkuType();
-
         
         $result_code =  $this->generateCode();
         $data->manual_id = $result_code['code'];

@@ -36,54 +36,69 @@ class MasterSkuController
 
     public function index(): Response
     {
+
+        $data = $this->service->list_part_information__raw()->paginate(10);
+        $startNumber = ($data->currentPage() - 1) * $data->perPage();
+        
         return response()
             ->view(
                 'master.sku_part_information.index',
                 [
-                    'data' =>  $this->service->list_part_information(),
-                    'type' => $this->typeService->list(),
+                    'data' => $data,
+                    'startNumber' => $startNumber,
+                    // 'type' => $this->typeService->list(),
                     // 'detail' => $this->detailService->list(),
                     // 'unit' => $this->unitService->list(),
                     // 'model' => $this->modelService->list(),
                     // 'packaging' => $this->packagingService->list(),
                     // 'process' => $this->processService->list(),
-                    'business' => $this->businessService->list()
+                    // 'business' => $this->businessService->list()
                 ]
             );
     }
 
     public function index_production_material(): Response
     {
+
+        // $data = $this->service->list_production_material_information__raw()->paginate(10);
+        // $startNumber = ($data->currentPage() - 1) * $data->perPage();
+        
         return response()
             ->view(
                 'master.sku_production_material.index',
                 [
-                    'data' =>  $this->service->list_production_material_information(),
-                    'type' => $this->typeService->list(),
+                    // 'data' => $data,
+                    // 'startNumber' => $startNumber,
+                    // 'type' => $this->typeService->list(),
                     // 'detail' => $this->detailService->list(),
                     // 'unit' => $this->unitService->list(),
                     // 'model' => $this->modelService->list(),
                     // 'packaging' => $this->packagingService->list(),
                     // 'process' => $this->processService->list(),
-                    'business' => $this->businessService->list()
+                    // 'business' => $this->businessService->list()
                 ]
             );
     }
 
     public function index_general_item(): Response
     {
+
+        $data = $this->service->list_general_information__raw()->paginate(10);
+        $startNumber = ($data->currentPage() - 1) * $data->perPage();
+
         return response()
             ->view(
                 'master.sku_general_item.index',
                 [
-                    'data' =>  $this->service->list_general_information(),
-                    'type' => $this->typeService->list(),
+                    'data' => $data,
+                    'startNumber' => $startNumber,
+                    // 'type' => $this->typeService->list(),
                     // 'detail' => $this->detailService->list(),
                     // 'unit' => $this->unitService->list(),
                     // 'model' => $this->modelService->list(),
                     // 'packaging' => $this->packagingService->list(),
                     // 'process' => $this->processService->list(),
-                    'business' => $this->businessService->list()
+                    // 'business' => $this->businessService->list()
                 ]
             );
     }
@@ -95,6 +110,18 @@ class MasterSkuController
             'data' => $data
         ]);
     }
+
+    public function api_part_information_all(Request $request)
+    {
+        $data = $this->service->list_pagination_part_information($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
+        ]);
+    }
+
     public function api_production_material_all(Request $request)
     {
         $data = $this->service->list_pagination_production_material_information($request);
