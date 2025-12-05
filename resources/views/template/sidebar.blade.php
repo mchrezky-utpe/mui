@@ -103,9 +103,33 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="/sku-process">Process and Business Type</a>
+                    <li class="has-sub">
+                        <a
+                            class="js-arrow"
+                            href="#"
+                            style="
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            "
+                        >
+                            <i class="fas fa-caret-right"></i>
+                            Process and Business Type
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
+                                <a href="/sku-process">index</a>
+                            </li>
+                            <!-- <li>
+                                <a href="/sku-pricelist-general-item"
+                                    >General Item Prices</a
+                                >
+                            </li> -->
+                        </ul>
                     </li>
+                    <!-- <li>
+                        <a href="/sku-process">Process and Business Type</a>
+                    </li> -->
                     <li>
                         <a href="/general-exchange-rates">Exchange Rates</a>
                     </li>
