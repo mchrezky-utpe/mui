@@ -79,6 +79,9 @@
                                     </ul>
                                 </li>
                                  <li>
+                                    <a href="/sku-process">Process and Business Type</a>
+                                </li>
+                                 <li>
                                     <a href="/general-exchange-rates">Exchange Rates</a>
                                 </li>
                             </ul>

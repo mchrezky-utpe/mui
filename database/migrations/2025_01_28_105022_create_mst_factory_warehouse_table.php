@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('mst_factory_warehouse')) {
+            return; // skip migration ini
+        }
         Schema::create('mst_factory_warehouse', function (Blueprint $table) {
             $table->id();
             $table->string('description', 100)->nullable();
