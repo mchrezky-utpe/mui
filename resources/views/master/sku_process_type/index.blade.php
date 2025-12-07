@@ -56,7 +56,21 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table
-                                class="table data-table table-striped table-bordered first"
+                                class="table data-table-item table-striped aaaaaa"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Code</th>
+                                        <th>Category</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            @if (false)
+                            <table
+                                class="table data-table data-table-item table-striped table-bordered first"
                             >
                                 <thead>
                                     <tr>
@@ -100,6 +114,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
                     </div>
                 </div>
