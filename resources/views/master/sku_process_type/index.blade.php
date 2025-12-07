@@ -39,11 +39,19 @@
                             id="add_button"
                             type="button"
                             class="btn btn-primary"
+                            onclick="alert(`Fitur belum tresedia!`)"
+                        >
+                            Add +
+                        </button>
+                        <!-- <button
+                            id="add_button"
+                            type="button"
+                            class="btn btn-primary"
                             data-toggle="modal"
                             data-target="#add_modal"
                         >
                             Add +
-                        </button>
+                        </button> -->
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -100,10 +108,10 @@
     </div>
 </div>
 <!-- MODAL -->
-@include('master.sku_process._add') @include('master.sku_process._edit')
+<!-- @include('master.sku_process._add') @include('master.sku_process._edit') -->
 @endsection @section('extra_javascript')
-<script
+<!-- <script
     src="{{ asset('assets/js/master/sku_process.js') }}"
     type="text/javascript"
-></script>
+></script> -->
 @endsection

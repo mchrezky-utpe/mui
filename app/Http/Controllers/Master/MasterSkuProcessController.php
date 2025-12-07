@@ -49,4 +49,14 @@ class MasterSkuProcessController
         $this->service->edit($request);
         return redirect("/sku-process");
     }
+
+    public function paginate(Request $request) {
+        $data = $this->service->pagination_sku_process_type($request);
+        return response()->json([
+            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
+            'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
+            'data' => $data['data'], // Data untuk ditampilkan
+        ]);
+    }   
 }

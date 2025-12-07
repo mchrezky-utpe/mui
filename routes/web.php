@@ -115,6 +115,9 @@ Route::controller(MasterSkuProcessController::class)->group(function () {
     Route::get("/sku-process/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/sku-process/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // Paginate
+    Route::get("/api/sku-process-type", "paginate")->middleware(OnlyMemberMiddleware::class);
+
 });
 
 Route::controller(MasterSkuPackagingController::class)->group(function () {
