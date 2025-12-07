@@ -106,15 +106,15 @@ Route::controller(MasterSkuController::class)->group(function () {
 
 Route::controller(MasterSkuProcessController::class)->group(function () {
     // LIST
-    Route::get("/sku-process", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-process-type", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
-    Route::post("/sku-process", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-process-type", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
-    Route::post("/sku-process/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-process-type/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
-    Route::get("/sku-process/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/sku-process-type/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
-    Route::post("/sku-process/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/sku-process-type/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     // Paginate
     Route::get("/api/sku-process-type", "paginate")->middleware(OnlyMemberMiddleware::class);
 

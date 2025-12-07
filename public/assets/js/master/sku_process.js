@@ -55,9 +55,27 @@ document.addEventListener("DOMContentLoaded", () => {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "/api/sku-process",
+            url: "/api/sku-process-type",
             type: "GET",
         },
+
+        columns: [
+            {
+                data: null,
+                render: (data, type, row, meta) => {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
+            },
+            {
+                data: "code",
+            },
+            {
+                data: "code_seq",
+            },
+            {
+                data: "name",
+            },
+        ],
 
         // columns: [
         //     // No

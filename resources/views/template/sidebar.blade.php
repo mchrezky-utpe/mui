@@ -118,7 +118,7 @@
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/sku-process">index</a>
+                                <a href="/sku-process-type">Process Type</a>
                             </li>
                             <!-- <li>
                                 <a href="/sku-pricelist-general-item"
