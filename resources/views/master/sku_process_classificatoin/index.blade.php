@@ -125,8 +125,8 @@
 <!-- MODAL -->
 <!-- @include('master.sku_process._add') @include('master.sku_process._edit') -->
 @endsection @section('extra_javascript')
-<script
-    src="{{ asset('assets/js/master/sku_process.js') }}"
+<!-- <script
+    src="{{ asset('assets/js/master/sku_process_classification.js') }}"
     type="text/javascript"
-></script>
+></script> -->
 @endsection
