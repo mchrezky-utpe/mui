@@ -21,6 +21,9 @@ $(document).on("click", ".edit", function (e) {
 document.addEventListener("DOMContentLoaded", () => {
     const csfr = document.querySelector("input[name=_token]").value;
 
+    alert("hai");
+    console.warn("haloo");
+
     const table = new DataTable(".data-table-item", {
         scrollX: true,
         scrollY: "400px",
@@ -183,4 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
         //     },
         // ],
     });
+
+    console.log("table", table);
 });

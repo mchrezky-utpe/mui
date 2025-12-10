@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('mst_sku_process_classification', function (Blueprint $table) {
             $table->id();
+            $table->string('code', 100)->nullable();
             $table->string('name', 100)->nullable();
             // $table->string('description', 100)->nullable();
             $table->string('prefix', 50)->nullable();

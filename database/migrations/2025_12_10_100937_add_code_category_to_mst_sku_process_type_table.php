@@ -12,29 +12,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('mst_sku_process_type', function (Blueprint $table) {
-
-            // fix PK supaya unsigned
-            $table->unsignedBigInteger('id')->change();
-
-            // kolom baru
+            //
             $table->string('code', 100)->nullable();
             $table->string('category', 100)->nullable();
             $table->string('name', 100)->nullable();
+            // $table->integer('item_type_id')->nullable();
 
-            // foreign key
             $table->unsignedBigInteger('mst_sku_type_id');
-            $table->foreign('mst_sku_type_id')
-                ->references('id')
-                ->on('mst_sku_type');
+            $table->foreign('mst_sku_type_id')->references('id')->on('mst_sku_type');
+
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('mst_sku_type');
+        Schema::table('mst_sku_process_type', function (Blueprint $table) {
+            //
+            $table->dropColumn(['code', 'category', 'name', 'mst_sku_type']);
+        });
     }
 };

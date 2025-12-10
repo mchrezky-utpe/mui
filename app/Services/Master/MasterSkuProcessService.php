@@ -51,7 +51,7 @@ class MasterSkuProcessService
             $start = $request->input('start') ?: 1;
             $length = $request->input('length') ?: 10; 
             $search = $request->input('search.value');
-            $query = DB::table('master_sku_process');
+            $query = DB::table('mst_sku_process');
             // $query = DB::table('vw_app_list_mst_sku');
             
             $query->where('flag_active', '=', 1);
