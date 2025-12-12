@@ -310,4 +310,11 @@ class MasterSkuController
 
         return response($sku->blob_image)->header('Content-Type', 'image/jpeg'); // atau sesuaikan dengan tipe gambar
     }
+
+
+    // etc
+    // get name n ext
+    // public function get_name_n_ext() {
+
+    // }
 }

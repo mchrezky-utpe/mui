@@ -2,29 +2,30 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Master\MasterFactoryMachineController;
-use App\Http\Controllers\Master\MasterFactoryWarehouseController;
-use App\Http\Controllers\Master\MasterGeneralCurrencyController;
-use App\Http\Controllers\Master\MasterGeneralDeductorController;
-use App\Http\Controllers\Master\MasterGeneralDepartmentController;
-use App\Http\Controllers\Master\MasterGeneralExchageRatesController;
-use App\Http\Controllers\Master\MasterGeneralOtherCostController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\OnlyGuestMiddleware;
+use App\Http\Middleware\OnlyMemberMiddleware;
+use App\Http\Controllers\Master\MasterSkuController;
+use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
+use App\Http\Controllers\Master\MasterSkuProcessController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
+use App\Http\Controllers\Master\MasterSkuPackagingController;
+use App\Http\Controllers\Transaction\PurchaseOrderController;
+use App\Http\Controllers\Master\MasterFactoryMachineController;
 use App\Http\Controllers\Master\MasterPersonCustomerController;
 use App\Http\Controllers\Master\MasterPersonEmployeeController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Master\MasterSkuController;
-use App\Http\Controllers\Master\MasterSkuProcessController;
-use App\Http\Controllers\Master\MasterSkuPackagingController;
-use App\Http\Controllers\Master\MasterSkuDetailController;
+use App\Http\Controllers\Master\MasterSkuProcessTypeController;
+use App\Http\Controllers\Master\MasterGeneralCurrencyController;
+use App\Http\Controllers\Master\MasterGeneralDeductorController;
+use App\Http\Controllers\Master\MasterFactoryWarehouseController;
+use App\Http\Controllers\Master\MasterGeneralOtherCostController;
+use App\Http\Controllers\Master\MasterGeneralDepartmentController;
+use App\Http\Controllers\Master\MasterGeneralExchageRatesController;
 use App\Http\Controllers\Transaction\Production\ProductionController;
 use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
-use App\Http\Controllers\Transaction\PurchaseOrderController;
-use App\Http\Middleware\OnlyGuestMiddleware;
-use App\Http\Middleware\OnlyMemberMiddleware;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
@@ -106,6 +107,22 @@ Route::controller(MasterSkuController::class)->group(function () {
 
 Route::controller(MasterSkuProcessController::class)->group(function () {
     // LIST
+    Route::get("/sku-process", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/sku-process", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/sku-process/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/sku-process/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/sku-process/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // Paginate
+    Route::get("/api/sku-process", "paginate")->middleware(OnlyMemberMiddleware::class);
+
+});
+
+Route::controller(MasterSkuProcessTypeController::class)->group(function () {
+    // LIST
     Route::get("/sku-process-type", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/sku-process-type", "add")->middleware(OnlyMemberMiddleware::class);
@@ -119,6 +136,8 @@ Route::controller(MasterSkuProcessController::class)->group(function () {
     Route::get("/api/sku-process-type", "paginate")->middleware(OnlyMemberMiddleware::class);
 
 });
+
+
 
 Route::controller(MasterSkuPackagingController::class)->group(function () {
     // LIST

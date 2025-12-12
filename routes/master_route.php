@@ -48,6 +48,7 @@ Route::controller(MasterSkuTypeController::class)->group(function () {
     Route::get("/api/sku-type/droplist/general-item", "api_droplist_for_general_item")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/sku-type/group-tag", "api_group_tag")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/sku-type/name-n-extension", "api_name_n_extension")->middleware(OnlyMemberMiddleware::class);
 
     // API
     Route::get("/api/sku-type", "api_all")->middleware(OnlyMemberMiddleware::class);
@@ -55,6 +56,7 @@ Route::controller(MasterSkuTypeController::class)->group(function () {
     Route::post("/api/sku-type", "api_add")->middleware(OnlyMemberMiddleware::class);
     Route::put("/api/sku-type/{id}", "api_edit")->middleware(OnlyMemberMiddleware::class);
     Route::delete("/api/sku-type/{id}", "api_delete")->middleware(OnlyMemberMiddleware::class);
+    // name n ext
 });
 
 Route::controller(MasterSkuUnitController::class)->group(function () {

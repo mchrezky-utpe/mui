@@ -148,7 +148,11 @@ class MasterSkuService
 
     public function get_all_sku(){
           return SkuListVw::orderBy('created_at', 'DESC')->take(1000)->get();
-     }
+    }
+
+    // public function get_all_name_n_ext() {
+    //     return DB::table("mst_sku")->orderBy('created_at', 'DESC')->get();
+    // }
      
     public function get_set_code(){
 

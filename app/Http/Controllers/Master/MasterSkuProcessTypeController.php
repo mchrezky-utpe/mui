@@ -3,26 +3,26 @@
 namespace App\Http\Controllers\Master;
 
 use App\Helpers\HelperCustom;
-use App\Services\Master\MasterSkuProcessService;
+use App\Services\Master\MasterSkuProcessTypeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MasterSkuProcessController
+class MasterSkuProcessTypeController
 {
 
-    private MasterSkuProcessService $service;
-    private $route = "/sku-process";
+    private MasterSkuProcessTypeService $service;
+    private $route = "/sku-process-type";
 
-    public function __construct(MasterSkuProcessService $service)
+    public function __construct(MasterSkuProcessTypeService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()
-            ->view('master.sku_process.index', ['data' =>  $this->service->list()
-            ]);
+        return response()->view('master.sku_process_type.index', [
+            'data' =>  $this->service->list()
+        ]);
     }
 
     public function add(Request $request)

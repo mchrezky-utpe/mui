@@ -16,6 +16,6 @@ class MasterSkuProcessType extends Model
     protected $table = "mst_sku_process_type";
 
     public function item_type() {
-        return $this->belongsTo(MasterSkuType::class, 'item_type_id');
+        return $this->belongsTo(MasterSkuType::class, 'mst_sku_type_id');
     }
 }
