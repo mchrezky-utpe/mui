@@ -330,7 +330,7 @@ Route::controller(BomController::class)->group(function () {
 });
 
 Route::controller(QcController::class)->group(function () {
-    Route::get("/qc/all", "get_data_all")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/qc/all", "get_data_all")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc/add", "add")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc/check", "index_check")->middleware(OnlyMemberMiddleware::class);

@@ -6,7 +6,10 @@ $("#table-qc").DataTable({
     serverSide: true,
     ajax: {
         url: base_url + "qc/all",
-        type: "GET"
+        type: "POST",
+        data: function(d){
+           d._token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
     },
     columns: [
         // { data: "id" },
