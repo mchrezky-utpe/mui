@@ -56,9 +56,11 @@
             </div>
             <div class="modal-body">
                  <form id="form_modal" autocomplete="off" class="form-horizontal" method="get" action="/qc/entry-qcc">
-                    @csrf
+                    {{-- @csrf --}}
                 
-                    <input  id="item_id"  class="form-control" type="hidden" placeholder="Enter quantity">
+                    <input  id="item_id" name="item_id"  class="form-control" type="hidden" placeholder="Enter quantity">
+                    <input  id="trans_po_id" name="trans_po_id"  class="form-control" type="hidden" placeholder="Enter quantity">
+                    <input  id="trans_rr_detail_id" name="trans_rr_detail_id"  class="form-control" type="hidden" placeholder="Enter quantity">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
@@ -66,7 +68,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Qty Receiving</label>
-                                                <input required name="qty_rcv" class="form-control" type="text" placeholder="Enter quantity">
+                                                <input readonly id="qty_receiving" name="qty_receiving" class="form-control" type="text" placeholder="Enter quantity">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -96,6 +98,11 @@
                                     </div>
                             
                                     <div class="form-group">
+                                        <label class="form-label">Qty Check</label>
+                                        <input required id="qty_check" readonly name="qty_check" class="form-control" type="text" placeholder="check quantity">
+                                    </div>
+                            
+                                    <div class="form-group">
                                         <label class="form-label">Qty Rework</label>
                                         <input required name="qty_rework" class="form-control" type="text" placeholder="Enter rework quantity">
                                     </div>
@@ -110,11 +117,12 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Cavity</label>
-                                                <select name="cavity" class="form-select">
+                                                <select name="flag_cavity" class="form-select">
                                                     <option value="">- Select -</option>
-                                                    <option value="1">Cavity 1</option>
-                                                    <option value="2">Cavity 2</option>
-                                                    <option value="3">Cavity 3</option>
+                                                    <option value="1">I</option>
+                                                    <option value="2">II</option>
+                                                    <option value="3">III</option>
+                                                    <option value="4">IV</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -126,19 +134,19 @@
                                                 <label class="form-label">Claim Submit</label>
                                                 <select name="claim_submit" class="form-select">
                                                     <option value="">- Select -</option>
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
+                                                    <option value="0">Yes</option>
+                                                    <option value="1">No</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Claim Action</label>
-                                                <select name="claim_action" class="form-select">
+                                                <select name="flag_claim_action" class="form-select">
                                                     <option value="">- Select -</option>
-                                                    <option value="approve">Approve</option>
-                                                    <option value="reject">Reject</option>
-                                                    <option value="pending">Pending</option>
+                                                    <option value="0">Approve</option>
+                                                    <option value="1">Reject</option>
+                                                    <option value="2">Pending</option>
                                                 </select>
                                             </div>
                                         </div>

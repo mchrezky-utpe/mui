@@ -8,11 +8,11 @@
         overflow-x: auto;
     }
 
-    .table-container table {
+    /* .table-container table {
       max-width: 150%;
         width: 150%;
         border-collapse: collapse;
-    }
+    } */
 </style>
 
 <div class="section__content section__content--p30">
@@ -48,21 +48,24 @@
             <div class="table-responsive">
               
 <div class="table-container">
-              <table id="table_sds" class="table table-striped table-bordered first">
+              <table id="table_returnable_packaging" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
-                    <th>Receiving Date</th>
-                    <th>DO Number</th>
-                    <th>Supplier</th>
+                    <th>PCC Code</th>
+                    <th>Packaging Type</th>
+                    <th>Packaging Name</th>
+                    <th>Model</th>
+                    <th>Unit</th>
+                    <th>Total Stock</th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) 
+                {{-- <tbody> @foreach($data as $key => $value) 
                   <tr>
                     <td>{{ $value->trans_date }}</td>
                     <td>{{ $value->doc_num }}</td>
                     <td>{{ $value->supplier }}</td>
                   </tr> @endforeach 
-                </tbody>
+                </tbody> --}}
                 </table>
                 </div>
             </div>

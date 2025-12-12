@@ -18,15 +18,6 @@
           </select>
         </div>
       </div>
-      <!-- REGION SIDE 3 -->
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="description_right">SDO Number</label>
-          <select required id="po_select" name="purchase_order_id" class="form-control">
-            <option value="">-- Select SDO --</option>
-          </select>
-        </div>
-      </div>
       <!-- HIDE FIELD -->
     </div>
 

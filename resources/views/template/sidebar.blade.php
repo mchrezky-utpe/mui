@@ -213,7 +213,10 @@
                                 <i class="fas fa-check-circle"></i>QC</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="/qc">Quality Control Check</a>
+                                    <a href="/qc">Quality Control</a>
+                                </li>
+                                <li>
+                                    <a href="/qc/goods-transfer">Goods Transfer</a>
                                 </li>
                             </ul>
                         </li> 
