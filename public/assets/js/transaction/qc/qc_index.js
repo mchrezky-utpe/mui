@@ -1,21 +1,26 @@
 $(document).ready(function(){
-$("#table-qc").DataTable({
+var table_qc = $("#table-qc").DataTable({
     scrollCollapse: true,
     scrollX: true,
     processing: true,
     serverSide: true,
+    // fixedColumns: {
+    //     left: 15 // Kolom 0-14 (sampai ppm) akan fixed
+    // },
     ajax: {
         url: base_url + "qc/all",
         type: "POST",
         data: function(d){
            d._token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            d.start_date = $('input[name="start_date"]').val();
+            d.end_date = $('input[name="end_date"]').val();
+            d.flag_checking_type = $("#flag_checking_type").val();
         }
     },
     columns: [
         // { data: "id" },
         { data: "checking_date" },
         { data: "checking_type" },
-        { data: "item_id" },
         { data: "item_code" },
         { data: "item_name" },
         { data: "item_type" },
@@ -88,24 +93,24 @@ $("#table-qc").DataTable({
         { data: "polish_mark" },
         { data: "orange_peel" },
         { data: "other" },
-        { data: "flag_judgement_sampling" },
-        { data: "flag_judgement_sorting" },
-        { data: "flag_judgement_rework" },
-        { data: "flag_judgement_return" },
+        { data: "remarks" },
+        { data: "sampling_level_normal" },
+        { data: "sampling_level_tighten" },
+        { data: "judgement_sampling" },
+        { data: "judgement_sorting" },
+        { data: "judgement_rework" },
+        { data: "judgement_return" },
         { data: "inspector" },
         { data: "shift" },
         { data: "check_goods_transfer" },
         { data: "status_goods_transfer" },
         { data: "date_goods_transfer" }
-    ],
-    order: [[0, "desc"]], // Mengurutkan berdasarkan id descending
-    columnDefs: [
-        {
-            targets: [0], // Kolom id
-            visible: false // Sembunyikan kolom id jika tidak perlu ditampilkan
-        }
     ]
 });
 
+
+    $('#btn-filter').click(function() {
+        table_qc.ajax.reload(); 
+    });
 
 });

@@ -29,15 +29,20 @@ class QcController
         $recordsTotal = $query->count();
         $recordsFiltered = $query->count();
         
+        if ($request->start_date != null && $request->end_date != null) {
+            $query->whereBetween('checking_date', [$request->start_date, $request->end_date]);
+        }
+
+        if($request->flag_checking_type != null){
+            $query->where('flag_checking_type', $request->flag_checking_type);
+        }
+        
         if($length > 0){        
             $data = $query->limit($length)->offset($start)->orderBy('doc_num','DESC')->get();
         }else{
             $data = $query->sortBy('doc_num')->get();
         }
 
-        if($request->flag_checking_type != null){
-            $query->where('flag_checking_type', $request->flag_checking_type);
-        }
 
         $data = [
             'data' =>  $data,
@@ -93,13 +98,14 @@ class QcController
                 'doc_counter' => $doc_num_generated['doc_counter'],
                 'flag_checking_type' => $request->flag_checking_type,
                 'flag_shift' => $request->flag_shift,
+                'flag_sampling_level' => $request->sampling == "on" ? 1 : 0,
                 'flag_cavity' => $request->flag_cavity,
                 'flag_claim_submit' => $request->flag_claim_submit,
                 'flag_cavity_action' => $request->flag_cavity_action,
-                'flag_judgement_sampling' => $request->flag_judgement_sampling,
-                'flag_judgement_sorting' => $request->flag_judgement_sorting,
-                'flag_judgement_rework' => $request->flag_judgement_rework,
-                'flag_judgement_return' => $request->flag_judgement_return,
+                'flag_judgement_sampling' => $request->flag_judgement_sampling == "on" ? 1 :0,
+                'flag_judgement_sorting' => $request->flag_judgement_sorting == "on" ? 1: 0,
+                'flag_judgement_rework' => $request->flag_judgement_rework == "on" ? 1 : 0,
+                'flag_judgement_return' => $request->flag_judgement_return == "on" ? 1 : 0,
                 'qty_check' => $request->qty_check,
                 'qty_receiving' => $request->qty_receiving,
                 'qty_ng' => $request->qty_ng,

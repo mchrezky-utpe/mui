@@ -42,11 +42,11 @@
           <div class="col-md-3">
             <div class="form-group">
               <label for="end_date">Checcking Type</label>
-              <select type="date" class="form-control" id="status" name="flag_checking_type">
+              <select type="date" class="form-control" id="flag_checking_type" name="flag_checking_type">
                   <option value>-</option> 
-                <option value="IQC">IQC</option>
-                <option value="QQC">QQC</option>
-                <option value="CS">CS</option>
+                <option value="0">IQC</option>
+                <option value="1">QQC</option>
+                <option value="2">CS</option>
               </select>
             </div>
           </div>
@@ -81,7 +81,7 @@
                     <th  colspan="25">Wip Defects</th>
                     <th  colspan="9">Process Defects</th>
                     <th  colspan="13">Chemical Defects</th>
-                    <th  colspan="10">Adhesive Tape and Painting Defects</th>
+                    <th  colspan="12">Adhesive Tape and Painting Defects</th>
                     <th  colspan="2">Other Defects</th>
                     <th  colspan="2">Sampling Level</th>
                     <th  colspan="4">Judgement</th>
@@ -150,6 +150,8 @@
                     <th>B. Cr</th>
                     <th>DOT</th>
                     <th>PT</th>
+                    <th>NIP</th>
+                    <th>DMG</th>
                     <th>FO</th>
                     <th>OTP</th>
                     <th>UTP</th>
