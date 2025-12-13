@@ -139,6 +139,7 @@ Route::controller(SupplierPerformanceController::class)->group(function () {
     Route::get("/supplier-performance", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/supplier-performance/summary", "get_summary_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/supplier-performance/summary/detail", "get_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/supplier-performance/summary/qc", "get_qc_detail")->middleware(OnlyMemberMiddleware::class);
 });
 
 

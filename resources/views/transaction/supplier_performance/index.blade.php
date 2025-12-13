@@ -107,7 +107,7 @@
                 <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab">Delivery Performance</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button disabled class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Quality Performance (under development)</button>
+                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab">Quality Performance (under development)</button>
             </li>
             
         </ul>
