@@ -17,6 +17,7 @@ use App\Http\Controllers\Master\MasterPersonCustomerController;
 use App\Http\Controllers\Master\MasterPersonEmployeeController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\Master\MasterSkuProcessTypeController;
+use App\Http\Controllers\Master\MasterSkuProcessClassificationController;
 use App\Http\Controllers\Master\MasterGeneralCurrencyController;
 use App\Http\Controllers\Master\MasterGeneralDeductorController;
 use App\Http\Controllers\Master\MasterFactoryWarehouseController;
@@ -121,23 +122,46 @@ Route::controller(MasterSkuProcessController::class)->group(function () {
 
 });
 
-Route::controller(MasterSkuProcessTypeController::class)->group(function () {
+
+Route::controller(MasterSkuProcessClassificationController::class)->group(function () {
+    $route_name = "sku-process-classification";
+    
     // LIST
-    Route::get("/sku-process-type", "index")->middleware(OnlyMemberMiddleware::class);
+    
+    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
-    Route::post("/sku-process-type", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
-    Route::post("/sku-process-type/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
-    Route::get("/sku-process-type/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
-    Route::post("/sku-process-type/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     // Paginate
-    Route::get("/api/sku-process-type", "paginate")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
 
 });
 
+Route::controller(MasterSkuProcessTypeController::class)->group(function () {
+    $route_name = "sku-process-type";
+    
+    // LIST
+    
+    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    // Paginate
+    Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
 
+    Route::get("/api/$route_name/names", "api_name")->middleware(OnlyMemberMiddleware::class);
+
+});
 
 Route::controller(MasterSkuPackagingController::class)->group(function () {
     // LIST

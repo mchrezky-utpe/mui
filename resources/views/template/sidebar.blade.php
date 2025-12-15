@@ -120,6 +120,9 @@
                             <li>
                                 <a href="/sku-process">Process ??</a>
                                 <a href="/sku-process-type">Process Type</a>
+                                <a href="/sku-process-classification"
+                                    >Process Classification</a
+                                >
                             </li>
                             <!-- <li>
                                 <a href="/sku-pricelist-general-item"

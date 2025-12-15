@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Helpers\HelperCustom;
-use App\Services\Master\MasterSkuProcessTypeService;
+use App\Services\Master\MasterSkuProcessClassificationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MasterSkuProcessTypeController
+class MasterSkuProcessClassificationController
 {
 
-    private MasterSkuProcessTypeService $service;
-    private $route = "/sku-process-type";
+    private MasterSkuProcessClassificationService $service;
+    private $route = "/sku-process-classification";
 
-    public function __construct(MasterSkuProcessTypeService $service)
+    public function __construct(MasterSkuProcessClassificationService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()->view('master.sku_process_type.index', [
-            'data' =>  $this->service->list()
+        return response()->view('master.sku_process_classification.index', [
+            // 'data' =>  $this->service->list()
         ]);
     }
 
@@ -52,21 +51,12 @@ class MasterSkuProcessTypeController
     }
 
     public function paginate(Request $request) {
-        $data = $this->service->pagination_sku_process_type($request);
+        $data = $this->service->paginate($request);
         return response()->json([
             'draw' => intval($request->input('draw')), // Parameter dari DataTables
             'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
             'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
             'data' => $data['data'], // Data untuk ditampilkan
         ]);
-    }
-
-    public function api_name() {
-        $data = $this->service->get_all_name();
-
-        return response()->json([
-            'success' => true,
-            'data' => $data,
-        ]);
-    }
+    }   
 }

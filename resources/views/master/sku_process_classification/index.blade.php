@@ -20,7 +20,7 @@
                                     class="breadcrumb-item active"
                                     aria-current="page"
                                 >
-                                    Process
+                                    Process Classification
                                 </li>
                             </ol>
                         </nav>
@@ -39,7 +39,6 @@
                             id="add_button"
                             type="button"
                             class="btn btn-primary"
-                            onclick="alert(`Fitur belum tresedia!`)"
                         >
                             Add +
                         </button>
@@ -52,18 +51,27 @@
                         >
                             Add +
                         </button> -->
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table
-                                class="table data-table-item table-striped aaaaaa"
-                            >
+                            <table class="table data-table-item table-striped">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Code</th>
-                                        <th>Category</th>
+                                        <th>Process Type</th>
                                         <th>Name</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -75,9 +83,9 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>ID</th>
-                                        <th>Manual ID</th>
-                                        <th>Description</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Process Type</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -85,12 +93,14 @@
                                     @foreach($data as $key => $value)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $value->prefix }}</td>
-                                        <td>{{ $value->manual_id }}</td>
-                                        <td>{{ $value->description }}</td>
+                                        <td>{{ $value->code }}</td>
+                                        <td>{{ $value->name }}</td>
+                                        <td>
+                                            {{ $value->process_type->name }}
+                                        </td>
                                         <td>
                                             <form
-                                                action="/sku-process/{{ $value->id }}/delete"
+                                                action="/sku-process-classification/{{ $value->id }}/delete"
                                                 method="post"
                                             >
                                                 @csrf
@@ -123,10 +133,11 @@
     </div>
 </div>
 <!-- MODAL -->
+@include('master.sku_process_classification._add')
 <!-- @include('master.sku_process._add') @include('master.sku_process._edit') -->
 @endsection @section('extra_javascript')
-<!-- <script
+<script
     src="{{ asset('assets/js/master/sku_process_classification.js') }}"
     type="text/javascript"
-></script> -->
+></script>
 @endsection
