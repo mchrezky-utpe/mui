@@ -113,8 +113,8 @@
                                 align-items: center;
                             "
                         >
-                            <i class="fas fa-caret-right"></i>
-                            Process and Business Type
+                            <i class="fas fa-caret-right"></i>Process And
+                            Business
                         </a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>

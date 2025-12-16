@@ -1,17 +1,22 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    const route = "sku-process-type";
+
     const addButtonEl = document.querySelector("#add_button");
     // const addModalEl = document.querySelector("#add_modal");
     const addModalEl = $("#add_modal");
 
     addButtonEl.addEventListener("click", () => {
-        console.log("prev modal");
+        // console.log("prev modal");
         addModalEl.modal("show");
         // addModalEl.classList.add("show");
-        console.log("after modal");
+        // console.log("after modal");
     });
 
     const selectInputItemTypeEl = $("#add_modal [name='mst_sku_type_id']");
-    console.log("selectInputItemTypeEl", selectInputItemTypeEl);
+    const selectInputItemTypeEl2 = $("#edit_modal [name='mst_sku_type_id']");
+
+    const formRemoveEl = document.querySelector("#form-remove");
+    // console.log("selectInputItemTypeEl", selectInputItemTypeEl);
 
     // $("#add_modal").on("click", () => {
     //     $("")
@@ -20,18 +25,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     // select input
     let itemType = [];
 
-    (async () => {
-        try {
-            const fetched = await fetchedJson("/api/sku-type/name-n-extension");
-            itemType = fetched?.data;
+    // (async () => {
+    try {
+        const fetched = await fetchedJson("/api/sku-type/name-n-extension");
+        itemType = fetched?.data;
 
-            console.log("fetched in itemType", fetched);
-            console.log("itemType:", JSON.stringify(itemType, 0, 4));
-            populateSelectV2(itemType, selectInputItemTypeEl);
-        } catch (e) {
-            console.error(e);
-        }
-    })();
+        // console.log("fetched in itemType", fetched);
+        // console.log("itemType:", JSON.stringify(itemType, 0, 4));
+        populateSelectV2(itemType, selectInputItemTypeEl);
+        populateSelectV2(itemType, selectInputItemTypeEl2);
+    } catch (e) {
+        console.error(e);
+    }
+    // })();
 
     // if (itemType.length) {
     //     populateSelect(itemType, selectInputItemTypeEl);
@@ -71,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "/api/sku-process-type",
+            url: `/api/${route}`,
             type: "GET",
             dataSrc: "data", // PENTING!
         },
@@ -113,6 +119,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <button data-id="${id}" type="button" class="edit btn btn-success btn-sm">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
+                        <button data-id="${id}" type="button" class="remove btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `,
+                _render: (id) => `
+                    <div class="d-flex gap-1 justify-content-center">
+                        <button @onclick="" data-id="${id}" type="button" class="edit btn btn-success btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
 
                         <form action="/sku-part-information/${id}/delete" method="post">
                             <input type="hidden" name="_token" value="${
@@ -128,113 +144,78 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `,
             },
         ],
-
-        _columns: [
-            // No
-            {
-                data: null,
-                render: (data, type, row, meta) => {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                },
-            },
-
-            // Image
-            {
-                data: "blob_image",
-                render: (img) => {
-                    if (img) {
-                        return `<img src="data:image/png;base64,${img}" width="80"/>`;
-                    }
-                    return `<span class="text-muted">No image</span>`;
-                },
-            },
-
-            // Part Code
-            { data: "sku_id" },
-
-            // Part Name
-            { data: "sku_name" },
-
-            // Spec Code
-            { data: "sku_specification_code" },
-
-            // Spec Description
-            { data: "sku_specification_detail" },
-
-            // Sales Category
-            { data: "sku_sales_category" },
-
-            // Set Code
-            { data: "set_code" },
-
-            // Item Sub Category
-            { data: "sku_sub_category" },
-
-            // Item Type
-            { data: "sku_material_type" },
-
-            // Business Type
-            { data: "sku_business_type" },
-
-            // Model
-            { data: "sku_model" },
-
-            // Surface Area
-            { data: "val_area" },
-
-            // Weight
-            { data: "val_weight" },
-
-            // Inventory Unit
-            { data: "sku_inventory_unit" },
-
-            // Procurement Type
-            { data: "sku_procurement_type" },
-
-            // Procurement Unit
-            {
-                data: "sku_procurement_unit",
-                render: (v) => v ?? "-",
-            },
-
-            // Conversion value
-            { data: "val_conversion" },
-
-            // Inventory Register
-            {
-                data: "flag_inventory_register",
-                render: (v) => (v == 1 ? "YES" : "NO"),
-            },
-
-            // Action button
-            {
-                data: "id",
-                render: (id) => `
-                    <div class="d-flex">
-                        <button
-                            data-id="${id}"
-                            type="button"
-                            class="edit btn btn-success"
-                        >
-                            <span class="fas fa-pencil-alt"></span>
-                        </button>
-
-                        <form action="/sku-part-information/${id}/delete" method="post">
-                            <input type="hidden" name="_token"
-                                value="${
-                                    document.querySelector("input[name=_token]")
-                                        .value
-                                }">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger">
-                                <span class="fas fa-trash"></span>
-                            </button>
-                        </form>
-                    </div>
-                `,
-            },
-        ],
     });
+
+    let mainDataList = [];
+    let mainDatas = {};
+
+    // ambil response AJAX DataTables
+    table.on("xhr.dt", function (e, settings, json) {
+        mainDataList = json.data;
+
+        if (Array.isArray(mainDataList)) {
+            mainDatas = mainDataList.reduce((acc, curr) => {
+                acc[curr.id] = curr;
+                return acc;
+            }, {});
+        }
+    });
+
+    const delegationEdit = (e) => {
+        const editButtonEl = e?.target.closest(".edit");
+
+        if (!editButtonEl) return;
+
+        const id = editButtonEl?.dataset?.id;
+        const data = mainDatas?.[id];
+
+        if (!data || typeof data != "object")
+            return console.log(
+                `${id} not in ${Object.keys(mainDatas).join(",")}`
+            );
+
+        // fill edit
+        $("#edit_modal form").action = `${route}/${id}`;
+        $("#edit_modal [name='category']").val(data.category);
+        $("#edit_modal [name='name']").val(data.name);
+        $("#edit_modal [name='mst_sku_type_id']").val(data.mst_sku_type_id);
+        $("#edit_modal").modal("show");
+    };
+
+    const delegationRemove = async (e) => {
+        const removeButton = e?.target.closest(".remove");
+        if (!removeButton) return;
+
+        e?.target.preventDefault?.();
+        const id = removeButton.dataset.id;
+        const data = mainDatas[id];
+
+        if (!data) return console.warn("data does not exists!");
+
+        const { isConfirmed } = await Swal.fire({
+            title: "Yakin ingin hapus Data?",
+            text: "Data yang dihapus tidak bisa di kembalikan!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#62c700",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya, saya yakin!",
+            cancelButtonText: "Batal",
+        });
+
+        if (!isConfirmed) return;
+
+        formRemoveEl.action = `${route}/${id}/delete`;
+        formRemoveEl.submit();
+    };
+
+    const deletagions = (e) => {
+        delegationEdit(e);
+        delegationRemove(e);
+    };
+
+    document.addEventListener("click", deletagions);
+    // table.on("click", delegations);
 });
 
 const fetchedJson = async (uri, args) => {
@@ -243,19 +224,19 @@ const fetchedJson = async (uri, args) => {
 
         const text = await fetched.text();
 
-        let json;
+        // let json;
 
         try {
-            json = JSON.parse(text);
+            return JSON.parse(text);
         } catch (e) {
             throw new Error(
                 `request fetch '${uri}' was failed cuz the response is not valid json. response: ${text}`
             );
         }
 
-        return json;
+        // return json;
     } catch (e) {
-        console.error(`Error while fetching, error: ${e}`);
+        console.error(`Error while fetching json, error: ${e}`);
     }
 };
 
@@ -263,12 +244,25 @@ const fetchedJson = async (uri, args) => {
  * fill select input option element.
  * note: element should be using jQuery :D
  */
-const populateSelectV2 = (master_data, element) => {
+const populateSelectV2 = (
+    master_data,
+    element,
+    columnValueName,
+    columnTextName
+) => {
+    columnValueName ||= "id";
+    columnTextName ||= "description";
+
+    if (!master_data) throw new Error("invalid master data!!!");
+    if (!element) throw new Error("element not found!!!");
+
     element.empty();
     element.append('<option value=""> -- Select -- </option>');
     master_data.forEach((data) => {
         element.append(
-            `<option value="${data.id}">${data.description}</option>`
+            `<option value="${data[columnValueName || ""]}">${
+                data[columnTextName] || ""
+            }</option>`
         );
     });
 };

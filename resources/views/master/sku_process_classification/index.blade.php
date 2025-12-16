@@ -63,73 +63,35 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table data-table-item table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Code</th>
-                                        <th>Process Type</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                            @if (false)
-                            <table
-                                class="table data-table data-table-item table-striped table-bordered first"
+                        <div class="">
+                            <div
+                                class="container-fluid"
+                                style="overflow-x: auto"
                             >
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Process Type</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($data as $key => $value)
-                                    <tr>
-                                        <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $value->code }}</td>
-                                        <td>{{ $value->name }}</td>
-                                        <td>
-                                            {{ $value->process_type->name }}
-                                        </td>
-                                        <td>
-                                            <form
-                                                action="/sku-process-classification/{{ $value->id }}/delete"
-                                                method="post"
-                                            >
-                                                @csrf
-                                                <button
-                                                    data-id="{{ $value->id }}"
-                                                    type="button"
-                                                    class="edit btn btn-success"
-                                                >
-                                                    <span
-                                                        class="fas fa-pencil-alt"
-                                                    ></span>
-                                                </button>
-                                                <button class="btn btn-danger">
-                                                    <span
-                                                        class="fas fa-trash"
-                                                    ></span>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            @endif
+                                <table
+                                    class="table data-table-item table-striped"
+                                >
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Code</th>
+                                            <th>Process Type</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div hidden>
+        <form id="form-remove" action="" method="POST">@csrf</form>
     </div>
 </div>
 <!-- MODAL -->

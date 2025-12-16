@@ -54,6 +54,16 @@
                         >
                             Add +
                         </button> -->
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -142,6 +152,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div hidden>
+        <form id="form-remove" action="" method="POST">@csrf</form>
     </div>
 </div>
 <!-- MODAL -->
