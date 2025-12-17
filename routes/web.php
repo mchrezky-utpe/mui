@@ -123,26 +123,6 @@ Route::controller(MasterSkuProcessController::class)->group(function () {
 
 });
 
-
-Route::controller(MasterSkuProcessClassificationController::class)->group(function () {
-    $route_name = "sku-process-classification";
-    
-    // LIST
-    
-    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
-    // ADD
-    Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
-    // DELETE
-    Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    // GET
-    Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT    
-    Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-    // Paginate
-    Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
-
-});
-
 Route::controller(MasterSkuProcessTypeController::class)->group(function () {
     $route_name = "sku-process-type";
     
@@ -164,6 +144,27 @@ Route::controller(MasterSkuProcessTypeController::class)->group(function () {
 
 });
 
+
+Route::controller(MasterSkuProcessClassificationController::class)->group(function () {
+    $route_name = "sku-process-classification";
+    
+    // LIST
+    
+    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    // Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT    
+    Route::post("/$route_name/{id}", "edit")->middleware(OnlyMemberMiddleware::class);
+    // Paginate
+    Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
+
+});
+
+
 Route::controller(MasterSkuBusinessController::class)->group(function () {
     $route_name = "sku-business-type";
 
@@ -175,10 +176,11 @@ Route::controller(MasterSkuBusinessController::class)->group(function () {
     Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     // GET
     Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT
+    // EDIT    
     Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/$route_name/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuPackagingController::class)->group(function () {

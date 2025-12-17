@@ -48,10 +48,12 @@ class MasterSkuProcessService
     }
 
     public function pagination_sku_process_type(Request $request){
-            $start = $request->input('start') ?: 1;
-            $length = $request->input('length') ?: 10; 
+            $start  = (int) $request->input('start', 0);
+            $length = (int) $request->input('length', 10);
+
             $search = $request->input('search.value');
-            $query = DB::table('mst_sku_process');
+            $query = MasterSkuProcess::query();
+
             // $query = DB::table('vw_app_list_mst_sku');
             
             $query->where('flag_active', '=', 1);

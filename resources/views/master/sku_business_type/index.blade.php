@@ -44,16 +44,41 @@
                         >
                             Add +
                         </button>
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            <table
+                                class="table data-table-item table-striped table-bordered first"
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Code</th>
+                                        <th>Category</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            @if (false)
                             <table
                                 class="table data-table table-striped table-bordered first"
                             >
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>ID</th>
+                                        <!-- <th>ID</th> -->
                                         <th>Manual ID</th>
                                         <th>Description</th>
                                         <th>Action</th>
@@ -63,9 +88,13 @@
                                     @foreach($data as $key => $value)
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
-                                        <td>{{ $value->prefix }}</td>
-                                        <td>{{ $value->manual_id }}</td>
-                                        <td>{{ $value->description }}</td>
+                                        <!-- <td>{{ $value->prefix }}</td> -->
+                                        <td>
+                                            {{ $value->manual_id ?? $value->code }}
+                                        </td>
+                                        <td>
+                                            {{ $value->description ?? $value->name}}
+                                        </td>
                                         <td>
                                             <form
                                                 action="/sku-business/{{ $value->id }}/delete"
@@ -92,11 +121,16 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div hidden>
+        <form id="form-remove" action="" method="POST">@csrf</form>
     </div>
 </div>
 <!-- MODAL -->
@@ -104,7 +138,7 @@
 @include('master.sku_business_type._edit') @endsection
 @section('extra_javascript')
 <script
-    src="{{ asset('assets/js/master/sku_business.js') }}"
+    src="{{ asset('assets/js/master/sku_business_type.js') }}"
     type="text/javascript"
 ></script>
 @endsection

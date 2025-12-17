@@ -249,7 +249,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
         // fill edit
-        $("#edit_modal form").action = `${route}/${id}`;
+        const action = `${route}/${id}`;
+        console.warn("action", action);
+        $("#edit_modal form").action = action;
+        // console.warn("form Action", $("#edit_modal form").action);
         $("#edit_modal [name='manual_id']").val(data.code);
         $("#edit_modal [name='mst_sku_process_type_id']").val(
             data.mst_sku_process_type_id
