@@ -3,11 +3,11 @@
     @csrf
     <div class="form-group">
       <label>Model Code</label>
-        <input name="prefix" class="form-control" type="text">
+        <input  class="form-control" type="text" placeholder="IMC-XXX" readonly>
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <label>Model Name</label>
+      <input required name="description" class="form-control" type="text" placeholder="Model Name">
     </div>
   </form>   
 </x-modals.modal>

@@ -3,11 +3,11 @@
   @csrf
     <div class="form-group">
       <label>Unit Code</label>
-         <input name="prefix" class="form-control" type="text" value="UC-XXXX">
+         <input name="prefix" class="form-control" type="text" placeholder="IUC-XXX" readonly>
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <label>Unit Name</label>
+      <input required name="description" class="form-control" type="text" placeholder="Unit Name">
     </div>
   </form>
 </x-modals.modal>

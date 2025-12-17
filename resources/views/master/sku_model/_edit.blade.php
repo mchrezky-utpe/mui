@@ -4,12 +4,12 @@
     <div class="form-group">
       <label>Model Code</label>
       <input name="id" class="form-control" type="hidden">
-      <input name="prefix" class="form-control" type="text" placeholder="Manual ID">
+      <input name="prefix" class="form-control" type="text" readonly>
     </div>
     <div class="form-group">
-      <label>Description</label>
+      <label>Model Name</label>
       <input type="hidden" name="id" />
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <input required name="description" class="form-control" type="text" placeholder="Model Name">
     </div>
   </form>   
 </x-modals.modal>

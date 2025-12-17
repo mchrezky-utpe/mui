@@ -34,7 +34,7 @@
                   <tr>
                     <th>No</th>
                     <th>Unit Code</th>
-                    <th>Description</th>
+                    <th>Unit Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>

@@ -19,9 +19,8 @@ class MasterSkuModelService
 
     public function add(Request $request){
         
-            $data['prefix'] = $request->prefix;
             $result_code =  $this->generateCode();
-            $data['manual_id'] = $result_code['code'];
+            $data['prefix'] = $result_code['code'];
             $data['counter'] = $result_code['counter'];
             
             $data['description'] = $request->description;

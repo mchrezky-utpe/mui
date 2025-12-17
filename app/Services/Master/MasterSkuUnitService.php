@@ -20,8 +20,11 @@ class MasterSkuUnitService
 
     public function add(Request $request){
         
+            $result_code =  $this->generateCode();
+            $data['prefix'] = $result_code['code'];
+            $data['counter'] = $result_code['counter'];
+
             $data['description'] = $request->description;
-            $data['prefix'] = $request->prefix;
             $data['generated_id'] = Str::uuid()->toString();
             $data['flag_active'] = 1;
             $data = MasterSkuUnit::create($data);
@@ -45,7 +48,6 @@ class MasterSkuUnitService
     {
         $data = MasterSkuUnit::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
-        $data->prefix= $request->prefix;
         $data->save();
     }
 
@@ -55,7 +57,7 @@ class MasterSkuUnitService
     
     public function generateCode(){
 
-        $result = DB::selectOne(" SELECT generate_unit_code(?) AS code ",["UC"]);
+        $result = DB::selectOne(" SELECT generate_unit_code(?) AS code ",["IUC"]);
 
         $code = $result->code;
         $parts = explode("-", $code);
