@@ -74,4 +74,13 @@ class MasterSkuTypeController
             'data' => $data
         ]);
     }
+
+    public function api_name_n_extension() {
+        $data = $this->service->get_all_name_n_ext();
+
+        return response()->json([
+            'success' => true,
+            'data' => $data,
+        ]);
+    }
 }

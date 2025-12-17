@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Helpers\HelperCustom;
-use App\Services\Master\MasterSkuProcessService;
+// use App\Helpers\HelperCustom;
+use App\Services\Master\MasterSkuBusinessTypeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MasterSkuProcessController
+class MasterSkuBusinessTypeController
 {
+    private MasterSkuBusinessTypeService $service;
+    private $route = "/sku-business-type";
 
-    private MasterSkuProcessService $service;
-    private $route = "/sku-process";
-
-    public function __construct(MasterSkuProcessService $service)
+    public function __construct(MasterSkuBusinessTypeService $service)
     {
         $this->service = $service;
     }
 
     public function index(): Response
     {
-        return response()
-            ->view('master.sku_process.index', ['data' =>  $this->service->list()
-            ]);
+        return response()->view('master.sku_business_type.index', [
+            'data' =>  $this->service->list()
+        ]);
     }
 
     public function add(Request $request)
@@ -51,8 +50,16 @@ class MasterSkuProcessController
         return redirect($this->route);
     }
 
+    public function api_droplist()
+    {
+        $data = $this->service->droplist();
+         return response()->json([
+            'data' => $data
+        ]);
+    }
+
     public function paginate(Request $request) {
-        $data = $this->service->pagination_sku_process_type($request);
+        $data = $this->service->pagination($request);
         return response()->json([
             'draw' => intval($request->input('draw')), // Parameter dari DataTables
             'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter

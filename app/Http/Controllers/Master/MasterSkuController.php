@@ -7,7 +7,7 @@ use App\Exports\SkuGeneralItemExport;
 use App\Exports\SkuProductionMaterialExport;
 use App\Services\Master\MasterSkuService;
 use App\Services\Master\MasterSkuTypeService;
-use App\Services\Master\MasterSkuBusinessService;
+use App\Services\Master\MasterSkuBusinessTypeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,12 +17,12 @@ class MasterSkuController
 
     private MasterSkuService $service;
     private MasterSkuTypeService $typeService;
-    private MasterSkuBusinessService $businessService;
+    private MasterSkuBusinessTypeService $businessService;
 
     public function __construct(
         MasterSkuService $service,
         MasterSkuTypeService $typeService,
-        MasterSkuBusinessService $businessService,
+        MasterSkuBusinessTypeService $businessService,
     ) {
         $this->service = $service;
         // $this->detailService = $detailService;
@@ -310,4 +310,11 @@ class MasterSkuController
 
         return response($sku->blob_image)->header('Content-Type', 'image/jpeg'); // atau sesuaikan dengan tipe gambar
     }
+
+
+    // etc
+    // get name n ext
+    // public function get_name_n_ext() {
+
+    // }
 }

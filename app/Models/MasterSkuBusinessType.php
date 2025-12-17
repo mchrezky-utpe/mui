@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
 
-class MasterSkuBusiness extends Model
+class MasterSkuBusinessType extends Model
 {
     use HasFactory;
   
@@ -14,6 +14,5 @@ class MasterSkuBusiness extends Model
 
     protected $table = 'mst_sku_business_type';
     
-
     use HasUserTracking;
 }

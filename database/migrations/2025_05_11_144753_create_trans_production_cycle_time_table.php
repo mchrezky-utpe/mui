@@ -11,6 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        if (Schema::hasTable('trans_production_cycle_time')) {
+            return;
+        }
+        
+        
        Schema::create('trans_production_cycle_time', function (Blueprint $table) {
         $table->id();
         $table->string('description', 100)->nullable()->comment('Item Name');

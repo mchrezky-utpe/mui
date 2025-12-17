@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasTable('mst_factory_warehouse')) {
-            return; // skip migration ini
-        }
-        Schema::create('mst_factory_warehouse', function (Blueprint $table) {
+        Schema::create('mst_sku_process_classification', function (Blueprint $table) {
             $table->id();
-            $table->string('description', 100)->nullable();
+            $table->string('code', 100)->nullable();
+            $table->string('name', 100)->nullable();
+            // $table->string('description', 100)->nullable();
             $table->string('prefix', 50)->nullable();
             $table->boolean('flag_active')->nullable();
             $table->string('manual_id', 50)->nullable();
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mst_factory_warehouse');
+        Schema::dropIfExists('mst_sku_process_classification');
     }
 };

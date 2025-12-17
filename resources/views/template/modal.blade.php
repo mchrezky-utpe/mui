@@ -1,9 +1,21 @@
-<div class="modal fade" id="{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="{{ $id }}Label" aria-hidden="true">
+<div
+    class="modal fade"
+    id="{{ $id }}"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="{{ $id }}Label"
+    aria-hidden="true"
+>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="{{ $id }}Label">{{ $title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -11,9 +23,25 @@
                 {{ $slot }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="close btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="{{ $id }}Submit">Save changes</button>
-                {{-- <button type="button" class="btn btn-primary" id="addBtn">Save Data</button> --}}
+                <button
+                    type="button"
+                    class="close btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="{{ $id }}Submit"
+                >
+                    Save changes
+                </button>
+                {{--
+                <button type="button" class="btn btn-primary" id="addBtn">
+                    Save Data
+                </button>
+                --}}
             </div>
         </div>
     </div>

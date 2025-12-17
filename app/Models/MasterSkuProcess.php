@@ -10,7 +10,7 @@ class MasterSkuProcess extends Model
 {
     use HasFactory;
   
-    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
+    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by', "code", "code_seq", "name"];
 
     protected $table = 'mst_sku_process';
 

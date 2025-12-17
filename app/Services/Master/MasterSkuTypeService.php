@@ -99,6 +99,10 @@ class MasterSkuTypeService
       return $result->counter;
     }
 
+    public function get_all_name_n_ext() {
+        return DB::table('mst_sku_type')->select('id', 'description', 'prefix')->distinct()->get();
+    }
+
     public function generateCode(){
 
       $result = DB::selectOne(" SELECT generate_item_type_code(?) AS code ",["ITC"]);

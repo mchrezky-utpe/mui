@@ -11,16 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mst_sku_type', function (Blueprint $table) {
-            $table->id(); // BIGINT and primary key with auto-increment
-            $table->string('description', 100)->nullable();
-            $table->string('prefix', 50)->nullable();
-            $table->boolean('flag_active')->nullable();
-            $table->string('manual_id', 50)->nullable();
-            $table->string('generated_id', 64)->nullable();
-            addAuditColumns($table);
+        Schema::table('mst_sku_process_type', function (Blueprint $table) {
+
+            // fix PK supaya unsigned
+            $table->unsignedBigInteger('id')->change();
+
+            // kolom baru
+            $table->string('code', 100)->nullable();
+            $table->string('category', 100)->nullable();
+            $table->string('name', 100)->nullable();
+
+            // foreign key
+            $table->unsignedBigInteger('mst_sku_type_id');
+            $table->foreign('mst_sku_type_id')
+                ->references('id')
+                ->on('mst_sku_type');
         });
     }
+
 
     /**
      * Reverse the migrations.

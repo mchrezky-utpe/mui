@@ -16,11 +16,14 @@
                                 <li class="breadcrumb-item">
                                     <a href="#" class="breadcrumb-link">SKU</a>
                                 </li>
+                                <!-- <li class="breadcrumb-item" aria-current="page">
+                                    Process n Business Type
+                                </li> -->
                                 <li
                                     class="breadcrumb-item active"
                                     aria-current="page"
                                 >
-                                    Process
+                                    Sku Process Type
                                 </li>
                             </ol>
                         </nav>
@@ -32,10 +35,17 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card">
                     <div
-                        class="card-header d-flex justify-content-between align-items-center"
+                        class="card-header d-flex justify-contenst-between align-items-center"
                     >
                         <h5 class="mb-0">List</h5>
                         <button
+                            id="add_button"
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            Add +
+                        </button>
+                        <!-- <button
                             id="add_button"
                             type="button"
                             class="btn btn-primary"
@@ -43,12 +53,56 @@
                             data-target="#add_modal"
                         >
                             Add +
-                        </button>
+                        </button> -->
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            <table class="table data-table-item table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Code</th>
+                                        <th>Category</th>
+                                        <th>Name</th>
+                                        <th>Item Type</th>
+                                        <th>Extension</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            @if (false)
+
+                            <tbody>
+                                @foreach($data as $key => $value)
+                                <tr>
+                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ $value->prefix }}</td>
+                                    <td>{{ $value->category }}</td>
+                                    <td>{{ $value->name }}</td>
+                                    <td>
+                                        {{ $value->item_type->description ?? '-' }}
+                                    </td>
+                                    <td>
+                                        {{ $value->item_type->prefix ?? '-' }}
+                                    </td>
+                                    <td>-</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+
                             <table
-                                class="table data-table table-striped table-bordered first"
+                                class="table data-table data-table-item table-striped table-bordered first"
                             >
                                 <thead>
                                     <tr>
@@ -92,18 +146,25 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div hidden>
+        <form id="form-remove" action="" method="POST">@csrf</form>
+    </div>
 </div>
 <!-- MODAL -->
-@include('master.sku_process._add') @include('master.sku_process._edit')
-@endsection @section('extra_javascript')
+<!-- @include('master.sku_process._add') @include('master.sku_process._edit') -->
+@include('master.sku_process_type._add')
+@include('master.sku_process_type._edit') @endsection
+@section('extra_javascript')
 <script
-    src="{{ asset('assets/js/master/sku_process.js') }}"
+    src="{{ asset('assets/js/master/sku_process_type.js') }}"
     type="text/javascript"
 ></script>
 @endsection
