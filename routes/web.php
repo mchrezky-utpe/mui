@@ -9,7 +9,7 @@ use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
-use App\Http\Controllers\Master\MasterSkuBusinessController;
+use App\Http\Controllers\Master\MasterSkuBusinessTypeController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
@@ -31,6 +31,7 @@ use App\Http\Controllers\Transaction\Production\ProductionProcessController;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
+require_once base_path('routes/livewire_route.php');
 
 Route::get('/', function () {
     return view('dashboard.dashboard');
@@ -165,7 +166,7 @@ Route::controller(MasterSkuProcessClassificationController::class)->group(functi
 });
 
 
-Route::controller(MasterSkuBusinessController::class)->group(function () {
+Route::controller(MasterSkuBusinessTypeController::class)->group(function () {
     $route_name = "sku-business-type";
 
     // LIST

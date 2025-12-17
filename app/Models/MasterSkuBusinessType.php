@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
 
-class MasterSkuBusiness extends Model
+class MasterSkuBusinessType extends Model
 {
     use HasFactory;
   

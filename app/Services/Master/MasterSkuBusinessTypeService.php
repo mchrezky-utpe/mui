@@ -3,19 +3,19 @@
 namespace App\Services\Master;
 
 use App\Helpers\HelperCustom;
-use App\Models\MasterSkuBusiness;
+use App\Models\MasterSkuBusinessType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Master\Sku\SkuBusinessListVw;
 
-class MasterSkuBusinessService
+class MasterSkuBusinessTypeService
 {
 
     private $allowedCategory = ['AUTOMOTIVE', 'NON-AUTOMOTIVE'];
     
     public function list(){
-        return MasterSkuBusiness::where('flag_active', 1)->get();
+        return MasterSkuBusinessType::where('flag_active', 1)->get();
     }
 
     public function add(Request $request){
@@ -34,7 +34,7 @@ class MasterSkuBusinessService
         // $data["category"] = $request->category;
 
         $data['flag_active'] = 1;
-        $data = MasterSkuBusiness::create($data);
+        $data = MasterSkuBusinessType::create($data);
         $data['code'] = HelperCustom::generateTrxNo('SKUT', $data->id);
         $data->save();
     }
@@ -43,13 +43,13 @@ class MasterSkuBusinessService
     //     $data['manual_id'] = $request->manual_id;
     //     $data['generated_id'] = Str::uuid()->toString();
     //     $data['flag_active'] = 1;
-    //     $data = MasterSkuBusiness::create($data);
+    //     $data = MasterSkuBusinessType::create($data);
     //     $data['prefix'] = HelperCustom::generateTrxNo('SKUT', $data->id);
     //     $data->save();
     // }
 
     public function delete($id){
-        $data = MasterSkuBusiness::where('id', $id)->firstOrFail();
+        $data = MasterSkuBusinessType::where('id', $id)->firstOrFail();
         $data->flag_active = 0;
         $data->deleted_at  = Carbon::now();
         $data->deleted_by  = Auth::id();
@@ -58,12 +58,12 @@ class MasterSkuBusinessService
     
     public function get(int $id)
     {
-        return MasterSkuBusiness::where('id', $id)->firstOrFail();
+        return MasterSkuBusinessType::where('id', $id)->firstOrFail();
     } 
 
     function edit(Request $request)
     {
-        $data = MasterSkuBusiness::where('id', $request->id)->firstOrFail();
+        $data = MasterSkuBusinessType::where('id', $request->id)->firstOrFail();
         $data->description = $request->description;
         $data->manual_id= $request->manual_id;
         $data->save();
@@ -79,10 +79,10 @@ class MasterSkuBusinessService
         $length = (int) $request->input('length', 10);
         $search = $request->input('search.value');
 
-        $query = MasterSkuBusiness::query()
+        $query = MasterSkuBusinessType::query()
             ->where('flag_active', 1);
 
-        $recordsTotal = MasterSkuBusiness::where('flag_active', 1)->count();
+        $recordsTotal = MasterSkuBusinessType::where('flag_active', 1)->count();
 
         // search
         if (!empty($search)) {

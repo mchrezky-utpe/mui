@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Master;
 
 // use App\Helpers\HelperCustom;
-use App\Services\Master\MasterSkuBusinessService;
+use App\Services\Master\MasterSkuBusinessTypeService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MasterSkuBusinessController
+class MasterSkuBusinessTypeController
 {
-    private MasterSkuBusinessService $service;
+    private MasterSkuBusinessTypeService $service;
     private $route = "/sku-business-type";
 
-    public function __construct(MasterSkuBusinessService $service)
+    public function __construct(MasterSkuBusinessTypeService $service)
     {
         $this->service = $service;
     }
