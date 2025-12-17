@@ -97,20 +97,7 @@ Route::controller(MasterSkuModelController::class)->group(function () {
     Route::get("/api/sku-model/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 });
 
-Route::controller(MasterSkuBusinessController::class)->group(function () {
-    // LIST
-    Route::get("/sku-business", "index")->middleware(OnlyMemberMiddleware::class);
-    // ADD
-    Route::post("/sku-business", "add")->middleware(OnlyMemberMiddleware::class);
-    // DELETE
-    Route::post("/sku-business/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    // GET
-    Route::get("/sku-business/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // EDIT
-    Route::post("/sku-business/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 
-    Route::get("/api/sku-business/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
-});
 
 
 

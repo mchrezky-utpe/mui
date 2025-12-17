@@ -123,6 +123,7 @@
                                 <a href="/sku-process-classification"
                                     >Process Classification</a
                                 >
+                                <a href="/sku-business-type">Business Type</a>
                             </li>
                             <!-- <li>
                                 <a href="/sku-pricelist-general-item"

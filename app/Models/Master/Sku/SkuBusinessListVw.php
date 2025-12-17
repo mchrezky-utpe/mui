@@ -2,9 +2,9 @@
 
 namespace App\Models\Master\Sku;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasUserTracking;
+// use App\Traits\HasUserTracking;
 
 class SkuBusinessListVw extends Model
 {

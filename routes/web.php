@@ -9,6 +9,7 @@ use App\Http\Controllers\Master\MasterSkuController;
 use App\Http\Controllers\Master\MasterSkuDetailController;
 use App\Http\Controllers\Master\MasterGeneralTaxController;
 use App\Http\Controllers\Master\MasterSkuProcessController;
+use App\Http\Controllers\Master\MasterSkuBusinessController;
 use App\Http\Controllers\Master\MasterGeneralTermsController;
 use App\Http\Controllers\Master\MasterSkuPackagingController;
 use App\Http\Controllers\Transaction\PurchaseOrderController;
@@ -17,7 +18,6 @@ use App\Http\Controllers\Master\MasterPersonCustomerController;
 use App\Http\Controllers\Master\MasterPersonEmployeeController;
 use App\Http\Controllers\Master\MasterPersonSupplierController;
 use App\Http\Controllers\Master\MasterSkuProcessTypeController;
-use App\Http\Controllers\Master\MasterSkuProcessClassificationController;
 use App\Http\Controllers\Master\MasterGeneralCurrencyController;
 use App\Http\Controllers\Master\MasterGeneralDeductorController;
 use App\Http\Controllers\Master\MasterFactoryWarehouseController;
@@ -25,6 +25,7 @@ use App\Http\Controllers\Master\MasterGeneralOtherCostController;
 use App\Http\Controllers\Master\MasterGeneralDepartmentController;
 use App\Http\Controllers\Master\MasterGeneralExchageRatesController;
 use App\Http\Controllers\Transaction\Production\ProductionController;
+use App\Http\Controllers\Master\MasterSkuProcessClassificationController;
 use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
 
@@ -161,6 +162,23 @@ Route::controller(MasterSkuProcessTypeController::class)->group(function () {
 
     Route::get("/api/$route_name/names", "api_name")->middleware(OnlyMemberMiddleware::class);
 
+});
+
+Route::controller(MasterSkuBusinessController::class)->group(function () {
+    $route_name = "sku-business-type";
+
+    // LIST
+    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
+    // DELETE
+    Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // GET
+    Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // EDIT
+    Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+
+    Route::get("/api/$route_name/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterSkuPackagingController::class)->group(function () {

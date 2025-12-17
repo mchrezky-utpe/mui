@@ -14,6 +14,5 @@ class MasterSkuBusiness extends Model
 
     protected $table = 'mst_sku_business_type';
     
-
     use HasUserTracking;
 }
