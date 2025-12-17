@@ -37,7 +37,7 @@ class SkuBusinessTypeComponent extends Component
 
         $new = MasterSkuBusinessType::create($validated);
 
-        $new->code = HelperCustom::generateTrxNo('SKUT', $new->id);
+        $new->prefix = HelperCustom::generateTrxNo('SKUT', $new->id);
         $new->save();
 
         session()->flash('success', 'Data berhasil ditambahkan');

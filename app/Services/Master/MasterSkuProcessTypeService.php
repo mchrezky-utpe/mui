@@ -26,7 +26,7 @@ class MasterSkuProcessTypeService
         $data['category'] = strtoupper($data['category']);
         $data['flag_active'] = 1;
         $data = MasterSkuProcessType::create($data);
-        $data["code"] = HelperCustom::generateTrxNo("PTC-", $data->id);
+        $data["prefix"] = HelperCustom::generateTrxNo("PTC-", $data->id);
         $data->save();
         
         // $data['description'] = $request->description;

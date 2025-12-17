@@ -87,7 +87,7 @@
                                 @foreach($data as $key => $value)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $value->code }}</td>
+                                    <td>{{ $value->prefix }}</td>
                                     <td>{{ $value->category }}</td>
                                     <td>{{ $value->name }}</td>
                                     <td>
