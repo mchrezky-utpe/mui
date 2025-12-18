@@ -34,7 +34,7 @@
                   <tr>
                     <th>No</th>
                     <th>Model Code</th>
-                    <th>Description</th>
+                    <th>Model Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>

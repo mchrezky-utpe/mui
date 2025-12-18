@@ -4,11 +4,11 @@
     <div class="form-group">
       <label>Unit Code</label>
       <input name="id" class="form-control" type="hidden">
-      <input required name="prefix" class="form-control" type="text" placeholder="Unit Code">
+      <input required name="prefix" class="form-control" type="text" placeholder="Unit Code" readonly>
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input required name="description" class="form-control" type="text" placeholder="Description">
+      <label>Unit Name</label>
+      <input required name="description" class="form-control" type="text" placeholder="Unit Name">
     </div>
   </form>
 </x-modals.modal>

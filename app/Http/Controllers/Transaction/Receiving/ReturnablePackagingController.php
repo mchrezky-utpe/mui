@@ -20,7 +20,7 @@ class ReturnablePackagingController
     {
         return response()->view(
             'transaction.receiving.returnable_packaging.index',
-            ['data' =>     $this->service->list()]
+            ['data' =>    []]
         );
     }
 

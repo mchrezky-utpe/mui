@@ -139,6 +139,7 @@ Route::controller(SupplierPerformanceController::class)->group(function () {
     Route::get("/supplier-performance", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/supplier-performance/summary", "get_summary_by")->middleware(OnlyMemberMiddleware::class);
     Route::get("/supplier-performance/summary/detail", "get_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/supplier-performance/summary/qc", "get_qc_detail")->middleware(OnlyMemberMiddleware::class);
 });
 
 
@@ -330,10 +331,12 @@ Route::controller(BomController::class)->group(function () {
 });
 
 Route::controller(QcController::class)->group(function () {
+    Route::post("/qc/all", "get_data_all")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/qc/add", "add")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc/check", "index_check")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc/check/get", "get_check_data")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/qc/check", "add")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/qc/check", "save_qc_check")->middleware(OnlyMemberMiddleware::class);
     Route::get("/qc/check/all", "get_all")->middleware(OnlyMemberMiddleware::class);
     Route::post("/qc/good-transfer", "index_good_transfer")->middleware(OnlyMemberMiddleware::class);
     Route::post("/qc/good-transfer/all", "get_all_good_transfer")->middleware(OnlyMemberMiddleware::class);

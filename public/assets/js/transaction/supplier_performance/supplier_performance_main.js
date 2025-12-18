@@ -54,10 +54,10 @@ $(document).ready(function() {
 							${item.delivery_grade}
 						</td>
 						<td>
-							-
+							${item.ppm}
 						</td>
 						<td>
-							-
+							${item.qc_grade}
 						</td>
 					</tr>`;
 
@@ -163,7 +163,7 @@ function loadDeliveryDetailList(startdate, endDate, prs_supplier_id) {
 function loadQualityDetailList(startdate, endDate, prs_supplier_id) {
 	$.ajax({
 		type: "GET",
-		url: base_url + `supplier-performance/summary/detail?startDate=${startdate}&endDate=${endDate}&prs_supplier_id=${prs_supplier_id}`,
+		url: base_url + `supplier-performance/summary/qc?startDate=${startdate}&endDate=${endDate}&prs_supplier_id=${prs_supplier_id}`,
 		success: function(data) {
 			data = data.data;
 			
@@ -188,13 +188,13 @@ function loadQualityDetailList(startdate, endDate, prs_supplier_id) {
 			for (let index = 0; index < data.length; index++) {
 				const item = data[index];
 				$("#detail_performance_table tbody .row_received")
-				.append(`<td>${item.total_sds}</td>`);
+				.append(`<td>${item.total_received}</td>`);
 
 				$("#detail_performance_table tbody .row_ng")
-				.append(`<td>${item.total_on_schedule}</td>`);
+				.append(`<td>${item.total_ng}</td>`);
 
 				$("#detail_performance_table tbody .row_ppm")
-				.append(`<td>${item.total_late}</td>`)
+				.append(`<td>${item.total_ppm}</td>`)
 			}	
             loadDeliveryLineChart(data,'Supplier Quality Performance',"PPM");
 		},
@@ -212,7 +212,7 @@ function loadDeliveryLineChart(data, label, title) {
             labels: data.map(m => m.period_label),
             datasets: [{
                 label: label,
-                data: data.map(m => Number(m.total_late)),
+                data: data.map(m => Number(m.total_ppm)),
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.1)',
                 tension: 0.1,

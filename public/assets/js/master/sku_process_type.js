@@ -176,6 +176,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // fill edit
         $("#edit_modal form").action = `${route}/${id}`;
+        $("#edit_modal [name='prefix']").val(data.prefix);
         $("#edit_modal [name='category']").val(data.category);
         $("#edit_modal [name='name']").val(data.name);
         $("#edit_modal [name='prefix']").val(data.prefix);

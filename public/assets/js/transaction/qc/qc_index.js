@@ -1,0 +1,116 @@
+$(document).ready(function(){
+var table_qc = $("#table-qc").DataTable({
+    scrollCollapse: true,
+    scrollX: true,
+    processing: true,
+    serverSide: true,
+    // fixedColumns: {
+    //     left: 15 // Kolom 0-14 (sampai ppm) akan fixed
+    // },
+    ajax: {
+        url: base_url + "qc/all",
+        type: "POST",
+        data: function(d){
+           d._token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            d.start_date = $('input[name="start_date"]').val();
+            d.end_date = $('input[name="end_date"]').val();
+            d.flag_checking_type = $("#flag_checking_type").val();
+        }
+    },
+    columns: [
+        // { data: "id" },
+        { data: "checking_date" },
+        { data: "checking_type" },
+        { data: "item_code" },
+        { data: "item_name" },
+        { data: "item_type" },
+        { data: "supplier" },
+        { data: "qty_receiving" },
+        { data: "qty_check" },
+        { data: "os" },
+        { data: "qty_good" },
+        { data: "qty_ng" },
+        { data: "qty_rework" },
+        { data: "qty_percentage" },
+        { data: "ppm" },
+        { data: "weld_line" },
+        { data: "silver" },
+        { data: "crack" },
+        { data: "sort_mould" },
+        { data: "corrosive" },
+        { data: "flow_mark" },
+        { data: "sink_mark" },
+        { data: "black_dot" },
+        { data: "flashes" },
+        { data: "oily" },
+        { data: "white_mark" },
+        { data: "fleck" },
+        { data: "gas_mark" },
+        { data: "broken_runner" },
+        { data: "shortage" },
+        { data: "non_standard_packing" },
+        { data: "step" },
+        { data: "excess_material" },
+        { data: "dented_scrath_wip" },
+        { data: "dirty_wip" },
+        { data: "mix_part_wip" },
+        { data: "over_cut_wip" },
+        { data: "bending_wip" },
+        { data: "dimention_wip" },
+        { data: "gate_cut_wip" },
+        { data: "dented_scrath_process" },
+        { data: "dirty_process" },
+        { data: "mix_part_process" },
+        { data: "over_cut_process" },
+        { data: "bending_process" },
+        { data: "dimention_process" },
+        { data: "broken" },
+        { data: "wrinkle" },
+        { data: "gate_cut_process" },
+        { data: "white_wash" },
+        { data: "peel_off" },
+        { data: "burn_mark" },
+        { data: "yellowish" },
+        { data: "under_shinning" },
+        { data: "skip" },
+        { data: "bubble" },
+        { data: "rough_dot" },
+        { data: "copper_mark" },
+        { data: "over_shinning" },
+        { data: "burn_chrome" },
+        { data: "dot" },
+        { data: "pitting" },
+        { data: "not_in_a_position" },
+        { data: "damage" },
+        { data: "fold" },
+        { data: "over_tape" },
+        { data: "under_tape" },
+        { data: "dirty_spray" },
+        { data: "over_spray" },
+        { data: "under_spray" },
+        { data: "uneven_spray" },
+        { data: "glass" },
+        { data: "polish_mark" },
+        { data: "orange_peel" },
+        { data: "other" },
+        { data: "remarks" },
+        { data: "sampling_level_normal" },
+        { data: "sampling_level_tighten" },
+        { data: "judgement_sampling" },
+        { data: "judgement_sorting" },
+        { data: "judgement_rework" },
+        { data: "judgement_return" },
+        { data: "inspector" },
+        { data: "shift" },
+        { data: "check_goods_transfer" },
+        { data: "status_goods_transfer" },
+        { data: "date_goods_transfer" }
+    ]
+});
+
+
+    $('#btn-filter').click(function() {
+        table_qc.ajax.reload(); 
+    });
+
+});
