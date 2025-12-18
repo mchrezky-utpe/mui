@@ -60,7 +60,7 @@ class MasterSkuProcessService
 
             if (!empty($search)) {
                 $query->where(function ($q) use ($search) {
-                    $q->where('code', 'like', "%$search%")
+                    $q->where('prefix', 'like', "%$search%")
                     ->orWhere("code_seq", 'like', "%$search%")
                     ->orWhere("name", 'like', "%$search%");
                 });

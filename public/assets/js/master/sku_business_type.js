@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 render: (data, type, row, meta) =>
                     meta.row + meta.settings._iDisplayStart + 1,
             },
-            { data: "code", defaultContent: "-" },
+            { data: "prefix", defaultContent: "-" },
             { data: "category", defaultContent: "-" },
-            { data: "name" },
+            { data: "description" },
             {
                 data: "id",
                 orderable: false,
@@ -109,8 +109,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.warn("formEditEl.action", formEditEl.action);
         // console.warn("form Action", $("#edit_modal form").action);
         $("#edit_modal [name='manual_id']").val(data.code);
+        $("#edit_modal [name='prefix']").val(data.prefix);
         $("#edit_modal [name='category']").val(data.category);
-        $("#edit_modal [name='name']").val(data.name);
+        $("#edit_modal [name='description']").val(data.description);
         $("#edit_modal").modal("show");
     };
 

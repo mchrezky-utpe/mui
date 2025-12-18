@@ -10,7 +10,7 @@
         <div class="form-group">
             <label>Code</label>
             <input
-                name="manual_id"
+                name="prefix"
                 class="form-control"
                 type="text"
                 placeholder="PTC-XXX"

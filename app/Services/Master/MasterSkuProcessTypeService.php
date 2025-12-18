@@ -26,7 +26,7 @@ class MasterSkuProcessTypeService
         $data['category'] = strtoupper($data['category']);
         $data['flag_active'] = 1;
         $data = MasterSkuProcessType::create($data);
-        $data["code"] = HelperCustom::generateTrxNo("PTC-", $data->id);
+        $data["prefix"] = HelperCustom::generateTrxNo("PTC-", $data->id);
         $data->save();
         
         // $data['description'] = $request->description;
@@ -75,7 +75,7 @@ class MasterSkuProcessTypeService
 
             if (!empty($search)) {
                 $query->where(function ($q) use ($search) {
-                    $q->where('code', 'like', "%$search%")
+                    $q->where('prefix', 'like', "%$search%")
                     ->orWhere("category", 'like', "%$search%")
                     ->orWhere("name", 'like', "%$search%");
                 });

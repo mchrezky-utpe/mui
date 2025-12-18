@@ -21,7 +21,7 @@ class MasterSkuBusinessTypeService
     public function add(Request $request){
 
         $data = $request->validate([
-            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
             'category' => 'required|in:' . implode(',', $this->allowedCategory),
             
             // 'category' => 'required|in:AUTOMOTIVE,NON-AUTOMOTIVE',
@@ -29,13 +29,13 @@ class MasterSkuBusinessTypeService
         ]);
         
         
-        // $data["name"] = $request->name;
+        $data["description"] = $request->description;
         // $data["code"] = $request->code;
         // $data["category"] = $request->category;
 
         $data['flag_active'] = 1;
         $data = MasterSkuBusinessType::create($data);
-        $data['code'] = HelperCustom::generateTrxNo('SKUT', $data->id);
+        $data['prefix'] = HelperCustom::generateTrxNo('SKUT', $data->id);
         $data->save();
     }
     // public function add(Request $request){
@@ -87,8 +87,8 @@ class MasterSkuBusinessTypeService
         // search
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('code', 'like', "%{$search}%")
-                ->orWhere('name', 'like', "%{$search}%");
+                $q->where('prefix', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
             });
         }
 

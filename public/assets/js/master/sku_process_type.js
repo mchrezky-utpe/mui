@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 width: "50px",
             },
 
-            { data: "code" },
+            { data: "prefix" },
             { data: "category" },
             { data: "name" },
 
@@ -178,6 +178,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         $("#edit_modal form").action = `${route}/${id}`;
         $("#edit_modal [name='category']").val(data.category);
         $("#edit_modal [name='name']").val(data.name);
+        $("#edit_modal [name='prefix']").val(data.prefix);
         $("#edit_modal [name='mst_sku_type_id']").val(data.mst_sku_type_id);
         $("#edit_modal").modal("show");
     };

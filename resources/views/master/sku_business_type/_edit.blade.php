@@ -11,7 +11,7 @@
             <label>Manual ID</label>
             <input
                 required
-                name="manual_id"
+                name="prefix"
                 class="form-control"
                 type="text"
                 placeholder="SKUT-XXX"
@@ -32,7 +32,7 @@
             <label>Name</label>
             <input
                 required
-                name="name"
+                name="description"
                 class="form-control"
                 type="text"
                 placeholder="Name"
