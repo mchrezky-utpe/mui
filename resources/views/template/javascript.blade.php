@@ -46,5 +46,5 @@
 <!-- Additional Javascript -->
 <script src="{{ asset('assets/js/util.js') }}"></script>
 <script>
-    var base_url = "{{url(" / ")}}" + "/";
+    var base_url = "{{url("/")}}" + "/";
 </script>
