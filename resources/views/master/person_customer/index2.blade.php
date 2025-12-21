@@ -39,14 +39,21 @@
                 <table class="table data-table table-striped table-bordered first">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>ID</th>
-                      <th>Manual ID</th>
-                      <th>Description</th>
+                      <th>Code</th>
+                      <th>Customer Name</th>
+                      <th>Initials</th>
+                      <th>Office Address</th>
+                      <th>Phone</th>
+                      <th>Fax</th>
+                      <th>Email</th>
+                      <th>NPWP</th>
+                      <th>CP Name</th>
+                      <th>CP Phone</th>
+                      <th>CP Email</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody> @foreach($data as $key => $value) <tr>
+                  {{-- <tbody> @foreach($data as $key => $value) <tr>
                       <td>{{ $loop->index + 1 }}</td>
                       <td>{{ $value->prefix }}</td>
                       <td>{{ $value->manual_id }}</td>
@@ -69,7 +76,7 @@
                           </form>
                             </div>
                       </td>
-                    </tr> @endforeach </tbody>
+                    </tr> @endforeach </tbody> --}}
                 </table>
               </div>
             </div>

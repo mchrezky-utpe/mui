@@ -15,9 +15,6 @@ class MasterPersonCustomerService
     public function list(){
         return MasterPersonCustomer::where('flag_active', 1)->get();
     }
-    public function list2(){
-        return MasterPersonCustomer::where('flag_active', 0)->get();
-    }
 
     public function add(Request $request){
         $data['description'] = $request->description;

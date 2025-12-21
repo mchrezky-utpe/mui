@@ -42,6 +42,9 @@
                     <li>
                         <a href="/person-supplier">Supplier</a>
                     </li>
+                    <li>
+                        <a href="/customer">Customer</a>
+                    </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-caret-right"></i>Item

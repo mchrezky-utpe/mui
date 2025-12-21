@@ -12,7 +12,7 @@ class MasterPersonCustomer extends Model
   
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $table = 'mst_person_customer';
+    protected $table = 'mst_customer';
 
     public $timestamps = false;
 

@@ -233,18 +233,20 @@ Route::controller(MasterPersonSupplierController::class)->group(function () {
 
 Route::controller(MasterPersonCustomerController::class)->group(function () {
     // LIST
-    Route::get("/person-customer", "index")->middleware(OnlyMemberMiddleware::class);
-    Route::get("/person-customer/index2", "index2")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/customer", "index")->middleware(OnlyMemberMiddleware::class);
+  
+    Route::get("/customer/all", "get_all")->middleware(OnlyMemberMiddleware::class);
     // ADD
-    Route::post("/person-customer", "add")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    Route::post("/customer", "add")->middleware(OnlyMemberMiddleware::class);
     // DELETE
-    Route::post("/person-customer/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/person-customer/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/person-customer/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/customer/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/customer/{id}/restore", "restore")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/customer/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     // GET
-    Route::get("/person-customer/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/customer/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
-    Route::post("/person-customer/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/customer/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralTermsController::class)->group(function () {

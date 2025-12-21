@@ -1,20 +1,17 @@
 @extends('template.main') @section('content') <div class="section__content section__content--p30">
+ <meta name="csrf-token" content="{{ csrf_token() }}">
   <div class="container-fluid">
     <div class="row">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-          <h2 class="pageheader-title">PERSON  Customer</h2>
+          <h2 class="pageheader-title">Customer</h2>
           <div class="page-breadcrumb">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="#" class="breadcrumb-link">Master</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="#" class="breadcrumb-link">Person</a>
+                  <a href="#" class="breadcrumb-link">Material Details</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Customer</li>
-                
               </ol>
             </nav>
           </div>
@@ -35,17 +32,25 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table data-table table-striped table-bordered first">
+              <table id="table-data" class="tabl table-striped table-bordered first">
                 <thead>
                   <tr>
-                    <th>No</th>
-                    <th>ID</th>
-                    <th>Manual ID</th>
-                    <th>Description</th>
-                    <th>Action</th>
+                      <th>Code</th>
+                      <th>Name</th>
+                      <th>Initials</th>
+                      <th>Office Address</th>
+                      <th>Phone</th>
+                      <th>Fax</th>
+                      <th>Email</th>
+                      <th>NPWP</th>
+                      <th>CP Name</th>
+                      <th>CP Phone</th>
+                      <th>CP Email</th>
+                      <th>Action</th>
                   </tr>
                 </thead>
-                <tbody> @foreach($data as $key => $value) <tr>
+                 <tbody> 
+                  {{-- @foreach($data as $key => $value) <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td>{{ $value->prefix }}</td>
                     <td>{{ $value->manual_id }}</td>
@@ -60,7 +65,8 @@
                         </button>
                       </form>
                     </td>
-                  </tr> @endforeach </tbody>
+                  </tr> @endforeach  --}}
+                </tbody> 
               </table>
             </div>
           </div>
