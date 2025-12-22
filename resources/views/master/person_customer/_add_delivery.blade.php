@@ -9,7 +9,7 @@
       </div>
       <div class="form-group">
         <label>Customer Name</label>
-        <input readonly name="name" class="form-control" type="text" value="<?php echo $customer_name; ?>">
+        <input readonly name="customer_name" class="form-control" type="text" value="<?php echo $customer_name; ?>">
       </div>
       <div class="form-group">
         <label>DD Code</label>
