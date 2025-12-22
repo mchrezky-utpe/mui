@@ -247,6 +247,10 @@ Route::controller(MasterPersonCustomerController::class)->group(function () {
     Route::get("/customer/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT    
     Route::post("/customer/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+
+    // delivery destination
+    Route::get("/customer/{id}/delivery", "index_delivery")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/customer/{id}/delivery", "add_delivery_destination")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(MasterGeneralTermsController::class)->group(function () {

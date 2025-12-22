@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\MasterPersonCustomer;
+use App\Models\MasterCustomerDeliveryDestination;
 use Illuminate\Support\Str;
 use App\Helpers\NumberGenerator;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,6 @@ class MasterPersonCustomerController
 
     public function index(): Response
     {
-        $data = MasterPersonCustomer::where('flag_active', 1)->get();
         return response()->view('master.person_customer.index', ['data' =>  null ]);
     }
 
@@ -102,5 +102,52 @@ class MasterPersonCustomerController
         $data->contact_person_email= $request->contact_person_email;
         $data->save();
         return redirect("/customer");
+    }
+
+    public function index_delivery(Request $request, int $customerId): Response
+    {
+        // get customer info 
+        
+        $query = DB::table('mst_customer');
+        $query->where('id', $customerId);
+        $customer_data = $query->get()->first();
+        $customer_id = $customer_data->id;
+        $customer_name= $customer_data->name;
+        $customer_code = $customer_data->prefix;
+
+        // get delivery info
+        $query = DB::table('vw_app_list_mst_customer_delivery_hd');
+        $query->where('customer_id', $customerId);
+        $data = $query->get();
+
+        
+        return response()->view('master.person_customer.index_delivery', 
+        [
+            'data' =>  $data,
+            'customer_id' => $customer_id,
+            'customer_name' => $customer_name,
+            'customer_code' => $customer_code
+             ]
+    );
+    }
+
+    public function add_delivery_destination(Request $request, int $customer_id)
+    {
+        $doc_num_generated = NumberGenerator::generateNumberV3('mst_customer_delivery_destination', 'DD', 'counter');
+        $data['prefix'] = $doc_num_generated['doc_num'];
+        $data['counter'] = $doc_num_generated['doc_counter'];
+        $data['customer_id'] = $customer_id;
+        $data['destination_code'] = $request->destination_code;
+        $data['destination_name'] = $request->destination_name;
+        $data['destination_address'] = $request->destination_address;
+        $data['flag_destination_type'] = $request->flag_destination_type;
+        $data['flag_destination_status'] = 1;
+        $data['flag_active'] = 1;
+        $data['flag_show'] = 1;
+        $data['manual_id'] = $request->manual_id;
+        $data['generated_id'] = Str::uuid()->toString();
+        $data = MasterCustomerDeliveryDestination::create($data);
+        $data->save();
+        return redirect("/customer/".$customer_id."/delivery");
     }
 }

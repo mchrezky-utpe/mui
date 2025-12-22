@@ -67,6 +67,9 @@ $("#table-data").DataTable({
                         `" type="button" class="edit btn btn-success me-1">
                             <span class="fas fa-pencil-alt"></span>
                             </button>
+							<a class="delivery btn btn-primary" href="/customer/`+data.id+`/delivery">
+                            <span class="fas fa-shipping-fast"></span>
+                            </a>
                             <button type="submit" class="btn btn-danger">
                             <span class="fas fa-trash"></span>
                             </button>
