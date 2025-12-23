@@ -19,7 +19,8 @@ class MasterSkuProcessClassificationService
         // dd('MASUK SERVICE ADD');
         
         $data = $request->validate([
-            'name'            => 'required|string|max:100',
+            'manual_id'            => 'nullable|string|max:100',
+            'description'            => 'required|string|max:100',
             // 'category'        => 'required|string|in:IN-HOUSE,PURCHASE',
             'mst_sku_process_type_id' => 'required|integer|exists:mst_sku_process_type,id',
         ]);
@@ -28,7 +29,7 @@ class MasterSkuProcessClassificationService
         // $data['category'] = strtoupper($data['category']);
         $data['flag_active'] = 1;
         $data = MasterSkuProcessClassification::create($data);
-        $data["code"] = HelperCustom::generateTrxNo("PCC-", $data->id);
+        $data["prefix"] = HelperCustom::generateTrxNo("PCC-", $data->id);
         $data->save();
 
         // dd($data);   
@@ -60,56 +61,71 @@ class MasterSkuProcessClassificationService
     } 
 
     function edit(Request $request)
-    {
-        $data = MasterSkuProcessClassification::where('id', $request->id)->firstOrFail();
-        $data->description = $request->description;
-        $data->manual_id = $request->manual_id;
-        $data->save();
+    {   
+        $data = $request->validate([            
+            'manual_id'            => 'nullable|string|max:100',
+            'description'            => 'required|string|max:100',
+            'mst_sku_process_type_id' => 'required|integer|exists:mst_sku_process_type,id',
+        ]);
+        
+        $oldData = MasterSkuProcessClassification::where('id', $request->id)->firstOrFail();
+        // $data->description = $request->description;
+        // $data->manual_id = $request->manual_id;
+        
+        // $data->save();
+        $oldData->update($data);
+    
     }
 
     public function paginate(Request $request){
-            $start = $request->input('start') ?: 1;
-            $length = $request->input('length') ?: 10; 
-            $search = $request->input('search.value');
-            // $query = DB::table('mst_sku_process_type');
-            $query = MasterSkuProcessClassification::with("process_type");
-            // $query = DB::table('vw_app_list_mst_sku');
-            
-            $query->where('flag_active', '=', 1);
+        $start = $request->input('start') ?: 1;
+        $length = $request->input('length') ?: 10; 
+        $search = $request->input('search.value');
+        // $query = DB::table('mst_sku_process_type');
 
-            if (!empty($search)) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('code', 'like', "%$search%")
-                    // ->orWhere("category", 'like', "%$search%")
-                    ->orWhere("name", 'like', "%$search%");
-                });
-            }
+        // $query = MasterSkuProcessClassification::query()
+        // ->where('flag_active', '=', 1);
 
+        $recordsTotal = MasterSkuProcessClassification::where('flag_active', 1)->count();
 
-            // // $query->where('sku_type_flag_checking','=',4); // unchecked type
+        $query = MasterSkuProcessClassification::with("process_type");
+        // $query = DB::table('vw_app_list_mst_sku');
         
-            // if (!empty($search)) {
-            //     $query->where(function ($q) use ($search) {
-            //         $q->Where('sku_id', 'like', '%' . $search . '%')
-            //             ->orWhere('sku_name', 'like', '%' . $search . '%')
-            //             ->orWhere('sku_specification_code', 'like', '%' . $search . '%');
-            //     });
-            // }
+        $query->where('flag_active', '=', 1);
 
-            $recordsTotal = $query->count();
-            $recordsFiltered = $query->count();
-            
-            if ($length > 0){        
-                $data = $query->limit($length)->offset($start)->get();
-            }
-            else{
-                $data = $query->get();
-            }
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('prefix', 'like', value: "%$search%")
+                ->orWhere("process_type.name","like", value:"%%$search")
+                ->orWhere("description", 'like', "%$search%");
+            });
+        }
 
-            return [
-                'data' => $data,
-                'recordsTotal' => $recordsTotal,
-                'recordsFiltered' => $recordsFiltered
-            ];
+
+        // // $query->where('sku_type_flag_checking','=',4); // unchecked type
+    
+        // if (!empty($search)) {
+        //     $query->where(function ($q) use ($search) {
+        //         $q->Where('sku_id', 'like', '%' . $search . '%')
+        //             ->orWhere('sku_name', 'like', '%' . $search . '%')
+        //             ->orWhere('sku_specification_code', 'like', '%' . $search . '%');
+        //     });
+        // }
+
+        // $recordsTotal = $query->count();
+        $recordsFiltered = $query->count();
+        
+        if ($length > 0){        
+            $data = $query->limit($length)->offset($start)->get();
+        }
+        else{
+            $data = $query->get();
+        }
+
+        return [
+            'data' => $data,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered
+        ];
     }
 }

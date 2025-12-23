@@ -4,10 +4,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const addButtonEl = document.querySelector("#add_button");
     // const addModalEl = document.querySelector("#add_modal");
     const addModalEl = $("#add_modal");
+    const editModalEl = $("#edit_modal");
 
     addButtonEl.addEventListener("click", () => {
         // console.log("prev modal");
         addModalEl.modal("show");
+        testSelect();
         // addModalEl.classList.add("show");
         // console.log("after modal");
     });
@@ -15,9 +17,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const selectInputProcessTypeEl = $(
         "#add_modal [name='mst_sku_process_type_id']"
     );
+    const selectInputProcessTypeEl2 = $(
+        "#edit_modal [name='mst_sku_process_type_id']"
+    );
 
     const formRemoveEl = document.querySelector("#form-remove");
-    // console.log("selectInputProcessTypeEl", selectInputProcessTypeEl);
+    console.log("selectInputProcessTypeEl", selectInputProcessTypeEl);
 
     // $("#add_modal").on("click", () => {
     //     $("")
@@ -31,9 +36,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         const fetched = await fetchedJson("/api/sku-process-type/names");
         processType = fetched?.data;
 
+        // testSelect();
         // console.log("fetched in processType", fetched);
         // console.log("processType:", JSON.stringify(processType, 0, 4));
-        populateSelectV2(processType, selectInputProcessTypeEl, "id", "name");
+        populateSelectV2(
+            processType,
+            selectInputProcessTypeEl,
+            "id",
+            "description"
+        );
+        populateSelectV2(
+            processType,
+            selectInputProcessTypeEl2,
+            "id",
+            "description"
+        );
+
+        // testSelect();
     } catch (e) {
         console.error(e);
     }
@@ -72,14 +91,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     meta.row + meta.settings._iDisplayStart + 1,
             },
 
-            { data: "code" },
-
+            { data: "prefix", defaultContent: "-" },
+            { data: "manual_id", defaultContent: "-" },
             {
                 data: "process_type.name",
                 defaultContent: "-",
             },
-
-            { data: "name" },
+            { data: "description", defaultContent: "-" },
 
             {
                 data: "id",
@@ -236,29 +254,51 @@ document.addEventListener("DOMContentLoaded", async () => {
     const delegationEdit = (e) => {
         const editButtonEl = e?.target.closest(".edit");
 
-        if (!editButtonEl) return;
+        console.log("editButtonEl", editButtonEl);
+
+        if (!editButtonEl) return console.warn("editButtonEl not found!");
+
+        // testSelect();
 
         e.preventDefault();
 
         const id = editButtonEl?.dataset?.id;
         const data = mainDatas?.[id];
 
+        console.log("data", data);
+
         if (!data || typeof data != "object")
             return console.log(
                 `${id} not in ${Object.keys(mainDatas).join(",")}`
             );
 
+        // return;
+
         // fill edit
-        const action = `${route}/${id}`;
-        console.warn("action", action);
-        $("#edit_modal form").action = action;
+        // const action = `${route}/${id}`;
+        // console.warn("action", action);
+        // $("#edit_modal form").action = action;
         // console.warn("form Action", $("#edit_modal form").action);
-        $("#edit_modal [name='manual_id']").val(data.code);
+        $("#edit_modal [name='id']").val(data.id);
+        $("#edit_modal [name='prefix']").val(data.prefix);
+        $("#edit_modal [name='manual_id']").val(data.manual_id);
+        $("#edit_modal [name='description']").val(data.description);
         $("#edit_modal [name='mst_sku_process_type_id']").val(
             data.mst_sku_process_type_id
         );
-        $("#edit_modal [name='name']").val(data.name);
-        $("#edit_modal").modal("show");
+
+        // document.querySelector(
+        //     "#edit_modal [name='mst_sku_process_type_id']"
+        // ).value = data.mst_sku_process_type_id;
+
+        console.log("mst_sku_process_type_id:", data.mst_sku_process_type_id);
+
+        // $("#edit_modal [name='name']").val(data.name);
+        editModalEl.modal("show");
+        // testSelect();
+        // $("#edit_modal").modal("show");
+
+        // console.warn("form id is filled successfully.");
     };
 
     const delegationRemove = async (e) => {
@@ -296,6 +336,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.addEventListener("click", deletagions);
     // table.on("click", deletagions);
 });
+
+// const testSelect = () => {
+//     $("#edit_modal [name='mst_sku_process_type_id'] option").each(function (
+//         index,
+//         element
+//     ) {
+//         console.log(`${index}: ${element.value} ${element.textContent}`);
+//     });
+
+//     console.warn("barrier");
+// };
 
 const fetchedJson = async (uri, args) => {
     try {

@@ -4,18 +4,28 @@
         autocomplete="off"
         class="form-horizontal"
         method="post"
-        action="/sku-business-type/"
+        action="/sku-business-type/edit"
     >
-        @csrf @method("PUT")
+        @csrf
+        <input type="hidden" name="id" />
         <div class="form-group">
-            <label>Manual ID</label>
+            <label>Code</label>
             <input
-                required
                 name="prefix"
                 class="form-control"
                 type="text"
                 placeholder="SKUT-XXX"
                 readonly
+            />
+        </div>
+
+        <div class="form-group">
+            <label>Manual ID</label>
+            <input
+                name="manual_id"
+                class="form-control"
+                type="text"
+                placeholder="Custom ID (optional)"
             />
         </div>
 

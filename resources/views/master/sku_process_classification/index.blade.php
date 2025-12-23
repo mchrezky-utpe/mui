@@ -75,6 +75,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Code</th>
+                                            <th>Manual ID</th>
                                             <th>Process Type</th>
                                             <th>Name</th>
                                             <th>Action</th>
@@ -96,6 +97,7 @@
 </div>
 <!-- MODAL -->
 @include('master.sku_process_classification._add')
+@include('master.sku_process_classification._edit')
 <!-- @include('master.sku_process._add') @include('master.sku_process._edit') -->
 @endsection @section('extra_javascript')
 <script

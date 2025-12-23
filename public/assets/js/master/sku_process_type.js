@@ -92,9 +92,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 width: "50px",
             },
 
-            { data: "prefix" },
+            { data: "prefix", defaultContent: "-" },
+            { data: "manual_id", defaultContent: "-" },
             { data: "category" },
-            { data: "name" },
+            { data: "description", defaultContent: "-" },
 
             // Item type (nested object)
             {
@@ -158,6 +159,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 acc[curr.id] = curr;
                 return acc;
             }, {});
+
+            console.log("mainDataList:", mainDataList);
         }
     });
 
@@ -175,10 +178,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
         // fill edit
-        $("#edit_modal form").action = `${route}/${id}`;
-        $("#edit_modal [name='prefix']").val(data.prefix);
+        // $("#edit_modal form").action = `${route}/${id}`;
+        $("#edit_modal [name='id']").val(data.id);
+        $("#edit_modal [name='manual_id']").val(data.manual_id);
         $("#edit_modal [name='category']").val(data.category);
-        $("#edit_modal [name='name']").val(data.name);
+        $("#edit_modal [name='description']").val(data.description);
         $("#edit_modal [name='prefix']").val(data.prefix);
         $("#edit_modal [name='mst_sku_type_id']").val(data.mst_sku_type_id);
         $("#edit_modal").modal("show");

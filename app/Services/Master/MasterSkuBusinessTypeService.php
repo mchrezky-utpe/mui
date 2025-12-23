@@ -21,15 +21,14 @@ class MasterSkuBusinessTypeService
     public function add(Request $request){
 
         $data = $request->validate([
+            'manual_id' => 'nullable|string|max:255',
             'description' => 'required|string|max:255',
             'category' => 'required|in:' . implode(',', $this->allowedCategory),
-            
             // 'category' => 'required|in:AUTOMOTIVE,NON-AUTOMOTIVE',
             // 'code' => 'required|string|max:255',
         ]);
         
         
-        $data["description"] = $request->description;
         // $data["code"] = $request->code;
         // $data["category"] = $request->category;
 
@@ -63,10 +62,21 @@ class MasterSkuBusinessTypeService
 
     function edit(Request $request)
     {
-        $data = MasterSkuBusinessType::where('id', $request->id)->firstOrFail();
-        $data->description = $request->description;
-        $data->manual_id= $request->manual_id;
-        $data->save();
+        $data = $request->validate([            
+            'manual_id' => 'nullable|string|max:255',
+            'description' => 'required|string|max:255',
+            'category' => 'required|in:' . implode(',', $this->allowedCategory),
+        ]);
+
+        $oldData = MasterSkuBusinessType::where('id', $request->id)->firstOrFail();
+        $oldData->update($data);
+        
+
+        // $data = MasterSkuBusinessType::where('id', $request->id)->firstOrFail();
+        // $data->description = $request->description;
+        // $data->manual_id= $request->manual_id;
+        // $data->category = $request->category;
+        // $data->save();
     }
 
     public function droplist(){
@@ -80,7 +90,7 @@ class MasterSkuBusinessTypeService
         $search = $request->input('search.value');
 
         $query = MasterSkuBusinessType::query()
-            ->where('flag_active', 1);
+            ->where('flag_active', '=', 1);
 
         $recordsTotal = MasterSkuBusinessType::where('flag_active', 1)->count();
 
@@ -88,7 +98,8 @@ class MasterSkuBusinessTypeService
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->where('prefix', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%")
+                ->orWhere('category', 'like', "%{$search}%");
             });
         }
 

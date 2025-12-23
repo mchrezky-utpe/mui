@@ -10,11 +10,21 @@
         <div class="form-group">
             <label>Code</label>
             <input
-                name="manual_id"
+                name="prefix"
                 class="form-control"
                 type="text"
                 placeholder="PCC-XXX"
                 readonly
+            />
+        </div>
+
+        <div class="form-group">
+            <label>Manual ID</label>
+            <input
+                name="manual_id"
+                class="form-control"
+                type="text"
+                placeholder="Custom ID (optional)"
             />
         </div>
 
@@ -29,7 +39,7 @@
             <label>Name</label>
             <input
                 required
-                name="name"
+                name="description"
                 class="form-control"
                 type="text"
                 placeholder="Name"
