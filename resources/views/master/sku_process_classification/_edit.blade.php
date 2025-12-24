@@ -61,11 +61,11 @@
     >
         @csrf
 
-        <input type="hiddem" name="id" />
+        <input type="hidden" name="id" />
         <div class="form-group">
             <label>Code</label>
             <input
-                name="prefix    "
+                name="prefix"
                 class="form-control"
                 type="text"
                 placeholder="PCC-XXX"

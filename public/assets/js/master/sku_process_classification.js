@@ -70,6 +70,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         paging: true,
         pageLength: 10,
         responsive: false,
+        columnDefs: [
+            {
+                targets: [0, 1, 2, 3, 4, 5],
+                className: "dtfc-fixed-left",
+                orderable: false,
+                searchable: false,
+            },
+            {
+                targets: -1,
+                className: "dtfc-fixed-right bg-light",
+                orderable: false,
+                searchable: false,
+                width: "120px",
+            },
+            {
+                targets: "_all",
+                className: "text-nowrap bordered-cell",
+            },
+        ],
 
         processing: true,
         serverSide: true,

@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         responsive: false,
         columnDefs: [
             {
-                targets: [0],
+                targets: [0, 1, 2, 3, 4],
                 className: "dtfc-fixed-left",
                 orderable: false,
                 searchable: false,
