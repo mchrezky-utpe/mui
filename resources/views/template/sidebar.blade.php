@@ -91,7 +91,7 @@
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Product Prices</a
+                            <i class="fas fa-caret-right"></i>Purchase Prices</a
                         >
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
