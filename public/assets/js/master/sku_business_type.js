@@ -19,6 +19,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         paging: true,
         pageLength: 10,
         responsive: false,
+        columnDefs: [
+            {
+                targets: [0, 1, 2, 3, 4],
+                className: "dtfc-fixed-left",
+                orderable: false,
+                searchable: false,
+            },
+            {
+                targets: -1,
+                className: "dtfc-fixed-right bg-light",
+                orderable: false,
+                searchable: false,
+                width: "120px",
+            },
+            {
+                targets: "_all",
+                className: "text-nowrap bordered-cell",
+            },
+        ],
 
         processing: true,
         serverSide: true,
@@ -40,6 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     meta.row + meta.settings._iDisplayStart + 1,
             },
             { data: "prefix", defaultContent: "-" },
+            { data: "manual_id", defaultContent: "-" },
             { data: "category", defaultContent: "-" },
             { data: "description" },
             {
@@ -102,13 +122,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             );
 
         // fill edit
-        const action = `${route}/${id}`;
-        formEditEl.action = action;
+        // const action = `${route}/${id}`;
+        // formEditEl.action = action;
         // console.warn("action", action);
         // $("#edit_modal form").action = action;
-        console.warn("formEditEl.action", formEditEl.action);
+        // console.warn("formEditEl.action", formEditEl.action);
         // console.warn("form Action", $("#edit_modal form").action);
-        $("#edit_modal [name='manual_id']").val(data.code);
+        $("#edit_modal [name='id']").val(data.id);
+        $("#edit_modal [name='code']").val(data.code);
+        $("#edit_modal [name='manual_id']").val(data.manual_id);
         $("#edit_modal [name='prefix']").val(data.prefix);
         $("#edit_modal [name='category']").val(data.category);
         $("#edit_modal [name='description']").val(data.description);

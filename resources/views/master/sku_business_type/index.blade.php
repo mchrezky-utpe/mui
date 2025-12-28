@@ -64,6 +64,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Code</th>
+                                        <th>Manual ID</th>
                                         <th>Category</th>
                                         <th>Name</th>
                                         <th>Action</th>
