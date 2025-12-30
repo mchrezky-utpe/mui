@@ -71,7 +71,6 @@ class MasterSkuBusinessTypeService
         $oldData = MasterSkuBusinessType::where('id', $request->id)->firstOrFail();
         $oldData->update($data);
         
-
         // $data = MasterSkuBusinessType::where('id', $request->id)->firstOrFail();
         // $data->description = $request->description;
         // $data->manual_id= $request->manual_id;

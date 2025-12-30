@@ -1,5 +1,38 @@
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@layer utilities {
+    tr.tr {
+        @apply tw-bg-white tw-transition-colors tw-duration-150;
+    }
+
+    /* zebra */
+    tr.tr:nth-child(even) {
+        @apply tw-bg-slate-50;
+    }
+
+    /* hover default */
+    tr.tr:hover {
+        @apply tw-bg-slate-100;
+    }
+
+    /* action-based hover */
+    tr.tr:has(.action-add:hover) {
+        @apply tw-bg-emerald-100;
+    }
+
+    tr.tr:has(.action-edit:hover) {
+        @apply tw-bg-blue-100;
+    }
+
+    tr.tr:has(.action-detail:hover) {
+        @apply tw-bg-slate-100;
+    }
+
+    tr.tr:has(.action-remove:hover) {
+        @apply tw-bg-red-100;
+    }
+}
