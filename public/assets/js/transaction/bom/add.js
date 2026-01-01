@@ -1,5 +1,73 @@
-$(document).ready(function() {
-    // Data structure to hold our tree with enhanced IDs
+$(document).ready(function () {
+
+    // handling pagination data
+	const table = $('#table-item').DataTable({
+		fixedColumns: {
+			start: 0,
+			end: 5
+		},
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 300,
+
+		processing: true,
+		serverSide: true,
+		ajax: {
+			url: base_url + 'bom/all/material',
+			type: "GET",
+			data: function(d) {
+			}
+		},
+		columns: [
+			{
+				data: "sku_id"
+			}, 
+			{
+				data: "sku_name"
+			},
+			{
+				data: "sku_id"
+			},
+			{
+				data: "sku_type"
+			},
+			{
+				data: "sku_inventory_unit"
+			},
+			{
+				data: "person_supplier"
+			}, 
+            {
+				data: "sku_type"
+			},
+			{
+				data: "currency"
+			},
+			{
+				data: "price"
+			},
+			{
+				data: "price_retail"
+			},
+			{
+				data: "pricelist_status"
+			}
+		],
+		columnDefs: []
+	});
+    // end of hanlding pagination data
+
+	   $('#table-item').on('click', 'tr', function() {
+		$('#add_modal_item').modal('show');
+        var data = table.row(this).data();
+        $('[name=sku_selected_id]').val(data.id);
+        $('[name=sku_selected_name]').val(data.sku_name);
+        $('[name=sku_selected_code]').val(data.sku_id);
+    });
+
+	
+	// REGION FOR MANAGE ITEM TREE 
+	    // Data structure to hold our tree with enhanced IDs
     const treeData = [];
     var skuData;
     let nextId = 1; // Auto-increment ID for easier tracking
@@ -82,26 +150,30 @@ $(document).ready(function() {
     
     // Function to add data to the tree
     function addDataToTree() {
-        const sku_id = $('#sku_id').val().trim();
-        const sku_name = $('#sku_id :selected').text().trim();
+        const sku_selected_id = $('#sku_selected_id').val().trim() ;
+        const sku_name = $('#sku_selected_name').val().trim();
+        const sku_code = $('#sku_selected_code').val().trim();
         const qty_capacity = $('#qty_capacity').val().trim();
         const qty_each_unit = parseInt($('#qty_each_unit').val());
         const description = $('#description').val().trim();
+        const process_type = $('[name=process_type] :selected').text().trim();
 
         const level = parseInt($('#level').val());
         
-        if (!sku_id || !qty_capacity) {
+        if (!sku_selected_id || !qty_capacity) {
             alert('Please correct data');
             return;
         }
         
         const newItem = {
             id: generateId(), // Use our auto-increment ID
-            sku_id,
+            sku_selected_id,
             sku_name,
+            sku_code,
             qty_capacity,
             qty_each_unit,
             description,
+            process_type,
             level,
             children: []
         };
@@ -130,12 +202,13 @@ $(document).ready(function() {
         }
         
         // Clear inputs
-        $('#sku_id, #qty_capacity, #qty_each_unit, #description, #part_code, #model').val('');
+        $('#sku_selected_id, #qty_capacity, #qty_each_unit, #description, #part_code, #model').val('');
         
         // Update UI
         updateLevelOptions();
         updateParentOptions();
         renderTree();
+		$('#add_modal_item').modal('hide');
     }
     
     // Function to delete an item from the tree
@@ -173,9 +246,9 @@ $(document).ready(function() {
         function renderItems(items) {
             items.forEach(item => {
                 html += `<div class="tree-node" data-id="${item.id}">
-                    <span class="node-label">${item.sku_name}</span>: 
+                    <span class="node-label">${item.sku_name}</span>: Qty 
                     <span class="node-value">${item.qty_capacity}</span> 
-                    <span>(Level ${item.level}, ID: ${item.id})</span>
+                    <span>(Level ${item.level}, Code: ${item.sku_code} , ${item.process_type})</span>
                     <span class="node-actions">
                         <button class="btn btn-danger delete" data-id="${item.id}">Delete</button>
                     </span>`;
@@ -274,10 +347,35 @@ $(document).ready(function() {
     return result;
 }
 
+    function applyData(){
+        const sku_id = $('#sku_id').val();
+        const description = $('#description').val();
+        if(sku_id == null || sku_id == ""){
+            alert("Select Part Name!");
+            return;
+        }
+
+        if(description == ""){
+            alert("Remark must not be blank!");
+            return;
+        }
+        $('#sku_id').prop('disabled',true);
+        $('#description').prop('readonly',true);
+        $('#applyBtn').prop('disabled',true);
+    }
+
+
+    function resetData(){
+        location.reload();
+    }
+
     // Event listeners
     $('#level').on('change', updateParentOptions);
-    $('#addBtn').on('click', addDataToTree);
+    $(document).on('click','#addBtn', addDataToTree);
     $('#saveBtn').on('click', saveTreeData);
+    $('#applyBtn').on('click', applyData);
+    $('#resetBtn').on('click', resetData);
+	
     $('#sku_id').on('change', function(){
        
         const selectedOption = $(this).find('option:selected');
@@ -289,9 +387,7 @@ $(document).ready(function() {
         $('[name=part_code]').val(skuId);
         $('[name=model]').val(skuModel);
     });
-    
 
-    
     // =========== HANDLING PARAM
     function populateSelectSku(title, master_data, element) {
         element.empty();
@@ -303,12 +399,33 @@ $(document).ready(function() {
         });
     }
 
+    function populateSelectProcessType(title, master_data, element) {
+        element.empty();
+        element.append('<option value="">-- Select ' + title + " --</option>");
+        master_data.forEach((data) => {
+            element.append(
+                `<option value="${data.id}">${data.description}</option>`
+            );
+        });
+    }
+
     function initParam() {
+        
+        fetchProcessType()
+            .then((data) => {
+                console.log("Succesfully get Sku:", data);
+                skuData = data;
+                populateSelectProcessType("Process Type", data, $("[name=process_type]"));
+            })
+            .catch((err) => {
+                console.error("Error get Sku:", err);
+            });
+
       return fetchSkuMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
                 skuData = data;
-                populateSelectSku("Sku", data, $("[name=sku_id]"));
+                populateSelectSku("Part Name", data, $("[name=sku_id]"));
             })
             .catch((err) => {
                 console.error("Error get Sku:", err);
@@ -325,6 +442,23 @@ $(document).ready(function() {
                 },
                 error: function (err) {
                     console.error("Error fetching terms master:", err);
+                    reject(err);
+                },
+            });
+        });
+    }
+
+    
+    function fetchProcessType() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: base_url + "api/sku-process-type/names",
+                success: function (data) {
+                    resolve(data.data);
+                },
+                error: function (err) {
+                    console.error("Error fetching type master:", err);
                     reject(err);
                 },
             });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transaction\Bom;
 use App\Services\Master\Bom\BomService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class BomController
 {
@@ -21,6 +22,44 @@ class BomController
     {
         return response()->view('transaction.bom.index');
     }
+
+    public function get_item_material(Request $request){
+        
+        $start = $request->input('start');
+        $length = $request->input('length'); 
+        $search = $request->input('search.value');
+        $orderColumnIndex = $request->input('order.0.column');
+        $orderDirection = $request->input('order.0.dir');
+        $columns = $request->input('columns');
+
+        $query = DB::table('vw_app_list_trans_sku_pricelist');
+        
+         $query->where('flag_sku_type','=', 2);
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('vw_app_list_trans_sku_pricelist.sku_name', 'like', '%' . $search . '%')
+                    ->orWhere('vw_app_list_trans_sku_pricelist.sku_id', 'like', '%' . $search . '%');
+            });
+        }
+
+        $recordsTotal = $query->count();
+
+        $recordsFiltered = $query->count();
+
+        $data = $query->get();
+        return [
+            'data' => $data,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' =>  $recordsFiltered
+        ];
+    }
+
+    public function add_index(): Response
+    {
+        return response()->view('transaction.bom.add');
+    }
+
 
     public function get_list_pageable(Request $request)
     {
