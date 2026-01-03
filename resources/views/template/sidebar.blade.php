@@ -257,21 +257,33 @@
                     <i class="fas fa-shopping-bag"></i>Purchase</a
                 >
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
-                    <li>
-                        <a href="/pr">Purchase Requisition (PR)</a>
-                    </li>
-                    <li>
-                        <a href="/pr-detail"
-                            >Purchase Requisition Detail (PR Detail)</a
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-caret-right"></i>Purchase Request</a
                         >
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
+                                <a href="/pr">Purchase Requisition (PR)</a>
+                            </li>
+                            <li>
+                            <a href="/pr-detail">Purchase Requisition Detail (PR Detail)</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-caret-right"></i>Purchase Order</a
+                        >
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
                         <a href="/po">Purchase Order (PO)</a>
-                    </li>
-                    <li>
+                            </li>
+                            <li>
                         <a href="/po-detail"
                             >Purchase Order Detail (PO Detail)</a
                         >
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="/approval-pr">Purchase Approval</a>
@@ -285,25 +297,38 @@
                     <li>
                         <a href="/goods-received">Goods Received</a>
                     </li>
-                    <li>
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-caret-right"></i>Purchase Invoice</a
+                        >
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
                         <a href="/pi">Purchase Invoice</a>
-                    </li>
-                    <li>
+                            </li>
+                            <li>
                         <a href="/pi-detail">Purchase Invoice Detail</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-caret-right"></i>Purchase Analysis</a
+                        >
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
                         <a href="/pa/frequency">Purchase Analysis Frequency</a>
-                    </li>
-                    <li>
+                            </li>
+                            <li>
                         <a href="/pa/price">Purchase Analysis Price Trends</a>
-                    </li>
-                    <li>
+                            </li>
+                            <li>
                         <a href="/pa/order">Purchase Analysis Order Trends</a>
-                    </li>
-                    <li>
+                            </li>
+                            <li>
                         <a href="/pa/supplier-trend"
                             >Purchase Analysis Supplier Trends</a
-                        >
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="/supplier-performance">Supplier Performance</a>

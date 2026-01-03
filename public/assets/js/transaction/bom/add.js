@@ -202,7 +202,7 @@ $(document).ready(function () {
         }
         
         // Clear inputs
-        $('#sku_selected_id, #qty_capacity, #qty_each_unit, #description, #part_code, #model').val('');
+        $('#sku_selected_id, #qty_capacity, #qty_each_unit, #process_type').val('');
         
         // Update UI
         updateLevelOptions();
