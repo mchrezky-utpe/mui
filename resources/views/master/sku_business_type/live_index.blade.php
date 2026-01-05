@@ -38,6 +38,20 @@
             this.isOpenMainModal = true;
             this.resetFormMain();
         },
+        async removeMainData(id) {
+            const { isConfirmed } = await Swal.fire({
+                title: 'Yakin ingin hapus Data ini?',
+                text: 'Data yang dihapus tidak bisa di kembalikan!',
+                icon: 'warning',
+                confirmButtonText: 'Ya, saya yakin!',
+                showCancelButton: true,
+                cancelButtonText: 'Batal',
+            });
+
+            if (!isConfirmed) return;
+
+            await $wire.deleteData(id)
+        }
     }"
 >
     <div class="tw-px-2 tw-py-2 sm:tw-px-6 tw-grid tw-gap-6">
@@ -135,6 +149,14 @@
                 <h5 class="tw-text-base tw-font-semibold tw-text-gray-800">
                     List
                 </h5>
+
+                <button
+                    x-on:click="$dispatch('notify', { variant: 'info', title: 'Update Available', message: 'A new version of the app is ready for you. Update now to enjoy the latest features!' })"
+                    type="button"
+                    class="tw-whitespace-nowrap tw-rounded-sm tw-bg-sky-700 tw-px-4 tw-py-2 tw-text-center tw-text-sm tw-font-medium tw-tracking-wide tw-text-slate-100 tw-transition hover:tw-opacity-75 focus-visible:tw-outline-2 focus-visible:tw-outline-offset-2 focus-visible:tw-outline-sky-700 active:tw-opacity-100 active:tw-outline-offset-0 disabled:tw-cursor-not-allowed disabled:tw-opacity-75"
+                >
+                    Info
+                </button>
 
                 <!-- masih bootstrap, aman -->
                 <button
@@ -337,6 +359,7 @@
 
                                         <button
                                             type="button"
+                                            x-on:click="removeMainData({{ $business->id }})"
                                             class="action-remove tw-p-1.5 tw-rounded tw-text-red-600 hover:tw-bg-red-100 focus:tw-outline-none tw-table-main"
                                         >
                                             <svg
@@ -418,7 +441,18 @@
 
             <!-- Body -->
             <form
-                x-on:submit.prevent="$wire[formMain.id ? 'editData' : 'addData'](formMain).then(() => isOpenMainModal = false)"
+                x-data="{ isSubmitting: false }"
+                x-on:submit.prevent="
+                    if (isSubmitting) return;   // jika lagi submit → ignore
+                    isSubmitting = true;
+                    $wire[formMain.id ? 'editData' : 'addData'](formMain)
+                        .then(() => {
+                            isOpenMainModal = false;
+                        })
+                        .finally(() => {
+                            isSubmitting = false;  // unlock form
+                        });
+                "
                 class="tw-space-y-4 tw-p-4"
             >
                 <!-- Code -->
@@ -476,7 +510,7 @@
                         x-model="formMain.category"
                         class="tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
                     >
-                        <option value="" disabled>-- Pilih Category --</option>
+                        <option value="">-- Pilih Category --</option>
                         @foreach ($allowed_category as $cat)
                         <option value="{{ $cat }}">{{ $cat }}</option>
                         @endforeach
@@ -495,9 +529,19 @@
 
                     <button
                         type="submit"
-                        class="tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white hover:tw-bg-blue-700"
+                        x-bind:disabled="isSubmitting"
+                        class="tw-relative tw-inline-flex tw-items-center tw-gap-2 tw-rounded-md tw-bg-blue-600 tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-text-white hover:tw-bg-blue-700"
                     >
-                        Save
+                        <!-- Spinner Component -->
+                        <x-loading-spinner
+                            x-show="isSubmitting"
+                            class="tw-w-4 tw-h-4"
+                            text=""
+                            svg_class="tw-text-white"
+                        />
+
+                        <!-- Button Text -->
+                        <span x-text="(formMain.id ? 'Edit' : 'Tambah')"></span>
                     </button>
                 </div>
             </form>

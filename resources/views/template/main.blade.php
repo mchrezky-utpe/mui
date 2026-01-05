@@ -46,6 +46,7 @@
         </div>
         <!-- END PAGE CONTAINER-->
 
+        <div class="tw-contents">@yield('extra-content')</div>
         @include('template.javascript') @yield('extra_javascript')
         @isset($script) @includeIf($script) @endisset
     </body>
