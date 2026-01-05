@@ -1,13 +1,12 @@
 <?php
 
-namespace App\View\Components\Layouts;
+namespace App\View\Components;
 
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class Sidebar extends Component
+class Breadcrumbs extends Component
 {
     public array $breadcrumbs = [];
     // example: ['master' => 'Master', 'master\sku' => 'SKU', 'master\sku\bom' => 'BOM']
@@ -15,20 +14,22 @@ class Sidebar extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(array $breadcrumbs = [])
     {
+        if (!empty($breadcrumbs)) {
+            $this->breadcrumbs = $breadcrumbs;
+            return;
+        }
 
-        if (empty($this->breadcrumbs)) {
-            $segments = request()->segments();
+        // auto dari URL
+        $segments = request()->segments();
+        $path = '';
 
-            $uris = '';
+        $this->breadcrumbs = [];
 
-            $this->breadcrumbs = collect($segments)->map(function ($segment) {
-                global $uris;
-                $uris .= $segment;
-
-                return [$uris => $segment];
-            })->toArray();
+        foreach ($segments as $segment) {
+            $path .= '/' . $segment;
+            $this->breadcrumbs[ucfirst(str_replace('-', ' ', $segment))] = $path;
         }
     }
 
@@ -37,7 +38,7 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.breadcrump');
+        return view('components.breadcrumbs');
     }
 }
 

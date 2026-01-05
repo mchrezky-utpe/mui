@@ -8,7 +8,7 @@
 >
     <div class="tw-px-2 tw-py-2 sm:tw-px-6 tw-grid tw-gap-6">
         <x-title-section title="SKU Product Price">
-            <x-breadcrumps :$breadcrumps></x-breadcrumps>
+            <x-breadcrumbs :breadcrumbs="$breadcrumbs"></x-breadcrumbs>
         </x-title-section>
     </div>
 </div>
