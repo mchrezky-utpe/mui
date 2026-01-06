@@ -326,7 +326,7 @@ function fetchSkuBusinessType() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: base_url + "api/sku-business/droplist",
+            url: base_url + "api/sku-business-type/droplist",
             success: function (data) {
                 resolve(data.data);
             },
