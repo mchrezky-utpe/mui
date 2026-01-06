@@ -150,13 +150,13 @@
                     List
                 </h5>
 
-                <button
+                <!-- <button
                     x-on:click="$dispatch('notify', { variant: 'info', title: 'Update Available', message: 'A new version of the app is ready for you. Update now to enjoy the latest features!' })"
                     type="button"
                     class="tw-whitespace-nowrap tw-rounded-sm tw-bg-sky-700 tw-px-4 tw-py-2 tw-text-center tw-text-sm tw-font-medium tw-tracking-wide tw-text-slate-100 tw-transition hover:tw-opacity-75 focus-visible:tw-outline-2 focus-visible:tw-outline-offset-2 focus-visible:tw-outline-sky-700 active:tw-opacity-100 active:tw-outline-offset-0 disabled:tw-cursor-not-allowed disabled:tw-opacity-75"
                 >
                     Info
-                </button>
+                </button> -->
 
                 <!-- masih bootstrap, aman -->
                 <button
@@ -481,8 +481,13 @@
                     <input
                         type="text"
                         x-model="formMain.manual_id"
-                        class="tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
+                        class="tw-w-full tw-rounded-md tw-border tw-border-slate-300 tw-ring-1 tw-ring-slate-300 tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
                     />
+                    <!-- <input
+                        type="text"
+                        x-model="formMain.manual_id"
+                        class="tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
+                    /> -->
                 </div>
 
                 <!-- Name -->
@@ -495,7 +500,7 @@
                     <input
                         type="text"
                         x-model="formMain.description"
-                        class="tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
+                        class="tw-w-full tw-rounded-md tw-border-slate-300 tw-ring-1 tw-ring-slate-300 tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
                     />
                 </div>
 
@@ -508,7 +513,7 @@
                     </label>
                     <select
                         x-model="formMain.category"
-                        class="tw-w-full tw-rounded-md tw-border tw-border-gray-300 tw-bg-white tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
+                        class="tw-w-full tw-rounded-md tw-border-slate-300 tw-ring-1 tw-ring-slate-300 tw-bg-white tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
                     >
                         <option value="">-- Pilih Category --</option>
                         @foreach ($allowed_category as $cat)
@@ -522,7 +527,7 @@
                     <button
                         type="button"
                         @click="isOpenMainModal = false"
-                        class="tw-rounded-md tw-border tw-border-gray-300 tw-px-4 tw-py-2 tw-text-sm tw-text-gray-600 hover:tw-bg-gray-100"
+                        class="tw-rounded-md tw-border-slate-300 tw-ring-1 tw-ring-slate-300 tw-px-4 tw-py-2 tw-text-sm tw-text-gray-600 hover:tw-bg-gray-100"
                     >
                         Cancel
                     </button>

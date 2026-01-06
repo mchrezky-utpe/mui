@@ -7,16 +7,36 @@ use Carbon\Carbon;
 
 trait HasUserTracking
 {
-    public static function bootHasUserTracking()
+    protected static function bootHasUserTracking()
     {
         static::creating(function ($model) {
-            $model->created_by = Auth::id();
-            $model->created_at  = Carbon::now();
+            if (Auth::check()) {
+                $model->created_by = Auth::id();
+            }
+            $model->created_at = Carbon::now();
         });
 
         static::updating(function ($model) {
-            $model->updated_by = Auth::id();
-            $model->updated_at  = Carbon::now();
+            if (Auth::check()) {
+                $model->updated_by = Auth::id();
+            }
+            $model->updated_at = Carbon::now();
+        });
+
+        static::deleting(function ($model) {
+            // hanya untuk soft delete
+            if (method_exists($model, 'isForceDeleting') && ! $model->isForceDeleting()) {
+                if (Auth::check()) {
+                    $model->deleted_by = Auth::id();
+                }
+
+                // ini penting supaya deleted_by ke-save
+                $model->saveQuietly();
+            }
+        });
+
+        static::restoring(function ($model) {
+            $model->deleted_by = null;
         });
     }
 }

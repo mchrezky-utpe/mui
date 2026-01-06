@@ -17,8 +17,9 @@ return new class extends Migration
 
             // prefix(code), description(name), 
             // bom(mst_sk_id)?(mungkin) (bom->number)
-            $table->unsignedBigInteger('priceable_id');
-            $table->string('priceable_type');
+            $table->unsignedBigInteger('mst_sku_id');
+            $table->foreign('mst_sku_id')->references('id')->cascadeOnUpdate()->restrictOnDelete();
+            // $table->string('priceable_type');
 
             // customor -> name
             $table->unsignedBigInteger('customor_id'); //fk

@@ -9,7 +9,6 @@ use App\Livewire\Pages\{
   ProductPrices
 };
 
-
 Route::get("/live--sku-business-type", SkuBusinessTypeComponent::class);
 Route::get("/product-price", ProductPrices::class);
 Route::get("/product-price/main/list/data", ProductPrices::class);

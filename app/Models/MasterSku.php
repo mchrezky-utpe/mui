@@ -17,6 +17,23 @@ class MasterSku extends Model
 
     protected $table = 'mst_sku';
 
+    public function scopePartInformatoin($q)
+    {
+        return $q->where('flag_sku_type', 1);
+    }
+
+    // Production Material
+    public function scopeProductionMaterials($q)
+    {
+        return $q->where('flag_sku_type', 2);
+    }
+
+    // General Item
+    public function scopeGeneralItems($q)
+    {
+        return $q->where('flag_sku_type', 3);
+    }
+
     public function detail()
     {
         return $this->hasOne(MasterSkuDetail::class, 'id','sku_detail_id');
