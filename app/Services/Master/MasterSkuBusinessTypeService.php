@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Master\Sku\SkuBusinessListVw;
+// use App\Models\{
+//     MasterSkuBusinessType
+// };
 
 class MasterSkuBusinessTypeService
 {
@@ -79,7 +82,10 @@ class MasterSkuBusinessTypeService
     }
 
     public function droplist(){
-        return SkuBusinessListVw::all();
+
+        $data = MasterSkuBusinessType::forSelect()->where('flag_active', 1)->get();
+        
+        return $data;
     }
 
     public function pagination(Request $request)

@@ -1,13 +1,11 @@
-
-var table = new DataTable('.data-table-item',
-    {
+var table = new DataTable(".data-table-item", {
     // Konfigurasi dasar
     scrollX: true,
     scrollY: "400px",
     scrollCollapse: true,
     fixedColumns: {
         left: 5, // Kolom 0-4 akan fixed (index 0,1,2,3,4)
-        heightMatch: 'auto'
+        heightMatch: "auto",
     },
     paging: true,
     pageLength: 10,
@@ -231,7 +229,7 @@ function fetchSkuBusinessType() {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "GET",
-            url: base_url + "api/sku-business/droplist",
+            url: base_url + "api/sku-business-type/droplist",
             success: function (data) {
                 resolve(data.data);
             },
@@ -278,8 +276,6 @@ fetchSkuBusinessType()
     .catch((err) => {
         console.error("Error fetchSkuModel:", err);
     });
-
-    
 
 // fetchSkuItemType()
 //     .then((data) => {
