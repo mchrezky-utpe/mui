@@ -330,6 +330,7 @@ Route::controller(BomController::class)->group(function () {
     Route::post("/bom/edit-detail", "do_edit_detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/bom/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/bom/all/material", "get_item_material")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/bom/{id}/items", "get_detail_bom")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(QcController::class)->group(function () {

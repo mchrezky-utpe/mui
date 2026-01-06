@@ -86,6 +86,7 @@ class BomController
 
      public function do_edit_detail(Request $request)
     {
+        dd($request);
         $bom_id = $request->bom_id;
         $data = json_decode($request->data, true);
         $this->service->do_edit_detail($bom_id,$data);
@@ -97,6 +98,18 @@ class BomController
     {
         $this->service->delete($id);
         return redirect("/bom");
+    }
+    
+    public function get_detail_bom(Request $request, $id)
+    {
+    $query = DB::table('vw_app_list_mst_sku_bom_detail');
+        
+        $query->where('bom_id', $id);
+    
+        $data = $query->get();
+        return response()->json([
+            'data' => $data
+        ]);
     }
     
 }

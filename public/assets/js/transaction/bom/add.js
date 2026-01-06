@@ -26,7 +26,7 @@ $(document).ready(function () {
 				data: "sku_name"
 			},
 			{
-				data: "sku_id"
+				data: "sku_specification_code"
 			},
 			{
 				data: "sku_type"
@@ -38,7 +38,7 @@ $(document).ready(function () {
 				data: "person_supplier"
 			}, 
             {
-				data: "sku_type"
+				data: "sku_procurement_type"
 			},
 			{
 				data: "currency"
@@ -60,9 +60,15 @@ $(document).ready(function () {
 	   $('#table-item').on('click', 'tr', function() {
 		$('#add_modal_item').modal('show');
         var data = table.row(this).data();
-        $('[name=sku_selected_id]').val(data.id);
+        $('[name=sku_selected_id]').val(data.sku_pk_id);
         $('[name=sku_selected_name]').val(data.sku_name);
         $('[name=sku_selected_code]').val(data.sku_id);
+        $('[name=unit]').val(data.sku_inventory_unit);
+        $('[name=supplier_id]').val(data.prs_supplier_id);
+    });
+
+    $(document).on('click','.closeBtnAdd',function(){
+		$('#add_modal_item').modal('hide');
     });
 
 	
@@ -157,6 +163,8 @@ $(document).ready(function () {
         const qty_each_unit = parseInt($('#qty_each_unit').val());
         const description = $('#description').val().trim();
         const process_type = $('[name=process_type] :selected').text().trim();
+        const process_type_id = $('[name=process_type] :selected').val();
+        const supplier_id = $('[name=supplier_id]').val();
 
         const level = parseInt($('#level').val());
         
@@ -174,6 +182,8 @@ $(document).ready(function () {
             qty_each_unit,
             description,
             process_type,
+            process_type_id,
+            supplier_id,
             level,
             children: []
         };
@@ -287,7 +297,7 @@ $(document).ready(function () {
         // Create a form dynamically
         var form = document.createElement('form');
         form.method = 'POST';
-        form.action = '/bom/edit-detail'; // Sesuaikan dengan route Laravel Anda
+        form.action = '/bom'; 
         
         // Add CSRF token (Laravel requirement)
         var csrfToken = document.createElement('input');
@@ -303,14 +313,23 @@ $(document).ready(function () {
         dataInput.value = JSON.stringify(flatData);
         form.appendChild(dataInput);
 
-        // Add the flattened data as JSON
-        var bomIdInput = document.createElement('input');
-        bomIdInput.type = 'hidden';
-        bomIdInput.name = 'bom_id';
-        bomIdInput.value = $('#bom_id').val();
-        form.appendChild(bomIdInput);
+        // add additional input data
+        // sku id
+        var skuIdInput = document.createElement('input');
+        skuIdInput.type = 'hidden';
+        skuIdInput.name = 'sku_id';
+        skuIdInput.value = $('#sku_id').val();
+        form.appendChild(skuIdInput);
+
+        // description/ remark
+        var descriptionInput = document.createElement('input');
+        descriptionInput.type = 'hidden';
+        descriptionInput.name = 'description';
+        descriptionInput.value = $('#description').val();
+        form.appendChild(descriptionInput);
         
         // Append form to body and submit
+        debugger;
         document.body.appendChild(form);
         form.submit();
         
@@ -325,13 +344,15 @@ $(document).ready(function () {
         // Buat objek flat dengan properti yang diinginkan
         let flatItem = {
             rec_key: item.id,
-            sku_id: item.sku_id,
+            sku_id: item.sku_selected_id,
             sku_name: item.sku_name,
             qty_capacity: item.qty_capacity,
             qty_each_unit: item.qty_each_unit,
             level: item.level,
             description: item.level,
-            rec_parent_key: parentId
+            rec_parent_key: parentId,
+            supplier_id: item.supplier_id,
+            process_type_id: item.process_type_id
         };
         
         // Tambahkan ke hasil
@@ -383,7 +404,6 @@ $(document).ready(function () {
         const skuModel = selectedOption.attr('sku_model');
         const value = selectedOption.val();
         const text = selectedOption.text();
-        debugger;
         $('[name=part_code]').val(skuId);
         $('[name=model]').val(skuModel);
     });

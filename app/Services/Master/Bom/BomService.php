@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\NumberGenerator;
 
 
 class BomService
@@ -48,21 +49,50 @@ class BomService
     public function add(Request $request)
     {
         DB::beginTransaction();
-
         try {
+            $doc_num_generated = NumberGenerator::generateNumberV3('mst_sku_bom', 'BM','counter',5);
             $data = [
                 'sku_id' => $request->sku_id,
-                'remark' => $request->remark,
+                'prefix' => $doc_num_generated['doc_num'],
+                'counter' => $doc_num_generated['doc_counter'],
+                'remark' => $request->description,
                 'flag_main_priority' => $request->flag_main_priority == "on" ? 1 : 0,
                 'flag_status' => 1,
                 'flag_active' => 1,
                 'generated_id' => Str::uuid()->toString()
             ];
 
-        
-            Bom::create($data);
+           // Store Header Data
+            $header =   Bom::create($data);
 
-            // Commit transaksi jika semua berhasil
+            $bom_id = $header->id;
+            $data = json_decode($request->data, true);
+
+            $details = [];
+            foreach ($data as $value) {
+                $detailData = [
+                    'sku_id' => $value['sku_id'],
+                    'description' => $value['description'],
+                    'qty_capacity' => $value['qty_capacity'],
+                    'qty_each_unit' => $value['qty_each_unit'],
+                    'sku_bom_id' => $bom_id,
+                    'rec_key' => $value['rec_key'],
+                    'level' => $value['level'],
+                    'rec_parent_key' => $value['rec_parent_key'],
+                    'prs_supplier_id' => $value['supplier_id'],
+                    'sku_process_type_id' => $value['process_type_id'], 
+                    'flag_active' => 1,
+                ];
+                // Insert new record
+                $detailData['generated_id'] = Str::uuid()->toString();
+                $details[] = $detailData;
+            }
+
+            // Insert records baru sekaligus
+            if (!empty($details)) {
+                BomDetail::insert($details);
+            }
+
             DB::commit();
         } catch (\Exception $e) {
             // Rollback jika terjadi error
@@ -111,6 +141,7 @@ class BomService
                     'rec_key' => $value['rec_key'],
                     'level' => $value['level'],
                     'rec_parent_key' => $value['rec_parent_key'],
+                    'sku_process_type_id' => $value['process_type_id'], 
                     'flag_active' => 1,
                 ];
 

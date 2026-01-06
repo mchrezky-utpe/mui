@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Bom Unit Quantity</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close closeBtnAdd" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -17,10 +17,12 @@
                             <input required id="sku_selected_id" name="sku_selected_id" class="form-control" type="hidden" value="1"/>
                             <input required id="sku_selected_name" name="sku_selected_name" class="form-control" type="hidden" value="1"/>
                             <input required id="sku_selected_code" name="sku_selected_code" class="form-control" type="hidden" value="1"/>
+                            <input required id="supplier_id" name="supplier_id" class="form-control" type="hidden"/>
+                            
                         </div>
                         <div class="form-group">
                             <label>Unit</label>
-                            <input required name="unit" class="form-control" type="text" placeholder="Unit">
+                            <input readonly id="unit" name="unit" class="form-control" type="text" placeholder="Unit">
                         </div>
                         <div class="form-group">
                             <label>Capacity</label>
@@ -48,10 +50,6 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Is Priority</label>
-                            <input name="flag_main_priority" class="form-control" type="checkbox" placeholder="Priority">
-                        </div>
                         <div class="form-group" id="levelGroup">
                             <label for="level">Level:</label>
                             <select id="level">
@@ -71,7 +69,7 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="addBtn">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary closeBtnAdd" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

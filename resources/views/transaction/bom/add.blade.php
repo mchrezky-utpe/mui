@@ -118,16 +118,20 @@
           <label for="dataName">Part Code:</label>
           <input disabled type="text" id="part_code" name="part_code">
         </div>
-      </div>
-      <div class="col-md-6">
         <div class="form-group">
           <label for="dataName">Model:</label>
           <input disabled type="text" id="model" name="model">
         </div>
+      </div>
+      <div class="col-md-6">
         <div class="form-group">
           <label for="dataName">Remark:</label>
           <input type="text" id="description">
         </div>
+          <div class="form-group">
+              <label>Is Priority</label>
+              <input name="flag_main_priority" class="form-control" type="checkbox" placeholder="Priority">
+          </div>
         <div class="form-group">
           <button type="button" id="applyBtn" class="btn btn-primary">Apply</button>
           <button type="button" class="btn btn-danger" id="resetBtn">Reset</button>
@@ -167,6 +171,9 @@
         <h2>Result</h2>
         <div id="treeView">
           <p></p>
+        </div>
+        <div class="form-group">
+          <button type="button" id="saveBtn" class="btn btn-primary right">Save</button>
         </div>
       </div>
     </div>

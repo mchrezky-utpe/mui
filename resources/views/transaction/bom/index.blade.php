@@ -54,6 +54,7 @@
                     <th></th>
                   </tr>
                   <tr>
+                    <th></th>
                     <th>BOM Number</th>
                     <th>Part Code</th>
                     <th>Part Name</th>
