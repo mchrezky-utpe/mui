@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductPrice extends Model
 {
-    use HasUserTracking, SoftDeletes;
+    use SoftDeletes, HasUserTracking;
 
     protected $table = "trans_sku_product_prices";
 

@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MasterSkuBusinessType extends Model
+class Customor extends Model
 {
-    use HasFactory;
-  
+    use SoftDeletes, HasUserTracking;
+    protected $table = 'mst_customer';
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
-    protected $table = 'mst_sku_business_type';
-        
-    use HasUserTracking, SoftDeletes;
+    
 }

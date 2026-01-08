@@ -35,4 +35,8 @@
     tr.tr:has(.action-remove:hover) {
         @apply tw-bg-red-100;
     }
+
+    tr.tr:has(.action-other:hover) {
+        @apply tw-bg-gray-300;
+    }
 }

@@ -39,6 +39,11 @@
             this.resetFormMain();
         },
         async removeMainData(id) {
+            if (!id) return;
+
+            const mainData = $wire.cached_data?.find(({ id: _id }) => id == _id);
+            if (!mainData) return;
+
             const { isConfirmed } = await Swal.fire({
                 title: 'Yakin ingin hapus Data ini?',
                 text: 'Data yang dihapus tidak bisa di kembalikan!',
@@ -51,9 +56,47 @@
             if (!isConfirmed) return;
 
             await $wire.deleteData(id)
-        }
+        },
+        async regeneratePrefix(id) {
+            if (!id) return;
+
+            const mainData = $wire.cached_data?.find(({ id: _id }) => id == _id);
+            if (!mainData) return;
+
+            const { isConfirmed } = await Swal.fire({
+                title: 'Confirm',
+                text: 'Yakin ingin re-generate Code ini?',
+                icon: 'warning',
+                confirmButtonText: 'Ya, saya yakin!',
+                showCancelButton: true,
+                cancelButtonText: 'Batal',
+            });
+
+            if (!isConfirmed) return;
+
+            await $wire.regeneratePrefix(id)
+        },
+        
     }"
 >
+    <script>
+        function tableActionDropdown() {
+            return {
+                isOpen: false,
+                style: "",
+                toggle(e) {
+                    const rect = e.currentTarget.getBoundingClientRect();
+
+                    this.style = `
+                top: ${rect.bottom + window.scrollY + 4}px;
+                left: ${rect.right - 180 + window.scrollX}px;
+            `;
+
+                    this.isOpen = !this.isOpen;
+                },
+            };
+        }
+    </script>
     <div class="tw-px-2 tw-py-2 sm:tw-px-6 tw-grid tw-gap-6">
         <section class="tw-grid tw-gap-1" id="title-section">
             <h2 class="tw-font-bold tw-text-xl sm:tw-text-2xl">SKU Business</h2>
@@ -237,7 +280,7 @@
 
             <!-- Table Wrapper -->
             <div
-                class="tw-relative tw-overflow-x-auto tw-border tw-border-gray-200 tw-rounded-md tw-m-2"
+                class="tw-relative tw-overflow-x-auto tw-overflow-y-visible tw-border tw-border-gray-200 tw-rounded-md tw-m-2"
             >
                 <!-- Overlay Spinner -->
                 <div
@@ -320,6 +363,7 @@
                             <td class="tw-px-3 tw-py-2">
                                 {{ $business->description ?? "-" }}
                             </td>
+                            {{--
                             <td class="tw-px-3 tw-py-2">
                                 <div class="tw-flex tw-justify-center tw-gap-2">
                                     <!-- action buttons -->
@@ -380,6 +424,195 @@
                                     </div>
                                 </div>
                             </td>
+                            --}}
+                            <td class="tw-px-3 tw-py-2">
+                                <div
+                                    x-data="{ open: false }"
+                                    class="tw-relative tw-flex tw-justify-center tw-isolate"
+                                    @click.outside="open = false"
+                                >
+                                    <!-- Trigger (3 dots) -->
+                                    <button
+                                        type="button"
+                                        @click="open = !open"
+                                        class="tw-rounded tw-p-1.5 tw-text-gray-600 hover:tw-bg-gray-100 focus:tw-outline-none"
+                                    >
+                                        <!-- three dots icon -->
+                                        <svg
+                                            class="tw-w-5 tw-h-5 tw-rotate-90"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zm6 0a2 2 0 11-4 0 2 2 0 014 0zm6 0a2 2 0 11-4 0 2 2 0 014 0z"
+                                            />
+                                        </svg>
+                                    </button>
+
+                                    <!-- Dropdown -->
+                                    <div
+                                        x-show="open"
+                                        x-transition
+                                        x-cloak
+                                        class="tw-absolute tw-right-0 tw-z-20 tw-mt-2 tw-w-40 tw-rounded-md tw-bg-white tw-shadow-lg tw-ring-1 tw-ring-black/5"
+                                    >
+                                        <ul class="tw-py-1 tw-text-sm">
+                                            <!-- Edit -->
+                                            <li>
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                            open = false;
+                                                            selectEditMainData({{ $business->id }})
+                                                        "
+                                                    class="action-edit tw-flex tw-w-full tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-text-blue-600 hover:tw-bg-blue-100"
+                                                >
+                                                    <!-- icon (optional) -->
+                                                    <svg
+                                                        class="tw-h-4 tw-w-4"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <g
+                                                            id="SVGRepo_bgCarrier"
+                                                            stroke-width="0"
+                                                        ></g>
+                                                        <g
+                                                            id="SVGRepo_tracerCarrier"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                        ></g>
+                                                        <g
+                                                            id="SVGRepo_iconCarrier"
+                                                        >
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                clip-rule="evenodd"
+                                                                d="M21.1213 2.70705C19.9497 1.53548 18.0503 1.53547 16.8787 2.70705L15.1989 4.38685L7.29289 12.2928C7.16473 12.421 7.07382 12.5816 7.02986 12.7574L6.02986 16.7574C5.94466 17.0982 6.04451 17.4587 6.29289 17.707C6.54127 17.9554 6.90176 18.0553 7.24254 17.9701L11.2425 16.9701C11.4184 16.9261 11.5789 16.8352 11.7071 16.707L19.5556 8.85857L21.2929 7.12126C22.4645 5.94969 22.4645 4.05019 21.2929 2.87862L21.1213 2.70705ZM18.2929 4.12126C18.6834 3.73074 19.3166 3.73074 19.7071 4.12126L19.8787 4.29283C20.2692 4.68336 20.2692 5.31653 19.8787 5.70705L18.8622 6.72357L17.3068 5.10738L18.2929 4.12126ZM15.8923 6.52185L17.4477 8.13804L10.4888 15.097L8.37437 15.6256L8.90296 13.5112L15.8923 6.52185ZM4 7.99994C4 7.44766 4.44772 6.99994 5 6.99994H10C10.5523 6.99994 11 6.55223 11 5.99994C11 5.44766 10.5523 4.99994 10 4.99994H5C3.34315 4.99994 2 6.34309 2 7.99994V18.9999C2 20.6568 3.34315 21.9999 5 21.9999H16C17.6569 21.9999 19 20.6568 19 18.9999V13.9999C19 13.4477 18.5523 12.9999 18 12.9999C17.4477 12.9999 17 13.4477 17 13.9999V18.9999C17 19.5522 16.5523 19.9999 16 19.9999H5C4.44772 19.9999 4 19.5522 4 18.9999V7.99994Z"
+                                                                fill="currentColor"
+                                                            ></path>
+                                                        </g>
+                                                    </svg>
+                                                    <span>Edit</span>
+                                                </button>
+                                            </li>
+
+                                            <!-- Delete -->
+                                            <li>
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                            open = false;
+                                                            removeMainData({{ $business->id }})
+                                                        "
+                                                    class="action-remove tw-flex tw-w-full tw-items-center tw-gap-2 tw-px-3 tw-py-2 hover:tw-bg-red-50 tw-text-red-600"
+                                                >
+                                                    <svg
+                                                        class="tw-h-4 tw-w-4"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m2 0H7m2-3h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"
+                                                        />
+                                                    </svg>
+                                                    <span>Hapus</span>
+                                                </button>
+                                            </li>
+                                            @if(!preg_match('/-/',$business->prefix??""))
+                                            <li>
+                                                <button
+                                                    type="button"
+                                                    @click="
+                                                        open = false;
+                                                        regeneratePrefix({{ $business->id }})
+                                                    "
+                                                    class="action-other tw-flex tw-w-full tw-items-center tw-gap-2 tw-px-3 tw-py-2 hover:tw-bg-gray-50"
+                                                >
+                                                    <span>Regenerate Code</span>
+                                                </button>
+                                            </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+
+                            {{--
+                            <td class="tw-px-3 tw-py-2">
+                                <div
+                                    x-data="tableActionDropdown()"
+                                    class="tw-flex tw-justify-center"
+                                >
+                                    <!-- Trigger -->
+                                    <button
+                                        type="button"
+                                        @click="toggle($event)"
+                                        class="tw-rounded tw-p-1.5 tw-text-gray-600 hover:tw-bg-gray-100 focus:tw-outline-none"
+                                    >
+                                        <svg
+                                            class="tw-w-5 tw-h-5 tw-rotate-90"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path
+                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zm6 0a2 2 0 11-4 0 2 2 0 014 0zm6 0a2 2 0 11-4 0 2 2 0 014 0z"
+                                            />
+                                        </svg>
+                                    </button>
+
+                                    <!-- Dropdown (PORTAL) -->
+                                    <template x-teleport="body">
+                                        <div
+                                            x-show="isOpen"
+                                            x-transition
+                                            x-cloak
+                                            :style="style"
+                                            @click.outside="isOpen = false"
+                                            class="tw-fixed tw-z-[9999] tw-w-44 tw-rounded-md tw-bg-white tw-shadow-lg tw-ring-1 tw-ring-black/5"
+                                        >
+                                            <ul class="tw-py-1 tw-text-sm">
+                                                <li>
+                                                    <button
+                                                        type="button"
+                                                        @click="isOpen = false; selectEditMainData({{ $business->id }})"
+                                                        class="tw-flex tw-w-full tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-text-blue-600 hover:tw-bg-blue-100"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </li>
+
+                                                <li>
+                                                    <button
+                                                        type="button"
+                                                        @click="isOpen = false; removeMainData({{ $business->id }})"
+                                                        class="tw-flex tw-w-full tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-text-red-600 hover:tw-bg-red-50"
+                                                    >
+                                                        Hapus
+                                                    </button>
+                                                </li>
+
+                                                <li>
+                                                    <button
+                                                        type="button"
+                                                        @click="isOpen = false; regeneratePrefix({{ $business->id }})"
+                                                        class="tw-flex tw-w-full tw-items-center tw-gap-2 tw-px-3 tw-py-2 hover:tw-bg-gray-50"
+                                                    >
+                                                        Regenerate Code
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </div>
+                            </td>
+                            --}}
                         </tr>
                         @empty
                         <tr>

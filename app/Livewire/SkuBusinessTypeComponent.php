@@ -93,7 +93,7 @@ class SkuBusinessTypeComponent extends Component
         $new = MainModel::create($validated);
 
         $new->flag_active = 1;
-        $new->prefix = HelperCustom::generateTrxNo('SKUT', $new->id);
+        $new->prefix = HelperCustom::generateTrxNo('SKUT-', $new->id);
         $new->save();
 
         // session()->flash('success', 'Data berhasil ditambahkan');
@@ -168,6 +168,27 @@ class SkuBusinessTypeComponent extends Component
             "variant" => "success",
             "title" => "Success",
             "message" => "Data berhasil dihapus."
+        ]);
+    }
+
+    // other method
+    public function regeneratePrefix(int $id) {
+        if (!$this->collection_data->find($id)) {
+            return $this->dispatch("notify", [
+                "variant" => "danger",
+                "title" => "Error",
+                "message" => "Data tidak ditemukan."
+            ]);
+        }
+
+        $data = MainModel::findOrFail($id);
+        $data->prefix = HelperCustom::generateTrxNo('SKUT-', $data->id);
+        $data->save();
+
+        $this->dispatch("notify", [
+            "variant" => "success",
+            "title" => "Success",
+            "message" => "Code berhasil di regenerate."
         ]);
     }
 
