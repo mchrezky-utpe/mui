@@ -133,7 +133,7 @@ class SkuBusinessTypeComponent extends Component
         //     'category' => 'required|in:' . $this->allowed_category__str,
         // ]);
 
-        $data = MainModel::findOrFail(id: $forms['id']);
+        $data = MainModel::findOrFail($forms['id']);
 
         $data->update($validated);
         // session()->flash('success', 'Data berhasil diubah');

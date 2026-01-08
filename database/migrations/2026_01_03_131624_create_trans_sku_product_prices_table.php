@@ -18,7 +18,7 @@ return new class extends Migration
             // prefix(code), description(name), 
             // bom(mst_sk_id)?(mungkin) (bom->number)
             $table->unsignedBigInteger('mst_sku_id');
-            $table->foreign('mst_sku_id')->references('id')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreign('mst_sku_id')->references('id')->on('mst_sku')->cascadeOnUpdate()->restrictOnDelete();
             // $table->string('priceable_type');
 
             // customor -> name
@@ -26,7 +26,8 @@ return new class extends Migration
             $table->string('project_code'); // by customor & acceptable for manual
             $table->string('part_number');
 
-            $table->string('gen_currency_id');
+            $table->unsignedBigInteger('general_currency_id');
+            $table->foreign('general_currency_id')->references('id')->on('mst_general_currency')->cascadeOnUpdate()->restrictOnDelete();
 
             $table->decimal('price', 20, 4);
             $table->decimal('retail_price', 20, 4);
@@ -38,8 +39,6 @@ return new class extends Migration
             $table->boolean('is_activated')->default(true);
             
             $table->boolean('flag_active')->default(true);
-
-            $table->foreign('gen_currency_id')->references('id')->on('mst_general_currency')->onUpdate('cascade')->restrictOnDelete();
 
             addAuditColumns($table);
         });

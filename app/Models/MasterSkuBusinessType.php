@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUserTracking;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MasterSkuBusinessType extends Model
 {
@@ -14,5 +15,5 @@ class MasterSkuBusinessType extends Model
 
     protected $table = 'mst_sku_business_type';
     
-    use HasUserTracking;
+    use HasUserTracking, SoftDeletes;
 }
