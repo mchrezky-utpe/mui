@@ -22,7 +22,9 @@ return new class extends Migration
             // $table->string('priceable_type');
 
             // customor -> name
-            $table->unsignedBigInteger('customor_id'); //fk
+            $table->unsignedBigInteger('customer_id'); //fk
+            $table->foreign('customer_id')->references('id')->on('mst_customer')->cascadeOnUpdate()->restrictOnDelete();
+
             $table->string('project_code'); // by customor & acceptable for manual
             $table->string('part_number');
 
