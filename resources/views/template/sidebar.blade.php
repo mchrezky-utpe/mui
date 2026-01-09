@@ -122,7 +122,10 @@
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
                                 <!-- <a href="/sku-process">Process ??</a> -->
-                                <a href="/sku-process-type">Process Type</a>
+                                <!-- <a href="/sku-process-type">Process Type</a> -->
+                                <a href="/live--sku-process-type"
+                                    >Process Type</a
+                                >
                                 <a href="/live--sku-process-classification"
                                     >Process Classification</a
                                 >

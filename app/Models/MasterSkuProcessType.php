@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Helpers\HelperCustom;
+use App\Traits\TrackUserAction;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Master\Sku\MasterSkuType;
-use App\Traits\TrackUserAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -30,9 +31,9 @@ class MasterSkuProcessType extends Model
     {
         static::created(function ($model) {
             if (!$model->prefix) {
-                $prefix = self::PREFIX;
+                $prefix = HelperCustom::generateTrxNo(self::PREFIX . "-", $model->id);
                 $model->updateQuietly([
-                    'prefix' => "{$prefix}-{$model->id}"
+                    'prefix' => $prefix,
                 ]);
             }
         });

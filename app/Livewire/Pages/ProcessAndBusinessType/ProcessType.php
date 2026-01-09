@@ -2,34 +2,32 @@
 
 namespace App\Livewire\Pages\ProcessAndBusinessType;
 
-use Livewire\Component;
-use App\Models\{
-    MasterSkuProcessClassification as MainModel,
-    MasterSkuProcessType,
-};
-use Illuminate\Support\Facades\{
-    Session,
-    Validator
-};
-use Livewire\WithPagination;
 use App\Helpers\HelperCustom;
+use Livewire\Component;
+use Livewire\WithPagination;
+use App\Models\{
+    MasterSkuProcessType as MainModel,
+};
+use App\Models\Master\Sku\MasterSkuType;
+use Illuminate\SUpport\Facades\{Session, Validator};
 
-class ProcessClassification extends Component
+class ProcessType extends Component
 {
     use WithPagination;
 
     public array 
         $cached_datas = [],
-        $process_types = [];
+        $sku_types = [];
     
     protected $validator_rules = [
-        "manual_id" => "nullable|max:50|min:3",
-        "description" => "required|string|max:50|min:3",
-        'mst_sku_process_type_id' => 'required|integer|exists:mst_sku_process_type,id',
+        'manual_id'       => 'nullable|string|max:100',
+        'description'     => 'required|string|max:100',
+        'category'        => 'required|string|in:IN-HOUSE,PURCHASE',
+        'mst_sku_type_id' => 'required|integer|exists:mst_sku_type,id',
     ];
 
     // pagination
-    public $allowed_show_entries = [1,10, 25, 50, 100];
+    public $allowed_show_entries = [1, 10, 25, 50, 100];
     public $show_entry;
     public $sort_desc = true;
     public $keyword = "";
@@ -42,7 +40,7 @@ class ProcessClassification extends Component
     ];
     
     public  function mount() {
-        $this->process_types = MasterSkuProcessType::forSelect()->where("flag_active", "=", "1")->get()->toArray();
+        $this->sku_types = MasterSkuType::forSelect()->where("flag_active", "=", "1")->get()->toArray();
 
         $cache_save_entry = Session::get('table.show_entry');
 
@@ -58,16 +56,19 @@ class ProcessClassification extends Component
         }
 
         // simpan ke session
-        session()->put('table.show_entry', (int) $this->show_entry);
+        Session::put('table.show_entry', (int) $this->show_entry);
 
-        $main_datas = MainModel::with('process_type:id,prefix,description')
-            ->when($this->keyword, function ($q) {
+        $main_datas = MainModel::
+            with('item_type:id,prefix,description')->
+            when($this->keyword, function ($q) {
                 $keyword = "%{$this->keyword}%";
 
                 $q->where(function ($q2) use ($keyword) {
                     $q2->where('description', 'like', $keyword)
                     ->orWhere('prefix', 'like', $keyword)
-                    ->orWhereHas('process_type', function ($q3) use ($keyword) {
+                    ->orWhere('manual_id', 'like', $keyword)
+                    ->orWhere('category', 'like', $keyword)
+                    ->orWhereHas('item_type', function ($q3) use ($keyword) {
                         $q3->where('description', 'like', $keyword);
                     });
                 });
@@ -81,11 +82,11 @@ class ProcessClassification extends Component
 
         $start_index = ($this->page - 1) * $this->show_entry;
 
-        return view('livewire.pages.process-and-business-type.process-classification', [
+        return view('livewire.pages.process-and-business-type.process-type', [
             'breadcrumbs' => [
                 '#1' => 'Material Detail',
                 '#2' => 'Process And Business Type',
-                '#3' => 'Process classification',
+                '#3' => 'Process Type',
             ],
             'main_datas' => $main_datas,
             "start_index" => $start_index,

@@ -78,13 +78,11 @@
         },
         init() {
             console.log('initial component.')
-
-            console.log('$wire.cached_datas.data', $wire.cached_datas.data)
         }
     }"
 >
     <div class="tw-px-2 tw-py-2 sm:tw-px-6 tw-grid tw-gap-6">
-        <x-title-section title="SKU Product Price">
+        <x-title-section title="SKU Process Classification">
             <x-breadcrumbs :breadcrumbs="$breadcrumbs"></x-breadcrumbs>
         </x-title-section>
 
@@ -490,6 +488,7 @@
                         type="text"
                         x-model="formMain.manual_id"
                         class="tw-w-full tw-rounded-md tw-border tw-border-slate-300 tw-ring-1 tw-ring-slate-300 tw-px-3 tw-py-2 tw-text-sm focus:tw-border-blue-500 focus:tw-ring-1 focus:tw-ring-blue-500"
+                        placeholder="(optional)"
                     />
                 </div>
 
