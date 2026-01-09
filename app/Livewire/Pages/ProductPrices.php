@@ -21,11 +21,11 @@ class ProductPrices extends Component
         $general_items = [];
     
     protected $validator_rules = [
-        "manual_id" => "nullable|max=50",
+        "manual_id" => "nullable|max:50",
         "mst_sku_id" => "in:mst_sku",
         "customor_id" => "nullable",
         "project_code" => "nullable",
-        "part_number" => "required|min=3|max=50",
+        "part_number" => "required|max:50",
         "general_currency_id" => "in:mst_general_currency",
         "price" => "required",
         "retail_price" => "required",
