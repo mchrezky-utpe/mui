@@ -16,7 +16,7 @@ class MasterSkuProcessType extends Model
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by', ];
     protected $table = "mst_sku_process_type";
 
-    public const string PREFIX = "PTC";
+    public const PREFIX = "PTC";
 
     public function item_type() {
         return $this->belongsTo(MasterSkuType::class, 'mst_sku_type_id');
