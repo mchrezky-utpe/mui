@@ -80,7 +80,7 @@ class NumberGenerator
     }
 
     
-    public static function generateNumberV3($tableName, $prefix, $counterColumn = 'doc_counter')
+    public static function generateNumberV3($tableName, $prefix, $counterColumn = 'doc_counter', $pad_length = 3)
     {
         // Cari entry terakhir di tabel untuk bulan dan tahun ini
         $lastEntry = DB::table($tableName)
@@ -92,7 +92,7 @@ class NumberGenerator
         
 
         // Format counter menjadi 4 digit (0001, 0002, dst.)
-        $formattedCounter = str_pad($newCounter, 3, '0', STR_PAD_LEFT);
+        $formattedCounter = str_pad($newCounter, $pad_length, '0', STR_PAD_LEFT);
         // Format nomor dokumen
         $docNumber = "{$prefix}-{$formattedCounter}";
 

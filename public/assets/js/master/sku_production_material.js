@@ -38,6 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ajax: {
             url: "/api/sku-production-material",
             type: "GET",
+            data:{
+                sku_type_flag_checking: 4
+            }
         },
 
         columns: [

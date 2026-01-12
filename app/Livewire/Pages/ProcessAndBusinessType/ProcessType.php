@@ -9,7 +9,7 @@ use App\Models\{
     MasterSkuProcessType as MainModel,
 };
 use App\Models\Master\Sku\MasterSkuType;
-use Illuminate\SUpport\Facades\{Session, Validator};
+use Illuminate\Support\Facades\{Session, Validator};
 
 class ProcessType extends Component
 {

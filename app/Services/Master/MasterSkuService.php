@@ -83,8 +83,11 @@ class MasterSkuService
             $query = DB::table('vw_app_list_mst_sku');
             
             $query->where('flag_sku_type','=',2);
-            $query->where('sku_type_flag_checking','=',4); // unchecked type
         
+            if($request->input('sku_type_flag_checking') != null){
+                 $query->where('sku_type_flag_checking','=',4); // unchecked type
+            }
+            
             if (!empty($search)) {
                 $query->where(function ($q) use ($search) {
                     $q->Where('sku_id', 'like', '%' . $search . '%')
@@ -202,7 +205,8 @@ class MasterSkuService
                 $prefix = 'MC';
                 break;
             default:
-                $prefix = 'IC';
+            
+            $prefix = 'IC';
         }
 
       $result = DB::selectOne(" SELECT generate_sku(?, ?, ?) AS sku ", [$prefix, $flag_sku_type, $sku_type_id]);
@@ -280,7 +284,7 @@ class MasterSkuService
         $group_types = MasterSkuType::where('group_tag', $type->group_tag)->get();
         
         $result_code =  $this->generateCode($group_types->first()->id, $data->flag_sku_type);
-
+                
         foreach ($group_types as $group_type) {
             $copyData = $data->replicate();
             

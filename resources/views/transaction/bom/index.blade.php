@@ -42,14 +42,21 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">List</h5>
-            <button id="add_button"  type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add +</button>
+            <a href="/bom/add" class="btn btn-primary">Add +</a>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table id="table-bom" class="table table-striped table-bordered first">
                 <thead>
                   <tr>
+                    <th colspan="5" style="text-align:center">Part Information</th>
+                    <th colspan="3" style="text-align:center">BOM Status</th>
                     <th></th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>BOM Number</th>
                     <th>Part Code</th>
                     <th>Part Name</th>
                     <th>Model</th>
@@ -57,7 +64,6 @@
                     <th>Verification</th>
                     <th>Status</th>
                     <th>Main Priority</th>
-                    <th></th>
                   </tr>
                 </thead>
                 </table>

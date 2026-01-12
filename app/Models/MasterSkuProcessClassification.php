@@ -17,7 +17,7 @@ class MasterSkuProcessClassification extends Model
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by', ];
     protected $table = "mst_sku_process_classification";
 
-    public const string PREFIX = "PCC";
+    public const PREFIX = "PCC";
 
     public function process_type() {
        return $this->belongsTo(MasterSkuProcessType::class, 'mst_sku_process_type_id'); 

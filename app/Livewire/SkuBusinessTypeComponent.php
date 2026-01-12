@@ -7,7 +7,7 @@ use Livewire\Component;
 use App\Helpers\HelperCustom;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MasterSkuBusinessType as MainModel;
-use Illuminate\Support\Collection;
+// use Illuminate\Support\Collection;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;

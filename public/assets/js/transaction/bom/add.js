@@ -1,5 +1,79 @@
-$(document).ready(function() {
-    // Data structure to hold our tree with enhanced IDs
+$(document).ready(function () {
+
+    // handling pagination data
+	const table = $('#table-item').DataTable({
+		fixedColumns: {
+			start: 0,
+			end: 5
+		},
+		scrollCollapse: true,
+		scrollX: true,
+		scrollY: 300,
+
+		processing: true,
+		serverSide: true,
+		ajax: {
+			url: base_url + 'bom/all/material',
+			type: "GET",
+			data: function(d) {
+			}
+		},
+		columns: [
+			{
+				data: "sku_id"
+			}, 
+			{
+				data: "sku_name"
+			},
+			{
+				data: "sku_specification_code"
+			},
+			{
+				data: "sku_type"
+			},
+			{
+				data: "sku_inventory_unit"
+			},
+			{
+				data: "person_supplier"
+			}, 
+            {
+				data: "sku_procurement_type"
+			},
+			{
+				data: "currency"
+			},
+			{
+				data: "price"
+			},
+			{
+				data: "price_retail"
+			},
+			{
+				data: "pricelist_status"
+			}
+		],
+		columnDefs: []
+	});
+    // end of hanlding pagination data
+
+	   $('#table-item').on('click', 'tr', function() {
+		$('#add_modal_item').modal('show');
+        var data = table.row(this).data();
+        $('[name=sku_selected_id]').val(data.sku_pk_id);
+        $('[name=sku_selected_name]').val(data.sku_name);
+        $('[name=sku_selected_code]').val(data.sku_id);
+        $('[name=unit]').val(data.sku_inventory_unit);
+        $('[name=supplier_id]').val(data.prs_supplier_id);
+    });
+
+    $(document).on('click','.closeBtnAdd',function(){
+		$('#add_modal_item').modal('hide');
+    });
+
+	
+	// REGION FOR MANAGE ITEM TREE 
+	    // Data structure to hold our tree with enhanced IDs
     const treeData = [];
     var skuData;
     let nextId = 1; // Auto-increment ID for easier tracking
@@ -82,26 +156,34 @@ $(document).ready(function() {
     
     // Function to add data to the tree
     function addDataToTree() {
-        const sku_id = $('#sku_id').val().trim();
-        const sku_name = $('#sku_id :selected').text().trim();
+        const sku_selected_id = $('#sku_selected_id').val().trim() ;
+        const sku_name = $('#sku_selected_name').val().trim();
+        const sku_code = $('#sku_selected_code').val().trim();
         const qty_capacity = $('#qty_capacity').val().trim();
         const qty_each_unit = parseInt($('#qty_each_unit').val());
         const description = $('#description').val().trim();
+        const process_type = $('[name=process_type] :selected').text().trim();
+        const process_type_id = $('[name=process_type] :selected').val();
+        const supplier_id = $('[name=supplier_id]').val();
 
         const level = parseInt($('#level').val());
         
-        if (!sku_id || !qty_capacity) {
+        if (!sku_selected_id || !qty_capacity) {
             alert('Please correct data');
             return;
         }
         
         const newItem = {
             id: generateId(), // Use our auto-increment ID
-            sku_id,
+            sku_selected_id,
             sku_name,
+            sku_code,
             qty_capacity,
             qty_each_unit,
             description,
+            process_type,
+            process_type_id,
+            supplier_id,
             level,
             children: []
         };
@@ -130,12 +212,13 @@ $(document).ready(function() {
         }
         
         // Clear inputs
-        $('#sku_id, #qty_capacity, #qty_each_unit, #description, #part_code, #model').val('');
+        $('#sku_selected_id, #qty_capacity, #qty_each_unit, #process_type').val('');
         
         // Update UI
         updateLevelOptions();
         updateParentOptions();
         renderTree();
+		$('#add_modal_item').modal('hide');
     }
     
     // Function to delete an item from the tree
@@ -173,9 +256,9 @@ $(document).ready(function() {
         function renderItems(items) {
             items.forEach(item => {
                 html += `<div class="tree-node" data-id="${item.id}">
-                    <span class="node-label">${item.sku_name}</span>: 
+                    <span class="node-label">${item.sku_name}</span>: Qty 
                     <span class="node-value">${item.qty_capacity}</span> 
-                    <span>(Level ${item.level}, ID: ${item.id})</span>
+                    <span>(Level ${item.level}, Code: ${item.sku_code} , ${item.process_type})</span>
                     <span class="node-actions">
                         <button class="btn btn-danger delete" data-id="${item.id}">Delete</button>
                     </span>`;
@@ -214,7 +297,7 @@ $(document).ready(function() {
         // Create a form dynamically
         var form = document.createElement('form');
         form.method = 'POST';
-        form.action = '/bom/edit-detail'; // Sesuaikan dengan route Laravel Anda
+        form.action = '/bom'; 
         
         // Add CSRF token (Laravel requirement)
         var csrfToken = document.createElement('input');
@@ -230,14 +313,23 @@ $(document).ready(function() {
         dataInput.value = JSON.stringify(flatData);
         form.appendChild(dataInput);
 
-        // Add the flattened data as JSON
-        var bomIdInput = document.createElement('input');
-        bomIdInput.type = 'hidden';
-        bomIdInput.name = 'bom_id';
-        bomIdInput.value = $('#bom_id').val();
-        form.appendChild(bomIdInput);
+        // add additional input data
+        // sku id
+        var skuIdInput = document.createElement('input');
+        skuIdInput.type = 'hidden';
+        skuIdInput.name = 'sku_id';
+        skuIdInput.value = $('#sku_id').val();
+        form.appendChild(skuIdInput);
+
+        // description/ remark
+        var descriptionInput = document.createElement('input');
+        descriptionInput.type = 'hidden';
+        descriptionInput.name = 'description';
+        descriptionInput.value = $('#description').val();
+        form.appendChild(descriptionInput);
         
         // Append form to body and submit
+        debugger;
         document.body.appendChild(form);
         form.submit();
         
@@ -252,13 +344,15 @@ $(document).ready(function() {
         // Buat objek flat dengan properti yang diinginkan
         let flatItem = {
             rec_key: item.id,
-            sku_id: item.sku_id,
+            sku_id: item.sku_selected_id,
             sku_name: item.sku_name,
             qty_capacity: item.qty_capacity,
             qty_each_unit: item.qty_each_unit,
             level: item.level,
             description: item.level,
-            rec_parent_key: parentId
+            rec_parent_key: parentId,
+            supplier_id: item.supplier_id,
+            process_type_id: item.process_type_id
         };
         
         // Tambahkan ke hasil
@@ -274,10 +368,35 @@ $(document).ready(function() {
     return result;
 }
 
+    function applyData(){
+        const sku_id = $('#sku_id').val();
+        const description = $('#description').val();
+        if(sku_id == null || sku_id == ""){
+            alert("Select Part Name!");
+            return;
+        }
+
+        if(description == ""){
+            alert("Remark must not be blank!");
+            return;
+        }
+        $('#sku_id').prop('disabled',true);
+        $('#description').prop('readonly',true);
+        $('#applyBtn').prop('disabled',true);
+    }
+
+
+    function resetData(){
+        location.reload();
+    }
+
     // Event listeners
     $('#level').on('change', updateParentOptions);
-    $('#addBtn').on('click', addDataToTree);
+    $(document).on('click','#addBtn', addDataToTree);
     $('#saveBtn').on('click', saveTreeData);
+    $('#applyBtn').on('click', applyData);
+    $('#resetBtn').on('click', resetData);
+	
     $('#sku_id').on('change', function(){
        
         const selectedOption = $(this).find('option:selected');
@@ -285,13 +404,10 @@ $(document).ready(function() {
         const skuModel = selectedOption.attr('sku_model');
         const value = selectedOption.val();
         const text = selectedOption.text();
-        debugger;
         $('[name=part_code]').val(skuId);
         $('[name=model]').val(skuModel);
     });
-    
 
-    
     // =========== HANDLING PARAM
     function populateSelectSku(title, master_data, element) {
         element.empty();
@@ -303,12 +419,33 @@ $(document).ready(function() {
         });
     }
 
+    function populateSelectProcessType(title, master_data, element) {
+        element.empty();
+        element.append('<option value="">-- Select ' + title + " --</option>");
+        master_data.forEach((data) => {
+            element.append(
+                `<option value="${data.id}">${data.description}</option>`
+            );
+        });
+    }
+
     function initParam() {
+        
+        fetchProcessType()
+            .then((data) => {
+                console.log("Succesfully get Sku:", data);
+                skuData = data;
+                populateSelectProcessType("Process Type", data, $("[name=process_type]"));
+            })
+            .catch((err) => {
+                console.error("Error get Sku:", err);
+            });
+
       return fetchSkuMaster()
             .then((data) => {
                 console.log("Succesfully get Sku:", data);
                 skuData = data;
-                populateSelectSku("Sku", data, $("[name=sku_id]"));
+                populateSelectSku("Part Name", data, $("[name=sku_id]"));
             })
             .catch((err) => {
                 console.error("Error get Sku:", err);
@@ -325,6 +462,23 @@ $(document).ready(function() {
                 },
                 error: function (err) {
                     console.error("Error fetching terms master:", err);
+                    reject(err);
+                },
+            });
+        });
+    }
+
+    
+    function fetchProcessType() {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "GET",
+                url: base_url + "api/sku-process-type/names",
+                success: function (data) {
+                    resolve(data.data);
+                },
+                error: function (err) {
+                    console.error("Error fetching type master:", err);
                     reject(err);
                 },
             });
