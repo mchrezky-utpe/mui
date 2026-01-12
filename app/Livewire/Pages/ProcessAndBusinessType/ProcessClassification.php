@@ -29,7 +29,7 @@ class ProcessClassification extends Component
     ];
 
     // pagination
-    public $allowed_show_entries = [1,10, 25, 50, 100];
+    public $allowed_show_entries = [10, 25, 50, 100];
     public $show_entry;
     public $sort_desc = true;
     public $keyword = "";
