@@ -27,6 +27,9 @@ $(document).ready(function () {
                 data: null,
             },
             {
+                data: null,
+            },
+            {
                 data: "prefix",
             },
             {
@@ -49,10 +52,7 @@ $(document).ready(function () {
             },
             {
                 data: "main_priority",
-            },
-            {
-                data: null,
-            },
+            }
         ],
         columnDefs: [
             {
@@ -64,32 +64,72 @@ $(document).ready(function () {
                 }
             },
             {
-                targets: 9,
+                targets: 1,
                 orderable: false,
                 searchable: false,
                 render: function (data, type, row, meta) {
                     const csrfToken = document
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute("content");
-                    return (
-                        `
-                        <form action="/bom/` +
-                        data.id +
-                        `/delete" method="post" onsubmit="return confirm('Are you sure you want to delete it?')">
-						<div class="d-flex">
-							<input type="hidden" name="_token" value="${csrfToken}">
-							<a  target="/bom/edit"   href="bom/` + data.id +`/edit" class="btn btn-success">
-							 <span class="fas fa-pencil-alt"></span>
-                            </a>
-                            <button type="submit" class="btn btn-danger">
-                            <span class="fas fa-trash"></span>
+                    
+                   const style_disable = 'style="pointer-events: none;cursor: default;background-color:red"'
+
+                   let stateButtonReceipt1 = style_disable;
+                   let stateButtonReceipt2 = style_disable;
+                   let stateButtonReceipt3 = style_disable;
+
+                //    if(data.receipt_date1 == null){
+                //         stateButtonReceipt1 = "";
+                //    }    
+                //    if(data.receipt_date1 != null && data.receipt_date2 == null){
+                //         stateButtonReceipt2 = "";
+                //    }    
+                //    if(data.receipt_date2 != null && data.receipt_date3 == null){
+                //         stateButtonReceipt3 = "";
+                //    }    
+
+
+                    let button = `
+                        <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <button data-id="${data.id}" type="button"class="update dropdown-item">
+							   Update
                             </button>
-						</div>
-						</form>
-                    `
-                    );
+
+                            <form action="/bom/${data.id}/delete" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button class="dropdown-item">Delete</button>
+                            </form>
+
+                            <form action="/bom/${data.id}/verify" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button class="dropdown-item">Verified</button>
+                            </form>
+
+                            <form action="/bom/${data.id}/activate" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button class="dropdown-item">Active</button>
+                            </form>
+                            
+                            
+                            <form action="/bom/${data.id}/main" method="post"> 
+							    <input type="hidden" name="_token" value="${csrfToken}">
+                              <button class="dropdown-item">Set Main Priotity</button>
+                            </form>
+
+                            <a href="/pi/${data.id}/export" class="btn dropdown-item">
+							   Export to Spreedsheet
+                            </a>
+
+                        </div>
+                      </div> `
+                    return button;
                 },
-            },
+            }
         ],
     });
 

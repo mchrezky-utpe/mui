@@ -6,6 +6,7 @@ use App\Services\Master\Bom\BomService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Models\Master\Bom\Bom;
 
 class BomController
 {
@@ -35,6 +36,7 @@ class BomController
         $query = DB::table('vw_app_list_trans_sku_pricelist');
         
          $query->where('flag_sku_type','=', 2);
+         $query->whereIn('extension_type', ['WPC','SPC','SAC']);
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -97,6 +99,32 @@ class BomController
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
+        return redirect("/bom");
+    }
+    
+
+    public function verify(Request $request, int $id)
+    {
+        $data = Bom::where('id', $id)->firstOrFail();
+        $data->flag_verified = 1;
+        $data->save();
+        return redirect("/bom");
+    }
+    
+    public function activate(Request $request, int $id)
+    {
+        $data = Bom::where('id', $id)->firstOrFail();
+        $data->flag_active = 1;
+        $data->save();
+        return redirect("/bom");
+    }
+    
+
+    public function main(Request $request, int $id)
+    {
+        $data = Bom::where('id', $id)->firstOrFail();
+        $data->flag_main_priority = 1;
+        $data->save();
         return redirect("/bom");
     }
     

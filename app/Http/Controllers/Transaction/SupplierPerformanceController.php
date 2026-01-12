@@ -105,7 +105,12 @@ FROM
     
     public function get_detail(Request $request)
     {
-        $year = $request->input('year', date('Y')); // Default tahun sekarang
+        $year = $request->input('startDate');
+        if ($year) {
+            $year = Carbon::parse($year)->year;
+        } else {
+            $year = $request->input('year', date('Y'));
+        }
         
         // Generate semua bulan dari Januari hingga Desember
         $allMonths = [];
@@ -196,8 +201,13 @@ FROM
     
     public function get_qc_detail(Request $request)
     {
-        $year = $request->input('year', date('Y')); // Default tahun sekarang
-        
+        $year = $request->input('startDate');
+        if ($year) {
+            $year = Carbon::parse($year)->year;
+        } else {
+            $year = $request->input('year', date('Y'));
+        }
+
         // Generate semua bulan dari Januari hingga Desember
         $allMonths = [];
         for ($month = 1; $month <= 12; $month++) {

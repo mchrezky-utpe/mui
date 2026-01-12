@@ -55,6 +55,7 @@
                   </tr>
                   <tr>
                     <th></th>
+                    <th></th>
                     <th>BOM Number</th>
                     <th>Part Code</th>
                     <th>Part Name</th>
@@ -63,7 +64,6 @@
                     <th>Verification</th>
                     <th>Status</th>
                     <th>Main Priority</th>
-                    <th></th>
                   </tr>
                 </thead>
                 </table>
