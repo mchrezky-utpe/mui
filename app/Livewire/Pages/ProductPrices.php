@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class ProductPrices extends Component
 {
     public array 
-        $main_datas = [], 
+        $cached_datas = [], 
         $currencies = [],
 
         $part_informations = [],
@@ -22,17 +22,17 @@ class ProductPrices extends Component
     
     protected $validator_rules = [
         "manual_id" => "nullable|max:50",
-        "mst_sku_id" => "in:mst_sku",
+        "mst_sku_id" => "required|exists:mst_sku",
         "customor_id" => "nullable",
         "project_code" => "nullable",
         "part_number" => "required|max:50",
-        "general_currency_id" => "in:mst_general_currency",
+        "general_currency_id" => "required|exists:mst_general_currency",
         "price" => "required",
         "retail_price" => "required",
         "effective_from" => "required",
         "effective_to" => "required",
-        "is_amortization" => "required",
-        "is_activated" => "required",
+        "is_amortization" => "nullable",
+        "is_activated" => "nullable",
     ];
 
     public function mount() {

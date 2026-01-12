@@ -3,13 +3,13 @@
 namespace App\Models\Transaction;
 
 use App\Models\MasterSku;
-use App\Traits\HasUserTracking;
+use App\Traits\TrackUserAction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductPrice extends Model
 {
-    use SoftDeletes, HasUserTracking;
+    use SoftDeletes, TrackUserAction;
 
     protected $table = "trans_sku_product_prices";
 
