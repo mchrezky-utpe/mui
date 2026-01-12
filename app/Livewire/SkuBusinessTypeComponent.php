@@ -22,12 +22,6 @@ class SkuBusinessTypeComponent extends Component
     public $collection_data;
     public $cached_data;
     
-    public $edit_id;
-    public $prefix = '';
-    public $manual_id = '';
-    public $description = '';
-    public $category = '';
-
     public $allowed_category = ['AUTOMOTIVE', 'NON-AUTOMOTIVE'];
     public $allowed_category__str = '';
 
@@ -44,8 +38,6 @@ class SkuBusinessTypeComponent extends Component
         'keyword' => ['except' => ''],
         'sort_desc' => ['except' => false]
     ];
-
-    public $show_modal = true;
 
     public function mount()
     {
@@ -84,30 +76,6 @@ class SkuBusinessTypeComponent extends Component
             "main_data" => $main_data
         ]);
     }
-
-    public function openModal($id = null)
-    {
-        if ($id ?? false) {
-            $row = $this->collection_data->firstWhere('id', $id);
-            
-            if (!$row) {
-                session()->flash('error', 'Data tidak tersedia di page ini!');
-                return;
-            }
-            
-            $this->edit_id = $row->id;
-            $this->prefix = $row->prefix;
-            $this->manual_id = $row->manual_id;
-            $this->description = $row->description;
-            $this->category = $row->category;
-    
-            $this->show_modal = true;
-        } else {
-            $this->reset(["edit_id", "prefix", "manual_id", "description", "category"]);
-            $this->show_modal = true;
-        }
-    }
-
     public function addData(array $forms)
     {
         $validated = Validator::make($forms, [
@@ -125,10 +93,16 @@ class SkuBusinessTypeComponent extends Component
         $new = MainModel::create($validated);
 
         $new->flag_active = 1;
-        $new->prefix = HelperCustom::generateTrxNo('SKUT', $new->id);
+        $new->prefix = HelperCustom::generateTrxNo('SKUT-', $new->id);
         $new->save();
 
-        session()->flash('success', 'Data berhasil ditambahkan');
+        // session()->flash('success', 'Data berhasil ditambahkan');
+
+        $this->dispatch("notify", [
+            "variant" => "success",
+            "title" => "Success",
+            "message" => "Data berhasil ditambahkan."
+        ]);
     }
 
     public function getData()
@@ -152,26 +126,70 @@ class SkuBusinessTypeComponent extends Component
             'description' => 'required|string|max:50',
             'category' => 'required|in:' . $this->allowed_category__str,
         ])->validate();
+        
         // $validated = $this->validate([
         //     'manual_id' => 'nullable|max:50',
         //     'description' => 'required|string|max:50',
         //     'category' => 'required|in:' . $this->allowed_category__str,
         // ]);
 
-        $data = MainModel::findOrFail(id: $forms['id']);
+        $data = MainModel::findOrFail($forms['id']);
 
         $data->update($validated);
-        session()->flash('success', 'Data berhasil diubah');
+        // session()->flash('success', 'Data berhasil diubah');
+
+        $this->dispatch("notify", [
+            "variant" => "success",
+            "title" => "Success",
+            "message" => "Data berhasil diubah."
+        ]);
     }
 
-    public function deleteData()
+    public function deleteData($id)
     {
-        $data = MainModel::findOrFail($this->editId);
+        try {
+            $data = MainModel::findOrFail($id);
+        } catch (\Exception $e) {
+            return $this->dispatch("notify", [
+                "variant" => "error",
+                "title" => "Error",
+                "message" => $e->getMessage()
+            ]);
+        }
+
         $data->flag_active = 0;
         $data->deleted_at  = Carbon::now();
         $data->deleted_by  = Auth::id();
         $data->save();
-        session()->flash('success', 'Data berhasil dihapus');
+
+        // session()->flash('success', 'Data berhasil dihapus');
+
+        $this->dispatch("notify", [
+            "variant" => "success",
+            "title" => "Success",
+            "message" => "Data berhasil dihapus."
+        ]);
+    }
+
+    // other method
+    public function regeneratePrefix(int $id) {
+        if (!$this->collection_data->find($id)) {
+            return $this->dispatch("notify", [
+                "variant" => "danger",
+                "title" => "Error",
+                "message" => "Data tidak ditemukan."
+            ]);
+        }
+
+        $data = MainModel::findOrFail($id);
+        $data->prefix = HelperCustom::generateTrxNo('SKUT-', $data->id);
+        $data->save();
+
+        $this->dispatch("notify", [
+            "variant" => "success",
+            "title" => "Success",
+            "message" => "Code berhasil di regenerate."
+        ]);
     }
 
     

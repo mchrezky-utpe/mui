@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Facades\Excel;
 
-
 class SkuPricelistController
 {
 
@@ -25,8 +24,6 @@ class SkuPricelistController
         return response()->view('transaction.sku_pricelist.index');
     }
 
-    
-
     public function index_general_item(): Response
     {
         return response()->view('transaction.sku_pricelist.index_general_item');
@@ -37,7 +34,7 @@ class SkuPricelistController
     {
         $data = $this->service->list_pagination($request);
         return response()->json([
-            'draw' => intval($request->input('draw')), // Parameter dari DataTables
+            'draw' => \intval($request->input('draw')), // Parameter dari DataTables
             'recordsTotal' => $data['recordsTotal'], // Total record tanpa filter
             'recordsFiltered' => $data['recordsFiltered'], // Total record setelah filter
             'data' => $data['data'], // Data untuk ditampilkan

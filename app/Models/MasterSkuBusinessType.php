@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasUserTracking;
+use App\Traits\TrackUserAction;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 
 class MasterSkuBusinessType extends Model
 {
-    use HasFactory, HasUserTracking, SoftDeletes;
+    use SoftDeletes, TrackUserAction;
   
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 

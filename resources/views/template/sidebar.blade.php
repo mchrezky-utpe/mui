@@ -122,11 +122,17 @@
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
                                 <!-- <a href="/sku-process">Process ??</a> -->
-                                <a href="/sku-process-type">Process Type</a>
-                                <a href="/sku-process-classification"
+                                <!-- <a href="/sku-process-type">Process Type</a> -->
+                                <a href="/live--sku-process-type"
+                                    >Process Type</a
+                                >
+                                <a href="/live--sku-process-classification"
                                     >Process Classification</a
                                 >
-                                <a href="/sku-business-type">Business Type</a>
+                                <a href="/live--sku-business-type"
+                                    >Business Type</a
+                                >
+                                <!-- <a href="/sku-business-type">Business Type</a> -->
                             </li>
                             <!-- <li>
                                 <a href="/sku-pricelist-general-item"
@@ -355,25 +361,26 @@
                 </ul>
             </li>
 
-                        <!-- QC Menu -->
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-check-circle"></i>QC</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="/qc">Quality Control</a>
-                                </li>
-                                <li>
-                                    <a href="/qc/add">Quality Control Check</a>
-                                </li>
-                                <li>
-                                    <a href="/qc/goods-transfer">Goods Transfer</a>
-                                </li>
-                            </ul>
-                        </li> 
-                        
-                        <!-- Factory Menu -->
-                        <!-- <li class="has-sub">
+            <!-- QC Menu -->
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-check-circle"></i>QC</a
+                >
+                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                    <li>
+                        <a href="/qc">Quality Control</a>
+                    </li>
+                    <li>
+                        <a href="/qc/add">Quality Control Check</a>
+                    </li>
+                    <li>
+                        <a href="/qc/goods-transfer">Goods Transfer</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Factory Menu -->
+            <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-industry"></i>Factory</a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">

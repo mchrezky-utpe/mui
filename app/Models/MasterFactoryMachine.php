@@ -9,10 +9,10 @@ use App\Traits\HasUserTracking;
 class MasterFactoryMachine extends Model
 {
     use HasFactory;
+    use HasUserTracking; 
 
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_by'];
 
     protected $table = 'mst_factory_machine';
 
-    use HasUserTracking;
 }
