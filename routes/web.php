@@ -28,6 +28,7 @@ use App\Http\Controllers\Transaction\Production\ProductionController;
 use App\Http\Controllers\Master\MasterSkuProcessClassificationController;
 use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
+use App\Http\Controllers\Transaction\Inventory\ProductionMaterialController;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
@@ -95,17 +96,16 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::get("/api/sku-part-information/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-production-material/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-general-item/get-set-code", "get_set_code")->middleware(OnlyMemberMiddleware::class);
-    
+
     Route::get("/api/sku-part-information/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-production-material/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
     // Route::get("/api/sku-general-item/get-code", "get_code")->middleware(OnlyMemberMiddleware::class);
 
     // Route::get('/sku/export', 'export')->name('sku.export')->middleware(OnlyMemberMiddleware::class);
     route::get('/sku/export', 'export')->name('sku.export');
-    route::get('/sku/export/production-material','export_production_material')->name('sku.export_production_material');
+    route::get('/sku/export/production-material', 'export_production_material')->name('sku.export_production_material');
     route::get('/sku/export/general-item',  'export_general_item')->name('sku.export_general_item');
     Route::get('/sku-image/{id}', 'showImage');
-
 });
 
 Route::controller(MasterSkuProcessController::class)->group(function () {
@@ -121,14 +121,13 @@ Route::controller(MasterSkuProcessController::class)->group(function () {
     Route::post("/sku-process/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     // Paginate
     Route::get("/api/sku-process", "paginate")->middleware(OnlyMemberMiddleware::class);
-
 });
 
 Route::controller(MasterSkuProcessTypeController::class)->group(function () {
     $route_name = "sku-process-type";
-    
+
     // LIST
-    
+
     Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
@@ -142,15 +141,14 @@ Route::controller(MasterSkuProcessTypeController::class)->group(function () {
     Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
 
     Route::get("/api/$route_name/names", "api_name")->middleware(OnlyMemberMiddleware::class);
-
 });
 
 
 Route::controller(MasterSkuProcessClassificationController::class)->group(function () {
     $route_name = "sku-process-classification";
-    
+
     // LIST
-    
+
     Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
     Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
@@ -162,7 +160,6 @@ Route::controller(MasterSkuProcessClassificationController::class)->group(functi
     Route::post("/$route_name/{id}", "edit")->middleware(OnlyMemberMiddleware::class);
     // Paginate
     Route::get("/api/$route_name", "paginate")->middleware(OnlyMemberMiddleware::class);
-
 });
 
 
@@ -234,7 +231,7 @@ Route::controller(MasterPersonSupplierController::class)->group(function () {
 Route::controller(MasterPersonCustomerController::class)->group(function () {
     // LIST
     Route::get("/customer", "index")->middleware(OnlyMemberMiddleware::class);
-  
+
     Route::get("/customer/all", "get_all")->middleware(OnlyMemberMiddleware::class);
     // ADD
     // ADD
@@ -343,7 +340,7 @@ Route::controller(MasterGeneralDeductorController::class)->group(function () {
     // EDIT    
     Route::post("/general-deductor/edit", "edit")->middleware(OnlyMemberMiddleware::class);
 
-    
+
     // HAPUS PERMANEN
     Route::post("/general-deductor/{id}/hapus", "hapus")->middleware(OnlyMemberMiddleware::class);
     //RESTORE
@@ -431,9 +428,9 @@ Route::controller(MasterPersonEmployeeController::class)->group(function () {
     Route::get("/api/person-employee", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
-    Route::get('/person-employee/export/pdf', [MasterPersonEmployeeController::class, 'exportPdf'])->name('employee.export.pdf');
-    // Route::get('/po/{id}/pdf', [PurchaseOrderController::class, 'generatePDF']);
-    Route::group(['prefix' => 'po'], function () {
+Route::get('/person-employee/export/pdf', [MasterPersonEmployeeController::class, 'exportPdf'])->name('employee.export.pdf');
+// Route::get('/po/{id}/pdf', [PurchaseOrderController::class, 'generatePDF']);
+Route::group(['prefix' => 'po'], function () {
     Route::get('/{id}/pdf', [PurchaseOrderController::class, 'generatePDF'])->name('po.pdf');
     Route::get('/{id}/items', [PurchaseOrderController::class, 'getItems'])->name('po.items');
     Route::get('/po/{id}/items', [PurchaseOrderController::class, 'getItems']);
@@ -471,7 +468,7 @@ Route::controller(ProductionProcessController::class)->group(function () {
     // API GET ALL DATA
     Route::get("/api/production_process", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
-   Route::controller(ProductionCostController::class)->group(function () {
+Route::controller(ProductionCostController::class)->group(function () {
     // LIST
     Route::get("/production_cost", "index")->middleware(OnlyMemberMiddleware::class);
     // ADD
@@ -489,3 +486,23 @@ Route::controller(ProductionProcessController::class)->group(function () {
     Route::get("/api/production_cost", "api_all")->middleware(OnlyMemberMiddleware::class);
 });
 
+Route::controller(ProductionMaterialController::class)->group(function () {
+    $route_name = "production_material";
+
+    // LIST
+    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
+    // ADD
+    // Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
+    // // DELETE
+    // Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    // // GET
+    // Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
+    // // EDIT    
+    // Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+
+    Route::get("/api/$route_name/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
+    Route::post(
+        "api/$route_name/approve",
+        [ProductionMaterialController::class, 'api_approve']
+    );
+});
