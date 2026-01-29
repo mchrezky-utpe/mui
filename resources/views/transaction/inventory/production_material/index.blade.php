@@ -217,8 +217,8 @@
   <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Stock Issue</h5>
-        <button type="button" class="close text-white" data-dismiss="modal">
+        <h5 class="modal-title text-white">Stock Issue</h5>
+        <button type="button" class="close text-white" data-bs-dismiss="modal">
           <span>&times;</span>
         </button>
       </div>
@@ -247,7 +247,7 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button class="btn btn-success" id="btnSubmitStockIssue">
           ✅ Submit
         </button>
