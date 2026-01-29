@@ -505,4 +505,9 @@ Route::controller(ProductionMaterialController::class)->group(function () {
         "api/$route_name/approve",
         [ProductionMaterialController::class, 'api_approve']
     );
+    Route::get("/api/$route_name/droplist-stock-issue", "api_droplist_stock_issue")->middleware(OnlyMemberMiddleware::class);
+    Route::post(
+        "api/$route_name/approve-stock-issue",
+        [ProductionMaterialController::class, 'api_approve_stock_issue']
+    );
 });
