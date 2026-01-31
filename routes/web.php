@@ -30,6 +30,7 @@ use App\Http\Controllers\Transaction\Production\ProductionCostController;
 use App\Http\Controllers\Transaction\Production\ProductionProcessController;
 use App\Http\Controllers\Transaction\Inventory\ProductionMaterialController;
 use App\Http\Controllers\Transaction\Sales\SalesOrderController;
+use App\Http\Controllers\Transaction\Inventory\CustomerDeliveryScheduleController;
 
 require_once base_path('routes/transaction_route.php');
 require_once base_path('routes/master_route.php');
@@ -490,37 +491,18 @@ Route::controller(ProductionCostController::class)->group(function () {
 Route::controller(ProductionMaterialController::class)->group(function () {
     $route_name = "production_material";
 
-    // LIST
     Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
-    // ADD
-    // Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
-    // // DELETE
-    // Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    // // GET
-    // Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // // EDIT    
-    // Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-
     Route::get("/api/$route_name/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/approve", "api_approve")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-stock-issue", "api_droplist_stock_issue")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/approve-stock-issue", "api_approve_stock_issue")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(SalesOrderController::class)->group(function () {
     $route_name = "sales_order";
 
-    // LIST
     Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
-    // ADD
-    // Route::post("/$route_name", "add")->middleware(OnlyMemberMiddleware::class);
-    // // DELETE
-    // Route::post("/$route_name/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
-    // // GET
-    // Route::get("/$route_name/{id}", "get")->middleware(OnlyMemberMiddleware::class);
-    // // EDIT    
-    // Route::post("/$route_name/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-
     Route::get("/api/$route_name/droplist-list-customer", "api_droplist_list_customer")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-list-currency", "api_droplist_list_currency")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-list-category", "api_droplist_list_category")->middleware(OnlyMemberMiddleware::class);
@@ -528,4 +510,13 @@ Route::controller(SalesOrderController::class)->group(function () {
     Route::post("/api/$route_name/insert-sales-order", "api_insert_sales_order")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-sales-order-list-detail", "api_droplist_sales_order_list_detail")->middleware(OnlyMemberMiddleware::class);
+});
+
+Route::controller(CustomerDeliveryScheduleController::class)->group(function () {
+    $route_name = "customer_delivery_schedule";
+
+    Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name/droplist-list-customer-destination", "api_droplist_list_customer_destination")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/api/$route_name/insert-customer-delivery-schedule", "api_insert_customer_delivery_schedule")->middleware(OnlyMemberMiddleware::class);
 });

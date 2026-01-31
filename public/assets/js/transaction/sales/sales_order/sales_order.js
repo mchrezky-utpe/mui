@@ -12,19 +12,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const validUntilSalesOrderDetails = document.getElementById(
         "valid_until_sales_order_details",
     );
+
     let lastCustomer = null;
+    let allowChange = true;
 
-    $("#customer").on("select2:select", function () {
-        lastCustomer = $(this).val();
-    });
+    $("#customer").on("select2:selecting", function (e) {
+        if (!allowChange) return;
 
-    $("#customer").on("change", function () {
-        const newCustomer = $(this).val();
+        const newCustomer = e.params.args.data.id;
 
         if (selectedItems.length === 0) {
             lastCustomer = newCustomer;
             return;
         }
+
+        e.preventDefault();
 
         Swal.fire({
             title: "Ganti Customer?",
@@ -35,12 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
             cancelButtonText: "Batal",
         }).then((res) => {
             if (res.isConfirmed) {
+                allowChange = false;
+
                 selectedItems = [];
                 tableSelected.clear().draw();
 
+                $("#customer").val(newCustomer).trigger("change");
+
                 lastCustomer = newCustomer;
-            } else {
-                $("#customer").val(lastCustomer).trigger("change.select2");
+
+                allowChange = true;
             }
         });
     });
@@ -213,8 +219,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 { data: "sku_id" },
                 { data: "sku_name" },
                 { data: "sku_specification_code" },
-                { data: "sku_type", render: (d) => d || "-" },
-                { data: "sku_procurement_type", render: (d) => d || "-" },
+                { data: null, defaultContent: "-" },
+                { data: null, defaultContent: "-" },
                 { data: "sku_inventory_unit", className: "text-center" },
                 { data: "currency", className: "text-center" },
                 {
@@ -442,8 +448,8 @@ document.addEventListener("DOMContentLoaded", function () {
             { data: "sku_id" },
             { data: "sku_name" },
             { data: "sku_specification_code" },
-            { data: "sku_type" },
-            { data: "sku_procurement_type" },
+            { data: null, defaultContent: "-" },
+            { data: null, defaultContent: "-" },
             { data: "sku_inventory_unit", className: "text-center" },
 
             { data: "qty", className: "text-center" },
