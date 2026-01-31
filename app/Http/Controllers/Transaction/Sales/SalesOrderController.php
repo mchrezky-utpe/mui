@@ -69,12 +69,11 @@ class SalesOrderController extends Controller
             $query->where('prs_customer_id', $request->customer);
         }
 
-        if ($request->filled('valid_from')) {
-            $query->whereDate('valid_date_from', '>=', $request->valid_from);
-        }
-
-        if ($request->filled('valid_until')) {
-            $query->whereDate('valid_date_to', '<=', $request->valid_until);
+        if ($request->filled('valid_from') && $request->filled('valid_until')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereDate('valid_date_from', '<=', $request->valid_until)
+                    ->whereDate('valid_date_to', '>=', $request->valid_from);
+            });
         }
 
         if ($request->filled('type_item')) {
@@ -197,5 +196,61 @@ class SalesOrderController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function api_droplist_sales_order_list(Request $request)
+    {
+        $query = TransSalesOrder::query()
+            ->join('mst_customer', 'trans_sales_order.customer_id', '=', 'mst_customer.id')
+            ->select([
+                'trans_sales_order.*',
+                'mst_customer.id as customer_id',
+                'mst_customer.name as customer_name'
+            ]);
+
+        if ($request->filled('customer_sales_order_details')) {
+            $query->where('trans_sales_order.customer_id', $request->customer_sales_order_details);
+        }
+
+        if (
+            $request->filled('valid_from_sales_order_details') ||
+            $request->filled('valid_until_sales_order_details')
+        ) {
+            $from  = $request->valid_from_sales_order_details ?? '1900-01-01';
+            $until = $request->valid_until_sales_order_details ?? '2999-12-31';
+
+            $query->whereDate('trans_sales_order.valid_from', '<=', $until)
+                ->whereDate('trans_sales_order.valid_until', '>=', $from);
+        }
+
+        if (!empty($request->search['value'])) {
+            $search = $request->search['value'];
+
+            $query->where(function ($q) use ($search) {
+                $q->where('trans_sales_order.so_number', 'like', "%{$search}%")
+                    ->orWhere('trans_sales_order.so_date', 'like', "%{$search}%")
+                    ->orWhere('trans_sales_order.po_number', 'like', "%{$search}%")
+                    ->orWhere('trans_sales_order.ref_number', 'like', "%{$search}%")
+                    ->orWhere('mst_customer.name', 'like', "%{$search}%")
+                    ->orWhere('trans_sales_order.valid_from', 'like', "%{$search}%")
+                    ->orWhere('trans_sales_order.valid_until', 'like', "%{$search}%");
+            });
+        }
+
+        $totalData = TransSalesOrder::count();
+        $recordsFiltered = (clone $query)->count();
+
+        $data = $query
+            ->orderBy('trans_sales_order.valid_from', 'desc')
+            ->offset($request->start ?? 0)
+            ->limit($request->length ?? 10)
+            ->get();
+
+        return response()->json([
+            'draw' => intval($request->draw),
+            'recordsTotal' => $totalData,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data
+        ]);
     }
 }

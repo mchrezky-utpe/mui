@@ -1,10 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     const customer = $("#customer");
+    const customer_sales_order_details = $("#customer_sales_order_details");
     const currency = $("#currency");
     const typeItem = $("#type_item");
     const rate = document.getElementById("exchange_rate");
     const validFrom = document.getElementById("valid_from");
     const validUntil = document.getElementById("valid_until");
+    const validFromSalesOrderDetails = document.getElementById(
+        "valid_from_sales_order_details",
+    );
+    const validUntilSalesOrderDetails = document.getElementById(
+        "valid_until_sales_order_details",
+    );
     let lastCustomer = null;
 
     $("#customer").on("select2:select", function () {
@@ -45,6 +52,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    validFromSalesOrderDetails.addEventListener("change", function () {
+        validUntilSalesOrderDetails.min = this.value;
+        if (validUntilSalesOrderDetails.value < this.value) {
+            validUntilSalesOrderDetails.value = this.value;
+        }
+    });
+
     $.ajax({
         url: base_url + "api/sales_order/droplist-list-customer",
         type: "GET",
@@ -55,13 +69,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     .empty()
                     .append('<option value="">-- Select Customer --</option>');
 
+                customer_sales_order_details
+                    .empty()
+                    .append('<option value="">-- Select Customer --</option>');
+
                 res.data.forEach((item) => {
                     customer.append(
+                        `<option value="${item.id}">${item.name}</option>`,
+                    );
+
+                    customer_sales_order_details.append(
                         `<option value="${item.id}">${item.name}</option>`,
                     );
                 });
 
                 customer.select2({
+                    placeholder: "Select Customer",
+                    width: "100%",
+                });
+
+                customer_sales_order_details.select2({
                     placeholder: "Select Customer",
                     width: "100%",
                 });
@@ -133,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //load datatable
     let tableProductPricelist = null;
+    let tableSalesOrderlist = null;
 
     function isFilterFilled() {
         return (
@@ -216,6 +244,66 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    function initTableSalesOrderlist() {
+        if (tableSalesOrderlist) return;
+
+        tableSalesOrderlist = $("#table_sales_order").DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 10,
+            responsive: true,
+
+            dom:
+                "<'row mb-2'<'col-md-6'l><'col-md-6 text-right'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+
+            ajax: {
+                url: base_url + "api/sales_order/droplist-sales-order-list",
+                type: "GET",
+                data: function (d) {
+                    d.customer_sales_order_details = $(
+                        "[name=customer_sales_order_details]",
+                    ).val();
+                    d.valid_from_sales_order_details = $(
+                        "[name=valid_from_sales_order_details]",
+                    ).val();
+                    d.valid_until_sales_order_details = $(
+                        "[name=valid_until_sales_order_details]",
+                    ).val();
+                },
+            },
+
+            columns: [
+                { data: "so_number" },
+                { data: "so_date" },
+                { data: "po_number" },
+                { data: "ref_number" },
+                { data: "customer_name" },
+                { data: "valid_from" },
+                { data: "valid_until" },
+                { data: "validation_status" },
+                {
+                    data: "so_status",
+                    className: "text-center",
+                    render: (data) =>
+                        data === 1
+                            ? `<span class="badge badge-success">&nbsp;</span>`
+                            : `<span class="badge badge-danger">&nbsp;</span>`,
+                },
+            ],
+
+            language: {
+                processing: `
+                <div class="dt-loading-wrapper">
+                    <div class="spinner-border text-primary"></div>
+                    <div class="mt-2">Loading data...</div>
+                </div>
+            `,
+            },
+        });
+    }
+
     function reloadTableIfReady() {
         if (!tableProductPricelist) return;
 
@@ -238,9 +326,18 @@ document.addEventListener("DOMContentLoaded", function () {
             initTableProductPricelist();
             tableProductPricelist.columns.adjust();
         }
+
+        if (target === "#tab-second-content") {
+            initTableSalesOrderlist();
+            tableSalesOrderlist.columns.adjust();
+        }
     });
 
     initTableProductPricelist();
+
+    $("#btn_filter_so").on("click", function () {
+        tableSalesOrderlist.ajax.reload();
+    });
 
     let selectedItems = [];
 

@@ -107,15 +107,6 @@
                 🏭 Sales Order List
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link"
-                id="tab-third"
-                data-toggle="tab"
-                href="#tab-third-content"
-                role="tab">
-                🏭 Sales Order Details List
-              </a>
-            </li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane fade show active"
@@ -251,15 +242,56 @@
             <div class="tab-pane fade"
               id="tab-second-content"
               role="tabpanel">
-
-              <div>kosong</div>
-            </div>
-            <!-- TAB 2 -->
-            <div class="tab-pane fade"
-              id="tab-third-content"
-              role="tabpanel">
-
-              <div>kosong</div>
+              <div class="card-header">
+                <div class="row w-100 align-items-end">
+                  <div class="col-md-3">
+                    <label>Customer</label>
+                    <select name="customer_sales_order_details" id="customer_sales_order_details" class="form-control">
+                      <option value="">-- Select Customer --</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label>Valid From</label>
+                    <input type="date"
+                      name="valid_from_sales_order_details"
+                      id="valid_from_sales_order_details"
+                      class="form-control"
+                      min="{{ date('Y-m-d') }}"
+                      value="{{ date('Y-m-d') }}">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Valid Until</label>
+                    <input type="date"
+                      name="valid_until_sales_order_details"
+                      id="valid_until_sales_order_details"
+                      class="form-control"
+                      min="{{ date('Y-m-d') }}"
+                      value="{{ date('Y-m-d') }}">
+                  </div>
+                  <div class="col-md-3 text-right">
+                    <button id="btn_filter_so" class="btn btn-primary w-100">
+                      <i class="fa fa-filter"></i> Apply Filter
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <table id="table_sales_order" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>So Number</th>
+                      <th>Date</th>
+                      <th>PO Number</th>
+                      <th>Ref. Number</th>
+                      <th>Customer</th>
+                      <th>Valid From</th>
+                      <th>Valid Until</th>
+                      <th>Validation Status</th>
+                      <th>SO Status</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
             </div>
           </div>
         </div>
