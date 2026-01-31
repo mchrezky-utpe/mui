@@ -129,26 +129,28 @@
                 </div>
               </div>
               <div class="card-body">
-                <table id="table_production_material" class="table table-striped table-bordered first">
-                  <thead>
-                    <tr>
-                      <th>PS Code</th>
-                      <th>Process Type</th>
-                      <th>Req Date</th>
-                      <th>PMR Code</th>
-                      <th>Material Code</th>
-                      <th>Material Name</th>
-                      <th>Item Type</th>
-                      <th>Unit</th>
-                      <th>Qty</th>
-                      <th>Stock</th>
-                      <th>Stock Status</th>
-                      <th>Request Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table id="table_production_material" class="table table-striped table-bordered first">
+                    <thead>
+                      <tr>
+                        <th>PS Code</th>
+                        <th>Process Type</th>
+                        <th>Req Date</th>
+                        <th>PMR Code</th>
+                        <th>Material Code</th>
+                        <th>Material Name</th>
+                        <th>Item Type</th>
+                        <th>Unit</th>
+                        <th>Qty</th>
+                        <th>Stock</th>
+                        <th>Stock Status</th>
+                        <th>Request Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
                 <div class="row mt-3">
                   <div class="col-md-12 text-right">
                     <button id="btnReject" class="btn btn-danger mr-2">
@@ -189,20 +191,22 @@
                 </div>
               </div>
               <div class="card-body">
-                <table id="table_stock_issue" class="table table-striped table-bordered first">
-                  <thead>
-                    <tr>
-                      <th>Item Code</th>
-                      <th>Item Name</th>
-                      <th>Specification Code</th>
-                      <th>Item Type</th>
-                      <th>Unit</th>
-                      <th>Stock</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table id="table_stock_issue" class="table table-striped table-bordered first">
+                    <thead>
+                      <tr>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Specification Code</th>
+                        <th>Item Type</th>
+                        <th>Unit</th>
+                        <th>Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

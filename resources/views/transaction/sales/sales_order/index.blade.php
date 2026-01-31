@@ -189,48 +189,50 @@
                 <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
                   <h5 class="mb-0">📦 Items</h5>
                 </div>
-                <table id="table_product_pricelist" class="table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Part Code</th>
-                      <th>Part Name</th>
-                      <th>Part Number</th>
-                      <th>Business Type</th>
-                      <th>Model</th>
-                      <th>Unit</th>
-                      <th>Currency</th>
-                      <th class="text-right">Price</th>
-                      <th>Valid From</th>
-                      <th>Valid Until</th>
-                      <th>Act. Status</th>
-                    </tr>
-                  </thead>
-                </table>
+                <div class="table-responsive">
+                  <table id="table_product_pricelist" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Part Code</th>
+                        <th>Part Name</th>
+                        <th>Part Number</th>
+                        <th>Business Type</th>
+                        <th>Model</th>
+                        <th>Unit</th>
+                        <th>Currency</th>
+                        <th class="text-right">Price</th>
+                        <th>Valid From</th>
+                        <th>Valid Until</th>
+                        <th>Act. Status</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
                 <hr>
                 <div class="d-flex justify-content-between align-items-center mb-2 mt-4">
                   <h5 class="mb-0">🛒 Items Selected</h5>
                 </div>
-
-                <table id="table_product_pricelist_selected" class="table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Part Code</th>
-                      <th>Part Name</th>
-                      <th>Part Number</th>
-                      <th>Business Type</th>
-                      <th>Model</th>
-                      <th>Unit</th>
-                      <th>Quantity</th>
-                      <th>Outstanding</th>
-                      <th>TOP</th>
-                      <th>Currency</th>
-                      <th class="text-right">Price</th>
-                      <th class="text-right">Amount</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                </table>
-
+                <div class="table-responsive">
+                  <table id="table_product_pricelist_selected" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Part Code</th>
+                        <th>Part Name</th>
+                        <th>Part Number</th>
+                        <th>Business Type</th>
+                        <th>Model</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
+                        <th>Outstanding</th>
+                        <th>TOP</th>
+                        <th>Currency</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">Amount</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
                 <div class="text-right mt-3">
                   <button class="btn btn-success" id="btnSaveSO">
                     💾 Save Sales Order
@@ -276,21 +278,24 @@
                 </div>
               </div>
               <div class="card-body">
-                <table id="table_sales_order" class="table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th>So Number</th>
-                      <th>Date</th>
-                      <th>PO Number</th>
-                      <th>Ref. Number</th>
-                      <th>Customer</th>
-                      <th>Valid From</th>
-                      <th>Valid Until</th>
-                      <th>Validation Status</th>
-                      <th>SO Status</th>
-                    </tr>
-                  </thead>
-                </table>
+                <div class="table-responsive">
+                  <table id="table_sales_order" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>So Number</th>
+                        <th>Date</th>
+                        <th>PO Number</th>
+                        <th>Ref. Number</th>
+                        <th>Customer</th>
+                        <th>Valid From</th>
+                        <th>Valid Until</th>
+                        <th>Validation Status</th>
+                        <th>SO Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -325,6 +330,45 @@
 
       <div class="modal-footer">
         <button class="btn btn-primary" id="btnSaveItem">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detail Sales Order -->
+<div class="modal fade" id="modalDetailSO" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Detail Sales Order: <span id="soNumberTitle"></span>
+        </h5>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table id="table_so_detail" class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Part Code</th>
+                <th>Part Name</th>
+                <th>Part Number</th>
+                <th>Business Type</th>
+                <th>Model</th>
+                <th>Unit</th>
+                <th>TOP</th>
+                <th>Quantity</th>
+                <th>Outstanding</th>
+                <th>Currency</th>
+                <th>Rates</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Amount</th>
+                <th>OS</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
       </div>
     </div>
   </div>

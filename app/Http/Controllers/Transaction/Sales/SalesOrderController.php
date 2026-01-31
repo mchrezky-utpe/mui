@@ -253,4 +253,49 @@ class SalesOrderController extends Controller
             'data' => $data
         ]);
     }
+
+    public function api_droplist_sales_order_list_detail(Request $request)
+    {
+        $query = TransSalesOrderDetails::query()
+            ->join('vw_app_list_mst_sku', 'trans_sales_order_details.sku_id', '=', 'vw_app_list_mst_sku.id')
+            ->select([
+                'trans_sales_order_details.*',
+                'vw_app_list_mst_sku.sku_id as sku_id',
+                'vw_app_list_mst_sku.sku_name as sku_name',
+                'vw_app_list_mst_sku.sku_specification_code as sku_specification_code',
+                'vw_app_list_mst_sku.sku_inventory_unit as sku_inventory_unit',
+            ])->where('trans_sales_order_details.id_sales_order', $request->sales_order_id);
+
+        if (!empty($request->search['value'])) {
+            $search = $request->search['value'];
+
+            $query->where(function ($q) use ($search) {
+                $q->where('vw_app_list_mst_sku.sku_id', 'like', "%{$search}%")
+                    ->orWhere('vw_app_list_mst_sku.sku_name', 'like', "%{$search}%")
+                    ->orWhere('vw_app_list_mst_sku.sku_specification_code', 'like', "%{$search}%")
+                    ->orWhere('vw_app_list_mst_sku.sku_inventory_unit', 'like', "%{$search}%");
+            });
+        }
+
+
+        $totalData = TransSalesOrderDetails::where(
+            'id_sales_order',
+            $request->sales_order_id
+        )->count();
+
+        $recordsFiltered = (clone $query)->count();
+
+        $data = $query
+            ->orderBy('trans_sales_order_details.id', 'desc')
+            ->offset($request->start ?? 0)
+            ->limit($request->length ?? 10)
+            ->get();
+
+        return response()->json([
+            'draw' => intval($request->draw),
+            'recordsTotal' => $totalData,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data
+        ]);
+    }
 }

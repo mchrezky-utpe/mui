@@ -527,4 +527,5 @@ Route::controller(SalesOrderController::class)->group(function () {
     Route::get("/api/$route_name/droplist-product-pricelist", "api_droplist_product_pricelist")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/insert-sales-order", "api_insert_sales_order")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name/droplist-sales-order-list-detail", "api_droplist_sales_order_list_detail")->middleware(OnlyMemberMiddleware::class);
 });

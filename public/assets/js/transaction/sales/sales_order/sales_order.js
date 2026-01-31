@@ -161,6 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //load datatable
     let tableProductPricelist = null;
     let tableSalesOrderlist = null;
+    let tableDetailSO = null;
 
     function isFilterFilled() {
         return (
@@ -291,6 +292,22 @@ document.addEventListener("DOMContentLoaded", function () {
                             ? `<span class="badge badge-success">&nbsp;</span>`
                             : `<span class="badge badge-danger">&nbsp;</span>`,
                 },
+                {
+                    data: "id",
+                    render: function (data, type, row) {
+                        return `
+                    <button 
+                        class="btn btn-sm btn-primary btn-detail-so"
+                        data-id="${row.id}"
+                        data-so="${row.so_number}"
+                    >
+                        Detail
+                    </button>
+                `;
+                    },
+                    orderable: false,
+                    searchable: false,
+                },
             ],
 
             language: {
@@ -303,6 +320,81 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         });
     }
+
+    $("#table_sales_order").on("click", ".btn-detail-so", function () {
+        const soId = $(this).data("id");
+        const soNumber = $(this).data("so");
+
+        $("#soNumberTitle").text(soNumber);
+        $("#modalDetailSO").modal("show");
+
+        if (tableDetailSO) {
+            tableDetailSO.clear().destroy();
+        }
+
+        tableDetailSO = $("#table_so_detail").DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 10,
+            responsive: true,
+
+            dom:
+                "<'row mb-2'<'col-md-6'l><'col-md-6 text-right'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+
+            ajax: {
+                url:
+                    base_url +
+                    "api/sales_order/droplist-sales-order-list-detail",
+                type: "GET",
+                data: function (d) {
+                    d.sales_order_id = soId;
+                },
+            },
+
+            columns: [
+                { data: "sku_id" },
+                { data: "sku_name" },
+                { data: "sku_specification_code" },
+                { data: null, defaultContent: "-" },
+                { data: null, defaultContent: "-" },
+                { data: "sku_inventory_unit" },
+                { data: "term_of_payment" },
+                { data: "quantity_order", className: "text-center" },
+                { data: "outstanding", className: "text-center" },
+                { data: "currency", className: "text-center" },
+                { data: "exchange_rates", className: "text-center" },
+                {
+                    data: "price",
+                    className: "text-right",
+                    render: (d) => new Intl.NumberFormat("id-ID").format(d),
+                },
+                {
+                    data: "total_price",
+                    className: "text-right",
+                    render: (d) => new Intl.NumberFormat("id-ID").format(d),
+                },
+                {
+                    data: "outstanding",
+                    className: "text-center",
+                    render: (data) =>
+                        data === 0
+                            ? `<span class="badge badge-success">&nbsp;</span>`
+                            : `<span class="badge badge-danger">&nbsp;</span>`,
+                },
+            ],
+
+            language: {
+                processing: `
+                <div class="dt-loading-wrapper">
+                    <div class="spinner-border text-primary"></div>
+                    <div class="mt-2">Loading data...</div>
+                </div>
+            `,
+            },
+        });
+    });
 
     function reloadTableIfReady() {
         if (!tableProductPricelist) return;
