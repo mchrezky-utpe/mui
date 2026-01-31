@@ -167,6 +167,12 @@ class CustomerDeliveryScheduleController extends Controller
                     'created_by'                   => Auth::id(),
                 ]);
 
+                $sod = TransSalesOrderDetails::find($item['id']);
+                if ($sod) {
+                    $sod->outstanding = max(0, $sod->outstanding - $item['quantity_order']);
+                    $sod->save();
+                }
+
                 $seq++;
             }
 
@@ -184,5 +190,107 @@ class CustomerDeliveryScheduleController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function api_droplist_customer_delivery_schedule_list(Request $request)
+    {
+        $query = TransCustomerDeliverySchedule::query()
+            ->join('mst_customer', 'trans_customer_delivery_schedule.customer_id', '=', 'mst_customer.id')
+            ->select([
+                'trans_customer_delivery_schedule.*',
+                'mst_customer.id as customer_id',
+                'mst_customer.name as customer_name'
+            ]);
+
+        if ($request->filled('customer_delivery_schedule_details')) {
+            $query->where('trans_customer_delivery_schedule.customer_id', $request->customer_delivery_schedule_details);
+        }
+
+        if (
+            $request->filled('valid_from_customer_delivery_schedule_details') ||
+            $request->filled('valid_until_customer_delivery_schedule_details')
+        ) {
+            $from  = $request->valid_from_customer_delivery_schedule_details ?? '1900-01-01';
+            $until = $request->valid_until_customer_delivery_schedule_details ?? '2999-12-31';
+
+            $query->whereDate('trans_customer_delivery_schedule.valid_from', '<=', $until)
+                ->whereDate('trans_customer_delivery_schedule.valid_until', '>=', $from);
+        }
+
+        if (!empty($request->search['value'])) {
+            $search = $request->search['value'];
+
+            $query->where(function ($q) use ($search) {
+                $q->where('trans_customer_delivery_schedule.cds_code', 'like', "%{$search}%")
+                    ->orWhere('trans_customer_delivery_schedule.cds_date', 'like', "%{$search}%")
+                    ->orWhere('trans_customer_delivery_schedule.customer_delivery_number', 'like', "%{$search}%")
+                    ->orWhere('mst_customer.name', 'like', "%{$search}%")
+                    ->orWhere('trans_customer_delivery_schedule.valid_from', 'like', "%{$search}%")
+                    ->orWhere('trans_customer_delivery_schedule.valid_until', 'like', "%{$search}%");
+            });
+        }
+
+        $totalData = TransCustomerDeliverySchedule::count();
+        $recordsFiltered = (clone $query)->count();
+
+        $data = $query
+            ->orderBy('trans_customer_delivery_schedule.valid_from', 'desc')
+            ->offset($request->start ?? 0)
+            ->limit($request->length ?? 10)
+            ->get();
+
+        return response()->json([
+            'draw' => intval($request->draw),
+            'recordsTotal' => $totalData,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data
+        ]);
+    }
+
+    public function api_droplist_customer_delivery_schedule_list_detail(Request $request)
+    {
+        $query = TransCustomerDeliveryScheduleDetails::query()
+            ->join('vw_app_list_mst_sku', 'trans_customer_delivery_schedule_details.sku_id', '=', 'vw_app_list_mst_sku.id')
+            ->join('mst_customer_delivery_destination', 'trans_customer_delivery_schedule_details.customer_delivery_destination_id', '=', 'mst_customer_delivery_destination.id')
+            ->select([
+                'trans_customer_delivery_schedule_details.*',
+                'vw_app_list_mst_sku.sku_id as sku_id',
+                'vw_app_list_mst_sku.sku_name as sku_name',
+                'vw_app_list_mst_sku.sku_specification_code as sku_specification_code',
+                'vw_app_list_mst_sku.sku_inventory_unit as sku_inventory_unit',
+                'mst_customer_delivery_destination.destination_name as destination_name'
+            ])->where('trans_customer_delivery_schedule_details.customer_delivery_schedule_id', $request->customer_delivery_schedule_id);
+
+        if (!empty($request->search['value'])) {
+            $search = $request->search['value'];
+
+            $query->where(function ($q) use ($search) {
+                $q->where('vw_app_list_mst_sku.sku_id', 'like', "%{$search}%")
+                    ->orWhere('vw_app_list_mst_sku.sku_name', 'like', "%{$search}%")
+                    ->orWhere('vw_app_list_mst_sku.sku_specification_code', 'like', "%{$search}%")
+                    ->orWhere('vw_app_list_mst_sku.sku_inventory_unit', 'like', "%{$search}%");
+            });
+        }
+
+
+        $totalData = TransCustomerDeliveryScheduleDetails::where(
+            'trans_customer_delivery_schedule_details.customer_delivery_schedule_id',
+            $request->customer_delivery_schedule_id
+        )->count();
+
+        $recordsFiltered = (clone $query)->count();
+
+        $data = $query
+            ->orderBy('trans_customer_delivery_schedule_details.id', 'desc')
+            ->offset($request->start ?? 0)
+            ->limit($request->length ?? 10)
+            ->get();
+
+        return response()->json([
+            'draw' => intval($request->draw),
+            'recordsTotal' => $totalData,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data
+        ]);
     }
 }

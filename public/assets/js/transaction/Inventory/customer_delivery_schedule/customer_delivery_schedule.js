@@ -1,9 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
     let selectedItems = [];
     const customer = $("#customer");
+    const customer_delivery_schedule_details = $(
+        "#customer_delivery_schedule_details",
+    );
     const modal_destination = $("#modal_destination");
     const validFrom = document.getElementById("valid_from");
     const validUntil = document.getElementById("valid_until");
+    const validFromCustomerDeliveryScheduleDetails = document.getElementById(
+        "valid_from_customer_delivery_schedule_details",
+    );
+    const validUntilCustomerDeliveryScheduleDetails = document.getElementById(
+        "valid_until_customer_delivery_schedule_details",
+    );
 
     let lastCustomer = null;
     let allowChange = true;
@@ -56,6 +65,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    validFromCustomerDeliveryScheduleDetails.addEventListener(
+        "change",
+        function () {
+            validUntilCustomerDeliveryScheduleDetails.disabled = false;
+            validUntilCustomerDeliveryScheduleDetails.min = this.value;
+            if (validUntilCustomerDeliveryScheduleDetails.value < this.value) {
+                validUntilCustomerDeliveryScheduleDetails.value = this.value;
+            }
+        },
+    );
+
     $.ajax({
         url: base_url + "api/sales_order/droplist-list-customer",
         type: "GET",
@@ -66,13 +86,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     .empty()
                     .append('<option value="">-- Select Customer --</option>');
 
+                customer_delivery_schedule_details
+                    .empty()
+                    .append('<option value="">-- Select Customer --</option>');
+
                 res.data.forEach((item) => {
                     customer.append(
+                        `<option value="${item.id}">${item.name}</option>`,
+                    );
+
+                    customer_delivery_schedule_details.append(
                         `<option value="${item.id}">${item.name}</option>`,
                     );
                 });
 
                 customer.select2({
+                    placeholder: "Select Customer",
+                    width: "100%",
+                });
+
+                customer_delivery_schedule_details.select2({
                     placeholder: "Select Customer",
                     width: "100%",
                 });
@@ -124,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //load datatable
     let tableSalesOrderlist = null;
+    let tableCustomerDeliveryScheduleList = null;
+    let tableDetailCDS = null;
 
     function isFilterFilled() {
         return (
@@ -220,6 +255,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (target === "#tab-request-content") {
             initTableSalesOrderlist();
             tableSalesOrderlist.columns.adjust();
+        }
+
+        if (target === "#tab-second-content") {
+            inittableCustomerDeliveryScheduleList();
+            tableCustomerDeliveryScheduleList.columns.adjust();
         }
     });
 
@@ -389,6 +429,17 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     );
 
+    function resetSalesOrderForm() {
+        selectedItems = [];
+        tableSelected.clear().draw();
+
+        $("#cust_delivery_num").val("");
+        $("#customer").val(null).trigger("change");
+        $("input[name='cust_delivery_num']").val("");
+
+        lastCustomer = null;
+    }
+
     $("#btnSaveCDS").on("click", function () {
         if (!isFilterFilled()) {
             Swal.fire("Error", "Lengkapi semua form di atas", "error");
@@ -460,4 +511,155 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
+
+    function inittableCustomerDeliveryScheduleList() {
+        if (tableCustomerDeliveryScheduleList) return;
+
+        tableCustomerDeliveryScheduleList = $(
+            "#table_customer_delivery_schedule",
+        ).DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 10,
+            responsive: true,
+
+            dom:
+                "<'row mb-2'<'col-md-6'l><'col-md-6 text-right'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+
+            ajax: {
+                url:
+                    base_url +
+                    "api/customer_delivery_schedule/droplist-customer-delivery-schedule-list",
+                type: "GET",
+                data: function (d) {
+                    d.customer_delivery_schedule_details = $(
+                        "[name=customer_delivery_schedule_details]",
+                    ).val();
+                    d.valid_from_customer_delivery_schedule_details = $(
+                        "[name=valid_from_customer_delivery_schedule_details]",
+                    ).val();
+                    d.valid_until_customer_delivery_schedule_details = $(
+                        "[name=valid_until_customer_delivery_schedule_details]",
+                    ).val();
+                },
+            },
+
+            columns: [
+                { data: "cds_code" },
+                { data: "cds_date" },
+                { data: "customer_delivery_number" },
+                { data: "customer_name" },
+                { data: "valid_from" },
+                { data: "valid_until" },
+                { data: "validation_status" },
+                {
+                    data: "cds_status",
+                    className: "text-center",
+                    render: (data) =>
+                        data === 1
+                            ? `<span class="badge badge-danger">&nbsp;</span>`
+                            : `<span class="badge badge-success">&nbsp;</span>`,
+                },
+                {
+                    data: "id",
+                    render: function (data, type, row) {
+                        return `
+                    <button 
+                        class="btn btn-sm btn-primary btn-detail-cds"
+                        data-id="${row.id}"
+                        data-cds="${row.cds_code}"
+                    >
+                        Detail
+                    </button>
+                `;
+                    },
+                    orderable: false,
+                    searchable: false,
+                },
+            ],
+
+            language: {
+                processing: `
+                <div class="dt-loading-wrapper">
+                    <div class="spinner-border text-primary"></div>
+                    <div class="mt-2">Loading data...</div>
+                </div>
+            `,
+            },
+        });
+    }
+
+    $("#btn_filter_cds").on("click", function () {
+        tableCustomerDeliveryScheduleList.ajax.reload();
+    });
+
+    $("#table_customer_delivery_schedule").on(
+        "click",
+        ".btn-detail-cds",
+        function () {
+            const cdsId = $(this).data("id");
+            const cdsNumber = $(this).data("cds");
+
+            $("#cdsNumberTitle").text(cdsNumber);
+            $("#modalDetailCDS").modal("show");
+
+            if (tableDetailCDS) {
+                tableDetailCDS.clear().destroy();
+            }
+
+            tableDetailCDS = $("#table_cds_detail").DataTable({
+                processing: true,
+                serverSide: true,
+                pageLength: 10,
+                responsive: true,
+
+                dom:
+                    "<'row mb-2'<'col-md-6'l><'col-md-6 text-right'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row mt-2'<'col-md-5'i><'col-md-7'p>>",
+
+                ajax: {
+                    url:
+                        base_url +
+                        "api/customer_delivery_schedule/droplist-customer-delivery-schedule-list-detail",
+                    type: "GET",
+                    data: function (d) {
+                        d.customer_delivery_schedule_id = cdsId;
+                    },
+                },
+
+                columns: [
+                    { data: "delivery_plan_date" },
+                    { data: "destination_name" },
+                    { data: "sku_id" },
+                    { data: "sku_name" },
+                    { data: "sku_specification_code" },
+                    { data: null, defaultContent: "-" },
+                    { data: null, defaultContent: "-" },
+                    { data: "sku_inventory_unit" },
+                    { data: "quantity_cds", className: "text-center" },
+                    { data: "outstanding", className: "text-center" },
+                    {
+                        data: "outstanding",
+                        className: "text-center",
+                        render: (data) =>
+                            data === 0
+                                ? `<span class="badge badge-success">&nbsp;</span>`
+                                : `<span class="badge badge-danger">&nbsp;</span>`,
+                    },
+                ],
+
+                language: {
+                    processing: `
+                <div class="dt-loading-wrapper">
+                    <div class="spinner-border text-primary"></div>
+                    <div class="mt-2">Loading data...</div>
+                </div>
+            `,
+                },
+            });
+        },
+    );
 });

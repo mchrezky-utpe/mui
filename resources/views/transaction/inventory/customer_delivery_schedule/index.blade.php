@@ -208,7 +208,58 @@
             <div class="tab-pane fade"
               id="tab-second-content"
               role="tabpanel">
-              <div>kosong</div>
+              <div class="card-header">
+                <div class="row w-100 align-items-end">
+                  <div class="col-md-3">
+                    <label>Customer</label>
+                    <select name="customer_delivery_schedule_details" id="customer_delivery_schedule_details" class="form-control">
+                      <option value="">-- Select Customer --</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label>Valid From</label>
+                    <input type="date"
+                      name="valid_from_customer_delivery_schedule_details"
+                      id="valid_from_customer_delivery_schedule_details"
+                      class="form-control"
+                      value="{{ date('Y-m-d') }}">
+                  </div>
+                  <div class="col-md-3">
+                    <label>Valid Until</label>
+                    <input type="date"
+                      name="valid_until_customer_delivery_schedule_details"
+                      id="valid_until_customer_delivery_schedule_details"
+                      class="form-control"
+                      min="{{ date('Y-m-d') }}"
+                      value="{{ date('Y-m-d') }}"
+                      disabled>
+                  </div>
+                  <div class="col-md-3 text-right">
+                    <button id="btn_filter_cds" class="btn btn-primary w-100">
+                      <i class="fa fa-filter"></i> Apply Filter
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="table_customer_delivery_schedule" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>CDS Code</th>
+                        <th>Date</th>
+                        <th>Customer Delivery Number</th>
+                        <th>Customer</th>
+                        <th>Valid From</th>
+                        <th>Valid Until</th>
+                        <th>Validation Status</th>
+                        <th>CDS Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -262,6 +313,42 @@
 
       <div class="modal-footer">
         <button class="btn btn-primary" id="btnSaveItem">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Detail Customer Delivery Schedule -->
+<div class="modal fade" id="modalDetailCDS" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Detail Customer Delivery Schedule: <span id="cdsNumberTitle"></span>
+        </h5>
+        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table id="table_cds_detail" class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Del. Plan Date</th>
+                <th>Destination</th>
+                <th>Part Code</th>
+                <th>Part Name</th>
+                <th>Part Number</th>
+                <th>Business Type</th>
+                <th>Model</th>
+                <th>Unit</th>
+                <th>Quantity</th>
+                <th>Outstanding</th>
+                <th>OS</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
       </div>
     </div>
   </div>

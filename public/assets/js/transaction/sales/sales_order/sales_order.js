@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     validFromSalesOrderDetails.addEventListener("change", function () {
+        validUntilSalesOrderDetails.disabled = false;
         validUntilSalesOrderDetails.min = this.value;
         if (validUntilSalesOrderDetails.value < this.value) {
             validUntilSalesOrderDetails.value = this.value;

@@ -519,4 +519,6 @@ Route::controller(CustomerDeliveryScheduleController::class)->group(function () 
     Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-list-customer-destination", "api_droplist_list_customer_destination")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/insert-customer-delivery-schedule", "api_insert_customer_delivery_schedule")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name/droplist-customer-delivery-schedule-list", "api_droplist_customer_delivery_schedule_list")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/api/$route_name/droplist-customer-delivery-schedule-list-detail", "api_droplist_customer_delivery_schedule_list_detail")->middleware(OnlyMemberMiddleware::class);
 });

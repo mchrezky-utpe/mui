@@ -258,7 +258,6 @@
                       name="valid_from_sales_order_details"
                       id="valid_from_sales_order_details"
                       class="form-control"
-                      min="{{ date('Y-m-d') }}"
                       value="{{ date('Y-m-d') }}">
                   </div>
                   <div class="col-md-3">
@@ -268,7 +267,8 @@
                       id="valid_until_sales_order_details"
                       class="form-control"
                       min="{{ date('Y-m-d') }}"
-                      value="{{ date('Y-m-d') }}">
+                      value="{{ date('Y-m-d') }}"
+                      disabled>
                   </div>
                   <div class="col-md-3 text-right">
                     <button id="btn_filter_so" class="btn btn-primary w-100">
