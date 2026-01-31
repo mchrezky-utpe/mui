@@ -259,5 +259,5 @@
 @endsection
 
 @section('extra_javascript')
-<script src="{{ asset('assets/js/transaction/production_material.js') }}" type="text/javascript"></script>
+<script src="{{ asset('assets/js/transaction/Inventory/production_material/production_material.js') }}" type="text/javascript"></script>
 @endsection
