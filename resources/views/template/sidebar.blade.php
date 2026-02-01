@@ -3,8 +3,7 @@
         <img
             src="{{ asset('assets/images/icon/mui.png') }}"
             width="150"
-            alt="mui"
-        />
+            alt="mui" />
     </a>
 </div>
 <div class="menu-sidebar__content js-scrollbar1">
@@ -27,8 +26,7 @@
             <!-- Person Menu -->
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="fas fa-tags"></i>Material Details</a
-                >
+                    <i class="fas fa-tags"></i>Material Details</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
                         <a href="/sku-type">Item Type</a>
@@ -48,41 +46,29 @@
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-caret-right"></i>Item
-                            Information</a
-                        >
+                            Information</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/sku-part-information"
-                                    >Part Information</a
-                                >
+                                <a href="/sku-part-information">Part Information</a>
                             </li>
                             <li>
-                                <a href="/sku-production-material"
-                                    >Production Material Information</a
-                                >
+                                <a href="/sku-production-material">Production Material Information</a>
                             </li>
                             <li>
-                                <a href="/sku-general-item"
-                                    >General Item Information</a
-                                >
+                                <a href="/sku-general-item">General Item Information</a>
                             </li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
                             <i class="fas fa-caret-right"></i>Packaging
-                            Information</a
-                        >
+                            Information</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/packaging-information-category"
-                                    >Category</a
-                                >
+                                <a href="/packaging-information-category">Category</a>
                             </li>
                             <li>
-                                <a href="/packaging-information-partition"
-                                    >Partition</a
-                                >
+                                <a href="/packaging-information-partition">Partition</a>
                             </li>
                         </ul>
                     </li>
@@ -91,18 +77,13 @@
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Purchase Prices</a
-                        >
+                            <i class="fas fa-caret-right"></i>Purchase Prices</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/sku-pricelist"
-                                    >Production Material Prices</a
-                                >
+                                <a href="/sku-pricelist">Production Material Prices</a>
                             </li>
                             <li>
-                                <a href="/sku-pricelist-general-item"
-                                    >General Item Prices</a
-                                >
+                                <a href="/sku-pricelist-general-item">General Item Prices</a>
                             </li>
                         </ul>
                     </li>
@@ -114,8 +95,7 @@
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
-                            "
-                        >
+                            ">
                             <i class="fas fa-caret-right"></i>Process And
                             Business
                         </a>
@@ -123,15 +103,9 @@
                             <li>
                                 <!-- <a href="/sku-process">Process ??</a> -->
                                 <!-- <a href="/sku-process-type">Process Type</a> -->
-                                <a href="/live--sku-process-type"
-                                    >Process Type</a
-                                >
-                                <a href="/live--sku-process-classification"
-                                    >Process Classification</a
-                                >
-                                <a href="/live--sku-business-type"
-                                    >Business Type</a
-                                >
+                                <a href="/live--sku-process-type">Process Type</a>
+                                <a href="/live--sku-process-classification">Process Classification</a>
+                                <a href="/live--sku-business-type">Business Type</a>
                                 <!-- <a href="/sku-business-type">Business Type</a> -->
                             </li>
                             <!-- <li>
@@ -156,29 +130,20 @@
                 </a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
-                        <a href="/transaction/inventory/stock_opening"
-                            >Stock Opening</a
-                        >
+                        <a href="/transaction/inventory/stock_opening">Stock Opening</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/stock_adjusment"
-                            >Stock Adjusment</a
-                        >
+                        <a href="/transaction/inventory/stock_adjusment">Stock Adjusment</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/minimum_stock"
-                            >Minimum Stock</a
-                        >
+                        <a href="/transaction/inventory/minimum_stock">Minimum Stock</a>
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Receiving</a
-                        >
+                            <i class="fas fa-caret-right"></i>Receiving</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/transaction/inventory/receiving"
-                                    >Supplier Delivery Order</a
-                                >
+                                <a href="/transaction/inventory/receiving">Supplier Delivery Order</a>
                             </li>
                             <li>
                                 <a href="/gpo">General Purchase Order</a>
@@ -198,30 +163,20 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/production_material"
-                            >Production Material</a
-                        >
+                        <a href="/transaction/inventory/production_material">Production Material</a>
                     </li>
                     <li>
                         <a
-                            href="/transaction/inventory/customer_delivery_schedule"
-                            >Customer Delivery Schedule</a
-                        >
+                            href="/transaction/inventory/customer_delivery_schedule">Customer Delivery Schedule</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/customer_return"
-                            >Customer Return</a
-                        >
+                        <a href="/transaction/inventory/customer_return">Customer Return</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/delivery_order"
-                            >Delivery Order</a
-                        >
+                        <a href="/transaction/inventory/delivery_order">Delivery Order</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/stock_view"
-                            >Stock View</a
-                        >
+                        <a href="/transaction/inventory/stock_view">Stock View</a>
                     </li>
                     {{--
                     <li>
@@ -229,30 +184,31 @@
                     </li>
                     --}}
                     <li>
-                        <a href="/transaction/inventory/transaction_history"
-                            >Transaction History</a
-                        >
+                        <a href="/transaction/inventory/transaction_history">Transaction History</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/balance_stock"
-                            >Balance Stock</a
-                        >
+                        <a href="/transaction/inventory/balance_stock">Balance Stock</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/aging_stock"
-                            >Aging Stock</a
-                        >
+                        <a href="/transaction/inventory/aging_stock">Aging Stock</a>
                     </li>
                     <li>
-                        <a href="/transaction/inventory/material_allowance"
-                            >Material Allowance</a
-                        >
+                        <a href="/transaction/inventory/material_allowance">Material Allowance</a>
                     </li>
                     <li>
                         <a
-                            href="/transaction/inventory/material_requirement_planing"
-                            >Material Requirement Planing</a
-                        >
+                            href="/transaction/inventory/material_requirement_planing">Material Requirement Planing</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-box"></i> Sales
+                </a>
+                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                    <li>
+                        <a href="/transaction/sales/sales_order">Sales Order</a>
                     </li>
                 </ul>
             </li>
@@ -260,34 +216,29 @@
             <!-- Purchase Menu -->
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="fas fa-shopping-bag"></i>Purchase</a
-                >
+                    <i class="fas fa-shopping-bag"></i>Purchase</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Purchase Request</a
-                        >
+                            <i class="fas fa-caret-right"></i>Purchase Request</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
                                 <a href="/pr">Purchase Requisition (PR)</a>
                             </li>
                             <li>
-                            <a href="/pr-detail">Purchase Requisition Detail (PR Detail)</a>
+                                <a href="/pr-detail">Purchase Requisition Detail (PR Detail)</a>
                             </li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Purchase Order</a
-                        >
+                            <i class="fas fa-caret-right"></i>Purchase Order</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                        <a href="/po">Purchase Order (PO)</a>
+                                <a href="/po">Purchase Order (PO)</a>
                             </li>
                             <li>
-                        <a href="/po-detail"
-                            >Purchase Order Detail (PO Detail)</a
-                        >
+                                <a href="/po-detail">Purchase Order Detail (PO Detail)</a>
                             </li>
                         </ul>
                     </li>
@@ -305,35 +256,32 @@
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Purchase Invoice</a
-                        >
+                            <i class="fas fa-caret-right"></i>Purchase Invoice</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                        <a href="/pi">Purchase Invoice</a>
+                                <a href="/pi">Purchase Invoice</a>
                             </li>
                             <li>
-                        <a href="/pi-detail">Purchase Invoice Detail</a>
+                                <a href="/pi-detail">Purchase Invoice Detail</a>
                             </li>
                         </ul>
                     </li>
                     <li class="has-sub">
                         <a class="js-arrow" href="#">
-                            <i class="fas fa-caret-right"></i>Purchase Analysis</a
-                        >
+                            <i class="fas fa-caret-right"></i>Purchase Analysis</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                        <a href="/pa/frequency">Purchase Analysis Frequency</a>
+                                <a href="/pa/frequency">Purchase Analysis Frequency</a>
                             </li>
                             <li>
-                        <a href="/pa/price">Purchase Analysis Price Trends</a>
+                                <a href="/pa/price">Purchase Analysis Price Trends</a>
                             </li>
                             <li>
-                        <a href="/pa/order">Purchase Analysis Order Trends</a>
+                                <a href="/pa/order">Purchase Analysis Order Trends</a>
                             </li>
                             <li>
-                        <a href="/pa/supplier-trend"
-                            >Purchase Analysis Supplier Trends</a
-                            </li>
+                                <a href="/pa/supplier-trend">Purchase Analysis Supplier Trends</a
+                                    </li>
                         </ul>
                     </li>
                     <li>
@@ -344,16 +292,13 @@
 
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="fas fa-file"></i>Production</a
-                >
+                    <i class="fas fa-file"></i>Production</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
                         <a href="/production_cycle">Production Cycle Time</a>
                     </li>
                     <li>
-                        <a href="/production_process"
-                            >Production Process Information</a
-                        >
+                        <a href="/production_process">Production Process Information</a>
                     </li>
                     <li>
                         <a href="/production_cost">Production Cost</a>
@@ -364,8 +309,7 @@
             <!-- QC Menu -->
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="fas fa-check-circle"></i>QC</a
-                >
+                    <i class="fas fa-check-circle"></i>QC</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
                         <a href="/qc">Quality Control</a>
@@ -411,8 +355,7 @@
             <!-- Terms Menu -->
             <li class="has-sub">
                 <a class="js-arrow" href="#">
-                    <i class="fas fa-file-alt"></i>Others</a
-                >
+                    <i class="fas fa-file-alt"></i>Others</a>
                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                     <li>
                         <a href="/general-terms">Terms</a>
