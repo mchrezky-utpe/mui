@@ -19,6 +19,7 @@ use App\Models\Transaction\Inventory\DeliveryOrderDetail;
 use App\Models\Transaction\Inventory\TransCustomerDeliverySchedule;
 use App\Models\Master\PackagingInformation\PackagingInformationCategory;
 use App\Models\Master\PackagingInformation\PackagingInformationPartition;
+use App\Models\Transaction\Inventory\CustomerReturnDetail;
 use App\Models\Transaction\Inventory\TransCustomerDeliveryScheduleDetails;
 
 class DeliveryOrderController extends Controller
@@ -115,8 +116,18 @@ class DeliveryOrderController extends Controller
                     ->leftJoin('trans_customer_delivery_schedule as d', 'd.id', '=', 'c.customer_delivery_schedule_id')
                     ->leftJoin('trans_sales_order_details as e', 'e.id', '=', 'c.sales_order_details_id')
                     ->leftJoin('trans_sales_order as f', 'f.id', '=', 'e.id_sales_order')
+                    ->leftJoin('trans_customer_return_detail as cc', function ($join) {
+                        $join->on('cc.id', '=', 'a.source_id')->where('a.source_type', '=', 'CR');
+                    })
+                    ->leftJoin('trans_customer_return as dd', 'dd.id', '=', 'cc.customer_return_id')
+                    ->leftJoin('trans_delivery_order_detail as ee', 'ee.id', '=', 'cc.delivery_order_detail_id')
+                    ->leftJoin('trans_customer_delivery_schedule_details as ff', function ($join) {
+                        $join->on('ff.id', '=', 'ee.source_id')->where('ee.source_type', '=', 'CDS');
+                    })
+                    ->leftJoin('trans_sales_order_details as gg', 'gg.id', '=', 'ff.sales_order_details_id')
+                    ->leftJoin('trans_sales_order as hh', 'hh.id', '=', 'gg.id_sales_order')
                     ->where('a.delivery_order_id', $d->id)
-                    ->selectRaw('f.po_number, d.customer_delivery_number, a.source_type, b.sku_id, b.sku_name, b.sku_specification_code, b.sku_business_type, b.sku_model, b.sku_inventory_unit, b.val_conversion, a.qty, c.quantity_cds, c.outstanding')
+                    ->selectRaw('f.po_number, hh.po_number as po_number_cr, d.customer_delivery_number, a.source_type, b.sku_id, b.sku_name, b.sku_specification_code, b.sku_business_type, b.sku_model, b.sku_inventory_unit, b.val_conversion, a.qty, c.quantity_cds, c.outstanding, dd.return_do_number, cc.outstanding_qty as outstanding_cr_qty')
                     ->get();
             }
 
@@ -273,6 +284,31 @@ class DeliveryOrderController extends Controller
                     ->where('a.outstanding', '>', 0)
                     ->selectRaw('a.id, a.delivery_plan_date as delivery_date, e.po_number, b.cds_code, b.customer_delivery_number as cd_number, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.quantity_cds, a.outstanding')
                     ->get();
+            } else if ($request->doType == 'Replacement') {
+                $data = CustomerReturnDetail::from('trans_customer_return_detail as a')
+                    ->leftJoin('trans_delivery_order_detail as b', 'b.id', '=', 'a.delivery_order_detail_id')
+                    ->leftJoin('trans_customer_delivery_schedule_details as c', function ($join) {
+                        $join->on('c.id', '=', 'b.source_id')->where('b.source_type', 'CDS');
+                    })->leftJoin('trans_customer_delivery_schedule as d', 'd.id', '=', 'c.customer_delivery_schedule_id')
+                    ->leftJoin('vw_app_list_mst_sku as e', 'e.id', '=', 'b.sku_id')
+                    ->leftJoin('trans_sales_order_details as f', 'f.id', '=', 'c.sales_order_details_id')
+                    ->leftJoin('trans_sales_order as g', 'g.id', '=', 'f.id_sales_order')
+                    ->leftJoin('trans_delivery_order as h', 'h.id', '=', 'b.delivery_order_id')
+                    ->leftJoin('trans_customer_return as i', 'i.id', '=', 'a.customer_return_id')
+                    ->where(function ($q) use ($request) {
+                        if ($request->subDoType) {
+                            $q->where('e.sku_type', $request->subDoType);
+                        }
+                        if ($request->customerId) {
+                            $q->where('d.customer_id', $request->customerId);
+                        }
+                        if ($request->deliveryDestinationId) {
+                            $q->where('c.customer_delivery_destination_id', $request->deliveryDestinationId);
+                        }
+                    })
+                    ->where('a.outstanding_qty', '>', 0)
+                    ->selectRaw('a.id, h.do_date as delivery_date, g.po_number, d.cds_code, i.return_do_number, e.sku_id, e.sku_name, e.sku_specification_code, e.sku_business_type, e.sku_model, a.return_qty, a.outstanding_qty')
+                    ->get();
             } else {
                 $data = [];
             }
@@ -305,6 +341,18 @@ class DeliveryOrderController extends Controller
                     ->leftJoin('trans_sales_order as e', 'e.id', '=', 'd.id_sales_order')
                     ->where('a.id', (int)$request->itemId)
                     ->selectRaw('c.id, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.outstanding as val_conversion, e.po_number, b.cds_code')->first();
+                $packaging = MasterSku::where('id', $sku->id)->select('sku_packaging_category_id', 'sku_packaging_partition_id', 'qty_per_partition')->first();
+            } else if ($request->itemType == 'CR') {
+                $sku = CustomerReturnDetail::from('trans_customer_return_detail as a')
+                    ->leftJoin('trans_delivery_order_detail as b', 'b.id', '=', 'a.delivery_order_detail_id')
+                    ->leftJoin('trans_customer_delivery_schedule_details as c', function ($join) {
+                        $join->on('c.id', '=', 'b.source_id')->where('b.source_type', 'CDS');
+                    })->leftJoin('trans_customer_delivery_schedule as d', 'd.id', '=', 'c.customer_delivery_schedule_id')
+                    ->leftJoin('vw_app_list_mst_sku as e', 'e.id', '=', 'b.sku_id')
+                    ->leftJoin('trans_sales_order_details as f', 'f.id', '=', 'c.sales_order_details_id')
+                    ->leftJoin('trans_sales_order as g', 'g.id', '=', 'f.id_sales_order')
+                    ->where('a.id', (int)$request->itemId)
+                    ->selectRaw('e.id, e.sku_id, e.sku_name, e.sku_specification_code, e.sku_business_type, e.sku_model, a.outstanding_qty as val_conversion, g.po_number, d.cds_code')->first();
                 $packaging = MasterSku::where('id', $sku->id)->select('sku_packaging_category_id', 'sku_packaging_partition_id', 'qty_per_partition')->first();
             } else {
                 $sku = null;
@@ -415,6 +463,19 @@ class DeliveryOrderController extends Controller
                             'outstanding' => $remainingOutstanding,
                             'outstanding_status' => $remainingOutstanding > 0 ? 1 : 0,
                             'delivery_status' => $remainingOutstanding > 0 ? 'PENDING' : 'DONE',
+                            'updated_by' => Auth::id(),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                }
+
+                // Update Outstanding CR
+                if ($item['type'] == 'CR') {
+                    $latestOutstandingCR = CustomerReturnDetail::where('id', (int)$item['id'])
+                        ->select('id', 'outstanding_qty')->first();
+                    $remainingOutstanding = $latestOutstandingCR->outstanding_qty - (float)$item['qty'];
+                    $updateOutstandingCR = CustomerReturnDetail::where('id', (int)$item['id'])
+                        ->update([
+                            'outstanding_qty' => $remainingOutstanding,
                             'updated_by' => Auth::id(),
                             'updated_at' => date('Y-m-d H:i:s'),
                         ]);
