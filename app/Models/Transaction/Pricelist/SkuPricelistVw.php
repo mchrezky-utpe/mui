@@ -10,7 +10,7 @@ class SkuPricelistVw extends Model
 {
     use HasFactory;
 
-    protected $table = 'vw_app_list_trans_sku_pricelist';
+    protected $table = 'vw_app_list_trans_sku_pricelist_2';
 
     use HasUserTracking;
 }
