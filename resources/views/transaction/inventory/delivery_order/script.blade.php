@@ -498,14 +498,6 @@
             }
         }];
 
-        if (type === 'Replacement') {
-            columns.push({
-                data: 'supplier_name'
-            }, {
-                data: 'warehouse'
-            });
-        }
-
         if (type === 'Sample Part' || type === 'Regular') {
             columns.push({
                 title: "Delivery Date",
@@ -519,6 +511,35 @@
             }, {
                 title: "CD Number",
                 data: "cd_number",
+            }, {
+                title: "Part Code",
+                data: "sku_id",
+            }, {
+                title: "Part Name",
+                data: "sku_name",
+            }, {
+                title: "Part Number",
+                data: "sku_specification_code",
+            }, {
+                title: "Business Type",
+                data: "sku_business_type",
+            }, {
+                title: "Model",
+                data: 'sku_model',
+            });
+        } else if (type === 'Replacement') {
+            columns.push({
+                title: "Delivery Date",
+                data: "delivery_date",
+            }, {
+                title: "PO Number",
+                data: "po_number",
+            }, {
+                title: "CDS Code",
+                data: "cds_code",
+            }, {
+                title: "Return DO Number",
+                data: "return_do_number",
             }, {
                 title: "Part Code",
                 data: "sku_id",
@@ -552,6 +573,14 @@
             }, {
                 title: "OS",
                 data: 'outstanding',
+            });
+        } else if (type === 'Replacement') {
+            columns.push({
+                title: "Quantity",
+                data: 'return_qty',
+            }, {
+                title: "OS",
+                data: 'outstanding_qty',
             });
         }
 
