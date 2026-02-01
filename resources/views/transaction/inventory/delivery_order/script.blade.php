@@ -1,4 +1,3 @@
-<!-- script for delivery_order -->
 <script>
     let itemTemp = null;
     let itemAdded = [];
@@ -213,6 +212,16 @@
                 initDatatableDODetailList();
             }
         });
+
+        $(document).on('click', '#applyFilterDO', function(e) {
+            e.preventDefault();
+            initDatatableDOList();
+        });
+
+        $(document).on('click', '#applyFilterDODetail', function(e) {
+            e.preventDefault();
+            initDatatableDOList();
+        });
     });
 
     const initDatatableDOList = () => {
@@ -226,7 +235,10 @@
                 url: `{{ url('/transaction/inventory/delivery_order/get-all') }}`,
                 method: "GET",
                 data: {
-                    doType: "tes"
+                    doTypeFilter: $('#filterDOType').val(),
+                    fromDateFilter: $('#fromDateFilter').val(),
+                    untilDateFilter: $('#untilDateFilter').val(),
+                    customerFilter: $('#customerFilter').val(),
                 },
                 dataSrc: function(res) {
                     if (!res.success) {
@@ -358,7 +370,10 @@
                 url: `{{ url('/transaction/inventory/delivery_order/get-all-detail') }}`,
                 method: "GET",
                 data: {
-                    doType: "tes"
+                    doTypeFilterDetail: $('#filterDOTypeDetail').val(),
+                    fromDateFilterDetail: $('#fromDateFilterDetail').val(),
+                    untilDateFilterDetail: $('#untilDateFilterDetail').val(),
+                    customerFilterDetail: $('#customerFilterDetail').val(),
                 },
                 dataSrc: function(res) {
                     if (!res.success) {
@@ -410,7 +425,7 @@
                 data: "sku_specification_code",
             }, {
                 title: "Item Type",
-                data: "sku_type",
+                data: "sku_material_type",
             }, {
                 title: "Unit",
                 data: "sku_inventory_unit",

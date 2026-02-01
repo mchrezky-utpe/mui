@@ -61,7 +61,7 @@
                     <div class="tab-pane fade show active" id="nav-do" role="tabpanel" aria-labelledby="nav-do-list">
                         <div class="card-header bg-light mx-0">
                             <div class="row">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <div>
                                         <label for="filterDOType" class="form-label">DO Type</label>
                                         <select name="" id="filterDOType" class="form-control form-control-sm">
@@ -72,21 +72,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-12 mt-2 mt-md-0">
-                                    <div>
-                                        <label for="fromDateFilter">From</label>
-                                        <input type="date" id="fromDateFilter" class="form-control form-control-sm">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12 mt-2 mt-md-0">
-                                    <div>
-                                        <label for="untilDateFilter">Until</label>
-                                        <input type="date" id="untilDateFilter" class="form-control form-control-sm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <div>
                                         <label for="customerFilter">Customer</label>
                                         <select id="customerFilter" class="form-control form-control-sm">
@@ -97,14 +83,22 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-12 mt-2 mt-md-0">
+                                <div class="col-md-3 col-sm-12 mt-2 mt-md-0">
                                     <div>
-                                        <label for="keywordFilter">Keyword</label>
-                                        <input type="text" id="keywordFilter" class="form-control form-control-sm">
+                                        <label for="fromDateFilter">From</label>
+                                        <input type="date" id="fromDateFilter" class="form-control form-control-sm">
                                     </div>
                                 </div>
+                                <div class="col-md-3 col-sm-12 mt-2 mt-md-0">
+                                    <div>
+                                        <label for="untilDateFilter">Until</label>
+                                        <input type="date" id="untilDateFilter" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 justify-content-end">
                                 <div class="col-md-2 col-sm-12 d-flex align-items-end mt-2 mt-md-0">
-                                    <button class="btn btn-sm btn-primary w-100">
+                                    <button class="btn btn-sm btn-primary w-100" id="applyFilterDO">
                                         <i class="fas fa-filter mr-1"></i> Apply Filter
                                     </button>
                                 </div>
@@ -120,11 +114,10 @@
                     <div class="tab-pane fade" id="nav-do-detail" role="tabpanel" aria-labelledby="nav-do-detail-list">
                         <div class="card-header bg-light mx-0">
                             <div class="row">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <div>
                                         <label for="filterDOTypeDetail" class="form-label">DO Type</label>
-                                        <select name="" id="filterDOTypeDetail"
-                                            class="form-control form-control-sm">
+                                        <select name="" id="filterDOTypeDetail" class="form-control form-control-sm">
                                             <option value="">-- Select DO Type</option>
                                             <option value="Regular">Regular</option>
                                             <option value="Replacement">Replacement</option>
@@ -132,23 +125,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-sm-12 mt-2 mt-md-0">
-                                    <div>
-                                        <label for="fromDateFilterDetail">From</label>
-                                        <input type="date" id="fromDateFilterDetail"
-                                            class="form-control form-control-sm">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-sm-12 mt-2 mt-md-0">
-                                    <div>
-                                        <label for="untilDateFilterDetail">Until</label>
-                                        <input type="date" id="untilDateFilterDetail"
-                                            class="form-control form-control-sm">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-md-4 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <div>
                                         <label for="customerFilterDetail">Customer</label>
                                         <select id="customerFilterDetail"class="form-control form-control-sm">
@@ -159,15 +136,24 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-12 mt-2 mt-md-0">
+                                <div class="col-md-3 col-sm-12 mt-2 mt-md-0">
                                     <div>
-                                        <label for="keywordFilterDetail">Keyword</label>
-                                        <input type="text" id="keywordFilterDetail"
+                                        <label for="fromDateFilterDetail">From</label>
+                                        <input type="date" id="fromDateFilterDetail"
                                             class="form-control form-control-sm">
                                     </div>
                                 </div>
+                                <div class="col-md-3 col-sm-12 mt-2 mt-md-0">
+                                    <div>
+                                        <label for="untilDateFilterDetail">Until</label>
+                                        <input type="date" id="untilDateFilterDetail"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 justify-content-end">
                                 <div class="col-md-2 col-sm-12 d-flex align-items-end mt-2 mt-md-0">
-                                    <button class="btn btn-sm btn-primary w-100">
+                                    <button class="btn btn-sm btn-primary w-100" id="applyFilterDODetail">
                                         <i class="fas fa-filter mr-1"></i> Apply Filter
                                     </button>
                                 </div>

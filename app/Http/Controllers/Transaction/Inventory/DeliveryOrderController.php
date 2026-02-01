@@ -75,6 +75,19 @@ class DeliveryOrderController extends Controller
 
             $totalRecords = (clone $query)->count();
 
+            if ($request->doTypeFilter) {
+                $query->where('do_type', $request->doTypeFilte);
+            }
+            if ($request->customerFilter) {
+                $query->where('customer_id', $request->customerFilter);
+            }
+            if ($request->fromDateFilter) {
+                $query->where('do_date', '>=', $request->fromDateFilter);
+            }
+            if ($request->untilDateFilter) {
+                $query->where('do_type', '<=', $request->untilDateFilter);
+            }
+
             if (!empty($search)) {
                 $query->where(function ($q) use ($search) {
                     $q->where('a.do_number', 'LIKE', '%' . $search . '%')
@@ -149,9 +162,37 @@ class DeliveryOrderController extends Controller
 
             $totalRecords = (clone $query)->count();
 
+            if ($request->doTypeFilter) {
+                $query->where('do_type', $request->doTypeFilte);
+            }
+            if ($request->customerFilter) {
+                $query->where('customer_id', $request->customerFilter);
+            }
+            if ($request->fromDateFilter) {
+                $query->where('do_date', '>=', $request->fromDateFilter);
+            }
+            if ($request->untilDateFilter) {
+                $query->where('do_type', '<=', $request->untilDateFilter);
+            }
+
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('b.do_number', 'LIKE', '%' . $search . '%')
+                        ->orWhere('f.po_number', 'LIKE', '%' . $search . '%')
+                        ->orWhere('d.customer_delivery_number', 'LIKE', '%' . $search . '%')
+                        ->orWhere('h.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('i.description', 'LIKE', '%' . $search . '%')
+                        ->orWhere('g.sku_id', 'LIKE', '%' . $search . '%')
+                        ->orWhere('g.sku_name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('g.sku_specification_code', 'LIKE', '%' . $search . '%')
+                        ->orWhere('g.sku_material_type', 'LIKE', '%' . $search . '%')
+                        ->orWhere('g.sku_inventory_unit', 'LIKE', '%' . $search . '%');
+                });
+            }
+
             $totalRecordWithFilter = (clone $query)->count();
 
-            $data = $query->selectRaw('b.do_date, b.do_number, b.do_destination_type, f.po_number, d.customer_delivery_number, h.name as customer_name, i.description as supplier_name, g.sku_id, g.sku_name, g.sku_specification_code, g.sku_type, g.sku_inventory_unit, g.val_conversion, a.source_type, a.qty, c.quantity_cds, c.outstanding')
+            $data = $query->selectRaw('b.do_date, b.do_number, b.do_destination_type, f.po_number, d.customer_delivery_number, h.name as customer_name, i.description as supplier_name, g.sku_id, g.sku_name, g.sku_specification_code, g.sku_material_type, g.sku_inventory_unit, g.val_conversion, a.source_type, a.qty, c.quantity_cds, c.outstanding')
                 ->skip($start)
                 ->take($length)
                 ->get();
