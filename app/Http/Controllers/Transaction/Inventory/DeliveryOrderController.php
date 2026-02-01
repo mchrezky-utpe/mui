@@ -2,20 +2,418 @@
 
 namespace App\Http\Controllers\Transaction\Inventory;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Models\MasterSku;
+use App\Models\MasterDriver;
 use Illuminate\Http\Request;
+use App\Models\MasterVehicle;
+use App\Models\MasterCustomer;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Master\Sku\SkuListVw;
+use Illuminate\Support\Facades\Auth;
+use App\Models\MasterCustomerDeliveryDestination;
+use App\Models\Transaction\Inventory\DeliveryOrder;
+use App\Models\Transaction\Inventory\DeliveryOrderDetail;
+use App\Models\Transaction\Inventory\TransCustomerDeliverySchedule;
+use App\Models\Master\PackagingInformation\PackagingInformationCategory;
+use App\Models\Master\PackagingInformation\PackagingInformationPartition;
+use App\Models\Transaction\Inventory\TransCustomerDeliveryScheduleDetails;
 
 class DeliveryOrderController extends Controller
 {
-    
-     public function index()
+
+    public function index()
     {
-         $data = [
+        $customers = MasterCustomer::select('id', 'name')->get();
+        $data = [
             'css'     => 'transaction/inventory/delivery_order/css',
             'content' => 'transaction/inventory/delivery_order/index',
             'script'  => 'transaction/inventory/delivery_order/script',
+            'customers'  => $customers,
         ];
 
         return view('transaction/inventory/delivery_order/index', $data);
+    }
+
+    public function create()
+    {
+        try {
+            $customer = MasterCustomer::select('id', 'name')->get();
+            $drivers = MasterDriver::select('id', 'driver_name')->get();
+            $vehicles = MasterVehicle::select('id', 'license_plate')->get();
+
+            $data = [
+                'css'       => 'transaction/inventory/delivery_order/css',
+                'content'   => 'transaction/inventory/delivery_order/index',
+                'script'    => 'transaction/inventory/delivery_order/script',
+                'customer'  => $customer,
+                'drivers'   => $drivers,
+                'vehicles'  => $vehicles
+            ];
+
+            return view('transaction/inventory/delivery_order/create', $data);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error Request, Exception Error!');
+        }
+    }
+
+    public function getAll(Request $request)
+    {
+        try {
+            $draw   = $request->get('draw');
+            $start  = $request->get('start');
+            $length = $request->get('length');
+            $search = $request->get('search')['value'];
+
+            $query = DeliveryOrder::from('trans_delivery_order as a')
+                ->leftJoin('mst_customer as b', function ($join) {
+                    $join->on('b.id', '=', 'a.customer_id')->where('a.do_destination_type', '=', 'Customer');
+                })->leftJoin('mst_person_supplier as c', function ($join) {
+                    $join->on('b.id', '=', 'a.supplier_id')->where('a.do_destination_type', '=', 'Supplier');
+                })->leftJoin('auth_user as d', 'd.id', '=', 'a.do_officer_id')->whereNull('a.deleted_at');
+
+            $totalRecords = (clone $query)->count();
+
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('a.do_number', 'LIKE', '%' . $search . '%')
+                        ->orWhere('a.do_type', 'LIKE', '%' . $search . '%')
+                        ->orWhere('a.do_sub_type', 'LIKE', '%' . $search . '%')
+                        ->orWhere('b.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('c.description', 'LIKE', '%' . $search . '%');
+                });
+            }
+
+            $totalRecordWithFilter = (clone $query)->count();
+
+            $data = $query->select('a.*', 'b.name as customer_name', 'c.description as supplier_name', 'd.fullname as do_officer_name')
+                ->skip($start)
+                ->take($length)
+                ->get();
+
+            foreach ($data as $d) {
+                $d->details = DeliveryOrderDetail::from('trans_delivery_order_detail as a')
+                    ->leftJoin('vw_app_list_mst_sku as b', 'b.id', '=', 'a.sku_id')
+                    ->leftJoin('trans_customer_delivery_schedule_details as c', function ($join) {
+                        $join->on('c.id', '=', 'a.source_id')->where('a.source_type', '=', 'CDS');
+                    })
+                    ->leftJoin('trans_customer_delivery_schedule as d', 'd.id', '=', 'c.customer_delivery_schedule_id')
+                    ->leftJoin('trans_sales_order_details as e', 'e.id', '=', 'c.sales_order_details_id')
+                    ->leftJoin('trans_sales_order as f', 'f.id', '=', 'e.id_sales_order')
+                    ->where('a.delivery_order_id', $d->id)
+                    ->selectRaw('f.po_number, d.customer_delivery_number, a.source_type, b.sku_id, b.sku_name, b.sku_specification_code, b.sku_business_type, b.sku_model, b.sku_inventory_unit, b.val_conversion, a.qty, c.quantity_cds, c.outstanding')
+                    ->get();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "Get data delivery order successfully",
+                'data' => [
+                    "draw"            => intval($draw),
+                    "recordsTotal"    => $totalRecords,
+                    "recordsFiltered" => $totalRecordWithFilter,
+                    "data"            => $data
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => true,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getAllDetail(Request $request)
+    {
+        try {
+            $draw   = $request->get('draw');
+            $start  = $request->get('start');
+            $length = $request->get('length');
+            $search = $request->get('search')['value'];
+
+            $query = DeliveryOrderDetail::from('trans_delivery_order_detail as a')
+                ->leftJoin('trans_delivery_order as b', 'b.id', '=', 'a.delivery_order_id')
+                ->leftJoin('trans_customer_delivery_schedule_details as c', function ($join) {
+                    $join->on('c.id', '=', 'a.source_id')->where('a.source_type', '=', 'CDS');
+                })->leftJoin('trans_customer_delivery_schedule as d', 'd.id', '=', 'c.customer_delivery_schedule_id')
+                ->leftJoin('trans_sales_order_details as e', 'e.id', '=', 'c.sales_order_details_id')
+                ->leftJoin('trans_sales_order as f', 'f.id', '=', 'e.id_sales_order')
+                ->leftJoin('vw_app_list_mst_sku as g', 'g.id', '=', 'a.sku_id')
+                ->leftJoin('mst_customer as h', function ($join) {
+                    $join->on('h.id', '=', 'b.customer_id')->where('b.do_destination_type', '=', 'Customer');
+                })->leftJoin('mst_person_supplier as i', function ($join) {
+                    $join->on('i.id', '=', 'b.supplier_id')->where('b.do_destination_type', '=', 'Supplier');
+                });
+
+            $totalRecords = (clone $query)->count();
+
+            $totalRecordWithFilter = (clone $query)->count();
+
+            $data = $query->selectRaw('b.do_date, b.do_number, b.do_destination_type, f.po_number, d.customer_delivery_number, h.name as customer_name, i.description as supplier_name, g.sku_id, g.sku_name, g.sku_specification_code, g.sku_type, g.sku_inventory_unit, g.val_conversion, a.source_type, a.qty, c.quantity_cds, c.outstanding')
+                ->skip($start)
+                ->take($length)
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => "Get data delivery order detail successfully",
+                'data' => [
+                    "draw"            => intval($draw),
+                    "recordsTotal"    => $totalRecords,
+                    "recordsFiltered" => $totalRecordWithFilter,
+                    "data"            => $data
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => true,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getDestination(Request $request)
+    {
+        try {
+            if ($request->type == 'select') {
+                $data = MasterCustomerDeliveryDestination::select('id', 'destination_name')
+                    ->where('customer_id', $request->customerId)->get();
+            } else {
+                $data = MasterCustomerDeliveryDestination::where('id', $request->id)->first();
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "Get data destination successfully",
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getDeliverySource(Request $request)
+    {
+        try {
+            if ($request->doType == 'Sample Part') {
+                $data = SkuListVw::where('flag_inventory_register', 1)
+                    ->where(function ($q) use ($request) {
+                        if ($request->subDoType) {
+                            $q->where('sku_type', $request->subDoType);
+                        }
+                    })
+                    ->selectRaw('id, NULL as delivery_date, NULL as po_number, NULL as cds_code, NULL as cd_number, sku_id, sku_name, sku_specification_code, sku_business_type, sku_model, val_conversion')
+                    ->get();
+            } else if ($request->doType == 'Regular') {
+                $data = TransCustomerDeliveryScheduleDetails::from('trans_customer_delivery_schedule_details as a')
+                    ->leftJoin('trans_customer_delivery_schedule as b', 'b.id', '=', 'a.customer_delivery_schedule_id')
+                    ->leftJoin('vw_app_list_mst_sku as c', 'c.id', '=', 'a.sku_id')
+                    ->leftJoin('trans_sales_order_details as d', 'd.id', '=', 'a.sales_order_details_id')
+                    ->leftJoin('trans_sales_order as e', 'e.id', '=', 'd.id_sales_order')
+                    ->where(function ($q) use ($request) {
+                        if ($request->subDoType) {
+                            $q->where('c.sku_type', $request->subDoType);
+                        }
+                    })
+                    ->where('a.outstanding', '>', 0)
+                    ->selectRaw('a.id, a.delivery_plan_date as delivery_date, e.po_number, b.cds_code, b.customer_delivery_number as cd_number, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.quantity_cds, a.outstanding')
+                    ->get();
+            } else {
+                $data = [];
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "Get delivery source successfully",
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getItemDetail(Request $request)
+    {
+        try {
+            if ($request->itemType == 'SKU') {
+                $sku = SkuListVw::where('id', (int)$request->itemId)->selectRaw('id, sku_id, sku_name, sku_specification_code, sku_business_type, sku_model, val_conversion, NULL as po_number, NULL as cds_code')->first();
+                $packaging = MasterSku::where('id', $sku->id)->select('sku_packaging_category_id', 'sku_packaging_partition_id', 'qty_per_partition')->first();
+            } else if ($request->itemType == 'CDS') {
+                $sku = DB::table('trans_customer_delivery_schedule_details as a')
+                    ->leftJoin('trans_customer_delivery_schedule as b', 'b.id', '=', 'a.customer_delivery_schedule_id')
+                    ->leftJoin('vw_app_list_mst_sku as c', 'c.id', '=', 'a.sku_id')
+                    ->leftJoin('trans_sales_order_details as d', 'd.id', '=', 'a.sales_order_details_id')
+                    ->leftJoin('trans_sales_order as e', 'e.id', '=', 'd.id_sales_order')
+                    ->where('a.id', (int)$request->itemId)
+                    ->selectRaw('c.id, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.quantity_cds as val_conversion, e.po_number, b.cds_code')->first();
+                $packaging = MasterSku::where('id', $sku->id)->select('sku_packaging_category_id', 'sku_packaging_partition_id', 'qty_per_partition')->first();
+            } else {
+                $sku = null;
+                $packaging = null;
+            }
+
+            if ($packaging->sku_packaging_category_id && $packaging->sku_packaging_partition_id && $packaging->qty_per_partition) {
+                $packagingCategory = PackagingInformationCategory::select('id', 'total_stock')->where('id', $packaging->sku_packaging_category_id)->first();
+                $packagingPartition = PackagingInformationPartition::select('id', 'capacity')->Where('id', $packaging->sku_packaging_partition_id)->first();
+                $qtyPerPackaging = floatval($packagingPartition->capacity) * floatval($packaging->qty_per_partition);
+                $data = [
+                    "sku" => $sku,
+                    "packagingCategory" => $packagingCategory,
+                    "qtyPerPackaging" => $qtyPerPackaging,
+                    "qtyPackaging" => floatval($packagingCategory->total_stock),
+                    "totalQtyPackaging" => ceil(floatval($sku->val_conversion) / $qtyPerPackaging),
+                ];
+            } else {
+                $data = [
+                    "sku" => $sku,
+                    "packagingCategory" => null,
+                    "qtyPerPackaging" => 0,
+                    "qtyPackaging" => 0,
+                    "totalQtyPackaging" => 0,
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "Get item detail successfully",
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function createDO(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $destinationType = $request->doDestinationType == 'Customer' ? 'MUI-C' : 'MUI-S';
+            if ($request->doType === 'Regular') {
+                $doTypePrefix = 'REG';
+                $doNumberLike = '%' . $destinationType . '/REG/%';
+            } else if ($request->doType === 'Replacement') {
+                $doTypePrefix = 'REP';
+                $doNumberLike = '%' . $destinationType . '/REP/%';
+            } else if ($request->doType === 'Sample Part') {
+                $doTypePrefix = 'SAM';
+                $doNumberLike = '%' . $destinationType . '/SAM/%';
+            }
+
+            $maxSeqNumber = DeliveryOrder::whereYear('created_at', date('Y'))
+                ->whereMonth('created_at', date('m'))->where('do_number', 'like', $doNumberLike)
+                ->max('do_number_seq');
+            $doNumber = $this->generateDONumber('Customer', $doTypePrefix, $maxSeqNumber + 1);
+
+            // Insert Delivery Order
+            $insertDO = DeliveryOrder::create([
+                'do_number' => $doNumber,
+                'do_number_seq' => $maxSeqNumber + 1,
+                'do_destination_type' => $request->doDestinationType,
+                'do_date' => $request->doDate,
+                'do_type' => $request->doType,
+                'do_sub_type' => $request->subDoType,
+                'customer_id' => (int)$request->customer,
+                'customer_delivery_destination_id' => (int)$request->doDestination,
+                'vehicle_id' => (int)$request->vehicle,
+                'driver_id' => (int)$request->driver,
+                'do_note' => $request->deliveryNote,
+                'do_officer_id' => 53,
+                'status' => 'READY',
+                'created_by' => Auth::id(),
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            // Insert Delivery Order Detail
+            $seqNumberDetail = 1;
+            foreach ($request->listItem as $item) {
+                $doNumberDetail = $this->generateDONumberDetail($doNumber, $seqNumberDetail);
+                $insertDODetail = DeliveryOrderDetail::create([
+                    'dod_number' => $doNumberDetail,
+                    'dod_number_seq' => $seqNumberDetail,
+                    'delivery_order_id' => $insertDO->id,
+                    'source_type' => $item['type'],
+                    'source_id' => (int)$item['id'],
+                    'sku_id' => (int)$item['skuId'],
+                    'qty' => (float)$item['qty'],
+                    'packaging_category_id' => (int)$item['packagingCategoryId'],
+                    'total_packaging' => (int)$item['totalPackaging'],
+                    'created_by' => Auth::id(),
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+
+                // Update Outstanding CDS
+                if ($item['type'] == 'CDS') {
+                    $latestOutstandingCDS = TransCustomerDeliveryScheduleDetails::where('id', (int)$item['id'])
+                        ->select('id', 'outstanding')->first();
+                    $remainingOutstanding = $latestOutstandingCDS->outstanding - (float)$item['qty'];
+                    $updateOutstandingCDS = TransCustomerDeliveryScheduleDetails::where('id', (int)$item['id'])
+                        ->update([
+                            'outstanding' => $remainingOutstanding,
+                            'outstanding_status' => $remainingOutstanding > 0 ? 1 : 0,
+                            'delivery_status' => $remainingOutstanding > 0 ? 'PENDING' : 'DONE',
+                            'updated_by' => Auth::id(),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                }
+
+                // Update stock packaging
+                $latestStockPackaging = PackagingInformationCategory::where('id', (int)$item['packagingCategoryId'])
+                    ->select('id', 'total_stock')->first();
+                $updateStockPackaging = PackagingInformationCategory::where('id', (int)$item['packagingCategoryId'])
+                    ->update([
+                        'total_stock' => $latestStockPackaging->total_stock - (int)$item['totalPackaging'],
+                        'updated_by' => Auth::id(),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => "Create delivery order successfully",
+                'data' => $insertDO
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function generateDONumber($category, $type, $sequence)
+    {
+        $prefixDONumber = $category === 'Customer' ? 'MUI-C' : 'MUI-S';
+        $paddedSequence = str_pad($sequence, 4, '0', STR_PAD_LEFT);
+        $year = date('y');
+        $month = date('m');
+
+        return "{$prefixDONumber}/{$type}/{$year}/{$month}/{$paddedSequence}";
+    }
+
+    function generateDONumberDetail($doNumber, $subSequence)
+    {
+        $paddedSub = str_pad($subSequence, 3, '0', STR_PAD_LEFT);
+
+        return "{$doNumber}-{$paddedSub}";
     }
 }
