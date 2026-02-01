@@ -56,15 +56,15 @@
                 data: "val_conversion"
             }, {
                 title: "Supplier",
-                data: null,
-                render: function() {
-                    return 0;
+                data: "total_outstanding",
+                render: function(data, type, row, meta) {
+                    return row.total_outstanding != null ? row.total_outstanding : 0;
                 }
             }, {
                 title: "Min",
-                data: null,
-                render: function() {
-                    return 0;
+                data: "min_qty",
+                render: function(data, type, row, meta) {
+                    return row.min_qty != null ? parseFloat(row.min_qty) : 0;
                 }
             }, {
                 title: "Max",
@@ -73,33 +73,46 @@
                     return 0;
                 }
             }, {
+                title: "MSR",
+                data: null,
+                render: function() {
+                    return 0;
+                }
+            }, {
                 title: 'Status',
-                data: 'sku_type',
+                data: null,
                 className: 'text-center',
                 render: function(data, type, row) {
-                    const bgColor = data ? 'bg-success' : 'bg-danger';
+                    const bgColor = row.val_conversion > 0 ? 'bg-success' : 'bg-danger';
 
                     return `<div class="${bgColor}" style="min-width: 40px; min-height: 20px; display: inline-block; border-radius: 4px;">&nbsp;</div>`;
                 }
             });
         } else {
             columns.push({
-                title: "Item Name",
-                data: "description",
-            }, {
-                title: "Item Type",
+                title: "Packaging Type",
                 data: "type",
+            }, {
+                title: "Packaging Name",
+                data: "description",
             }, {
                 title: "Model",
                 data: "model",
             }, {
-                title: "Unit",
+                title: "Packaging Unit",
                 data: "unit",
             }, {
                 title: "Category Size",
                 data: "category_size",
             }, {
-                title: "Qty Stock",
+                title: "Warehouse",
+                data: "total_stock",
+            }, {
+                title: "Outside",
+                data: null,
+                defaultContent: 0,
+            }, {
+                title: "Warehouse",
                 data: "total_stock",
             }, {
                 title: 'Status',
