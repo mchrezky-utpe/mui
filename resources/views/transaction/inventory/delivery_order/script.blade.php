@@ -3,6 +3,7 @@
     let itemAdded = [];
     let tableDO;
     let tableDODetail;
+    let countRowItem = 1;
 
     $(function() {
         initDatatableDOList();
@@ -12,7 +13,6 @@
             e.preventDefault();
             const type = $('#doTypeSelect').val();
             const subType = $('#subDoTypeSelect').val();
-            console.log(type, subType);
             initDatatable(type, subType);
         });
 
@@ -70,12 +70,18 @@
         $('#itemAddQty').on('input', function(e) {
             e.preventDefault();
             let max = parseFloat($(this).attr('max'));
+            let min = 1;
             let val = parseFloat($(this).val());
 
             itemTemp.qty = val;
             if (val > max) {
                 $(this).val(max);
                 itemTemp.qty = max;
+            }
+
+            if (val < min) {
+                $(this).val(min);
+                itemTemp.qty = min;
             }
 
             let qtyPerPkg = parseFloat($('#itemAddQtyPerPackage').val()) || 0;
@@ -95,6 +101,12 @@
             $('#itemAddQtyTotalPackage').val(newTotalPackage);
         });
 
+        $('#itemAddQty').on('keypress', function(e) {
+            if (e.which === 45) {
+                e.preventDefault();
+            }
+        });
+
         $('#modalAddItem').on('hidden.bs.modal', function() {
             itemTemp = null;
             $('#tbodyAddItem').empty();
@@ -110,14 +122,17 @@
 
         $(document).on('click', '#itemBtnAdd', function(e) {
             e.preventDefault();
-            itemAdded.push(itemTemp);
+            itemAdded.push({
+                row_id: countRowItem,
+                ...itemTemp
+            });
 
             if (itemAdded.length == 1) {
                 $('#tbodyListAdded').empty();
             }
 
             $('#tbodyListAdded').append(`
-                <tr>
+                <tr id="listRow${countRowItem}">
                     <td>${itemTemp.poNumber ? itemTemp.poNumber : ""}</td>
                     <td>${itemTemp.cdsCode ? itemTemp.cdsCode : ""}</td>
                     <td>${itemTemp.itemCode? itemTemp.itemCode : ""}</td>
@@ -126,11 +141,13 @@
                     <td>${itemTemp.businessType? itemTemp.businessType : ""}</td>
                     <td>${itemTemp.model? itemTemp.model : ""}</td>
                     <td>${itemTemp.qty}</td>
+                    <td><button type="button" class="btn btn-sm btn-danger" onclick="deleteItem(${countRowItem})"><i class="fas fa-trash"></i></button></td>
                 </tr>
             `);
 
             // Reset
             itemTemp = null;
+            countRowItem += 1;
 
             $('#modalAddItem').modal('hide');
         });
@@ -149,8 +166,23 @@
 
             if (!doDate || !customer || !doType || !doDestination || !vehicle || !subDoType || !
                 driver) {
-                alert("Please fill out required fields!");
+                Swal.fire({
+                    title: 'Validation Error',
+                    text: 'Please fill out all required fields!',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
                 return;
+            }
+            if (itemAdded.length == 0) {
+                Swal.fire({
+                    title: 'Validation Error',
+                    text: 'Please add at least one item.',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
             }
 
             $('#btnSaveDO').html(`<i class="fas fa-spinner fa-spin mr-1"></i> Please wait...`).attr(
@@ -220,7 +252,7 @@
 
         $(document).on('click', '#applyFilterDODetail', function(e) {
             e.preventDefault();
-            initDatatableDOList();
+            initDatatableDODetailList();
         });
     });
 
@@ -300,13 +332,14 @@
                 title: "Check Return",
                 data: null,
                 render: function(data, type, row, meta) {
-                    return `<input type="checkbox" class="form-control form-control-sm mr-1"/>`;
+                    const isChecked = row.is_returned == 1 ? 'checked' : '';
+                    return `<input type="checkbox" class="form-control form-control-sm mr-1" ${isChecked} disabled/>`;
                 }
             }, {
                 title: "Action",
                 data: null,
                 render: function(data, type, row, meta) {
-                    return `<button class="btn btn-sm btn-secondary"><i class="fas fa-print"></i></button>`;
+                    return `<a href="{{ url('/transaction/inventory/delivery_order/export-pdf') }}?id=${row.id}" target="_blank" class="btn btn-sm btn-secondary text-white"><i class="fas fa-print"></i></a>`;
                 }
             }]
         });
@@ -605,7 +638,9 @@
                     method: "GET",
                     data: {
                         doType: type,
-                        subDoType: subType
+                        subDoType: subType,
+                        customerId: $('#customerInput').val(),
+                        deliveryDestinationId: $('#doDestinationSelect').val(),
                     },
                     dataSrc: function(res) {
                         if (!res.success) {
@@ -621,6 +656,18 @@
     }
 
     const showAddItem = (itemType, itemId) => {
+        let isExist = itemAdded.some(item => item.id === itemId && item.type === itemType);
+        if (isExist) {
+            Swal.fire({
+                title: 'Already Added',
+                text: 'This item is already in your list.',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
         $.ajax({
             url: `{{ url('/transaction/inventory/delivery_order/item-detail') }}`,
             method: "GET",
@@ -672,5 +719,16 @@
                 $('#modalAddItem').modal('show');
             }
         });
+    }
+
+    const deleteItem = (rowId) => {
+        $(`#listRow${rowId}`).remove();
+        itemAdded = itemAdded.filter(item => item.row_id !== rowId);
+
+        if (itemAdded.length == 0) {
+            $('#tbodyListAdded').append(`<tr>
+                                            <td colspan="9">No data available in table</td>
+                                        </tr>`);
+        }
     }
 </script>

@@ -8,6 +8,7 @@ use App\Models\MasterDriver;
 use Illuminate\Http\Request;
 use App\Models\MasterVehicle;
 use App\Models\MasterCustomer;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Sku\SkuListVw;
@@ -76,16 +77,16 @@ class DeliveryOrderController extends Controller
             $totalRecords = (clone $query)->count();
 
             if ($request->doTypeFilter) {
-                $query->where('do_type', $request->doTypeFilte);
+                $query->where('a.do_type', $request->doTypeFilter);
             }
             if ($request->customerFilter) {
-                $query->where('customer_id', $request->customerFilter);
+                $query->where('a.customer_id', $request->customerFilter);
             }
             if ($request->fromDateFilter) {
-                $query->where('do_date', '>=', $request->fromDateFilter);
+                $query->where('a.do_date', '>=', $request->fromDateFilter);
             }
             if ($request->untilDateFilter) {
-                $query->where('do_type', '<=', $request->untilDateFilter);
+                $query->where('a.do_date', '<=', $request->untilDateFilter);
             }
 
             if (!empty($search)) {
@@ -131,7 +132,7 @@ class DeliveryOrderController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'success' => true,
+                'success' => false,
                 'message' => "Error Request, Exception Error!",
                 'data' => $e->getMessage()
             ], 500);
@@ -162,17 +163,17 @@ class DeliveryOrderController extends Controller
 
             $totalRecords = (clone $query)->count();
 
-            if ($request->doTypeFilter) {
-                $query->where('do_type', $request->doTypeFilte);
+            if ($request->doTypeFilterDetail) {
+                $query->where('b.do_type', $request->doTypeFilterDetail);
             }
-            if ($request->customerFilter) {
-                $query->where('customer_id', $request->customerFilter);
+            if ($request->customerFilterDetail) {
+                $query->where('b.customer_id', $request->customerFilterDetail);
             }
-            if ($request->fromDateFilter) {
-                $query->where('do_date', '>=', $request->fromDateFilter);
+            if ($request->fromDateFilterDetail) {
+                $query->where('b.do_date', '>=', $request->fromDateFilterDetail);
             }
-            if ($request->untilDateFilter) {
-                $query->where('do_type', '<=', $request->untilDateFilter);
+            if ($request->untilDateFilterDetail) {
+                $query->where('b.do_date', '<=', $request->untilDateFilterDetail);
             }
 
             if (!empty($search)) {
@@ -262,6 +263,12 @@ class DeliveryOrderController extends Controller
                         if ($request->subDoType) {
                             $q->where('c.sku_type', $request->subDoType);
                         }
+                        if ($request->customerId) {
+                            $q->where('b.customer_id', $request->customerId);
+                        }
+                        if ($request->deliveryDestinationId) {
+                            $q->where('a.customer_delivery_destination_id', $request->deliveryDestinationId);
+                        }
                     })
                     ->where('a.outstanding', '>', 0)
                     ->selectRaw('a.id, a.delivery_plan_date as delivery_date, e.po_number, b.cds_code, b.customer_delivery_number as cd_number, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.quantity_cds, a.outstanding')
@@ -297,7 +304,7 @@ class DeliveryOrderController extends Controller
                     ->leftJoin('trans_sales_order_details as d', 'd.id', '=', 'a.sales_order_details_id')
                     ->leftJoin('trans_sales_order as e', 'e.id', '=', 'd.id_sales_order')
                     ->where('a.id', (int)$request->itemId)
-                    ->selectRaw('c.id, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.quantity_cds as val_conversion, e.po_number, b.cds_code')->first();
+                    ->selectRaw('c.id, c.sku_id, c.sku_name, c.sku_specification_code, c.sku_business_type, c.sku_model, a.outstanding as val_conversion, e.po_number, b.cds_code')->first();
                 $packaging = MasterSku::where('id', $sku->id)->select('sku_packaging_category_id', 'sku_packaging_partition_id', 'qty_per_partition')->first();
             } else {
                 $sku = null;
@@ -422,6 +429,8 @@ class DeliveryOrderController extends Controller
                         'updated_by' => Auth::id(),
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
+
+                $seqNumberDetail++;
             }
 
             DB::commit();
@@ -451,10 +460,38 @@ class DeliveryOrderController extends Controller
         return "{$prefixDONumber}/{$type}/{$year}/{$month}/{$paddedSequence}";
     }
 
-    function generateDONumberDetail($doNumber, $subSequence)
+    public function generateDONumberDetail($doNumber, $subSequence)
     {
         $paddedSub = str_pad($subSequence, 3, '0', STR_PAD_LEFT);
 
         return "{$doNumber}-{$paddedSub}";
+    }
+
+    public function exportPDF(Request $request)
+    {
+        try {
+            $deliveryOrder = $query = DeliveryOrder::from('trans_delivery_order as a')
+                ->leftJoin('mst_customer as b', function ($join) {
+                    $join->on('b.id', '=', 'a.customer_id')->where('a.do_destination_type', '=', 'Customer');
+                })->leftJoin('mst_person_supplier as c', function ($join) {
+                    $join->on('b.id', '=', 'a.supplier_id')->where('a.do_destination_type', '=', 'Supplier');
+                })->leftJoin('auth_user as d', 'd.id', '=', 'a.do_officer_id')
+                ->where('a.id', $request->id)
+                ->selectRaw('a.*, b.name as customer_name, c.description as supplier_name, d.fullname as do_officer_name')->first();
+
+            $data = [
+                'title' => "Delivery Order",
+                "data" => $deliveryOrder
+            ];
+
+            $pdf = Pdf::loadView('transaction.inventory.delivery_order.pdf', $data);
+
+            return response($pdf->output(), 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="delivery-order.pdf"',
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error Request, Exception Error!');
+        }
     }
 }
