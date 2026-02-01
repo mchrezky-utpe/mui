@@ -74,9 +74,15 @@ Route::prefix('transaction/inventory')->group(function () {
     Route::prefix('customer_return')->controller(CustomerReturnController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/data', 'data');
+        Route::get('/create', 'create');
         Route::get('/tambah', 'tambah');
         Route::get('/edit', 'edit');
         Route::get('/hapus', 'hapus');
+        Route::get('/get-source', 'getSourceData');
+        Route::get('/get-source-detail', 'getSourceDataDetail');
+        Route::post('/create-cr', 'createCR');
+        Route::get('/get-all', 'getAll');
+        Route::get('/get-all-detail', 'getAllDetail');
     });
 
     Route::prefix('delivery_order')->controller(DeliveryOrderController::class)->group(function () {
@@ -90,7 +96,8 @@ Route::prefix('transaction/inventory')->group(function () {
         Route::get('/get-destination', 'getDestination');
         Route::get('/get-delivery-source', 'getDeliverySource');
         Route::get('/item-detail', 'getItemDetail');
-        Route::post('create-do', 'createDO');
+        Route::post('/create-do', 'createDO');
+        Route::get('/export-pdf', 'exportPDF');
     });
 
     Route::prefix('stock_view')->controller(StockViewController::class)->group(function () {

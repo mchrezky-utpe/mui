@@ -148,11 +148,12 @@
                                 <th>Business Type</th>
                                 <th>Model</th>
                                 <th>Quantity</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyListAdded">
                             <tr>
-                                <td colspan="8">No data available in table</td>
+                                <td colspan="9">No data available in table</td>
                             </tr>
                         </tbody>
                     </table>
@@ -168,7 +169,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Item</h5>
+                    <h5 class="modal-title">Add Delivery Order Item</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
