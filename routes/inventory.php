@@ -29,6 +29,7 @@ Route::prefix('transaction/inventory')->group(function () {
         Route::get('/tambah', 'tambah');
         Route::get('/edit', 'edit');
         Route::get('/hapus', 'hapus');
+        Route::post('/opening_stock', 'opening_stock');
     });
 
     Route::prefix('stock_adjusment')->controller(StockAdjusmentController::class)->group(function () {

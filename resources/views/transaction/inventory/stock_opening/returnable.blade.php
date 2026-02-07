@@ -1,3 +1,5 @@
+<!-- retunable -->
+
 <table class="table table-sm table-bordered align-middle">
     <thead class="bg-light text-center">
         <tr>
@@ -13,7 +15,10 @@
     </thead>
     <tbody>
         @forelse ($data as $row)
-        <tr>
+        <tr class="row-item"
+            data-id="{{ $row->pcc_code }}"
+            data-opening="{{ $row->is_has_opening ?? 0 }}">
+
             <td>{{ $row->pcc_code }}</td>
             <td>{{ $row->sub_category }}</td>
             <td>{{ $row->category_type }}</td>
@@ -21,7 +26,7 @@
             <td>{{ $row->model }}</td>
             <td>{{ @$row->size }}</td>
             <td>{{ $row->unit }}</td>
-            <td class="text-end">{{ number_format(@$row->total_stock, 0) }}</td>
+            <td class="text-end">{{ number_format($row->total_stock, 0) }}</td>
         </tr>
         @empty
         <tr>
@@ -30,3 +35,7 @@
         @endforelse
     </tbody>
 </table>
+
+<div class="d-flex justify-content-end mt-3">
+    {!! $data->links('vendor.pagination.custome') !!}
+</div>
