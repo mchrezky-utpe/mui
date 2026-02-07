@@ -81,7 +81,7 @@ class StockOpeningController extends Controller
         try {
 
             //check mst_sku
-            $sku = MstSku::where('manual_id', $sku_id)->first();
+            $sku = MstSku::where('id', $sku_id)->first();
 
             if (!$sku) {
                 throw new \Exception('Item not found');

@@ -102,8 +102,8 @@
             let sku_id = $('#sku_id').val();
             let qty = $('#qty').val();
 
-            if (!qty || qty <= 0) {
-                Swal.fire('Warning', 'Qty must be greater than 0', 'warning');
+            if (!qty || qty < 0) {
+                Swal.fire('Warning', 'Qty cannot be less than 0', 'warning');
                 return;
             }
 

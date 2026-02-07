@@ -38,6 +38,8 @@ Route::prefix('transaction/inventory')->group(function () {
         Route::get('/tambah', 'tambah');
         Route::get('/edit', 'edit');
         Route::get('/hapus', 'hapus');
+        Route::post('/adjusment_stock', 'adjusment_stock');
+        Route::post('/import_adjusment_stock', 'import_adjusment_stock');
     });
 
     Route::prefix('minimum_stock')->controller(MinimumStockController::class)->group(function () {

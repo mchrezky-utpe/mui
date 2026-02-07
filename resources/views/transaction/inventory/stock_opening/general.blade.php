@@ -5,14 +5,15 @@
         <tr>
             <th style="width:19%;">Item Code</th>
             <th>Item Name</th>
-            <th style="width:20%;">
+            <th style="width:20%;">Specification Code</th>
+            <th>Item Type</th>
             <th>Item Unit</th>
         </tr>
     </thead>
     <tbody>
         @forelse ($data as $item)
         <tr class="row-item"
-            data-id="{{ $item->sku_id }}"
+            data-id="{{ $item->id }}"
             data-opening="{{ $item->is_has_opening }}">
             <td>{{ $item->sku_id }}</td>
             <td>{{ $item->sku_name }}</td>
