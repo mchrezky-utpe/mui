@@ -48,6 +48,7 @@ Route::prefix('transaction/inventory')->group(function () {
         Route::get('/tambah', 'tambah');
         Route::get('/edit', 'edit');
         Route::get('/hapus', 'hapus');
+        Route::post('/minimum_stock', 'minimum_stock');
     });
 
     Route::prefix('receiving')->controller(ReceivingController::class)->group(function () {

@@ -1,7 +1,4 @@
-<!-- data view for minimum_stock -->
-<!-- Part Code = manual_id
-Part Name = description
-Spesification Code = specification_code -->
+<!-- part -->
 
 <table class="table table-sm table-bordered">
     <thead>
@@ -16,7 +13,9 @@ Spesification Code = specification_code -->
     </thead>
     <tbody>
         @forelse ($data as $item)
-        <tr>
+        <tr class="row-item"
+            data-id="{{ $item->id }}"
+            data-opening="{{ $item->is_has_opening }}">
             <td>{{ $item->sku_id }}</td>
             <td>{{ $item->sku_name }}</td>
             <td>{{ $item->sku_specification_code }}</td>
