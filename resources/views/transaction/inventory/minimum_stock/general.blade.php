@@ -8,6 +8,7 @@
             <th style="width:20%;">Specification Code</th>
             <th>Item Type</th>
             <th>Item Unit</th>
+            <th>Stock</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
             <td>{{ $item->sku_specification_code }}</td>
             <td>{{ $item->sku_material_type }}</td>
             <td>{{ $item->sku_inventory_unit }}</td>
+            <td>{{ $item->val_conversion }}</td>
         </tr>
         @empty
         <tr>

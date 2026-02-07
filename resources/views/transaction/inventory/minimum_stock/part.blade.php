@@ -9,6 +9,7 @@
             <th>Part Type</th>
             <th>Part Model</th>
             <th>Part Unit</th>
+            <th>Stock</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
             <td>{{ $item->sku_material_type }}</td>
             <td>{{ $item->sku_model }}</td>
             <td>{{ $item->sku_inventory_unit }}</td>
+            <td>{{ $item->val_conversion }}</td>
         </tr>
         @empty
         <tr>
