@@ -149,6 +149,54 @@ function getCurrentFilter() {
     };
 }
 
+$("#btnSubmitImport").on("click", function () {
+    let file = $("#fileImport")[0].files[0];
+
+    if (!file) {
+        Swal.fire("Warning", "Please select file", "warning");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
+
+    Swal.fire({
+        title: "Importing...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
+    $.ajax({
+        url: base_url + "api/production_material/import",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            $("#fileImport").val("");
+
+            Swal.fire({
+                icon: "success",
+                title: "Import Completed",
+                html: `
+                    <b>${res.inserted}</b> data inserted<br>
+                    <b>${res.skipped}</b> data skipped
+                `,
+            });
+
+            tableProductionMaterial.ajax.reload();
+        },
+        error: function (xhr) {
+            Swal.fire(
+                "Error",
+                xhr.responseJSON?.message || "Import failed",
+                "error",
+            );
+        },
+    });
+});
+
 $("#btnApprove").on("click", async function () {
     const confirm = await Swal.fire({
         title: "Approve Data?",
