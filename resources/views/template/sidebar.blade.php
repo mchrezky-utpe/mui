@@ -1,9 +1,6 @@
 <div class="logo">
     <a href="/">
-        <img
-            src="{{ asset('assets/images/icon/mui.png') }}"
-            width="150"
-            alt="mui" />
+        <img src="{{ asset('assets/images/icon/mui.png') }}" width="150" alt="mui" />
     </a>
 </div>
 <div class="menu-sidebar__content js-scrollbar1">
@@ -88,9 +85,7 @@
                         </ul>
                     </li>
                     <li class="has-sub">
-                        <a
-                            class="js-arrow"
-                            href="#"
+                        <a class="js-arrow" href="#"
                             style="
                                 display: flex;
                                 justify-content: center;
@@ -143,7 +138,7 @@
                             <i class="fas fa-caret-right"></i>Receiving</a>
                         <ul class="list-unstyled navbar__sub-list js-sub-list">
                             <li>
-                                <a href="/transaction/inventory/receiving">Supplier Delivery Order</a>
+                                <a href="/sdo">Supplier Delivery Order</a>
                             </li>
                             <li>
                                 <a href="/gpo">General Purchase Order</a>
@@ -155,10 +150,10 @@
                                 <a href="/replacement">Replacement</a>
                             </li>
                             <li>
-                                <a href="#">Internal</a>
+                                <a href="/internal">Internal</a>
                             </li>
                             <li>
-                                <a href="#">Returnable Packaging</a>
+                                <a href="/returnable-packaging">Returnable Packaging</a>
                             </li>
                         </ul>
                     </li>
@@ -166,8 +161,7 @@
                         <a href="/transaction/inventory/production_material">Production Material</a>
                     </li>
                     <li>
-                        <a
-                            href="/transaction/inventory/customer_delivery_schedule">Customer Delivery Schedule</a>
+                        <a href="/transaction/inventory/customer_delivery_schedule">Customer Delivery Schedule</a>
                     </li>
                     <li>
                         <a href="/transaction/inventory/customer_return">Customer Return</a>
@@ -196,8 +190,7 @@
                         <a href="/transaction/inventory/material_allowance">Material Allowance</a>
                     </li>
                     <li>
-                        <a
-                            href="/transaction/inventory/material_requirement_planing">Material Requirement Planing</a>
+                        <a href="/transaction/inventory/material_requirement_planing">Material Requirement Planing</a>
                     </li>
                 </ul>
             </li>
@@ -280,8 +273,7 @@
                                 <a href="/pa/order">Purchase Analysis Order Trends</a>
                             </li>
                             <li>
-                                <a href="/pa/supplier-trend">Purchase Analysis Supplier Trends</a
-                                    </li>
+                                <a href="/pa/supplier-trend">Purchase Analysis Supplier Trends</a </li>
                         </ul>
                     </li>
                     <li>
