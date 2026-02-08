@@ -531,27 +531,59 @@ class DeliveryOrderController extends Controller
     public function exportPDF(Request $request)
     {
         try {
-            $deliveryOrder = $query = DeliveryOrder::from('trans_delivery_order as a')
+            $deliveryOrder = DeliveryOrder::from('trans_delivery_order as a')
                 ->leftJoin('mst_customer as b', function ($join) {
                     $join->on('b.id', '=', 'a.customer_id')->where('a.do_destination_type', '=', 'Customer');
                 })->leftJoin('mst_person_supplier as c', function ($join) {
                     $join->on('b.id', '=', 'a.supplier_id')->where('a.do_destination_type', '=', 'Supplier');
                 })->leftJoin('auth_user as d', 'd.id', '=', 'a.do_officer_id')
+                ->leftJoin('mst_customer_delivery_destination as e', 'e.id', '=', 'a.customer_delivery_destination_id')
                 ->where('a.id', $request->id)
-                ->selectRaw('a.*, b.name as customer_name, c.description as supplier_name, d.fullname as do_officer_name')->first();
+                ->selectRaw('a.*, b.name as customer_name, c.description as supplier_name, d.fullname as do_officer_name, e.destination_address')->first();
+
+            $items = DeliveryOrderDetail::from('trans_delivery_order_detail as a')
+                ->leftJoin('vw_app_list_mst_sku as b', 'b.id', '=', 'a.sku_id')
+                ->leftJoin('mst_packaging_information_category as c', 'c.id', '=', 'a.packaging_category_id')
+                ->leftJoin('trans_customer_delivery_schedule_details as d', function ($join) {
+                    $join->on('d.id', '=', 'a.source_id')->where('a.source_type', '=', 'CDS');
+                })
+                ->leftJoin('trans_sales_order_details as e', 'e.id', '=', 'd.sales_order_details_id')
+                ->leftJoin('trans_sales_order as f', 'f.id', '=', 'e.id_sales_order')
+                ->leftJoin('trans_customer_return_detail as cc', function ($join) {
+                    $join->on('cc.id', '=', 'a.source_id')->where('a.source_type', '=', 'CR');
+                })
+                ->leftJoin('trans_customer_return as dd', 'dd.id', '=', 'cc.customer_return_id')
+                ->leftJoin('trans_delivery_order_detail as ee', 'ee.id', '=', 'cc.delivery_order_detail_id')
+                ->leftJoin('trans_customer_delivery_schedule_details as ff', function ($join) {
+                    $join->on('ff.id', '=', 'ee.source_id')->where('ee.source_type', '=', 'CDS');
+                })
+                ->leftJoin('trans_sales_order_details as gg', 'gg.id', '=', 'ff.sales_order_details_id')
+                ->leftJoin('trans_sales_order as hh', 'hh.id', '=', 'gg.id_sales_order')
+                ->where('a.delivery_order_id', $request->id)
+                ->selectRaw('a.id, a.qty, a.source_type, a.total_packaging, b.sku_name, c.description, f.po_number as po_number_cds, hh.po_number as po_number_cr')
+                ->get();
 
             $data = [
                 'title' => "Delivery Order",
-                "data" => $deliveryOrder
+                "data" => $deliveryOrder,
+                "items" => $items
             ];
 
-            $pdf = Pdf::loadView('transaction.inventory.delivery_order.pdf', $data);
+            // $pdf = Pdf::loadView('transaction.inventory.delivery_order.pdf', $data)->setPaper('a4', 'landscape');;
 
-            return response($pdf->output(), 200, [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="delivery-order.pdf"',
-            ]);
+            // return response($pdf->output(), 200, [
+            //     'Content-Type' => 'application/pdf',
+            //     'Content-Disposition' => 'inline; filename="delivery-order.pdf"',
+            // ]);
+
+            $pdf = Pdf::loadView(
+                'transaction.inventory.delivery_order.pdf',
+                $data
+            )->setPaper('a4', 'landscape');
+
+            return $pdf->stream('delivery_order.pdf');
         } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->with('error', 'Error Request, Exception Error!');
         }
     }

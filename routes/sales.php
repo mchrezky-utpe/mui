@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Transaction\Sales\{
-    SalesOrderController
+    SalesOrderController,
+    SalesInvoiceController
 };
 
 Route::prefix('transaction/sales')->group(function () {
@@ -16,5 +17,10 @@ Route::prefix('transaction/sales')->group(function () {
         Route::get('/tambah', 'tambah');
         Route::get('/edit', 'edit');
         Route::get('/hapus', 'hapus');
+    });
+
+    Route::prefix('sales_invoice')->controller(SalesInvoiceController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/source', 'getSourceData');
     });
 });

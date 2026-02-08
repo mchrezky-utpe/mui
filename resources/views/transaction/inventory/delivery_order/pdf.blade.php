@@ -1,171 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title }} - {{ $data->do_number }}</title>
+    <meta charset="utf-8">
+    <title>Delivery Note</title>
     <style>
+        @page {
+            margin: 20px;
+        }
+
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            font-size: 12px;
-            color: #333;
-            line-height: 1.5;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .container {
+            width: 100%;
         }
 
         .header-table {
             width: 100%;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .header-table td {
+            vertical-align: top;
+        }
+
+        .company-name {
+            font-size: 14px;
+            font-weight: bold;
         }
 
         .title {
-            text-align: center;
-            text-transform: uppercase;
-            font-size: 18px;
+            font-size: 13px;
             font-weight: bold;
-            margin: 0;
-        }
-
-        .info-table {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .info-table td {
-            vertical-align: top;
-            width: 50%;
-        }
-
-        .label {
-            font-weight: bold;
-            width: 120px;
-            display: inline-block;
-        }
-
-        .content-table {
-            width: 100%;
-            border-collapse: collapse;
             margin-top: 10px;
         }
 
-        .content-table th {
-            background-color: #f2f2f2;
+        .border {
             border: 1px solid #000;
-            padding: 8px;
-            text-align: center;
         }
 
-        .content-table td {
-            border: 1px solid #000;
-            padding: 8px;
-        }
-
-        .footer-table {
+        .table {
             width: 100%;
-            margin-top: 40px;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #000;
+            padding: 4px;
+        }
+
+        .table th {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .text-center {
             text-align: center;
         }
 
-        .signature-box {
-            height: 80px;
+        .text-right {
+            text-align: right;
         }
 
-        .page-break {
-            page-break-after: always;
+        .mt-10 {
+            margin-top: 10px;
+        }
+
+        .signature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .signature-table td {
+            border: 1px solid #000;
+            height: 60px;
+            text-align: center;
+            vertical-align: bottom;
+            padding-bottom: 5px;
+        }
+
+        .small {
+            font-size: 9px;
         }
     </style>
 </head>
 
 <body>
-
-    <table class="header-table">
-        <tr>
-            <td>
-                <h1 class="title">{{ $title }}</h1>
-                <div style="text-align: center;">Nomor: {{ $data->do_number }}</div>
-            </td>
-        </tr>
-    </table>
-
-    <table class="info-table">
-        <tr>
-            <td>
-                <div><span class="label">Tanggal</span>: {{ \Carbon\Carbon::parse($data->do_date)->format('d F Y') }}
-                </div>
-                <div><span class="label">Tipe DO</span>: {{ $data->do_type }}</div>
-                <div><span class="label">Sub Tipe</span>: {{ $data->do_sub_type }}</div>
-            </td>
-            <td>
-                <div><span class="label">Customer</span>: {{ $data->customer_name }}</div>
-                <div><span class="label">Petugas</span>: {{ $data->do_officer_name }}</div>
-                <div><span class="label">Status</span>: <strong>{{ $data->status }}</strong></div>
-            </td>
-        </tr>
-    </table>
-
-    <p>Harap diterima barang-barang berikut dengan baik:</p>
-
-    <table class="content-table">
-        <thead>
+    <div class="container">
+        <table class="header-table">
             <tr>
-                <th width="5%">No</th>
-                <th>Deskripsi Barang</th>
-                <th width="15%">Jumlah</th>
-                <th width="15%">Satuan</th>
+                <td width="60%">
+                    <table width="100%" style="border-collapse: collapse; margin-bottom: 6px;">
+                        <tr>
+                            <td width="60" style="vertical-align: top; text-align: center;">
+                                <img src="{{ public_path('assets/images/icon/mui.png') }}" style="margin-bottom: 0px;"
+                                    height="50">
+                                <p style="font-size: 6.5px; margin: 0px; padding: 0px;">PT. MULTI USAGE INDONESIA</p>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <div class="company-name" style="font-weight: bold; font-size: 14px;">
+                                    PT. MULTI USAGE INDONESIA
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    JL. JABABEKA XII B BLOK W-38<br>
+                    KAWASAN INDUSTRI JABABEKA<br>
+                    CIKARANG BEKASI - 17530<br>
+                    Telp : (021) 89830301<br>
+                    Fax : (021) 89830268
+                </td>
+                <td width="40%" style="padding: 40px;">
+                    Cikarang, {{ date('d/m/Y') }}<br>
+                    Kepada Yth :<br>
+                    <strong>{{ $data->customer_name }}</strong><br>
+                    {{ $data->destination_address }}
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {{-- Sesuaikan bagian ini jika Anda memiliki relasi $data->details --}}
-            @if (isset($data->items) && count($data->items) > 0)
-                @foreach ($data->items as $index => $item)
+        </table>
+
+        <div class="title">SURAT JALAN No. {{ $data->do_number }}</div>
+        <div style="margin-bottom: 8px;">Bersama Kendaraan : _______________________________ kami mengirim barang
+            tersebut.</div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="8%">DUS</th>
+                    <th width="12%">Banyaknya</th>
+                    <th width="40%">Nama Barang</th>
+                    <th width="15%">P/O</th>
+                    <th width="10%">Warna</th>
+                    <th width="15%">Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($items as $item)
                     <tr>
-                        <td style="text-align: center;">{{ $index + 1 }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td style="text-align: center;">{{ $item->quantity }}</td>
-                        <td style="text-align: center;">{{ $item->unit }}</td>
+                        <td class="text-center">{{ $item->description }}</td>
+                        <td class="text-center">{{ $item->total_packaging }}</td>
+                        <td>{{ $item->sku_name }}</td>
+                        <td class="text-center">
+                            @if ($item->source_type == 'CDS')
+                                {{ $item->po_number_cds }}
+                            @elseif($item->source_type == 'CR')
+                                {{ $item->po_number_cr }}
+                            @endif
+                        </td>
+                        <td class="text-center"></td>
+                        <td class="text-center">{{ floatval($item->qty) }}</td>
                     </tr>
                 @endforeach
-            @else
-                <tr>
-                    <td colspan="4" style="text-align: center; font-style: italic;">Tidak ada detail item barang.
-                    </td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    @if ($data->do_note)
-        <div style="margin-top: 15px;">
-            <strong>Catatan:</strong><br>
-            {{ $data->do_note }}
+        {{-- Tanda Tangan --}}
+        <table class="signature-table">
+            <tr>
+                <td width="25%">Tanda Terima</td>
+                <td width="25%">Keamanan</td>
+                <td width="25%">Bagian Gudang</td>
+                <td width="25%">
+                    Hormat kami<br><br>
+                    <strong>{{ $pengirim ?? 'RAHMAT HIDAYAT' }}</strong>
+                </td>
+            </tr>
+        </table>
+
+        <div class="small mt-10">
+            PMI-8.5.04/46 Rev.1
         </div>
-    @endif
 
-    <table class="footer-table">
-        <tr>
-            <td width="33%">
-                Penerima,<br><br>
-                <div class="signature-box"></div>
-                ____________________<br>
-                ( Stempel & Tanda Tangan )
-            </td>
-            <td width="33%">
-                Sopir,<br><br>
-                <div class="signature-box"></div>
-                ____________________<br>
-                ( {{ $data->driver_id ?? '....................' }} )
-            </td>
-            <td width="33%">
-                Hormat Kami,<br><br>
-                <div class="signature-box"></div>
-                ____________________<br>
-                ( {{ $data->do_officer_name }} )
-            </td>
-        </tr>
-    </table>
-
+    </div>
 </body>
 
 </html>
