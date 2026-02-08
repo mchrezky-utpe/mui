@@ -203,6 +203,9 @@
                     <li>
                         <a href="/transaction/sales/sales_order">Sales Order</a>
                     </li>
+                    <li>
+                        <a href="/transaction/sales/sales_invoice">Sales Invoice</a>
+                    </li>
                 </ul>
             </li>
 
