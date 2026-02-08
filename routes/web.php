@@ -494,6 +494,7 @@ Route::controller(ProductionMaterialController::class)->group(function () {
     Route::get("/$route_name", "index")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/approve", "api_approve")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/api/$route_name/import", "api_import_production_material_request")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-stock-issue", "api_droplist_stock_issue")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/approve-stock-issue", "api_approve_stock_issue")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);

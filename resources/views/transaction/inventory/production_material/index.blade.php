@@ -129,6 +129,11 @@
                 </div>
               </div>
               <div class="card-body">
+                <div class="col-md-12 text-right mb-3">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#modalImportPMR">
+                    📥 Import Excel
+                  </button>
+                </div>
                 <div class="table-responsive">
                   <table id="table_production_material" class="table table-striped table-bordered first">
                     <thead>
@@ -254,6 +259,40 @@
         <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button class="btn btn-success" id="btnSubmitStockIssue">
           ✅ Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Import PMR -->
+<div class="modal fade" id="modalImportPMR" tabindex="-1">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title text-white">Import Production Material Request</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <a href="{{ asset('assets/template/template_import_pmr.xlsx') }}"
+            class="btn btn-outline-primary btn-sm"
+            download>
+            📥 Download Template
+          </a>
+        </div>
+        <input type="file" id="fileImport" class="form-control" accept=".xls,.xlsx">
+        <small class="text-muted">Format harus sesuai template</small>
+      </div>
+
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-success" id="btnSubmitImport">
+          ✅ Import
         </button>
       </div>
     </div>
