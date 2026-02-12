@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class StockOpening extends Model
 {
-    protected $table = 'mst_sku'; // ganti dengan nama tabel kamu di database
+    protected $table = 'vw_app_list_mst_sku'; // ganti dengan nama tabel kamu di database
     protected $primaryKey = 'id';
     public $timestamps = true; // ubah ke true kalau tabel punya created_at & updated_at
 
@@ -37,34 +37,41 @@ class StockOpening extends Model
     }
 
     public function scopeReturnablePackagingView($query)
-    { 
+    {
         return DB::table('mst_sku as s')
-        ->join('mst_sku_type as t', 's.sku_type_id', '=', 't.id')
-        ->join('mst_sku_sub_category as sc', 't.sku_sub_category_id', '=', 'sc.id')
-        ->leftJoin('mst_sku_model as m', 's.sku_model_id', '=', 'm.id')
-        ->leftJoin('mst_sku_unit as u', 's.sku_unit_id', '=', 'u.id')
-        ->select([
-            's.manual_id as pcc_code',
-            'sc.description as sub_category',
-            't.description as category_type',
-            'sc.description as category_name',
-            'm.description as model',
-            'u.description as unit',
-        ])
-        ->where(function($q) {
-            $q->where('sc.description', 'like', '%RETURNABLE%')
-              ->orWhere('sc.description', 'like', '%NON RETURNABLE%');
-        })
-        ->groupBy(
-            's.manual_id',
-            'sc.description',
-            't.description',
-            'm.description',
-            'u.description'
-        );
+            ->join('mst_sku_type as t', 's.sku_type_id', '=', 't.id')
+            ->join('mst_sku_sub_category as sc', 't.sku_sub_category_id', '=', 'sc.id')
+            ->leftJoin('mst_sku_model as m', 's.sku_model_id', '=', 'm.id')
+            ->leftJoin('mst_sku_unit as u', 's.sku_unit_id', '=', 'u.id')
+
+            ->leftJoin('trans_sku_opening_stock as tsos', 's.id', '=', 'tsos.sku_id')
+
+            ->select([
+                's.id',
+                's.manual_id as pcc_code',
+                'sc.description as sub_category',
+                't.description as category_type',
+                's.description as category_name',
+                'm.description as model',
+                'u.description as unit',
+                's.val_conversion as total_stock',
+
+                DB::raw('CASE WHEN tsos.id IS NULL THEN 0 ELSE 1 END as is_has_opening')
+            ])
+
+            ->where(function ($q) {
+                $q->where('sc.description', 'like', '%RETURNABLE%')
+                    ->orWhere('sc.description', 'like', '%NON RETURNABLE%');
+            })
+
+            ->groupBy(
+                's.id',
+                's.manual_id',
+                'sc.description',
+                't.description',
+                'm.description',
+                'u.description',
+                'tsos.id'
+            );
     }
-
-
-
-
 }

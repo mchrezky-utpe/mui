@@ -123,6 +123,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     placeholder: "Select Currency",
                     width: "100%",
                 });
+
+                currency.val("IDR").trigger("change");
             }
         },
     });

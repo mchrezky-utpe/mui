@@ -10,6 +10,9 @@ use App\Models\Transaction\Inventory\MstSku;
 use App\Models\Master\Sku\SkuListVw;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ProductionMaterialController extends Controller
 {
@@ -149,6 +152,86 @@ class ProductionMaterialController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Successfully {$request->action} ({$updated} data)",
+        ]);
+    }
+
+    public function api_import_production_material_request(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        $rows = Excel::toArray([], $request->file('file'));
+        $data = $rows[0];
+
+        $inserted = 0;
+        $skipped = 0;
+
+        foreach ($data as $index => $row) {
+
+            if ($index == 0) continue; // skip header
+
+            $sku_id = $row[1];
+            $quantity_request = $row[2];
+            $purchase_cost = $row[3];
+            $production_material_cost = $row[4];
+            $production_process_cost = $row[5];
+            $total_production_cost = $row[6];
+            $item_retail_cost = $row[7];
+            $crt_code = $row[8];
+            $exchange_rates = $row[9];
+            $requestDateRaw = $row[10];
+
+            if (is_numeric($requestDateRaw)) {
+                $request_date = Date::excelToDateTimeObject($requestDateRaw)->format('Y-m-d');
+            } else {
+                $request_date = Carbon::createFromFormat('d/m/Y', $requestDateRaw)->format('Y-m-d');
+            }
+
+            $sku = MstSku::where('id', $sku_id)->first();
+            if (!$sku) {
+                $skipped++;
+                continue;
+            }
+
+            $pmr_code = 'PMR-' . date('Ymd');
+            $ps_code = 'PS-' . date('Ymd');
+
+            $exist = TransProductionMaterialRequest::where('pmr_code', $pmr_code)
+                ->where('ps_code', $ps_code)
+                ->where('sku_id', $sku_id)
+                ->exists();
+
+            if ($exist) {
+                $skipped++;
+                continue;
+            }
+
+            TransProductionMaterialRequest::create([
+                'pmr_code' => $pmr_code,
+                'ps_code' => $ps_code,
+                'pmr_code_seq' => 1,
+                'sku_id' => $sku_id,
+                'quantity_request' => $quantity_request,
+                'purchase_cost' => $purchase_cost,
+                'production_material_cost' => $production_material_cost,
+                'production_process_cost' => $production_process_cost,
+                'total_production_cost' => $total_production_cost,
+                'item_retail_cost' => $item_retail_cost,
+                'crt_code' => $crt_code,
+                'exchange_rates' => $exchange_rates,
+                'production_material_request_status' => 'REQUESTED',
+                'request_date' => $request_date,
+                'created_by' => Auth::id(),
+            ]);
+
+            $inserted++;
+        }
+
+        return response()->json([
+            'success' => true,
+            'inserted' => $inserted,
+            'skipped' => $skipped,
         ]);
     }
 
