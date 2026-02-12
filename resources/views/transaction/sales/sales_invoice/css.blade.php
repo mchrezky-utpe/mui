@@ -3,6 +3,50 @@
         height: 32px !important;
     }
 
+    .table-fixed {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #dee2e6;
+    }
+
+    .table-fixed table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .table-fixed thead th {
+        position: sticky;
+        top: 0;
+        background: #fff;
+        z-index: 2;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table-fixed thead th:not(:last-child) {
+        border-right: 1px solid #dee2e6;
+    }
+
+
+    .dt-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #007bff;
+        border-top: 2px solid transparent;
+        border-radius: 50%;
+        animation: dt-spin 0.6s linear infinite;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+
+    @keyframes dt-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
     .dataTables_wrapper .dataTables_length select {
         height: 32px;
         padding: 2px 6px;

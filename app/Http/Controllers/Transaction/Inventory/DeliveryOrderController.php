@@ -126,8 +126,9 @@ class DeliveryOrderController extends Controller
                     })
                     ->leftJoin('trans_sales_order_details as gg', 'gg.id', '=', 'ff.sales_order_details_id')
                     ->leftJoin('trans_sales_order as hh', 'hh.id', '=', 'gg.id_sales_order')
+                    ->leftJoin('trans_customer_delivery_schedule as ii', 'ii.id', '=', 'ff.customer_delivery_schedule_id')
                     ->where('a.delivery_order_id', $d->id)
-                    ->selectRaw('f.po_number, hh.po_number as po_number_cr, d.customer_delivery_number, a.source_type, b.sku_id, b.sku_name, b.sku_specification_code, b.sku_business_type, b.sku_model, b.sku_inventory_unit, b.val_conversion, a.qty, c.quantity_cds, c.outstanding, dd.return_do_number, cc.outstanding_qty as outstanding_cr_qty')
+                    ->selectRaw('f.po_number, hh.po_number as po_number_cr, d.customer_delivery_number, ii.customer_delivery_number as customer_delivery_number_cr, a.source_type, b.sku_id, b.sku_name, b.sku_specification_code, b.sku_business_type, b.sku_model, b.sku_inventory_unit, b.val_conversion, a.qty, c.quantity_cds, c.outstanding, dd.return_do_number, cc.outstanding_qty as outstanding_cr_qty')
                     ->get();
             }
 
