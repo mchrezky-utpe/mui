@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\Transaction\Sales\SalesInvoiceController;
+use App\Http\Controllers\Transaction\Sales\SalesOrderController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Transaction\Sales\{
-    SalesOrderController,
-    SalesInvoiceController
-};
 
 Route::prefix('transaction/sales')->group(function () {
     Route::get('/', function () {
@@ -21,6 +19,11 @@ Route::prefix('transaction/sales')->group(function () {
 
     Route::prefix('sales_invoice')->controller(SalesInvoiceController::class)->group(function () {
         Route::get('/', 'index');
+        Route::get('/all', 'getAll');
+        Route::get('/all-detail', 'getAllDetail');
         Route::get('/source', 'getSourceData');
+        Route::get('/source/detail', 'getSourceDetail');
+        Route::get('/exchange-rate', 'getExchangeRate');
+        Route::post('/create-invoice', 'createInvoice');
     });
 });
