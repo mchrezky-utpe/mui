@@ -354,11 +354,13 @@
                     element2 = `<td class="text-right">${dRow.val_conversion}</td>`;
                 } else if (dRow.source_type == 'CDS') {
                     element2 = `<td class="text-right">${dRow.outstanding}</td>`;
+                } else if (dRow.source_type == 'CR') {
+                    element2 = `<td class="text-right">${dRow.outstanding_cr_qty}</td>`;
                 }
 
                 element += `<tr>
-                    <td>${dRow.po_number || ""}</td>
-                    <td>${dRow.customer_delivery_number || ""}</td>
+                    <td>${dRow.source_type == 'CR' ? dRow.po_number_cr : dRow.po_number || ""}</td>
+                    <td>${dRow.source_type == 'CR' ? dRow.customer_delivery_number_cr : dRow.customer_delivery_number || ""}</td>
                     <td>${dRow.sku_id || ""}</td>
                     <td>${dRow.sku_name || ""}</td>
                     <td>${dRow.sku_specification_code || ""}</td>
