@@ -17,8 +17,9 @@ use App\Http\Controllers\Transaction\Inventory\{
     MaterialAllowanceController,
     MaterialRequirementPlaningController
 };
+use App\Http\Middleware\OnlyMemberMiddleware;
 
-Route::prefix('transaction/inventory')->group(function () {
+Route::prefix('transaction/inventory')->middleware(OnlyMemberMiddleware::class)->group(function () {
     Route::get('/', function () {
         return 'Halaman Inventory';
     });

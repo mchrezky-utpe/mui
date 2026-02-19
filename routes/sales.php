@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\Transaction\Sales\SalesInvoiceController;
 use App\Http\Controllers\Transaction\Sales\SalesOrderController;
+use App\Http\Middleware\OnlyMemberMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('transaction/sales')->group(function () {
+Route::prefix('transaction/sales')->middleware(OnlyMemberMiddleware::class)->group(function () {
     Route::get('/', function () {
         return 'Halaman Sales';
     });
