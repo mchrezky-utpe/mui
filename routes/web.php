@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\OnlyGuestMiddleware;
 use App\Http\Middleware\OnlyMemberMiddleware;
@@ -41,16 +41,10 @@ Route::get('/', function () {
 })->middleware(OnlyMemberMiddleware::class);
 
 
-Route::controller(AuthController::class)->group(function () {
-    Route::get("/login", "login")->middleware(OnlyGuestMiddleware::class);
-    Route::post("/login", "doLogin")->middleware(OnlyGuestMiddleware::class);
-    Route::post("/logout", "doLogout")->middleware(OnlyMemberMiddleware::class);
-});
-
-Route::controller(AuthController::class)->group(function () {
-    Route::get("/login", "login")->middleware(OnlyGuestMiddleware::class);
-    Route::post("/login", "doLogin")->middleware(OnlyGuestMiddleware::class);
-    Route::post("/logout", "doLogout")->middleware(OnlyMemberMiddleware::class);
+Route::controller(LoginController::class)->group(function () {
+    Route::get("/login", "showLogin")->middleware(OnlyGuestMiddleware::class);
+    Route::post("/login", "login")->middleware(OnlyGuestMiddleware::class);
+    Route::post("/logout", "logout")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(UserController::class)->group(function () {

@@ -12,7 +12,7 @@
     <!-- Title Page-->
     <title>Login</title>
     @include('template.stylesheet')
-    
+
 </head>
 
 <body class="animsition">
@@ -23,21 +23,30 @@
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                <img src="{{asset('assets/images/icon/mui.png')}}" alt="mui">
+                                <img src="{{ asset('assets/images/icon/mui.png') }}" alt="mui">
                             </a>
                         </div>
                         <div class="login-form">
+                            @if ($errors->any())
+                                <div style="color: red; margin-bottom: 10px; text-align: center;">
+                                    {{ $errors->first() }}
+                                </div>
+                            @endif
                             <form action="login" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input class="au-input au-input--full" type="text" name="username" placeholder="Username">
+                                    <input class="au-input au-input--full" type="text" name="username"
+                                        placeholder="Username">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
+                                    <input class="au-input au-input--full" type="password" name="password"
+                                        placeholder="Password">
                                 </div>
-                                <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20"><center>Login</center></button>
+                                <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20">
+                                    <center>Login</center>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -49,7 +58,7 @@
 
     @include('template.javascript')
 
-    
+
 </body>
 
 </html>
