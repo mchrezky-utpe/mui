@@ -258,6 +258,7 @@ class DeliveryOrderController extends Controller
         try {
             if ($request->doType == 'Sample Part') {
                 $data = SkuListVw::where('flag_inventory_register', 1)
+                    ->where('is_has_opening', 1)
                     ->where(function ($q) use ($request) {
                         if ($request->subDoType) {
                             $q->where('sku_type', $request->subDoType);
