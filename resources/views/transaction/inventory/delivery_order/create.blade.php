@@ -61,7 +61,7 @@
                             <div class="col-md-4 col-sm-6 mt-2 mt-md-0 pl-0">
                                 <label for="doOfficerInput" class="required">DO Officer</label>
                                 <input type="text" id="doOfficerInput" class="form-control form-control-sm"
-                                    value="ANDRIYANI" readonly>
+                                    value="{{ auth()->user()->name }}" readonly>
                             </div>
                         </div>
                         <div class="row mt-2">

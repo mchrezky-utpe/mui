@@ -170,4 +170,53 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" id="modalPrint">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">DO Print Out Setup</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="printId">
+                    <div>
+                        <h6>Regular</h6>
+                        <div class="custom-control custom-radio mt-1 d-flex align-items-center">
+                            <input type="radio" id="printRadio1" name="printRadio" class="custom-control-input"
+                                value="customerDeliveryNumber">
+                            <label class="custom-control-label" for="printRadio1">Customer Delivery Number</label>
+                        </div>
+                        <div class="custom-control custom-radio d-flex align-items-center">
+                            <input type="radio" id="printRadio2" name="printRadio" class="custom-control-input"
+                                value="customerPONumber">
+                            <label class="custom-control-label" for="printRadio2">Customer PO Number</label>
+                        </div>
+                        <div class="custom-control custom-radio d-flex align-items-center">
+                            <input type="radio" id="printRadio3" name="printRadio" class="custom-control-input"
+                                value="supplierPONumber">
+                            <label class="custom-control-label" for="printRadio3">Supplier PO Number</label>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <h6>Replacement</h6>
+                        <div class="custom-control custom-radio mt-1 d-flex align-items-center">
+                            <input type="radio" id="printRadio4" name="printRadio" class="custom-control-input"
+                                value="returnsDONumber">
+                            <label class="custom-control-label" for="printRadio4">Returns DO Number</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="custom-control custom-checkbox d-flex align-items-center">
+                        <input type="checkbox" class="custom-control-input" id="checkOtherDestination">
+                        <label class="custom-control-label" for="checkOtherDestination">Other Destination</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-sm btn-primary" id="printSubmitBtn">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

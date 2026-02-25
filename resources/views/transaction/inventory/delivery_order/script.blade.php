@@ -254,6 +254,41 @@
             e.preventDefault();
             initDatatableDODetailList();
         });
+
+        $(document).on('click', '.btn-print', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+            $('#printId').val(id);
+            $('#modalPrint').modal('show');
+        });
+
+        $('#modalPrint').on('hidden.bs.modal', function() {
+            $('#printId').val("");
+            $('input[name="printRadio"]').prop('checked', false);
+            $('#checkOtherDestination').prop('checked', false);
+        });
+
+        $(document).on('click', '#printSubmitBtn', function(e) {
+            e.preventDefault();
+            const id = $('#printId').val();
+            const printOption = $('input[name="printRadio"]:checked').val();
+            const otherDestination = $('#checkOtherDestination').is(':checked');
+
+            if (!printOption) {
+                Swal.fire({
+                    title: 'Validation Error',
+                    text: 'Please select a print option!',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            let url =
+                `{{ url('/transaction/inventory/delivery_order/export-pdf') }}?id=${id}&option=${printOption}&otherDestination=${otherDestination ? 1 : 0}`;
+            window.open(url, '_blank');
+        });
     });
 
     const initDatatableDOList = () => {
@@ -339,7 +374,8 @@
                 title: "Action",
                 data: null,
                 render: function(data, type, row, meta) {
-                    return `<a href="{{ url('/transaction/inventory/delivery_order/export-pdf') }}?id=${row.id}" target="_blank" class="btn btn-sm btn-secondary text-white"><i class="fas fa-print"></i></a>`;
+                    // return `<a href="{{ url('/transaction/inventory/delivery_order/export-pdf') }}?id=${row.id}" target="_blank" class="btn btn-sm btn-secondary text-white"><i class="fas fa-print"></i></a>`;
+                    return `<button class="btn btn-sm btn-secondary text-white btn-print" data-id="${row.id}"><i class="fas fa-print"></i></button>`;
                 }
             }]
         });
