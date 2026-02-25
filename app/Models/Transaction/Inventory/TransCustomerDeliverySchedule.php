@@ -9,4 +9,8 @@ class TransCustomerDeliverySchedule extends Model
 
     protected $table = 'trans_customer_delivery_schedule';
     protected $guarded = [];
+
+    protected $casts = [
+        'cds_status' => 'integer',
+    ];
 }
