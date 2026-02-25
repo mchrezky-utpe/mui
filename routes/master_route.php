@@ -1,17 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\OnlyMemberMiddleware;
-use App\Http\Controllers\Master\Sku\MasterSkuCategoryController;
-use App\Http\Controllers\Master\Sku\MasterSkuSubCategoryController;
-use App\Http\Controllers\Master\Sku\MasterSkuClassificationController;
-use App\Http\Controllers\Master\Sku\MasterSkuSalesController;
+use App\Http\Controllers\Master\MasterPackagingInformationCategoryController;
+use App\Http\Controllers\Master\MasterPackagingInformationController;
+use App\Http\Controllers\Master\MasterPackagingInformationPartitionController;
+use App\Http\Controllers\Master\MasterSkuBusinessController;
+use App\Http\Controllers\Master\MasterSkuModelController;
 use App\Http\Controllers\Master\MasterSkuTypeController;
 use App\Http\Controllers\Master\MasterSkuUnitController;
-use App\Http\Controllers\Master\MasterSkuModelController;
-use App\Http\Controllers\Master\MasterSkuBusinessController;
-use App\Http\Controllers\Master\MasterPackagingInformationCategoryController;
-use App\Http\Controllers\Master\MasterPackagingInformationPartitionController;
+use App\Http\Controllers\Master\Sku\MasterSkuCategoryController;
+use App\Http\Controllers\Master\Sku\MasterSkuClassificationController;
+use App\Http\Controllers\Master\Sku\MasterSkuSalesController;
+use App\Http\Controllers\Master\Sku\MasterSkuSubCategoryController;
+use App\Http\Middleware\OnlyMemberMiddleware;
+use Illuminate\Support\Facades\Route;
 
 
 Route::controller(MasterSkuCategoryController::class)->group(function () {
@@ -114,7 +115,6 @@ Route::controller(MasterPackagingInformationCategoryController::class)->group(fu
     Route::get("/packaging-information-category/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT
     Route::post("/packaging-information-category/edit", "edit")->middleware(OnlyMemberMiddleware::class);
-
 });
 
 
@@ -131,5 +131,11 @@ Route::controller(MasterPackagingInformationPartitionController::class)->group(f
     Route::get("/packaging-information-partition/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     // EDIT
     Route::post("/packaging-information-partition/edit", "edit")->middleware(OnlyMemberMiddleware::class);
+});
 
+Route::controller(MasterPackagingInformationController::class)->group(function () {
+    // PARTITION
+    Route::get("/packaging-information", "index")->middleware(OnlyMemberMiddleware::class);
+    Route::get("/packaging-information/get-data", "getData")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/packaging-information/update/{id}", "update")->middleware(OnlyMemberMiddleware::class);
 });

@@ -67,6 +67,9 @@
                             <li>
                                 <a href="/packaging-information-partition">Partition</a>
                             </li>
+                            <li>
+                                <a href="/packaging-information">Packaging Information</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
