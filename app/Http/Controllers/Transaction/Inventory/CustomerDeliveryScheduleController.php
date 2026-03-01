@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Transaction\Inventory;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Transaction\Sales\TransSalesOrderDetails;
+use App\Imports\CustomerDeliveryScheduleImport;
 use App\Models\MasterCustomerDeliveryDestination;
+use App\Models\Transaction\Inventory\MstSku;
 use App\Models\Transaction\Inventory\TransCustomerDeliverySchedule;
 use App\Models\Transaction\Inventory\TransCustomerDeliveryScheduleDetails;
-use Illuminate\Support\Facades\DB;
+use App\Models\Transaction\Sales\TransSalesOrder;
+use App\Models\Transaction\Sales\TransSalesOrderDetails;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Transaction\Inventory\MstSku;
+use Illuminate\Support\Facades\DB;
 
 class CustomerDeliveryScheduleController extends Controller
 {
@@ -292,5 +294,189 @@ class CustomerDeliveryScheduleController extends Controller
             'recordsFiltered' => $recordsFiltered,
             'data' => $data
         ]);
+    }
+
+    private function generateSoNumber()
+    {
+        $year = now()->format('y');
+        $month = now()->format('m');
+
+        $last = TransSalesOrder::whereYear('so_date', now()->year)
+            ->whereMonth('so_date', now()->month)
+            ->max('so_number_seq');
+
+        $seq = ($last ?? 0) + 1;
+
+        return [
+            'seq' => $seq,
+            'number' => sprintf("SO-%s/%s/%04d", $year, $month, $seq)
+        ];
+    }
+
+    private function generateSodNumber($soNumber, $seq)
+    {
+        return sprintf("SOD-%s-%03d", $soNumber, $seq);
+    }
+
+    function extelToDate($excelDate)
+    {
+        $unixTimestamp = ($excelDate - 25569) * 86400;
+        return date("Y-m-d", $unixTimestamp);
+    }
+
+    public function api_import_customer_delivery_schedule(Request $request)
+    {
+        DB::beginTransaction();
+
+        // Validasi file
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        try {
+            // Excel to array
+            $file = $request->file('file');
+            $fileData = \Excel::toArray(CustomerDeliveryScheduleImport::class, $file);
+            $data = $fileData[0] ?? [];
+            unset($data[0]);
+
+            $SODetailList = [];
+            foreach ($data as $row) {
+                $checkSKU = MstSku::where('specification_code', trim($row[5]))->select('id', 'val_conversion')->first();
+                if (!$checkSKU) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Part number '" . trim($row[5]) . "' not found",
+                    ], 404);
+                }
+                if (floatval($row[13]) > floatval($checkSKU->val_conversion)) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Quantity for part number '" . trim($row[5]) . "' must be less than or equal " . floatval($checkSKU->val_conversion),
+                    ], 400);
+                }
+
+                // Check pricelist
+                $priceSKU = DB::table('trans_sku_pricelist as a')->select('a.id', 'a.price', 'a.price_retail', 'b.prefix')
+                    ->leftJoin('mst_general_currency as b', 'a.gen_currency_id', '=', 'b.id')
+                    ->where('a.sku_id', $checkSKU->id)
+                    ->where('a.prs_customer_id', 19)->orderBy('a.valid_date_to', 'desc')->first();
+                if (!$priceSKU) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => "Price for part number '" . trim($row[5]) . "' not found",
+                    ], 404);
+                }
+
+                // Get customer delivery destination
+                $customerDeliveryDestination = MasterCustomerDeliveryDestination::where('customer_id', 19)->where('destination_code', trim($row[3]))->where('flag_active', 1)->first('id');
+
+                $SODetailList[] = [
+                    'sku_id' => $checkSKU->id,
+                    'val_conversion' => floatval($checkSKU->val_conversion),
+                    'quantity_order' => floatval($row[13]),
+                    'price' => floatval($priceSKU->price),
+                    'price_retail' => floatval($priceSKU->price_retail),
+                    'currency' => $priceSKU->prefix,
+                    'cds_delivery_date' => $row[10] ? $this->extelToDate($row[10]) : date('Y-m-d', strtotime(strval($row[9]))),
+                    'customer_delivery_destination_id' => $customerDeliveryDestination->id ?? null,
+                ];
+            }
+
+            $soNumberData = $this->generateSoNumber();
+
+            $salesOrder = TransSalesOrder::create([
+                'so_number'      => $soNumberData['number'],
+                'so_number_seq'  => $soNumberData['seq'],
+                'so_date'        => now()->toDateString(),
+                'so_type'        => '',
+                'po_number'      => NULL,
+                'customer_id'    => 19,
+                'valid_from'     => $SODetailList[0]['cds_delivery_date'],
+                'valid_until'    => end($SODetailList)['cds_delivery_date'],
+                'validation_status' => 'UP TO DATE',
+                'created_by'     => Auth::id(),
+            ]);
+
+            $seq = 1;
+            foreach ($SODetailList as $item) {
+                $soDetail = TransSalesOrderDetails::create([
+                    'sod_number'      => $this->generateSodNumber($soNumberData['number'], $seq),
+                    'sod_number_seq'  => $seq,
+                    'id_sales_order' => $salesOrder->id,
+                    'sku_id'          => $item['sku_id'],
+                    'quantity_order' => $item['quantity_order'],
+                    'outstanding'    => 0,
+                    'term_of_payment' => 100,
+                    'currency'       => $item['currency'],
+                    'price'          => $item['price'],
+                    'retail_price'   => $item['price_retail'],
+                    'total_price'    => $item['quantity_order'] * $item['price'],
+                    'exchange_rates' => 1,
+                    'created_by'     => Auth::id(),
+                ]);
+
+                // Update sku stock
+                $sku = MstSku::where('id', $item['sku_id'])->update([
+                    'val_conversion' => $item['val_conversion'] - $item['quantity_order'],
+                ]);
+
+                $SODetailList[$seq - 1]['sales_order_details_id'] = $soDetail->id;
+
+                $seq++;
+            }
+
+            $cdsNumberData = $this->generateCdsNumber();
+
+            $cds = TransCustomerDeliverySchedule::create([
+                'cds_code'        => $cdsNumberData['number'],
+                'cds_code_seq'    => $cdsNumberData['seq'],
+                'cds_date'        => now()->toDateString(),
+                'customer_delivery_number' => NULL,
+                'customer_id'     => 19,
+                'valid_from'      => $SODetailList[0]['cds_delivery_date'],
+                'valid_until'     => end($SODetailList)['cds_delivery_date'],
+                'validation_status' => 'UP TO DATE',
+                'cds_status'      => 1,
+                'created_by'      => Auth::id(),
+            ]);
+
+            $seqCDS = 1;
+            foreach ($SODetailList as $item2) {
+                TransCustomerDeliveryScheduleDetails::create([
+                    'cdsd_code'                    => $this->generateCdsdNumber($cdsNumberData['number'], $seqCDS),
+                    'cdsd_code_seq'                => $seqCDS,
+                    'customer_delivery_schedule_id' => $cds->id,
+                    'delivery_plan_date'           => $item2['cds_delivery_date'],
+                    'sku_id'                       => $item2['sku_id'],
+                    'customer_delivery_destination_id' => $item2['customer_delivery_destination_id'],
+                    'sales_order_details_id'       => $item2['sales_order_details_id'],
+                    'quantity_cds'                 => $item2['quantity_order'],
+                    'outstanding'                  => $item2['quantity_order'],
+                    'valid_from'                   => $SODetailList[0]['cds_delivery_date'],
+                    'valid_until'                  => end($SODetailList)['cds_delivery_date'],
+                    'validation_status'            => 'UP TO DATE',
+                    'delivery_status'              => 'PENDING',
+                    'created_by'                   => Auth::id(),
+                ]);
+
+                $seqCDS++;
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Import customer delivery schedule successfully',
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Internal server error: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 }

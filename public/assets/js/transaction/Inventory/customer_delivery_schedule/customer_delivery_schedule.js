@@ -173,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (tableSalesOrderlist) return;
 
         tableSalesOrderlist = $("#table_sales_order_list").DataTable({
+            destroy: true,
             processing: true,
             serverSide: true,
             pageLength: 10,
@@ -266,6 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
     initTableSalesOrderlist();
 
     const tableSelected = $("#table_sales_order_list_selected").DataTable({
+        destroy: true,
         paging: false,
         searching: false,
         info: false,
@@ -518,6 +520,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tableCustomerDeliveryScheduleList = $(
             "#table_customer_delivery_schedule",
         ).DataTable({
+            destroy: true,
             processing: true,
             serverSide: true,
             pageLength: 10,
@@ -610,6 +613,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             tableDetailCDS = $("#table_cds_detail").DataTable({
+                destroy: true,
                 processing: true,
                 serverSide: true,
                 pageLength: 10,
@@ -662,4 +666,71 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         },
     );
+
+    $(document).on("click", "#btnImportCDS", function () {
+        $("#modalImport").modal("show");
+
+        $("#btnSaveImport")
+            .off()
+            .on("click", function () {
+                const fileInput = $("#uploadedFile")[0];
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    Swal.fire("Error", "Pilih file untuk diimport", "error");
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                Swal.fire({
+                    title: "Importing File",
+                    text: "Please wait while the file is being imported.",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                $.ajax({
+                    url: base_url + "api/customer_delivery_schedule/import",
+                    type: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content",
+                        ),
+                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        Swal.close();
+
+                        if (res.status) {
+                            Swal.fire("Success", res.message, "success");
+                            tableCustomerDeliveryScheduleList.ajax.reload();
+                            $("#modalImport").modal("hide");
+                        } else {
+                            Swal.fire("Error", res.message, "error");
+                        }
+                        console.log(res);
+                    },
+                    error: function (xhr) {
+                        Swal.close();
+
+                        Swal.fire(
+                            "Error",
+                            xhr.responseJSON?.message || "Server error",
+                            "error",
+                        );
+                    },
+                });
+            });
+    });
+
+    $(document).on("hidden.bs.modal", "#modalImport", function () {
+        $("#uploadedFile").val("");
+    });
 });

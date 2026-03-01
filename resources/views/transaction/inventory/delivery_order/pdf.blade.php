@@ -149,10 +149,24 @@
                         <td class="text-center">{{ $item->total_packaging }}</td>
                         <td>{{ $item->sku_name }}</td>
                         <td class="text-center">
-                            @if ($item->source_type == 'CDS')
-                                {{ $item->po_number_cds }}
-                            @elseif($item->source_type == 'CR')
-                                {{ $item->po_number_cr }}
+                            @if ($option == 'customerDeliveryNumber')
+                                @if ($item->source_type == 'CDS')
+                                    {{ $item->customer_delivery_number_cds }}
+                                @elseif($item->source_type == 'CR')
+                                    {{ $item->customer_delivery_number_cr }}
+                                @endif
+                            @elseif ($option == 'customerPONumber')
+                                @if ($item->source_type == 'CDS')
+                                    {{ $item->po_number_cds }}
+                                @elseif($item->source_type == 'CR')
+                                    {{ $item->po_number_cr }}
+                                @endif
+                            @elseif($option == 'supplierPONumber')
+
+                            @elseif($option == 'returnsDONumber')
+                                @if ($item->source_type == 'CR')
+                                    {{ $item->return_do_number_cr }}
+                                @endif
                             @endif
                         </td>
                         <td class="text-center"></td>
@@ -169,7 +183,7 @@
                 <td width="25%">Keamanan</td>
                 <td width="25%">Bagian Gudang</td>
                 <td width="25%">
-                    Hormat kami<br><br>
+                    Hormat kami<br><br><br>
                     <strong>{{ $pengirim ?? 'RAHMAT HIDAYAT' }}</strong>
                 </td>
             </tr>
@@ -178,6 +192,20 @@
         <div class="small mt-10">
             PMI-8.5.04/46 Rev.1
         </div>
+
+        @if ($isOtherDestination)
+            <div class="mt-10">
+                @if ($items[0]->source_type == 'CDS')
+                    <div>Destination: {{ $items[0]->delivery_destination_cds }}</div>
+                    <div>Address: {{ $items[0]->delivery_destination_address_cds }}</div>
+                    <div>Code: {{ $items[0]->delivery_destination_code_cds }}</div>
+                @elseif($items[0]->source_type == 'CR')
+                    <div>Destination: {{ $item->delivery_destination_cr }}</div>
+                    <div>Address: {{ $items[0]->delivery_destination_address_cr }}</div>
+                    <div>Code: {{ $items[0]->delivery_destination_code_cr }}</div>
+                @endif
+            </div>
+        @endif
 
     </div>
 </body>

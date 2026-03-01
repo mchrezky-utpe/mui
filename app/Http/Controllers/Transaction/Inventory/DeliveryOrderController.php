@@ -431,7 +431,7 @@ class DeliveryOrderController extends Controller
                 'vehicle_id' => (int)$request->vehicle,
                 'driver_id' => (int)$request->driver,
                 'do_note' => $request->deliveryNote,
-                'do_officer_id' => 53,
+                'do_officer_id' => Auth::id(),
                 'status' => 'READY',
                 'created_by' => Auth::id(),
                 'created_at' => date('Y-m-d H:i:s')
@@ -496,6 +496,23 @@ class DeliveryOrderController extends Controller
                 $seqNumberDetail++;
             }
 
+            foreach ($request->listItem as $item2) {
+                // Check CDS Detail is not fully outstanding and update CDS status
+                if ($item2['type'] == 'CDS') {
+                    $getCDSId = TransCustomerDeliveryScheduleDetails::where('id', (int)$item2['id'])->select('customer_delivery_schedule_id')->first();
+                    $checkOutstandingCDS = TransCustomerDeliverySchedule::where('customer_delivery_schedule_id', $getCDSId->customer_delivery_schedule_id)
+                        ->where('outstanding', '>', 0)->count();
+                    if ($checkOutstandingCDS === 0) {
+                        TransCustomerDeliverySchedule::where('id', $getCDSId->customer_delivery_schedule_id)
+                            ->update([
+                                'cds_status' => 0,
+                                'updated_by' => Auth::id(),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            ]);
+                    }
+                }
+            }
+
             DB::commit();
 
             return response()->json([
@@ -551,6 +568,8 @@ class DeliveryOrderController extends Controller
                 })
                 ->leftJoin('trans_sales_order_details as e', 'e.id', '=', 'd.sales_order_details_id')
                 ->leftJoin('trans_sales_order as f', 'f.id', '=', 'e.id_sales_order')
+                ->leftJoin('trans_customer_delivery_schedule as g', 'g.id', '=', 'd.customer_delivery_schedule_id')
+                ->leftJoin('mst_customer_delivery_destination as h', 'h.id', '=', 'd.customer_delivery_destination_id')
                 ->leftJoin('trans_customer_return_detail as cc', function ($join) {
                     $join->on('cc.id', '=', 'a.source_id')->where('a.source_type', '=', 'CR');
                 })
@@ -561,14 +580,18 @@ class DeliveryOrderController extends Controller
                 })
                 ->leftJoin('trans_sales_order_details as gg', 'gg.id', '=', 'ff.sales_order_details_id')
                 ->leftJoin('trans_sales_order as hh', 'hh.id', '=', 'gg.id_sales_order')
+                ->leftJoin('trans_customer_delivery_schedule as ii', 'ii.id', '=', 'ff.customer_delivery_schedule_id')
+                ->leftJoin('mst_customer_delivery_destination as jj', 'jj.id', '=', 'ff.customer_delivery_destination_id')
                 ->where('a.delivery_order_id', $request->id)
-                ->selectRaw('a.id, a.qty, a.source_type, a.total_packaging, b.sku_name, c.description, f.po_number as po_number_cds, hh.po_number as po_number_cr')
+                ->selectRaw('a.id, a.qty, a.source_type, a.total_packaging, b.sku_name, c.description, f.po_number as po_number_cds, hh.po_number as po_number_cr, g.customer_delivery_number as customer_delivery_number_cds, ii.customer_delivery_number as customer_delivery_number_cr, dd.return_do_number as return_do_number_cr, h.destination_name as delivery_destination_cds, jj.destination_name as delivery_destination_cr, h.destination_address as delivery_destination_address_cds, jj.destination_address as delivery_destination_address_cr, h.destination_code as delivery_destination_code_cds, jj.destination_code as delivery_destination_code_cr')
                 ->get();
 
             $data = [
                 'title' => "Delivery Order",
                 "data" => $deliveryOrder,
-                "items" => $items
+                "items" => $items,
+                "option" => $request->option,
+                "isOtherDestination" => $request->otherDestination == '1' ? true : false,
             ];
 
             // $pdf = Pdf::loadView('transaction.inventory.delivery_order.pdf', $data)->setPaper('a4', 'landscape');;
@@ -585,7 +608,6 @@ class DeliveryOrderController extends Controller
 
             return $pdf->stream('delivery_order.pdf');
         } catch (Exception $e) {
-            dd($e);
             return redirect()->back()->with('error', 'Error Request, Exception Error!');
         }
     }
