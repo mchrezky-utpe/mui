@@ -710,8 +710,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         if (res.status) {
                             Swal.fire("Success", res.message, "success");
-                            tableCustomerDeliveryScheduleList.ajax.reload();
                             $("#modalImport").modal("hide");
+                            tableCustomerDeliveryScheduleList.ajax.reload();
                         } else {
                             Swal.fire("Error", res.message, "error");
                         }

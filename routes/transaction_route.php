@@ -49,7 +49,6 @@ Route::controller(ApprovalPurchaseRequestController::class)->group(function () {
     Route::get("/api/approval-pr", "api_all")->middleware(OnlyMemberMiddleware::class);
     route::get('/pruchase_requisition/export', 'export')->name('pruchase_requisition.export');
     route::get('/purchase_requisition_detail/export_pr_dt', 'export_pr_dt')->name('purchase_requisition_detail.export_pr_dt');
-
 });
 
 
@@ -105,7 +104,7 @@ Route::controller(PurchaseInvoiceController::class)->group(function () {
     Route::get("/pi/{id}", "get")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi/{id}/items", "get_detail_pi")->middleware(OnlyMemberMiddleware::class);
     route::get('/pi/export/excel', 'export')->middleware(OnlyMemberMiddleware::class);
-    
+
     // detail view
     Route::get("/pi-detail", "index_detail")->middleware(OnlyMemberMiddleware::class);
     Route::get("/pi-detail/all", "get_detail_all")->middleware(OnlyMemberMiddleware::class);
@@ -263,11 +262,10 @@ Route::controller(GpoController::class)->group(function () {
     Route::post("/gpo/edit", "edit")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/gpo/droplist", "api_droplist")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/gpo/detail", "detail")->middleware(OnlyMemberMiddleware::class);
-    
+
     // api
     Route::get("/api/gpo/all", "api_all")->middleware(OnlyMemberMiddleware::class);
     route::get('/general_purchase_order/export', 'export')->name('general_purchase_order.export');
-
 });
 Route::controller(SupplyController::class)->group(function () {
     Route::get("/supply", "index")->middleware(OnlyMemberMiddleware::class);
@@ -328,7 +326,7 @@ Route::controller(BomController::class)->group(function () {
     Route::post("/bom", "add")->middleware(OnlyMemberMiddleware::class);
     Route::get("/bom/{id}/edit-detail", "edit_detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/bom/edit-detail", "do_edit_detail")->middleware(OnlyMemberMiddleware::class);
-    Route::post("/bom/{id}/delete", "deltee")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/bom/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::get("/bom/all/material", "get_item_material")->middleware(OnlyMemberMiddleware::class);
     Route::get("/bom/{id}/items", "get_detail_bom")->middleware(OnlyMemberMiddleware::class);
     Route::post("/bom/{id}/verify", "verify")->middleware(OnlyMemberMiddleware::class);
@@ -347,5 +345,3 @@ Route::controller(QcController::class)->group(function () {
     Route::post("/qc/good-transfer", "index_good_transfer")->middleware(OnlyMemberMiddleware::class);
     Route::post("/qc/good-transfer/all", "get_all_good_transfer")->middleware(OnlyMemberMiddleware::class);
 });
-
-

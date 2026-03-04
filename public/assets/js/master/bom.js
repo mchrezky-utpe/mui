@@ -1,7 +1,6 @@
 $(document).ready(function () {
-
     // =========== GET DATA PAGEABLE
-   const table_bom =  $("#table-bom").DataTable({
+    const table_bom = $("#table-bom").DataTable({
         fixedColumns: {
             start: 0,
             end: 5,
@@ -15,7 +14,16 @@ $(document).ready(function () {
         ajax: {
             url: base_url + "bom/all/pageable",
             type: "GET",
-            data: function (d) {
+            data: function (d) {},
+            beforeSend: function () {
+                $("#table-bom tbody").html(`
+                        <tr>
+                            <td colspan="100%" class="text-center p-3">
+                                <div class="dt-spinner"></div>
+                                Loading data...
+                            </td>
+                        </tr>
+                    `);
             },
         },
         order: [
@@ -52,16 +60,16 @@ $(document).ready(function () {
             },
             {
                 data: "main_priority",
-            }
+            },
         ],
         columnDefs: [
             {
                 targets: 0,
                 orderable: false,
                 searchable: false,
-                render:  function (data, type, row, meta) {
+                render: function (data, type, row, meta) {
                     return `<button class="btn btn-sm btn-info view-details" data-id="${data.id}" >Detail</button>'`;
-                }
+                },
             },
             {
                 targets: 1,
@@ -71,65 +79,68 @@ $(document).ready(function () {
                     const csrfToken = document
                         .querySelector('meta[name="csrf-token"]')
                         .getAttribute("content");
-                    
-                   const style_disable = 'style="pointer-events: none;cursor: default;background-color:red"'
 
-                   let stateButtonReceipt1 = style_disable;
-                   let stateButtonReceipt2 = style_disable;
-                   let stateButtonReceipt3 = style_disable;
+                    const style_disable =
+                        'style="pointer-events: none;cursor: default;background-color:red"';
 
-                //    if(data.receipt_date1 == null){
-                //         stateButtonReceipt1 = "";
-                //    }    
-                //    if(data.receipt_date1 != null && data.receipt_date2 == null){
-                //         stateButtonReceipt2 = "";
-                //    }    
-                //    if(data.receipt_date2 != null && data.receipt_date3 == null){
-                //         stateButtonReceipt3 = "";
-                //    }    
+                    let stateButtonReceipt1 = style_disable;
+                    let stateButtonReceipt2 = style_disable;
+                    let stateButtonReceipt3 = style_disable;
 
+                    //    if(data.receipt_date1 == null){
+                    //         stateButtonReceipt1 = "";
+                    //    }
+                    //    if(data.receipt_date1 != null && data.receipt_date2 == null){
+                    //         stateButtonReceipt2 = "";
+                    //    }
+                    //    if(data.receipt_date2 != null && data.receipt_date3 == null){
+                    //         stateButtonReceipt3 = "";
+                    //    }
 
                     let button = `
-                        <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Action
-                        </button>
-
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <button data-id="${data.id}" type="button"class="update dropdown-item">
-							   Update
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
                             </button>
+                            <div class="dropdown-menu shadow-sm" aria-labelledby="dropdownMenuButton">
+                                
+                                <button class="dropdown-item update" data-id="${data.id}" type="button">
+                                    <i class="fas fa-edit mr-2"></i> Update
+                                </button>
 
-                            <form action="/bom/${data.id}/delete" method="post"> 
-							    <input type="hidden" name="_token" value="${csrfToken}">
-                              <button class="dropdown-item">Delete</button>
-                            </form>
+                                <form action="/bom/${data.id}/verify" method="post">
+                                    <input type="hidden" name="_token" value="${csrfToken}">
+                                    <button type="submit" class="dropdown-item">Verified</button>
+                                </form>
 
-                            <form action="/bom/${data.id}/verify" method="post"> 
-							    <input type="hidden" name="_token" value="${csrfToken}">
-                              <button class="dropdown-item">Verified</button>
-                            </form>
+                                <form action="/bom/${data.id}/activate" method="post">
+                                    <input type="hidden" name="_token" value="${csrfToken}">
+                                    <button type="submit" class="dropdown-item text-success">Active</button>
+                                </form>
 
-                            <form action="/bom/${data.id}/activate" method="post"> 
-							    <input type="hidden" name="_token" value="${csrfToken}">
-                              <button class="dropdown-item">Active</button>
-                            </form>
-                            
-                            
-                            <form action="/bom/${data.id}/main" method="post"> 
-							    <input type="hidden" name="_token" value="${csrfToken}">
-                              <button class="dropdown-item">Set Main Priotity</button>
-                            </form>
+                                <form action="/bom/${data.id}/main" method="post">
+                                    <input type="hidden" name="_token" value="${csrfToken}">
+                                    <button type="submit" class="dropdown-item">Set Main Priority</button>
+                                </form>
 
-                            <a href="/pi/${data.id}/export" class="btn dropdown-item">
-							   Export to Spreedsheet
-                            </a>
+                                <div class="dropdown-divider"></div>
 
-                        </div>
-                      </div> `
+                                <a class="dropdown-item" href="/pi/${data.id}/export/excel">
+                                    Export to Spreadsheet
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <form action="/bom/${data.id}/delete" method="post" onsubmit="return confirm('Yakin hapus data ini?')">
+                                    <input type="hidden" name="_token" value="${csrfToken}">
+                                    <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                </form>
+                                
+                            </div>
+                        </div>`;
                     return button;
                 },
-            }
+            },
         ],
     });
 
@@ -140,7 +151,7 @@ $(document).ready(function () {
         element.append('<option value="">-- Select ' + title + " --</option>");
         master_data.forEach((data) => {
             element.append(
-                `<option sku_id="${data.sku_id}" unit="${data.sku_procurement_unit}" value="${data.id}">${data.sku_name}</option>`
+                `<option sku_id="${data.sku_id}" unit="${data.sku_procurement_unit}" value="${data.id}">${data.sku_name}</option>`,
             );
         });
     }
@@ -155,7 +166,7 @@ $(document).ready(function () {
                 console.error("Error get Sku:", err);
             });
     }
-    
+
     function fetchSkuMaster() {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -172,25 +183,23 @@ $(document).ready(function () {
         });
     }
 
-
     // Expand row on button click
-    $('#table-bom tbody').on('click', '.view-details', function() {
-        var tr = $(this).closest('tr');
+    $("#table-bom tbody").on("click", ".view-details", function () {
+        var tr = $(this).closest("tr");
         var row = table_bom.row(tr);
-        var id = $(this).data('id');
+        var id = $(this).data("id");
 
         if (row.child.isShown()) {
             row.child.hide();
-            tr.removeClass('shown');
+            tr.removeClass("shown");
         } else {
             $.ajax({
-                url: '/bom/'+id+'/items',
-                type: 'GET',
-                success: function(data) {
+                url: "/bom/" + id + "/items",
+                type: "GET",
+                success: function (data) {
                     let body = "";
-                    data.data.forEach(obj => {
-                        body += 
-                        `<tr>
+                    data.data.forEach((obj) => {
+                        body += `<tr>
                             <td>${obj.index_data}</td>
                             <td>${obj.material_code}</td>
                             <td>${obj.material_name}</td>
@@ -206,13 +215,12 @@ $(document).ready(function () {
                             <td>${obj.price}</td>
                             <td>${obj.price}</td>
                             <td>${obj.process}</td>
-                        </tr>`
+                        </tr>`;
                     });
                     const total = data.data.reduce((accumulator, value) => {
-                                return accumulator + Number(value.total_f);
-                                }, 0);
-                    body += 
-                        `<tr>
+                        return accumulator + Number(value.total_f);
+                    }, 0);
+                    body += `<tr>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -228,9 +236,10 @@ $(document).ready(function () {
                             <th>${total}</th>
                             <th>${total}</th>
                             <th>${total}</th>
-                        </tr>`
+                        </tr>`;
 
-                    var detailHtml = `
+                    var detailHtml =
+                        `
                         <div class="p-3 bg-light">
                             <table class="table table-sm">
                                 <tr style="text-align:center">
@@ -254,18 +263,16 @@ $(document).ready(function () {
                                     <th>Sub Process</th>
                                     <th>Process</th>
                                 </tr>
-                                `+
-                                    body
-                                +`
+                                ` +
+                        body +
+                        `
                             </table>
                         </div>
                     `;
                     row.child(detailHtml).show();
-                    tr.addClass('shown');
-                }
+                    tr.addClass("shown");
+                },
             });
         }
     });
-
-
 });

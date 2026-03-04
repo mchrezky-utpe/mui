@@ -500,7 +500,7 @@ class DeliveryOrderController extends Controller
                 // Check CDS Detail is not fully outstanding and update CDS status
                 if ($item2['type'] == 'CDS') {
                     $getCDSId = TransCustomerDeliveryScheduleDetails::where('id', (int)$item2['id'])->select('customer_delivery_schedule_id')->first();
-                    $checkOutstandingCDS = TransCustomerDeliverySchedule::where('customer_delivery_schedule_id', $getCDSId->customer_delivery_schedule_id)
+                    $checkOutstandingCDS = TransCustomerDeliveryScheduleDetails::where('customer_delivery_schedule_id', $getCDSId->customer_delivery_schedule_id)
                         ->where('outstanding', '>', 0)->count();
                     if ($checkOutstandingCDS === 0) {
                         TransCustomerDeliverySchedule::where('id', $getCDSId->customer_delivery_schedule_id)
@@ -600,11 +600,12 @@ class DeliveryOrderController extends Controller
             //     'Content-Type' => 'application/pdf',
             //     'Content-Disposition' => 'inline; filename="delivery-order.pdf"',
             // ]);
+            $customPaper = [0, 0, 609.45, 453.54];
 
             $pdf = Pdf::loadView(
                 'transaction.inventory.delivery_order.pdf',
                 $data
-            )->setPaper('a4', 'landscape');
+            )->setPaper($customPaper, 'portrait');
 
             return $pdf->stream('delivery_order.pdf');
         } catch (Exception $e) {
