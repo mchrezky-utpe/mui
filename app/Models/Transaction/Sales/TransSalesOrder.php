@@ -9,4 +9,8 @@ class TransSalesOrder extends Model
 
     protected $table = 'trans_sales_order';
     protected $guarded = [];
+
+    protected $casts = [
+        'so_status' => 'integer',
+    ];
 }

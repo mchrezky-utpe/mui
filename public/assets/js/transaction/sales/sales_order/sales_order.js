@@ -297,25 +297,33 @@ document.addEventListener("DOMContentLoaded", function () {
                     data: "so_status",
                     className: "text-center",
                     render: (data) =>
-                        data === 1
+                        data === 0
                             ? `<span class="badge badge-success">&nbsp;</span>`
                             : `<span class="badge badge-danger">&nbsp;</span>`,
                 },
                 {
-                    data: "id",
-                    render: function (data, type, row) {
-                        return `
-                    <button 
-                        class="btn btn-sm btn-primary btn-detail-so"
-                        data-id="${row.id}"
-                        data-so="${row.so_number}"
-                    >
-                        Detail
-                    </button>
-                `;
+                    data: null,
+                    render: function (data) {
+                        let btnDetail = `
+                        <button class="btn btn-sm btn-info btn-detail-so"
+                            data-id="${data.id}"
+                            data-so="${data.so_number}">
+                            Detail
+                        </button>`;
+
+                        let btnDelete = "";
+
+                        if (data.can_delete == 1) {
+                            btnDelete = `
+                            <button class="btn btn-sm btn-danger btn-delete-so"
+                                data-id="${data.id}"
+                                data-so="${data.so_number}">
+                                Delete
+                            </button>`;
+                        }
+
+                        return btnDetail + " " + btnDelete;
                     },
-                    orderable: false,
-                    searchable: false,
                 },
             ],
 
@@ -402,6 +410,72 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             `,
             },
+        });
+    });
+
+    $("#table_sales_order").on("click", ".btn-delete-so", function () {
+        const soId = $(this).data("id");
+        const soNumber = $(this).data("so");
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Sales Order " + soNumber + " will be deleted",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleting...",
+                    html: "Please wait...",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                $.ajax({
+                    url: base_url + "api/sales_order/delete-sales-order",
+                    type: "POST",
+                    data: {
+                        id: soId,
+                    },
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                            "content",
+                        ),
+                    },
+                    success: function (res) {
+                        if (res.status) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Deleted!",
+                                text: res.message,
+                            });
+
+                            $("#table_sales_order")
+                                .DataTable()
+                                .ajax.reload(null, false);
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Failed!",
+                                text: res.message,
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error!",
+                            text: "Something went wrong",
+                        });
+                    },
+                });
+            }
         });
     });
 
@@ -636,7 +710,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         $("#po_number").val("");
         $("#customer").val(null).trigger("change");
-        $("#currency").val(null).trigger("change");
+        currency.val("IDR").trigger("change");
         $("#exchange_rate").val("1");
         $("#type_item").val(null).trigger("change");
         $("input[name='po_number']").val("");
