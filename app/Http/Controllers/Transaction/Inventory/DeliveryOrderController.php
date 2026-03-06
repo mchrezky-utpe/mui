@@ -583,7 +583,7 @@ class DeliveryOrderController extends Controller
                 ->leftJoin('trans_customer_delivery_schedule as ii', 'ii.id', '=', 'ff.customer_delivery_schedule_id')
                 ->leftJoin('mst_customer_delivery_destination as jj', 'jj.id', '=', 'ff.customer_delivery_destination_id')
                 ->where('a.delivery_order_id', $request->id)
-                ->selectRaw('a.id, a.qty, a.source_type, a.total_packaging, b.sku_name, c.description, f.po_number as po_number_cds, hh.po_number as po_number_cr, g.customer_delivery_number as customer_delivery_number_cds, ii.customer_delivery_number as customer_delivery_number_cr, dd.return_do_number as return_do_number_cr, h.destination_name as delivery_destination_cds, jj.destination_name as delivery_destination_cr, h.destination_address as delivery_destination_address_cds, jj.destination_address as delivery_destination_address_cr, h.destination_code as delivery_destination_code_cds, jj.destination_code as delivery_destination_code_cr')
+                ->selectRaw('a.id, a.qty, a.source_type, a.total_packaging, b.sku_name, c.description, f.po_number as po_number_cds, hh.po_number as po_number_cr, g.customer_delivery_number as customer_delivery_number_cds, ii.customer_delivery_number as customer_delivery_number_cr, dd.return_do_number as return_do_number_cr, h.destination_name as delivery_destination_cds, jj.destination_name as delivery_destination_cr, h.destination_address as delivery_destination_address_cds, jj.destination_address as delivery_destination_address_cr, h.destination_code as delivery_destination_code_cds, jj.destination_code as delivery_destination_code_cr, b.sku_inventory_unit, b.sku_specification_code')
                 ->get();
 
             $data = [
@@ -603,7 +603,7 @@ class DeliveryOrderController extends Controller
             $customPaper = [0, 0, 609.45, 453.54];
 
             $pdf = Pdf::loadView(
-                'transaction.inventory.delivery_order.pdf',
+                'transaction.inventory.delivery_order.pdf2',
                 $data
             )->setPaper($customPaper, 'portrait');
 
