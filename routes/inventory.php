@@ -108,6 +108,7 @@ Route::prefix('transaction/inventory')->middleware(OnlyMemberMiddleware::class)-
     Route::prefix('stock_view')->controller(StockViewController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/all', 'getAll');
+        Route::get('/export', 'exportExcel');
     });
 
     Route::prefix('transaction_history')->controller(TransactionHistoryController::class)->group(function () {

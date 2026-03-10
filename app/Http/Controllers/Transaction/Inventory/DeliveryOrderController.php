@@ -600,12 +600,17 @@ class DeliveryOrderController extends Controller
             //     'Content-Type' => 'application/pdf',
             //     'Content-Disposition' => 'inline; filename="delivery-order.pdf"',
             // ]);
-            $customPaper = [0, 0, 609.45, 453.54];
-
             $pdf = Pdf::loadView(
                 'transaction.inventory.delivery_order.pdf2',
                 $data
-            )->setPaper($customPaper, 'portrait');
+            )->setPaper('a4', 'portrait');
+
+            // $customPaper = [0, 0, 609.45, 453.54];
+
+            // $pdf = Pdf::loadView(
+            //     'transaction.inventory.delivery_order.pdf2',
+            //     $data
+            // )->setPaper($customPaper, 'portrait');
 
             return $pdf->stream('delivery_order.pdf');
         } catch (Exception $e) {

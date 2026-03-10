@@ -6,6 +6,11 @@
             const val = $(this).val();
             initDatatable(val);
         });
+
+        $(document).on('click', '#btnExport', function() {
+            const type = $('#itemTypeFilter').val();
+            window.location.href = `/transaction/inventory/stock_view/export?type=${type}`;
+        });
     });
 
     const initDatatable = (type) => {
