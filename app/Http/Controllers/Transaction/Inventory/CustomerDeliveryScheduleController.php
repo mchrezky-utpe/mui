@@ -350,12 +350,12 @@ class CustomerDeliveryScheduleController extends Controller
                         'message' => "Part number '" . trim($row[5]) . "' not found",
                     ], 404);
                 }
-                if (floatval($row[13]) > floatval($checkSKU->val_conversion)) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Quantity for part number '" . trim($row[5]) . "' must be less than or equal " . floatval($checkSKU->val_conversion),
-                    ], 400);
-                }
+                // if (floatval($row[13]) > floatval($checkSKU->val_conversion)) {
+                //     return response()->json([
+                //         'status' => false,
+                //         'message' => "Quantity for part number '" . trim($row[5]) . "' must be less than or equal " . floatval($checkSKU->val_conversion),
+                //     ], 400);
+                // }
 
                 // Check pricelist
                 $priceSKU = DB::table('trans_sku_pricelist as a')->select('a.id', 'a.price', 'a.price_retail', 'b.prefix')
@@ -419,9 +419,9 @@ class CustomerDeliveryScheduleController extends Controller
                 ]);
 
                 // Update sku stock
-                $sku = MstSku::where('id', $item['sku_id'])->update([
-                    'val_conversion' => $item['val_conversion'] - $item['quantity_order'],
-                ]);
+                // $sku = MstSku::where('id', $item['sku_id'])->update([
+                //     'val_conversion' => $item['val_conversion'] - $item['quantity_order'],
+                // ]);
 
                 // Customer delivery schedule
                 $cdsNumberData = $this->generateCdsNumber();
