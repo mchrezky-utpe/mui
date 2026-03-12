@@ -161,14 +161,16 @@ class SalesInvoiceController extends Controller
                     ->leftJoin('trans_sales_order as f', 'f.id', '=', 'e.id_sales_order')
                     ->whereNotNull('b.id')
                     ->where('a.customer_id', $request->customer)
-                    ->groupBy('a.id');
+                    ->groupBy('a.do_date', 'a.do_number', 'a.id');
 
                 $totalRecords = (clone $query)->count();
 
                 $totalRecordWithFilter = (clone $query)->count();
 
                 $data = $query->select(
-                    'a.*',
+                    'a.do_date',
+                    'a.do_number',
+                    'a.id',
                     DB::raw('MIN(d.cds_code) as cds_code'),
                     DB::raw('MIN(f.po_number) as po_number')
                 )->skip($start)->take($length)->get();

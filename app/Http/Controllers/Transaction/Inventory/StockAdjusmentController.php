@@ -169,7 +169,7 @@ class StockAdjusmentController extends Controller
                 ]);
 
                 $sku->update([
-                    'val_conversion' => $qty
+                    'val_conversion' => $qty + $sku->val_conversion
                 ]);
 
                 $successCount++;
