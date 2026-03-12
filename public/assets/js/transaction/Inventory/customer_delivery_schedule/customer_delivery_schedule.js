@@ -566,17 +566,31 @@ document.addEventListener("DOMContentLoaded", function () {
                             : `<span class="badge badge-success">&nbsp;</span>`,
                 },
                 {
-                    data: "id",
+                    data: null,
                     render: function (data, type, row) {
-                        return `
-                    <button 
-                        class="btn btn-sm btn-primary btn-detail-cds"
-                        data-id="${row.id}"
-                        data-cds="${row.cds_code}"
-                    >
-                        Detail
-                    </button>
-                `;
+                        let btnDetail = `
+                            <button 
+                                class="btn btn-sm btn-primary btn-detail-cds"
+                                data-id="${row.id}"
+                                data-cds="${row.cds_code}">
+                                Detail
+                            </button>
+                        `;
+
+                        let btnDelete = "";
+
+                        if (row.can_delete == 1) {
+                            btnDelete = `
+                                <button 
+                                    class="btn btn-sm btn-danger btn-delete-cds"
+                                    data-id="${row.id}"
+                                    data-cds="${row.cds_code}">
+                                    Delete
+                                </button>
+                            `;
+                        }
+
+                        return btnDetail + " " + btnDelete;
                     },
                     orderable: false,
                     searchable: false,
@@ -663,6 +677,81 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             `,
                 },
+            });
+        },
+    );
+
+    $("#table_customer_delivery_schedule").on(
+        "click",
+        ".btn-delete-cds",
+        function () {
+            const cdsId = $(this).data("id");
+            const cdsNumber = $(this).data("cds");
+
+            Swal.fire({
+                title: "Are you sure?",
+                text:
+                    "Customer Delivery Schedule " +
+                    cdsNumber +
+                    " will be deleted",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Deleting...",
+                        html: "Please wait...",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
+
+                    $.ajax({
+                        url:
+                            base_url +
+                            "api/customer_delivery_schedule/delete-customer-delivery-schedule",
+                        type: "POST",
+                        data: {
+                            id: cdsId,
+                        },
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content",
+                            ),
+                        },
+                        success: function (res) {
+                            if (res.status) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Deleted!",
+                                    text: res.message,
+                                });
+
+                                $("#table_customer_delivery_schedule")
+                                    .DataTable()
+                                    .ajax.reload(null, false);
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Failed!",
+                                    text: res.message,
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error!",
+                                text: "Something went wrong",
+                            });
+                        },
+                    });
+                }
             });
         },
     );

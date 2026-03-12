@@ -63,8 +63,8 @@
                     <input type="hidden" id="sku_id">
 
                     <div class="mb-3">
-                        <label>Adjusment Qty</label>
-                        <input type="number" id="qty" class="form-control" min="0" required>
+                        <label>Adjustment Qty</label>
+                        <input type="text" id="qty" class="form-control" placeholder="ex: 20 or -20" required>
                     </div>
                 </form>
             </div>

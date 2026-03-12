@@ -507,6 +507,7 @@ Route::controller(SalesOrderController::class)->group(function () {
     Route::post("/api/$route_name/insert-sales-order", "api_insert_sales_order")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-sales-order-list", "api_droplist_sales_order_list")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-sales-order-list-detail", "api_droplist_sales_order_list_detail")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/api/$route_name/delete-sales-order", "api_delete_sales_order")->middleware(OnlyMemberMiddleware::class);
 });
 
 Route::controller(CustomerDeliveryScheduleController::class)->group(function () {
@@ -519,4 +520,5 @@ Route::controller(CustomerDeliveryScheduleController::class)->group(function () 
     Route::get("/api/$route_name/droplist-customer-delivery-schedule-list", "api_droplist_customer_delivery_schedule_list")->middleware(OnlyMemberMiddleware::class);
     Route::get("/api/$route_name/droplist-customer-delivery-schedule-list-detail", "api_droplist_customer_delivery_schedule_list_detail")->middleware(OnlyMemberMiddleware::class);
     Route::post("/api/$route_name/import", "api_import_customer_delivery_schedule")->middleware(OnlyMemberMiddleware::class);
+    Route::post("/api/$route_name/delete-customer-delivery-schedule", "api_delete_customer_delivery_schedule")->middleware(OnlyMemberMiddleware::class);
 });

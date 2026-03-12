@@ -102,10 +102,15 @@
             let sku_id = $('#sku_id').val();
             let qty = $('#qty').val();
 
-            if (!qty || qty < 0) {
-                Swal.fire('Warning', 'Qty cannot be less than 0', 'warning');
+            // hanya boleh angka atau minus di depan
+            let regex = /^-?\d+$/;
+
+            if (!regex.test(qty)) {
+                Swal.fire('Warning', 'Invalid qty format', 'warning');
                 return;
             }
+
+            qty = parseInt(qty);
 
             Swal.fire({
                 title: 'Processing...',
@@ -128,7 +133,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: 'Adjusment stock saved successfully'
+                        text: res.message
                     });
 
                     $('#modalAdjusment').modal('hide');
@@ -141,7 +146,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Failed to save adjustment stock'
+                        text: err.responseJSON?.message ?? 'Failed to save adjustment stock'
                     });
                 }
             });
@@ -182,9 +187,25 @@
                         $('body').removeClass('modal-open');
                         $('body').css('padding-right', '');
 
-                        Swal.fire('Success', res.message, 'success');
-                    }, 300);
+                        if (res.errors && res.errors.length > 0) {
 
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Import Completed with Errors',
+                                html: res.message + '<br><br>' + res.errors.join('<br>')
+                            });
+
+                        } else {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: res.message
+                            });
+
+                        }
+
+                    }, 300);
 
                     let filter = getCurrentFilter();
                     loadData(filter.q, filter.type, filter.date);

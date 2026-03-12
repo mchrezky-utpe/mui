@@ -44,7 +44,9 @@ class CustomerDeliveryScheduleController extends Controller
                 'vw_app_list_mst_sku.sku_name as sku_name',
                 'vw_app_list_mst_sku.sku_specification_code as sku_specification_code',
                 'vw_app_list_mst_sku.sku_inventory_unit as sku_inventory_unit',
-            ]);
+            ])
+            ->where('trans_sales_order_details.outstanding', '>', 0)
+            ->where('trans_sales_order.so_status', '!=', 3);
 
         if ($request->filled('po_number')) {
             $query->where('trans_sales_order.po_number', $request->po_number);
@@ -172,7 +174,19 @@ class CustomerDeliveryScheduleController extends Controller
                 $sod = TransSalesOrderDetails::find($item['id']);
                 if ($sod) {
                     $sod->outstanding = max(0, $sod->outstanding - $item['quantity_order']);
+                    $sod->updated_by = Auth::id();
                     $sod->save();
+
+                    $salesOrderId = $sod->id_sales_order;
+
+                    $remainingOutstanding = TransSalesOrderDetails::where('id_sales_order', $salesOrderId)
+                        ->where('outstanding', '>', 0)
+                        ->exists();
+
+                    if (!$remainingOutstanding) {
+                        TransSalesOrder::where('id', $salesOrderId)
+                            ->update(['so_status' => 0, 'updated_by' => Auth::id()]);
+                    }
                 }
 
                 $seq++;
@@ -198,11 +212,29 @@ class CustomerDeliveryScheduleController extends Controller
     {
         $query = TransCustomerDeliverySchedule::query()
             ->join('mst_customer', 'trans_customer_delivery_schedule.customer_id', '=', 'mst_customer.id')
+            ->leftJoin(
+                'trans_customer_delivery_schedule_details as cdsd',
+                'trans_customer_delivery_schedule.id',
+                '=',
+                'cdsd.customer_delivery_schedule_id'
+            )
             ->select([
                 'trans_customer_delivery_schedule.*',
-                'mst_customer.id as customer_id',
-                'mst_customer.name as customer_name'
-            ]);
+                'mst_customer.name as customer_name',
+                DB::raw("
+            CASE 
+                WHEN COUNT(cdsd.id) = SUM(
+                    CASE 
+                        WHEN cdsd.outstanding = cdsd.quantity_cds 
+                        THEN 1 ELSE 0 
+                    END
+                )
+                THEN 1 ELSE 0
+            END as can_delete
+        ")
+            ])
+            ->where('trans_customer_delivery_schedule.cds_status', '!=', 3)
+            ->groupBy('trans_customer_delivery_schedule.id', 'mst_customer.name');
 
         if ($request->filled('customer_delivery_schedule_details')) {
             $query->where('trans_customer_delivery_schedule.customer_id', $request->customer_delivery_schedule_details);
@@ -499,5 +531,79 @@ class CustomerDeliveryScheduleController extends Controller
         }
 
         return $formatted;
+    }
+
+    public function api_delete_customer_delivery_schedule(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $cds = TransCustomerDeliverySchedule::findOrFail($request->id);
+
+            $hasUsedDetail = TransCustomerDeliveryScheduleDetails::where(
+                'customer_delivery_schedule_id',
+                $cds->id
+            )
+                ->whereColumn('outstanding', '<', 'quantity_cds')
+                ->exists();
+
+            if ($hasUsedDetail) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'CDS tidak bisa dihapus karena sudah diproses'
+                ]);
+            }
+
+            $cdsDetails = TransCustomerDeliveryScheduleDetails::where(
+                'customer_delivery_schedule_id',
+                $cds->id
+            )->get();
+
+            foreach ($cdsDetails as $detail) {
+
+                $sod = TransSalesOrderDetails::find($detail->sales_order_details_id);
+
+                if ($sod) {
+
+                    $sod->outstanding += $detail->quantity_cds;
+                    $sod->updated_by = Auth::id();
+                    $sod->save();
+
+                    $salesOrderId = $sod->id_sales_order;
+
+                    $hasRemainingOutstanding = TransSalesOrderDetails::where('id_sales_order', $salesOrderId)
+                        ->where('outstanding', '>', 0)
+                        ->exists();
+
+                    if ($hasRemainingOutstanding) {
+                        TransSalesOrder::where('id', $salesOrderId)
+                            ->update([
+                                'so_status' => 1,
+                                'updated_by' => Auth::id()
+                            ]);
+                    }
+                }
+            }
+
+            $cds->cds_status = 3;
+            $cds->updated_by = Auth::id();
+            $cds->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Customer Delivery Schedule berhasil dihapus & SO dikembalikan'
+            ]);
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

@@ -269,8 +269,8 @@
                     <div class="form-group">
                         <label>Quantity</label>
                         <input type="number" id="modal_qty" class="form-control" min="1">
-                        <small class="text-muted">
-                            Max: <span id="modal_qty_max_label"></span>
+                        <small class="text-muted" style="font-size: 12px">
+                            OS: <span id="modal_qty_max_label"></span>
                         </small>
                     </div>
 
