@@ -202,11 +202,21 @@ class SalesOrderController extends Controller
     {
         $query = TransSalesOrder::query()
             ->join('mst_customer', 'trans_sales_order.customer_id', '=', 'mst_customer.id')
+            ->leftJoin('trans_sales_order_details as sod', 'trans_sales_order.id', '=', 'sod.id_sales_order')
             ->select([
                 'trans_sales_order.*',
-                'mst_customer.id as customer_id',
-                'mst_customer.name as customer_name'
-            ]);
+                'mst_customer.name as customer_name',
+                DB::raw("
+            CASE 
+                WHEN COUNT(sod.id) = SUM(
+                    CASE WHEN sod.outstanding = sod.quantity_order THEN 1 ELSE 0 END
+                )
+                THEN 1 ELSE 0
+            END as can_delete
+        ")
+            ])
+            ->where('trans_sales_order.so_status', '!=', 3)
+            ->groupBy('trans_sales_order.id', 'mst_customer.name');
 
         if ($request->filled('customer_sales_order_details')) {
             $query->where('trans_sales_order.customer_id', $request->customer_sales_order_details);
@@ -297,5 +307,45 @@ class SalesOrderController extends Controller
             'recordsFiltered' => $recordsFiltered,
             'data' => $data
         ]);
+    }
+
+    public function api_delete_sales_order(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $so = TransSalesOrder::findOrFail($request->id);
+
+            $hasUsedDetail = TransSalesOrderDetails::where('id_sales_order', $so->id)
+                ->whereColumn('outstanding', '<', 'quantity_order')
+                ->exists();
+
+            if ($hasUsedDetail) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Sales Order tidak bisa dihapus karena sudah diproses'
+                ]);
+            }
+
+            $so->so_status = 3;
+            $so->updated_by = Auth::id();
+            $so->save();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Sales Order berhasil dihapus'
+            ]);
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

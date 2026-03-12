@@ -83,22 +83,31 @@ class StockAdjusmentController extends Controller
 
         try {
 
-            //check mst_sku
             $sku = MstSku::where('id', $sku_id)->first();
 
             if (!$sku) {
                 throw new \Exception('Item not found');
             }
 
+            $currentStock = $sku->val_conversion;
+
+            // hitung stok baru
+            $newStock = $currentStock + $qty;
+
+            // tidak boleh minus
+            if ($newStock < 0) {
+                throw new \Exception('Stock cannot be less than 0');
+            }
+
             TransSkuAdjusment::create([
-                'sku_id'    => $sku->id,
-                'qty'       => $qty,
+                'sku_id'     => $sku->id,
+                'qty'        => $qty,
                 'trans_date' => date('Y-m-d'),
                 'created_by' => Auth::id(),
             ]);
 
             MstSku::where('id', $sku->id)->update([
-                'val_conversion' => $qty
+                'val_conversion' => $newStock
             ]);
 
             DB::commit();
@@ -142,22 +151,34 @@ class StockAdjusmentController extends Controller
                 if ($index == 0) continue;
 
                 $partCode = trim($row[1] ?? '');
-                $qty      = $row[2] ?? 0;
+                $qtyRaw   = $row[2] ?? null;
 
                 if (!$partCode) {
                     $errors[] = "Row " . ($index + 1) . " Part Code empty";
                     continue;
                 }
 
-                if ($qty < 0) {
-                    $errors[] = "Row " . ($index + 1) . " Qty invalid";
+                // validasi qty harus angka
+                if (!is_numeric($qtyRaw)) {
+                    $errors[] = "Row " . ($index + 1) . " Qty invalid format";
                     continue;
                 }
+
+                $qty = (int)$qtyRaw;
 
                 $sku = MstSku::where('manual_id', $partCode)->first();
 
                 if (!$sku) {
                     $errors[] = "Row " . ($index + 1) . " Part Code {$partCode} not found";
+                    continue;
+                }
+
+                $currentStock = $sku->val_conversion ?? 0;
+                $newStock = $currentStock + $qty;
+
+                // tidak boleh minus
+                if ($newStock < 0) {
+                    $errors[] = "Row " . ($index + 1) . " Stock cannot be negative. Current stock {$currentStock}, adjustment {$qty}";
                     continue;
                 }
 
@@ -169,7 +190,7 @@ class StockAdjusmentController extends Controller
                 ]);
 
                 $sku->update([
-                    'val_conversion' => $qty
+                    'val_conversion' => $newStock
                 ]);
 
                 $successCount++;
