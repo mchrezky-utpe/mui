@@ -10,7 +10,7 @@ use App\Models\Master\Bom\Bom;
 
 class BomController
 {
-    
+
     private BomService $service;
 
     public function __construct(BomService $service)
@@ -24,19 +24,20 @@ class BomController
         return response()->view('transaction.bom.index');
     }
 
-    public function get_item_material(Request $request){
-        
+    public function get_item_material(Request $request)
+    {
+
         $start = $request->input('start');
-        $length = $request->input('length'); 
+        $length = $request->input('length');
         $search = $request->input('search.value');
         $orderColumnIndex = $request->input('order.0.column');
         $orderDirection = $request->input('order.0.dir');
         $columns = $request->input('columns');
 
         $query = DB::table('vw_app_list_trans_sku_pricelist');
-        
-         $query->where('flag_sku_type','=', 2);
-         $query->whereIn('extension_type', ['WPC','SPC','SAC']);
+
+        $query->where('flag_sku_type', '=', 2);
+        //  $query->whereIn('extension_type', ['WPC','SPC','SAC']);
 
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
@@ -74,34 +75,34 @@ class BomController
         ]);
     }
 
-     public function add(Request $request)
+    public function add(Request $request)
     {
         $this->service->add($request);
         return redirect("/bom");
     }
 
-     public function edit_detail(Request $request, int $id)
+    public function edit_detail(Request $request, int $id)
     {
         $data =  $this->service->get_detail($id);
-        return response()->view('transaction.bom.edit',['data' => $data]);
+        return response()->view('transaction.bom.edit', ['data' => $data]);
     }
 
-     public function do_edit_detail(Request $request)
+    public function do_edit_detail(Request $request)
     {
         dd($request);
         $bom_id = $request->bom_id;
         $data = json_decode($request->data, true);
-        $this->service->do_edit_detail($bom_id,$data);
+        $this->service->do_edit_detail($bom_id, $data);
         return redirect("/bom");
     }
-    
+
 
     public function delete(Request $request, int $id)
     {
         $this->service->delete($id);
         return redirect("/bom");
     }
-    
+
 
     public function verify(Request $request, int $id)
     {
@@ -110,7 +111,7 @@ class BomController
         $data->save();
         return redirect("/bom");
     }
-    
+
     public function activate(Request $request, int $id)
     {
         $data = Bom::where('id', $id)->firstOrFail();
@@ -118,7 +119,7 @@ class BomController
         $data->save();
         return redirect("/bom");
     }
-    
+
 
     public function main(Request $request, int $id)
     {
@@ -127,17 +128,16 @@ class BomController
         $data->save();
         return redirect("/bom");
     }
-    
+
     public function get_detail_bom(Request $request, $id)
     {
-    $query = DB::table('vw_app_list_mst_sku_bom_detail');
-        
+        $query = DB::table('vw_app_list_mst_sku_bom_detail');
+
         $query->where('bom_id', $id);
-    
+
         $data = $query->get();
         return response()->json([
             'data' => $data
         ]);
     }
-    
 }

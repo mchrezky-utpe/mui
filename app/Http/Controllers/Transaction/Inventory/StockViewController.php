@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Transaction\Inventory;
 
+use App\Exports\StockViewExport;
+use App\Http\Controllers\Controller;
+use App\Models\Master\Sku\SkuListVw;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Models\Master\Sku\SkuListVw;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockViewController extends Controller
 {
@@ -104,6 +106,24 @@ class StockViewController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success' => true,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function exportExcel(Request $request)
+    {
+        try {
+            $type = $request->type;
+            $date = date('YmdHis');
+
+            $fileName = "Stock-view-{$date}-{$type}.xlsx";
+
+            return Excel::download(new StockViewExport($type), $fileName);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
                 'message' => "Error Request, Exception Error!",
                 'data' => $e->getMessage()
             ], 500);

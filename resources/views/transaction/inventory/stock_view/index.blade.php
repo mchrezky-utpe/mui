@@ -30,15 +30,14 @@
 
             <div class="card shadow-sm">
                 <div class="card-header bg-light">
-                    <div class="row">
-                        <div class="col-6">
+                    <div class="d-flex align-items-center">
+                        <div class="col-5">
                             <div class="d-flex align-items-center gap-3">
                                 <label for="dateFilter" class="mb-0 mr-2">Date</label>
                                 <input type="date" id="dateFilter" class="form-control form-control-sm">
                             </div>
                         </div>
-
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="d-flex align-items-center gap-3">
                                 <label for="itemTypeFilter" class="text-nowrap mb-0 mr-2">Item Type</label>
                                 <select id="itemTypeFilter" class="form-control form-control-sm">
@@ -48,6 +47,10 @@
                                     <option value="Returnable Packaging">Returnable Packaging</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-success" id="btnExport"><i class="fas fa-file-excel"></i>
+                                Export</button>
                         </div>
                     </div>
                 </div>

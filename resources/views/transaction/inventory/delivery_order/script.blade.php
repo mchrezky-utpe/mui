@@ -287,7 +287,11 @@
 
             let url =
                 `{{ url('/transaction/inventory/delivery_order/export-pdf') }}?id=${id}&option=${printOption}&otherDestination=${otherDestination ? 1 : 0}`;
-            window.open(url, '_blank');
+            let printWindow = window.open(url, '_blank');
+
+            printWindow.onload = function() {
+                printWindow.print();
+            };
         });
     });
 

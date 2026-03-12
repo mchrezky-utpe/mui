@@ -184,7 +184,7 @@
                 <td width="25%">Bagian Gudang</td>
                 <td width="25%">
                     Hormat kami<br><br><br>
-                    <strong>{{ $pengirim ?? 'RAHMAT HIDAYAT' }}</strong>
+                    <strong>{{ auth()->user()->name }}</strong>
                 </td>
             </tr>
         </table>
@@ -197,11 +197,9 @@
             <div class="mt-10">
                 @if ($items[0]->source_type == 'CDS')
                     <div>Destination: {{ $items[0]->delivery_destination_cds }}</div>
-                    <div>Address: {{ $items[0]->delivery_destination_address_cds }}</div>
                     <div>Code: {{ $items[0]->delivery_destination_code_cds }}</div>
                 @elseif($items[0]->source_type == 'CR')
                     <div>Destination: {{ $item->delivery_destination_cr }}</div>
-                    <div>Address: {{ $items[0]->delivery_destination_address_cr }}</div>
                     <div>Code: {{ $items[0]->delivery_destination_code_cr }}</div>
                 @endif
             </div>

@@ -39,7 +39,7 @@ class MasterSkuController
 
         $data = $this->service->list_part_information__raw()->paginate(10);
         $startNumber = ($data->currentPage() - 1) * $data->perPage();
-        
+
         return response()
             ->view(
                 'master.sku_part_information.index',
@@ -62,7 +62,7 @@ class MasterSkuController
 
         // $data = $this->service->list_production_material_information__raw()->paginate(10);
         // $startNumber = ($data->currentPage() - 1) * $data->perPage();
-        
+
         return response()
             ->view(
                 'master.sku_production_material.index',
@@ -106,7 +106,7 @@ class MasterSkuController
     public function api_sku_part_information()
     {
         $data = $this->service->list_part_information();
-         return response()->json([
+        return response()->json([
             'data' => $data
         ]);
     }
@@ -147,11 +147,11 @@ class MasterSkuController
     public function api_all_sku()
     {
         $data = $this->service->get_all_sku();
-         return response()->json([
+        return response()->json([
             'data' => $data
         ]);
     }
-    
+
 
     public function get_code(Request $request)
     {
@@ -199,7 +199,7 @@ class MasterSkuController
 
     public function add(Request $request)
     {
-        
+
         $this->service->add($request);
         // $request->validate([
         //     'blob_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -213,10 +213,10 @@ class MasterSkuController
         // if ($request->hasFile('blob_image')) {
         //     $image = $request->file('blob_image');
         //     $folder = 'sku_images/' . now()->format('Y-m');
-            
+
         //     // Simpan ke storage/app/public/sku_images/...
         //     $path = $image->store($folder, 'public');
-            
+
         //     // Simpan path relatif tanpa 'public/' prefix
         //     $data['blob_image'] = $path;
         // }
@@ -295,7 +295,7 @@ class MasterSkuController
     {
         return Excel::download(new SkuProductionMaterialExport, 'sku_production_material.xlsx');
     }
-    
+
     public function export_general_item()
     {
         return Excel::download(new SkuGeneralItemExport, 'sku_general_item.xlsx');

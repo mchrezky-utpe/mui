@@ -372,21 +372,22 @@ class CustomerDeliveryScheduleController extends Controller
             $data = $fileData[0] ?? [];
             unset($data[0]);
 
-            $SODetailList = [];
+            $SOList = [];
             foreach ($data as $row) {
-                $checkSKU = MstSku::where('specification_code', trim($row[5]))->select('id', 'val_conversion')->first();
+                $partNumberFormat = $this->formatPartNumber($row[5]);
+                $checkSKU = MstSku::where('specification_code', $partNumberFormat)->select('id', 'val_conversion')->first();
                 if (!$checkSKU) {
                     return response()->json([
                         'status' => false,
                         'message' => "Part number '" . trim($row[5]) . "' not found",
                     ], 404);
                 }
-                if (floatval($row[13]) > floatval($checkSKU->val_conversion)) {
-                    return response()->json([
-                        'status' => false,
-                        'message' => "Quantity for part number '" . trim($row[5]) . "' must be less than or equal " . floatval($checkSKU->val_conversion),
-                    ], 400);
-                }
+                // if (floatval($row[13]) > floatval($checkSKU->val_conversion)) {
+                //     return response()->json([
+                //         'status' => false,
+                //         'message' => "Quantity for part number '" . trim($row[5]) . "' must be less than or equal " . floatval($checkSKU->val_conversion),
+                //     ], 400);
+                // }
 
                 // Check pricelist
                 $priceSKU = DB::table('trans_sku_pricelist as a')->select('a.id', 'a.price', 'a.price_retail', 'b.prefix')
@@ -403,38 +404,39 @@ class CustomerDeliveryScheduleController extends Controller
                 // Get customer delivery destination
                 $customerDeliveryDestination = MasterCustomerDeliveryDestination::where('customer_id', 19)->where('destination_code', trim($row[3]))->where('flag_active', 1)->first('id');
 
-                $SODetailList[] = [
+                $SOList[] = [
                     'sku_id' => $checkSKU->id,
                     'val_conversion' => floatval($checkSKU->val_conversion),
-                    'quantity_order' => floatval($row[13]),
+                    'quantity_order' => $row[14] ? floatval($row[14]) : floatval($row[13]),
                     'price' => floatval($priceSKU->price),
                     'price_retail' => floatval($priceSKU->price_retail),
                     'currency' => $priceSKU->prefix,
                     'cds_delivery_date' => $row[10] ? $this->extelToDate($row[10]) : date('Y-m-d', strtotime(strval($row[9]))),
                     'customer_delivery_destination_id' => $customerDeliveryDestination->id ?? null,
+                    'slip_number' => trim($row[8]),
+                    'kd_lot_number' => trim($row[16]),
                 ];
             }
 
-            $soNumberData = $this->generateSoNumber();
+            foreach ($SOList as $item) {
+                $soNumberData = $this->generateSoNumber();
 
-            $salesOrder = TransSalesOrder::create([
-                'so_number'      => $soNumberData['number'],
-                'so_number_seq'  => $soNumberData['seq'],
-                'so_date'        => now()->toDateString(),
-                'so_type'        => '',
-                'po_number'      => NULL,
-                'customer_id'    => 19,
-                'valid_from'     => $SODetailList[0]['cds_delivery_date'],
-                'valid_until'    => end($SODetailList)['cds_delivery_date'],
-                'validation_status' => 'UP TO DATE',
-                'created_by'     => Auth::id(),
-            ]);
+                $salesOrder = TransSalesOrder::create([
+                    'so_number'      => $soNumberData['number'],
+                    'so_number_seq'  => $soNumberData['seq'],
+                    'so_date'        => now()->toDateString(),
+                    'so_type'        => '',
+                    'po_number'      => $item['slip_number'],
+                    'customer_id'    => 19,
+                    'valid_from'     => $item['cds_delivery_date'],
+                    'valid_until'    => $item['cds_delivery_date'],
+                    'validation_status' => 'UP TO DATE',
+                    'created_by'     => Auth::id(),
+                ]);
 
-            $seq = 1;
-            foreach ($SODetailList as $item) {
                 $soDetail = TransSalesOrderDetails::create([
-                    'sod_number'      => $this->generateSodNumber($soNumberData['number'], $seq),
-                    'sod_number_seq'  => $seq,
+                    'sod_number'      => $this->generateSodNumber($soNumberData['number'], 1),
+                    'sod_number_seq'  => 1,
                     'id_sales_order' => $salesOrder->id,
                     'sku_id'          => $item['sku_id'],
                     'quantity_order' => $item['quantity_order'],
@@ -449,50 +451,43 @@ class CustomerDeliveryScheduleController extends Controller
                 ]);
 
                 // Update sku stock
-                $sku = MstSku::where('id', $item['sku_id'])->update([
-                    'val_conversion' => $item['val_conversion'] - $item['quantity_order'],
+                // $sku = MstSku::where('id', $item['sku_id'])->update([
+                //     'val_conversion' => $item['val_conversion'] - $item['quantity_order'],
+                // ]);
+
+                // Customer delivery schedule
+                $cdsNumberData = $this->generateCdsNumber();
+                $customerDeliveryNumber = $item['kd_lot_number'] ? $item['slip_number'] . '-' . $item['kd_lot_number'] : $item['slip_number'];
+
+                $cds = TransCustomerDeliverySchedule::create([
+                    'cds_code'        => $cdsNumberData['number'],
+                    'cds_code_seq'    => $cdsNumberData['seq'],
+                    'cds_date'        => now()->toDateString(),
+                    'customer_delivery_number' => $customerDeliveryNumber,
+                    'customer_id'     => 19,
+                    'valid_from'      => $item['cds_delivery_date'],
+                    'valid_until'     => $item['cds_delivery_date'],
+                    'validation_status' => 'UP TO DATE',
+                    'cds_status'      => 1,
+                    'created_by'      => Auth::id(),
                 ]);
 
-                $SODetailList[$seq - 1]['sales_order_details_id'] = $soDetail->id;
-
-                $seq++;
-            }
-
-            $cdsNumberData = $this->generateCdsNumber();
-
-            $cds = TransCustomerDeliverySchedule::create([
-                'cds_code'        => $cdsNumberData['number'],
-                'cds_code_seq'    => $cdsNumberData['seq'],
-                'cds_date'        => now()->toDateString(),
-                'customer_delivery_number' => NULL,
-                'customer_id'     => 19,
-                'valid_from'      => $SODetailList[0]['cds_delivery_date'],
-                'valid_until'     => end($SODetailList)['cds_delivery_date'],
-                'validation_status' => 'UP TO DATE',
-                'cds_status'      => 1,
-                'created_by'      => Auth::id(),
-            ]);
-
-            $seqCDS = 1;
-            foreach ($SODetailList as $item2) {
                 TransCustomerDeliveryScheduleDetails::create([
-                    'cdsd_code'                    => $this->generateCdsdNumber($cdsNumberData['number'], $seqCDS),
-                    'cdsd_code_seq'                => $seqCDS,
+                    'cdsd_code'                    => $this->generateCdsdNumber($cdsNumberData['number'], 1),
+                    'cdsd_code_seq'                => 1,
                     'customer_delivery_schedule_id' => $cds->id,
-                    'delivery_plan_date'           => $item2['cds_delivery_date'],
-                    'sku_id'                       => $item2['sku_id'],
-                    'customer_delivery_destination_id' => $item2['customer_delivery_destination_id'],
-                    'sales_order_details_id'       => $item2['sales_order_details_id'],
-                    'quantity_cds'                 => $item2['quantity_order'],
-                    'outstanding'                  => $item2['quantity_order'],
-                    'valid_from'                   => $SODetailList[0]['cds_delivery_date'],
-                    'valid_until'                  => end($SODetailList)['cds_delivery_date'],
+                    'delivery_plan_date'           => $item['cds_delivery_date'],
+                    'sku_id'                       => $item['sku_id'],
+                    'customer_delivery_destination_id' => $item['customer_delivery_destination_id'],
+                    'sales_order_details_id'       => $soDetail->id,
+                    'quantity_cds'                 => $item['quantity_order'],
+                    'outstanding'                  => $item['quantity_order'],
+                    'valid_from'                   => $item['cds_delivery_date'],
+                    'valid_until'                  => $item['cds_delivery_date'],
                     'validation_status'            => 'UP TO DATE',
                     'delivery_status'              => 'PENDING',
                     'created_by'                   => Auth::id(),
                 ]);
-
-                $seqCDS++;
             }
 
             DB::commit();
@@ -510,6 +505,32 @@ class CustomerDeliveryScheduleController extends Controller
                 'message' => 'Internal server error: ' . $e->getMessage(),
             ], 500);
         }
+    }
+
+    function formatPartNumber($input)
+    {
+        $input = trim($input);
+
+        $parts = explode(' ', $input);
+
+        $first = $parts[0] ?? '';
+        $second = $parts[1] ?? '';
+
+        if (preg_match('/^(\d{5})(.+)$/', $first, $match)) {
+            $formatted = $match[1] . '-' . $match[2];
+        } else {
+            $formatted = $first;
+        }
+
+        if (!empty($second)) {
+            if (preg_match_all('/[A-Z]\d+/i', $second, $matches)) {
+                $formatted .= '-' . implode('-', $matches[0]);
+            } else {
+                $formatted .= '-' . $second;
+            }
+        }
+
+        return $formatted;
     }
 
     public function api_delete_customer_delivery_schedule(Request $request)
