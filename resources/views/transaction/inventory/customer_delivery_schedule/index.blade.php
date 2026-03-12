@@ -340,6 +340,12 @@
                         <input type="file" id="uploadedFile" class="form-control">
                         <small class="text-muted">Only Excel files (.xlsx) are allowed.</small>
                     </div>
+                    <div>
+                        <a href="{{ asset('assets/template/Import_CDS_Template.xlsx') }}"
+                            class="btn btn-success btn-sm mt-2" download>
+                            📥 Download Import Template
+                        </a>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
