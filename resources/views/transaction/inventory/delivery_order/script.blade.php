@@ -293,6 +293,63 @@
                 printWindow.print();
             };
         });
+
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+            const id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `{{ url('/transaction/inventory/delivery_order/delete-do') }}`,
+                        method: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: id
+                        },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Deleting...',
+                                text: 'Please wait while the delivery order is being deleted.',
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                        },
+                        success: function(res) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'The delivery order has been deleted.',
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
+                            });
+                            tableDO.ajax.reload();
+                        },
+                        error: function(xhr) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: xhr.responseJSON.message ||
+                                    'An error occurred while deleting the delivery order.',
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
+                            });
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
     });
 
     const initDatatableDOList = () => {
@@ -379,7 +436,11 @@
                 data: null,
                 render: function(data, type, row, meta) {
                     // return `<a href="{{ url('/transaction/inventory/delivery_order/export-pdf') }}?id=${row.id}" target="_blank" class="btn btn-sm btn-secondary text-white"><i class="fas fa-print"></i></a>`;
-                    return `<button class="btn btn-sm btn-secondary text-white btn-print" data-id="${row.id}"><i class="fas fa-print"></i></button>`;
+                    return `
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-secondary text-white btn-print" data-id="${row.id}"><i class="fas fa-print"></i></button>
+                            <button class="btn btn-sm btn-danger text-white btn-delete" data-id="${row.id}"><i class="fas fa-trash"></i></button>
+                        </div>`;
                 }
             }]
         });

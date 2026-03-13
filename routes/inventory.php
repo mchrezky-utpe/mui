@@ -103,6 +103,7 @@ Route::prefix('transaction/inventory')->middleware(OnlyMemberMiddleware::class)-
         Route::get('/item-detail', 'getItemDetail');
         Route::post('/create-do', 'createDO');
         Route::get('/export-pdf', 'exportPDF');
+        Route::post('/delete-do', 'deleteDO');
     });
 
     Route::prefix('stock_view')->controller(StockViewController::class)->group(function () {

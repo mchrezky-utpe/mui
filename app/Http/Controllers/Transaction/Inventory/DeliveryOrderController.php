@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers\Transaction\Inventory;
 
-use Exception;
-use App\Models\MasterSku;
-use App\Models\MasterDriver;
-use Illuminate\Http\Request;
-use App\Models\MasterVehicle;
-use App\Models\MasterCustomer;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Master\PackagingInformation\PackagingInformationCategory;
+use App\Models\Master\PackagingInformation\PackagingInformationPartition;
 use App\Models\Master\Sku\SkuListVw;
-use Illuminate\Support\Facades\Auth;
+use App\Models\MasterCustomer;
 use App\Models\MasterCustomerDeliveryDestination;
+use App\Models\MasterDriver;
+use App\Models\MasterSku;
+use App\Models\MasterVehicle;
+use App\Models\Transaction\Inventory\CustomerReturnDetail;
 use App\Models\Transaction\Inventory\DeliveryOrder;
 use App\Models\Transaction\Inventory\DeliveryOrderDetail;
 use App\Models\Transaction\Inventory\TransCustomerDeliverySchedule;
-use App\Models\Master\PackagingInformation\PackagingInformationCategory;
-use App\Models\Master\PackagingInformation\PackagingInformationPartition;
-use App\Models\Transaction\Inventory\CustomerReturnDetail;
 use App\Models\Transaction\Inventory\TransCustomerDeliveryScheduleDetails;
+use App\Models\Transaction\Sales\TransSalesInvoiceDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryOrderController extends Controller
 {
@@ -171,7 +172,7 @@ class DeliveryOrderController extends Controller
                     $join->on('h.id', '=', 'b.customer_id')->where('b.do_destination_type', '=', 'Customer');
                 })->leftJoin('mst_person_supplier as i', function ($join) {
                     $join->on('i.id', '=', 'b.supplier_id')->where('b.do_destination_type', '=', 'Supplier');
-                });
+                })->whereNull('b.deleted_at');
 
             $totalRecords = (clone $query)->count();
 
@@ -615,6 +616,102 @@ class DeliveryOrderController extends Controller
             return $pdf->stream('delivery_order.pdf');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error Request, Exception Error!');
+        }
+    }
+
+    public function deleteDO(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $deliveryOrder = DeliveryOrder::where('id', $request->id)->first();
+            if (!$deliveryOrder) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Delivery Order not found!",
+                    'data' => null
+                ], 404);
+            }
+
+            // Get DO Detail
+            $doDetails = DeliveryOrderDetail::where('delivery_order_id', $request->id)->get();
+
+            // Check if DO has been used in invoice with detail ids
+            $checkInvoice = TransSalesInvoiceDetail::whereIn('delivery_order_detail_id', $doDetails->pluck('id'))
+                ->whereNull('deleted_at')
+                ->count();
+            if ($checkInvoice > 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Cannot delete delivery order, this delivery order has been used in invoice!",
+                    'data' => null
+                ], 400);
+            }
+
+            if ($deliveryOrder->do_type == 'Regular') {
+                // Update back outstanding CDS
+                foreach ($doDetails as $detail) {
+                    if ($detail->source_type == 'CDS') {
+                        TransCustomerDeliveryScheduleDetails::where('id', $detail->source_id)
+                            ->update([
+                                'outstanding' => DB::raw('outstanding + ' . $detail->qty),
+                                'outstanding_status' => 1,
+                                'delivery_status' => 'PENDING',
+                                'updated_by' => Auth::id(),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            ]);
+                    }
+                }
+            } else if ($deliveryOrder->do_type == 'Replacement') {
+                // Update back outstanding CR
+                foreach ($doDetails as $detail) {
+                    if ($detail->source_type == 'CR') {
+                        CustomerReturnDetail::where('id', $detail->source_id)
+                            ->update([
+                                'outstanding_qty' => DB::raw('outstanding_qty + ' . $detail->qty),
+                                'updated_by' => Auth::id(),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            ]);
+                    }
+                }
+            } else if ($deliveryOrder->do_type == 'Sample Part') {
+                // Update back stock packaging
+                foreach ($doDetails as $detail) {
+                    PackagingInformationCategory::where('id', $detail->packaging_category_id)
+                        ->update([
+                            'total_stock' => DB::raw('total_stock + ' . $detail->total_packaging),
+                            'updated_by' => Auth::id(),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                }
+            }
+
+            // Delete DO Detail
+            DeliveryOrderDetail::where('delivery_order_id', $request->id)->update([
+                'deleted_at' => date('Y-m-d H:i:s'),
+                'deleted_by' => Auth::id(),
+            ]);
+
+            // Delete DO
+            DeliveryOrder::where('id', $request->id)->update([
+                'deleted_at' => date('Y-m-d H:i:s'),
+                'deleted_by' => Auth::id(),
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => "Delete delivery order successfully",
+                'data' => null
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => "Error Request, Exception Error!",
+                'data' => $e->getMessage()
+            ], 500);
         }
     }
 }
