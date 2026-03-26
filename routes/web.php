@@ -71,7 +71,7 @@ Route::controller(MasterSkuController::class)->group(function () {
     Route::post("/sku-production-material", "add_production_material")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-general-item", "add_general_item")->middleware(OnlyMemberMiddleware::class);
     // DELETE
-    Route::post("/sku-part-information/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
+    Route::delete("/sku-part-information/{id}/delete", "delete")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-production-material/{id}/delete", "delete_production_material")->middleware(OnlyMemberMiddleware::class);
     Route::post("/sku-general-item/{id}/delete", "delete_general_item")->middleware(OnlyMemberMiddleware::class);
     // GET

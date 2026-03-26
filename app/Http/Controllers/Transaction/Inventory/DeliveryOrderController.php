@@ -42,8 +42,8 @@ class DeliveryOrderController extends Controller
     public function create()
     {
         try {
-            $customer = MasterCustomer::select('id', 'name')->get();
-            $drivers = MasterDriver::select('id', 'driver_name')->get();
+            $customer = MasterCustomer::select('id', 'name')->orderBy('name', 'asc')->get();
+            $drivers = MasterDriver::select('id', 'driver_name')->orderBy('driver_name', 'asc')->get();
             $vehicles = MasterVehicle::select('id', 'license_plate')->get();
 
             $data = [
@@ -74,7 +74,7 @@ class DeliveryOrderController extends Controller
                     $join->on('b.id', '=', 'a.customer_id')->where('a.do_destination_type', '=', 'Customer');
                 })->leftJoin('mst_person_supplier as c', function ($join) {
                     $join->on('b.id', '=', 'a.supplier_id')->where('a.do_destination_type', '=', 'Supplier');
-                })->leftJoin('auth_user as d', 'd.id', '=', 'a.do_officer_id')->whereNull('a.deleted_at');
+                })->leftJoin('mst_user as d', 'd.id', '=', 'a.do_officer_id')->whereNull('a.deleted_at');
 
             $totalRecords = (clone $query)->count();
 
@@ -103,7 +103,7 @@ class DeliveryOrderController extends Controller
 
             $totalRecordWithFilter = (clone $query)->count();
 
-            $data = $query->select('a.*', 'b.name as customer_name', 'c.description as supplier_name', 'd.fullname as do_officer_name')
+            $data = $query->select('a.*', 'b.name as customer_name', 'c.description as supplier_name', 'd.name as do_officer_name')
                 ->skip($start)
                 ->take($length)
                 ->get();
