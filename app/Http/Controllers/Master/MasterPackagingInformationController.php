@@ -39,6 +39,24 @@ class MasterPackagingInformationController
 
             $totalRecords = (clone $query)->count();
 
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('a.sku_id', 'like', "%{$search}%")
+                        ->orWhere('a.sku_name', 'like', "%{$search}%")
+                        ->orWhere('c.prefix', 'like', "%{$search}%")
+                        ->orWhere('c.sub_category', 'like', "%{$search}%")
+                        ->orWhere('c.type', 'like', "%{$search}%")
+                        ->orWhere('c.description', 'like', "%{$search}%")
+                        ->orWhere('c.model', 'like', "%{$search}%")
+                        ->orWhere('c.category_size', 'like', "%{$search}%")
+                        ->orWhere('c.unit', 'like', "%{$search}%")
+                        ->orWhere('d.sub_category', 'like', "%{$search}%")
+                        ->orWhere('d.type', 'like', "%{$search}%")
+                        ->orWhere('d.description', 'like', "%{$search}%")
+                        ->orWhere('d.size', 'like', "%{$search}%");
+                });
+            }
+
             $totalRecordWithFilter = (clone $query)->count();
 
             $data = $query->selectRaw('a.id, a.sku_id, a.sku_name, b.sku_packaging_category_id, b.sku_packaging_partition_id, b.qty_per_partition, c.prefix as pck_code, c.sub_category, c.type, c.description, c.model, c.category_size, c.unit, c.total_stock, d.sub_category as partition_sub_category, d.type as partition_type, d.description as partition_description, d.size as partition_size, d.capacity as partition_capacity')
